@@ -1,10 +1,10 @@
 {
-  "name": "uwstout-gdd325-gamebase",
-  "version": "2.0.0",
-  "description": "A base project for making 2D web games used in GDD 325 at UW Stout",
-  "author": "Seth Berrier <berriers@uwstout.edu>",
+  "name": "edge-of-the-map",
+  "version": "0.0.1",
+  "description": "Game description here",
+  "author": "Not professor berrier",
   "main": "index.html",
-  "repository": "UWStout/gdd325-web-base",
+  "repository": "UWStout/edge-of-the-map",
   "scripts": {
     "sfx": "audiosprite --loop running --output assets/audio/sounds assets/audio/*.wav",
     "dev": "run-s clean dev-cmd",
@@ -57,7 +57,7 @@
     "webfontloader": "^1.6.28"
   },
   "window": {
-    "title": "GDD 325 Example Game",
+    "title": "Edge of the Map",
     "icon": "./assets/images/icon.png",
     "toolbar": false,
     "frame": true,
