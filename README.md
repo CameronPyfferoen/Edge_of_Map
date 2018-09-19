@@ -5,7 +5,11 @@
 All about your game
 
 # Core Team
-Who you are
+Eliot Waters
+Hunter Nguyen
+Jesselyn Lonneman
+Cameron Pyfferon
+Dylan Shepard 
 
 # Credits
 This game was made in partial fulfillment of the course GDD 325 at the University of Wisconsin Stout.
