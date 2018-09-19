@@ -2,7 +2,7 @@
 #### Cannon warfare on the high-seas
 
 # Description
-All about your game
+Pirates, ghosts, and monsters. oh my!
 
 # Core Team
 Eliot Waters
