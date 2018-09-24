@@ -44,6 +44,19 @@ class MainPlayer extends Phaser.Sprite {
 
     // Initialize the scale of this sprite
     this.scale.setTo(this._SCALE)
+
+    // Create a P2 physics body for this sprite
+    this.game.physics.p2.enable(this)
+    this.body.debug = __DEV__
+    this.body.collideWorldBounds = false
+    this.body.fixedRotation = true
+
+    // Create a custom shape for the collider body
+    this.body.setRectangle(55, 130, 0, 30)
+    this.body.offset.setTo(0, 0)
+
+    // Configure custom physics properties
+    this.body.damping = 0.5
   }
 
   // Setter and getter for the movement state property

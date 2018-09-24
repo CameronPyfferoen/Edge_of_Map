@@ -58,6 +58,14 @@ class Splash extends Phaser.State {
     this.loaderBar.destroy()
     this.loaderBg.destroy()
 
+    // Re-Start Physics
+    this.game.physics.p2 = null
+    this.game.physics.startSystem(Phaser.Physics.P2JS)
+    this.game.physics.p2.setImpactEvents(true)
+
+    this.game.physics.p2.gravity.y = 0
+    this.game.physics.p2.world.defaultContactMaterial.friction = 0.3
+
     // Setup the audio which should now be loaded
     this.setupAudio()
   }
