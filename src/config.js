@@ -27,7 +27,7 @@ export default {
   MIN_SPLASH_SECONDS: 2,
 
   // Time before playing the idle animation
-  IDLE_COUNTDOWN: 200,
+  IDLE_COUNTDOWN: 200
 
   // Values for tweeking the player character behaviors
   /*
@@ -37,6 +37,6 @@ export default {
   JUMP_TIME: 0.4,
   GRAVITY_CONSTANT: 1000
   */
-};
+}
 
 this.game.physics.startSystem(this.Phaser.Physics.ARCADE)
