@@ -8,6 +8,7 @@ import Phaser from 'phaser'
 // Import the three main states used in our example game
 import BootState from './states/Boot' // A preliminary state that loads minimal assets
 import SplashState from './states/Splash' // A fancy loading splash screen for loading more assets
+//import MainMenu from './states/MainMenu'
 import TestLevelState from './states/TestLevel' // The main game level for testing
 
 // Import our general configuration file
