@@ -103,7 +103,7 @@ class Splash extends Phaser.State {
     if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
       // Make sure the audio is not only loaded but also decoded before advancing
       if (this.game.sounds.get('music-intro').isDecoded) {
-        //this.state.start('MainMenu')
+        // this.state.start('MainMenu')
         this.state.start('TestLevel')
       }
     }
