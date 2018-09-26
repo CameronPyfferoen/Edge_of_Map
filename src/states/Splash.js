@@ -45,6 +45,8 @@ class Splash extends Phaser.State {
     // The main player spritesheet
     this.load.spritesheet('player-main', 'assets/images/player-main.png', 64, 64)
 
+    this.load.spritesheet('crab_blue_16x', 'assets/images/crab_blue_16x.png', 64, 64)
+
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
@@ -63,7 +65,7 @@ class Splash extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.P2JS)
     this.game.physics.p2.setImpactEvents(true)
 
-    this.game.physics.p2.gravity.y = 0
+    this.game.physics.p2.gravity.y = 700
     this.game.physics.p2.world.defaultContactMaterial.friction = 0.3
 
     // Setup the audio which should now be loaded

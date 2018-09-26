@@ -19,7 +19,7 @@ class TestCrab extends Phaser.Sprite {
 
     // Create a P2 physics body for this sprite
     this.game.physics.p2.enable(this)
-    // this.body.debug = __DEV__
+    this.body.debug = __DEV__
     this.body.collideWorldBounds = false
     this.body.fixedRotation = true
 
@@ -35,7 +35,13 @@ class TestCrab extends Phaser.Sprite {
   update () {
     // Always give parent a chance to update
     super.update()
+    this.animations.play('crab')
   }
+
+  setupAnimations () {
+    this.animations.add('crab', [0], 1, false)
+  }
+
 }
 
 export default TestCrab
