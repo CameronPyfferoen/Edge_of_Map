@@ -4,7 +4,7 @@ import config from '../config'
 
 class TestCrab extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'test-crab', 0)
+    super(game, x, y, 'crab_blue_16x', 0)
     this.name = 'Test Crab'
     this.anchor.setTo(0.5, 0.5)
 
