@@ -6,6 +6,9 @@ import Phaser from 'phaser'
 // Import the main player sprite
 import MainPlayer from '../sprites/Player'
 
+// Import the test C R A B
+import TestCrab from '../sprites/TestCrab'
+
 // Import config settings
 import config from '../config'
 
@@ -34,6 +37,13 @@ class TestLevel extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY + 32
+    })
+
+    // Create and add the test C R A B
+    this.crab = new TestCrab({
+      gmae: this.game,
+      x: this.world.centerX,
+      y: this.world.centery + 64
     })
 
     // Compute a reasonable height for the floor based on the height of the player sprite
