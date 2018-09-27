@@ -38,5 +38,3 @@ export default {
   GRAVITY_CONSTANT: 1000
   */
 }
-
-this.game.physics.startSystem(this.Phaser.Physics.ARCADE)
