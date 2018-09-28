@@ -20,7 +20,6 @@ class PlayerBoat extends Phaser.Sprite {
     this.game.physics.p2.enable(this)
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
-    this.body.fixedRotation = false
 
     // Create a custom shape for the collider body
     this.body.setRectangle(100, 100, 0, 0)

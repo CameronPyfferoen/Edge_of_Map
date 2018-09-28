@@ -6,6 +6,7 @@ import config from '../config'
 
 // Import the player boat
 import PlayerBoat from '../sprites/PlayerBoat'
+import { Sprite } from 'phaser-ce';
 
 class PrototypeLevel1 extends Phaser.State {
   init () {
@@ -24,23 +25,31 @@ class PrototypeLevel1 extends Phaser.State {
     })
 
     this.game.add.existing(this.player)
+    this.setupKeyboard()
   }
 
   setupKeyboard () {
     // register keys
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
-    this.forward = this.game.input.keyboard.addKey(Phaser.keyboard.UP)
+    this.forward = this.game.input.keyboard.addKey(Phaser.Keyboard.UP)
 
     // Stop the following keys from propagating up to the browser
     this.game.input.keyboard.addKeyCapture([
       Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.UP
     ])
+     
   }
 
   update () {
-
+    // this.player.angle += 1
+    // ...body.moveForward(x)
+    if (this.leftKey.isDown) { this.player.body.angle -= 2 }
+    if (this.rightKey.isDown) { this.player.body.angle += 2 }  
+    if (this.forward.isDown) { this.player.body.moveForward(250) } 
+    else { this.player.body.angularVelocity = 0 } 
   }
+
 }
 // Expose the class TestLevel to other files
 export default PrototypeLevel1
