@@ -2,12 +2,11 @@
 import Phaser from 'phaser'
 import config from '../config'
 
-class TestCrab extends Phaser.Sprite {
+class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'crab_blue_16x', 0)
-    this.name = 'Test Crab'
+    super(game, x, y, 'Pirat_Ship_1', 0)
+    this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
-
     // turn off smoothing (this is pixel art)
     this.smoothed = false
 
@@ -20,27 +19,25 @@ class TestCrab extends Phaser.Sprite {
     // Create a P2 physics body for this sprite
     this.game.physics.p2.enable(this)
     this.body.debug = __DEV__
-    this.body.collideWorldBounds = false
-    this.body.fixedRotation = true
+    this.body.collideWorldBounds = true
+    this.body.fixedRotation = false
 
     // Create a custom shape for the collider body
-    this.body.setRectangle(55, 130, 0, 30)
+    this.body.setRectangle(100, 100, 0, 0)
     this.body.offset.setTo(0, 0)
 
     // Configure custom physics properties
     this.body.damping = 0.5
   }
 
-  // Function that runs every tick to update this sprite
-  update () {
+  upddate () {
     // Always give parent a chance to update
     super.update()
-    this.animations.play('crab')
+    this.animations.play('idle')
   }
 
   setupAnimations () {
-    this.animations.add('crab', [0], 1, false)
+    this.animations.add('idle', [0], 1, false)
   }
-}
 
-export default TestCrab
+}
