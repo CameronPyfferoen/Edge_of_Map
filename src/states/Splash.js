@@ -43,7 +43,7 @@ class Splash extends Phaser.State {
     // Load all the assets needed for next state
 
     // The main player spritesheet
-    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Pirat_Ship_1', 64, 64)
+    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Pirat_Ship_1.jpg', 64, 64)
 
     this.load.spritesheet('player-main', 'assets/images/player-main.png', 64, 64)
 

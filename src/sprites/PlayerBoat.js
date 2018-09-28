@@ -28,6 +28,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Configure custom physics properties
     this.body.damping = 0.5
+    this.body.data.gravityScale = 0
   }
 
   upddate () {
@@ -41,3 +42,5 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
 }
+
+export default PlayerBoat

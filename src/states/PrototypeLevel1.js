@@ -22,6 +22,8 @@ class PrototypeLevel1 extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY + 32
     })
+
+    this.game.add.existing(this.player)
   }
 
   setupKeyboard () {
@@ -29,6 +31,11 @@ class PrototypeLevel1 extends Phaser.State {
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
     this.forward = this.game.input.keyboard.addKey(Phaser.keyboard.UP)
+
+    // Stop the following keys from propagating up to the browser
+    this.game.input.keyboard.addKeyCapture([
+      Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.UP
+    ])
   }
 
   update () {
