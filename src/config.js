@@ -27,14 +27,14 @@ export default {
   MIN_SPLASH_SECONDS: 2,
 
   // Time before playing the idle animation
-  IDLE_COUNTDOWN: 200
+  IDLE_COUNTDOWN: 200,
 
   // Values for tweeking the player character behaviors
-  /*
+  
   PLAYER_SCALE: 3.0,
   PLAYER_MASS: 5,
   JUMP_INITIAL: -400,
   JUMP_TIME: 0.4,
   GRAVITY_CONSTANT: 1000
-  */
+  
 }
