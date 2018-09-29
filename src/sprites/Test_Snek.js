@@ -13,7 +13,7 @@ class Test_Snek extends Phaser.Sprite
     this.game = game;
 
     this._SCALE = config.PLAYER_SCALE;
-    this._SCALE.setTo(this._SCALE)
+    this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this);
     this.body.debug = __DEV__;
@@ -24,31 +24,44 @@ class Test_Snek extends Phaser.Sprite
 
     this.body.damping = 0.5;
 
-    this.sprite.inputEnabled = true;
+    //this.sprite.inputEnabled = true;
 
+  }
+
+  setupKeyboard () {
+    this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
   }
 
   update() {
     super.update();
-    this.sprite.body.setZeroVelocity();
+    //this.sprite.body.setZeroVelocity();
+    this.animations.play('snek');
 
     //input
-    if(this.game.input.keyboard.isDown(Phaser.Keycode.W))
+    if(this.forwardKey.isDown)
     {
-      this.sprite.body.physics.p2.angle.moveForward(50);
+      this.sprite.body.moveForward(50);
     }
-    if(this.game.input.keyboard.isDown(Phaser.Keycode.A))
+    if(this.leftKey.isDown)
     {
-      this.sprite.body.physics.p2.angle -= 1;
+      this.sprite.body.angle -= 1;
     }
-    if(this.game.input.keyboard.isDown(Phaser.Keycode.S))
+    if(this.backwardKey.isDown)
     {
       this.sprite.body.physics.p2.angle.moveBackward(10);
     }
-    if(this.game.input.keyboard.isDown(Phaser.Keycode.D))
+    if(this.rightKey.isDown)
     {
-      this.sprite.body.physics.p2.angle += 1;
+      this.sprite.body.angle += 1;
     }
+    else { this.sprite.body.angularVelocity = 0; }
+  }
+
+  setupAnimations() {
+    this.animations.add('snek', [0], 1, false);
   }
 }
 export default Test_Snek
