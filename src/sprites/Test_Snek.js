@@ -32,21 +32,22 @@ class Test_Snek extends Phaser.Sprite
     super.update();
     this.sprite.body.setZeroVelocity();
 
+    //input
     if(this.game.input.keyboard.isDown(Phaser.Keycode.W))
     {
-      this.sprite.body.physics.p2.angle.moveForward();
+      this.sprite.body.physics.p2.angle.moveForward(50);
     }
     if(this.game.input.keyboard.isDown(Phaser.Keycode.A))
     {
-
+      this.sprite.body.physics.p2.angle -= 1;
     }
     if(this.game.input.keyboard.isDown(Phaser.Keycode.S))
     {
-
+      this.sprite.body.physics.p2.angle.moveBackward(10);
     }
     if(this.game.input.keyboard.isDown(Phaser.Keycode.D))
     {
-      
+      this.sprite.body.physics.p2.angle += 1;
     }
   }
 }
