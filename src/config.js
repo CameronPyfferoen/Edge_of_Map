@@ -11,7 +11,7 @@ export default {
   gameWidth: 1600, // The width of the game viewport in the browser
   gameHeight: 800, // The height of the game viewport in the browser
   localStorageName: 'stoutGDD325', // Prefix for cookie & session storage
-  
+
   // List of webfonts you want to load
   webfonts: ['Libre Franklin'],
 
