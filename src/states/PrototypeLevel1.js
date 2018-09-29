@@ -11,21 +11,28 @@ import { Sprite } from 'phaser-ce';
 class PrototypeLevel1 extends Phaser.State {
   init () {
     // Set / Reset world bounds
-    this.game.world.setBounds(0, 0, this.game.width, this.game.height)
+    this.game.add.tileSprite(0, 0, 3149, 2007, 'map');
+    this.game.world.setBounds(0, 0, 3149, 2007)
+
   }
 
   preload () {}
 
   create () {
-    // create the player object
+    // create the player object and setup the camera and inputs
     this.player = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY + 32
+      x: 260,
+      y: 1850
     })
 
     this.game.add.existing(this.player)
+
     this.setupKeyboard()
+
+    this.game.camera.scale.x = 4.2
+    this.game.camera.scale.y = 4.2
+    this.game.camera.follow(this.player)
   }
 
   setupKeyboard () {
@@ -44,9 +51,9 @@ class PrototypeLevel1 extends Phaser.State {
   update () {
     // this.player.angle += 1
     // ...body.moveForward(x)
-    if (this.leftKey.isDown) { this.player.body.angle -= 2 }
-    if (this.rightKey.isDown) { this.player.body.angle += 2 }  
-    if (this.forward.isDown) { this.player.body.moveForward(250) } 
+    if (this.leftKey.isDown) { this.player.body.angle -= 1 }
+    if (this.rightKey.isDown) { this.player.body.angle += 1 }  
+    if (this.forward.isDown) { this.player.body.moveForward(75) } 
     else { this.player.body.angularVelocity = 0 } 
   }
 
