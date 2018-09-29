@@ -4,7 +4,7 @@ import config from '../config';
 class Test_Snek extends Phaser.Sprite
 {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'seasnake_16x', 0);
+    super(game, x, y, 'sea_snake_16x', 0);
     this.name = 'Test Snek';
     this.anchor.setTo(0.5,0.5);
 
@@ -16,14 +16,17 @@ class Test_Snek extends Phaser.Sprite
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this);
+    
     this.body.debug = __DEV__;
     this.body.colliderWorldBounds = false;
     
-    this.body.setRectangle(55, 130, 0, 30);
+    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0);
     this.body.offset.setTo(0,0);
 
     this.body.damping = 0.5;
+    this.body.data.gravityScale = 0;
 
+    this.setupKeyboard();
     //this.sprite.inputEnabled = true;
 
   }
@@ -43,21 +46,21 @@ class Test_Snek extends Phaser.Sprite
     //input
     if(this.forwardKey.isDown)
     {
-      this.sprite.body.moveForward(50);
+      this.body.moveForward(50);
     }
     if(this.leftKey.isDown)
     {
-      this.sprite.body.angle -= 1;
+      this.body.angle -= 0.1;
     }
     if(this.backwardKey.isDown)
     {
-      this.sprite.body.physics.p2.angle.moveBackward(10);
+      this.body.moveBackward(10);
     }
     if(this.rightKey.isDown)
     {
-      this.sprite.body.angle += 1;
+      this.body.angle += 0.1;
     }
-    else { this.sprite.body.angularVelocity = 0; }
+     else { this.body.angularVelocity = 0; }
   }
 
   setupAnimations() {
