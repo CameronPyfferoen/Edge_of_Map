@@ -47,9 +47,9 @@ class PrototypeLevel1 extends Phaser.State {
   update () {
     // this.player.angle += 1
     // ...body.moveForward(x)
-    if (this.leftKey.isDown) { this.player.body.angle -= 2 }
-    if (this.rightKey.isDown) { this.player.body.angle += 2 }  
-    if (this.forward.isDown) { this.player.body.moveForward(250) } 
+    if (this.leftKey.isDown) { this.player.body.angle -= 1 }
+    if (this.rightKey.isDown) { this.player.body.angle += 1 }  
+    if (this.forward.isDown) { this.player.body.moveForward(75) } 
     else { this.player.body.angularVelocity = 0 } 
   }
 
