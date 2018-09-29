@@ -30,7 +30,7 @@ export default {
   IDLE_COUNTDOWN: 200,
 
   // Values for tweeking the player character behaviors
-  PLAYER_SCALE: 0.5,
+  PLAYER_SCALE: 0.3,
   PLAYER_MASS: 5,
   JUMP_INITIAL: -400,
   JUMP_TIME: 0.4,

@@ -19,15 +19,19 @@ class PrototypeLevel1 extends Phaser.State {
   preload () {}
 
   create () {
-    // create the player object
+    // create the player object and setup the camera and inputs
     this.player = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY + 32
+      x: 260,
+      y: 1850
     })
 
     this.game.add.existing(this.player)
+
     this.setupKeyboard()
+
+    this.game.camera.scale.x = 4.2
+    this.game.camera.scale.y = 4.2
     this.game.camera.follow(this.player)
   }
 
