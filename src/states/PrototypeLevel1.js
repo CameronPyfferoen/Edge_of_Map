@@ -11,7 +11,9 @@ import { Sprite } from 'phaser-ce';
 class PrototypeLevel1 extends Phaser.State {
   init () {
     // Set / Reset world bounds
-    this.game.world.setBounds(0, 0, this.game.width, this.game.height)
+    this.game.add.tileSprite(0, 0, 3149, 2007, 'map');
+    this.game.world.setBounds(0, 0, 3149, 2007)
+
   }
 
   preload () {}
@@ -26,6 +28,7 @@ class PrototypeLevel1 extends Phaser.State {
 
     this.game.add.existing(this.player)
     this.setupKeyboard()
+    this.game.camera.follow(this.player)
   }
 
   setupKeyboard () {
