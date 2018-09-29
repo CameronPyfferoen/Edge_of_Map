@@ -43,8 +43,12 @@ class Splash extends Phaser.State {
     // Load all the assets needed for next state
 
     // The main player spritesheet
+    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Pirat_Ship_1.jpg', 64, 64)
+
     this.load.spritesheet('player-main', 'assets/images/player-main.png', 64, 64)
 
+    this.load.spritesheet('crab_blue_16x', 'assets/images/crab_blue_16x.png', 64, 64)
+    
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
@@ -63,7 +67,7 @@ class Splash extends Phaser.State {
     this.game.physics.startSystem(Phaser.Physics.P2JS)
     this.game.physics.p2.setImpactEvents(true)
 
-    this.game.physics.p2.gravity.y = 0
+    this.game.physics.p2.gravity.y = 700
     this.game.physics.p2.world.defaultContactMaterial.friction = 0.3
 
     // Setup the audio which should now be loaded
@@ -103,8 +107,9 @@ class Splash extends Phaser.State {
     if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
       // Make sure the audio is not only loaded but also decoded before advancing
       if (this.game.sounds.get('music-intro').isDecoded) {
-        //this.state.start('MainMenu')
-        this.state.start('TestLevel')
+        // this.state.start('MainMenu')
+        // this.state.start('TestLevel')
+        this.state.start('PrototypeLevel1')
       }
     }
   }

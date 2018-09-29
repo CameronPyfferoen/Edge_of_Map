@@ -41,7 +41,7 @@ class TestLevel extends Phaser.State {
 
     // Create and add the test C R A B
     this.crab = new TestCrab({
-      gmae: this.game,
+      game: this.game,
       x: this.world.centerX,
       y: this.world.centery + 64
     })

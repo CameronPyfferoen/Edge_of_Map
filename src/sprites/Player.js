@@ -57,7 +57,7 @@ class MainPlayer extends Phaser.Sprite {
 
     // Configure custom physics properties
     this.body.damping = 0.5
-    //this.sprite.physics.p2.
+    this.body.data.gravityScale = 0
   }
 
   // Setter and getter for the movement state property
