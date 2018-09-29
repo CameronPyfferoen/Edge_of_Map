@@ -6,7 +6,7 @@ class Test_Snek extends Phaser.Sprite
   constructor ({ game, x, y }) {
     super(game, x, y, 'seasnake_16x', 0);
     this.name = 'Test Snek';
-    this.anchor.setTo(0.5,0.5);
+    this.anchor.setTo(0.5, 0.5);
 
     this.smoothed = true;
 
@@ -35,32 +35,32 @@ class Test_Snek extends Phaser.Sprite
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
   }
 
-  update() {
+  update () {
     super.update();
-    //this.sprite.body.setZeroVelocity();
+    // this.sprite.body.setZeroVelocity();
     this.animations.play('snek');
 
-    //input
-    if(this.forwardKey.isDown)
+    // input
+    if (this.forwardKey.isDown)
     {
       this.sprite.body.moveForward(50);
     }
-    if(this.leftKey.isDown)
+    if (this.leftKey.isDown)
     {
       this.sprite.body.angle -= 1;
     }
-    if(this.backwardKey.isDown)
+    if (this.backwardKey.isDown)
     {
       this.sprite.body.physics.p2.angle.moveBackward(10);
     }
-    if(this.rightKey.isDown)
+    if (this.rightKey.isDown)
     {
       this.sprite.body.angle += 1;
     }
     else { this.sprite.body.angularVelocity = 0; }
   }
 
-  setupAnimations() {
+  setupAnimations () {
     this.animations.add('snek', [0], 1, false);
   }
 }

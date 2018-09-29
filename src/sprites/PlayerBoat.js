@@ -40,6 +40,13 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('idle', [0], 1, false)
   }
 
+  velocityFromAngle (rotation, speed, point) {
+    if (speed === undefined) {speed = 60 }
+    point = point || new Phaser.Point()
+
+    return point.setTo((Math.cos(rotation) * speed), (Math.sin(rotation) * speed))
+  }
+
 }
 
 export default PlayerBoat
