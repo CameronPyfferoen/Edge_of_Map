@@ -30,6 +30,7 @@ class PrototypeLevel1 extends Phaser.State {
 
     this.setupKeyboard()
 
+    //frame of the game
     this.game.camera.scale.x = 4.2
     this.game.camera.scale.y = 4.2
     this.game.camera.follow(this.player)
