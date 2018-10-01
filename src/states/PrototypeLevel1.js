@@ -51,11 +51,24 @@ class PrototypeLevel1 extends Phaser.State {
   update () {
     // this.player.angle += 1
     // ...body.moveForward(x)
+
     if (this.leftKey.isDown) { this.player.body.angle -= 1 }
     if (this.rightKey.isDown) { this.player.body.angle += 1 }
-    if (this.forward.isDown) { this.player.body.moveForward(75) }
-    // if (this.forward.isDown) { this.player.velocityFromAngle(this.player.body.angle, 75, this.player.body.velocity) } 
-    else { this.player.body.angularVelocity = 0 } 
+    if (!this.leftKey.isDown && !this.rightKey.isDown) { this.player.body.angularVelocity = 0 }
+
+    if (this.forward.isDown) { 
+      this.player.body.moveForward(75)
+      this.player.forward = true
+    } else {
+      // this.player.body.setZeroVelocity()
+      if (this.player.forward == true) {
+        this.player.body.thrust(200)
+        this.player.forward = false
+      }
+    }
+    // if (this.forward.isDown) {this.player.body.velocity = this.player.velocityFromAngle(this.player.body.angle, 75, this.player.body.velocity) }
+
+    this.game.debug.spriteInfo(this.player, 32, 32)
   }
 
 }

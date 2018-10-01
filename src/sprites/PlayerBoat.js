@@ -28,9 +28,11 @@ class PlayerBoat extends Phaser.Sprite {
     // Configure custom physics properties
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
+
+    this.forward = false
   }
 
-  upddate () {
+  update () {
     // Always give parent a chance to update
     super.update()
     this.animations.play('idle')
@@ -40,13 +42,12 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('idle', [0], 1, false)
   }
 
-  velocityFromAngle (rotation, speed, point) {
-    if (speed === undefined) {speed = 60 }
+  velocityFromRotation (rotation, speed, point) {
+    if (speed === undefined) { speed = 60 }
     point = point || new Phaser.Point()
 
-    return point.setTo((Math.cos(rotation) * speed), (Math.sin(rotation) * speed))
+    return point.setToPolar(rotation, speed)
   }
-
 }
 
 export default PlayerBoat
