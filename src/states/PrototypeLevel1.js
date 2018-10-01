@@ -28,7 +28,7 @@ class PrototypeLevel1 extends Phaser.State {
 
     this.game.add.existing(this.player)
 
-    this.setupKeyboard()
+    // this.setupKeyboard()
 
     //frame of the game
     this.game.camera.scale.x = 4.2
@@ -49,7 +49,7 @@ class PrototypeLevel1 extends Phaser.State {
      
   } */
 
-  update () {
+  // update () {
     // this.player.angle += 1
     // ...body.moveForward(x)
     /*
@@ -58,7 +58,7 @@ class PrototypeLevel1 extends Phaser.State {
     if (this.forward.isDown) { this.player.body.moveForward(75) }
     // if (this.forward.isDown) { this.player.velocityFromAngle(this.player.body.angle, 75, this.player.body.velocity) } 
     else { this.player.body.angularVelocity = 0 } */
-  }
+  // }
 
 }
 // Expose the class TestLevel to other files

@@ -31,8 +31,8 @@ class PlayerBoat extends Phaser.Sprite {
 
     this.setupKeyboard();
 
-    var fwdspd = 50;
-    var bckspd = 10;
+    this.fwdspd = 50;
+    this.bckspd = 10;
   }
 
   setupKeyboard () {
@@ -43,30 +43,28 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
 
-  upddate () {
+  update () {
     // Always give parent a chance to update
     super.update()
     this.animations.play('idle')
 
-     // input
-     if (this.forwardKey.isDown)
-     {
-       this.body.moveForward(fwdspd);
-     }
-     if (this.leftKey.isDown)
-     {
-       this.body.angle -= 0.1;
-     }
-     if (this.backwardKey.isDown)
-     {
-       this.body.moveBackward(bckspd);
-     }
-     if (this.rightKey.isDown)
-     {
-       this.body.angle += 0.1;
-     }
-      else { this.body.angularVelocity = 0; }
-   }
+    // input
+    if (this.forwardKey.isDown) {
+      this.body.moveForward(this.fwdspd);
+    }
+    if (this.leftKey.isDown)
+    {
+      this.body.angle -= 0.1;
+    }
+    if (this.backwardKey.isDown)
+    {
+      this.body.moveBackward(this.bckspd);
+    }
+    if (this.rightKey.isDown)
+    {
+      this.body.angle += 0.1;
+    }
+    else { this.body.angularVelocity = 0; }
   }
 
   setupAnimations () {
