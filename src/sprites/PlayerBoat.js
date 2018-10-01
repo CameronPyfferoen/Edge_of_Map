@@ -28,23 +28,49 @@ class PlayerBoat extends Phaser.Sprite {
     // Configure custom physics properties
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
+
+    this.setupKeyboard();
+
+    var fwdspd = 50;
+    var bckspd = 10;
   }
+
+  setupKeyboard () {
+    this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+  }
+
 
   upddate () {
     // Always give parent a chance to update
     super.update()
     this.animations.play('idle')
+
+     // input
+     if (this.forwardKey.isDown)
+     {
+       this.body.moveForward(fwdspd);
+     }
+     if (this.leftKey.isDown)
+     {
+       this.body.angle -= 0.1;
+     }
+     if (this.backwardKey.isDown)
+     {
+       this.body.moveBackward(bckspd);
+     }
+     if (this.rightKey.isDown)
+     {
+       this.body.angle += 0.1;
+     }
+      else { this.body.angularVelocity = 0; }
+   }
   }
 
   setupAnimations () {
     this.animations.add('idle', [0], 1, false)
-  }
-
-  velocityFromAngle (rotation, speed, point) {
-    if (speed === undefined) {speed = 60 }
-    point = point || new Phaser.Point()
-
-    return point.setTo((Math.cos(rotation) * speed), (Math.sin(rotation) * speed))
   }
 
 }
