@@ -30,12 +30,41 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.data.gravityScale = 0
 
     this.forward = false
+    this.setupKeyboard();
+
+    this.fwdspd = 50;
+    this.bckspd = 10;
+  }
+
+  setupKeyboard () {
+    this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
   }
 
   update () {
     // Always give parent a chance to update
     super.update()
     this.animations.play('idle')
+
+    // input
+    if (this.forwardKey.isDown) {
+      this.body.moveForward(this.fwdspd);
+    }
+    if (this.leftKey.isDown)
+    {
+      this.body.angle -= 0.1;
+    }
+    if (this.backwardKey.isDown)
+    {
+      this.body.moveBackward(this.bckspd);
+    }
+    if (this.rightKey.isDown)
+    {
+      this.body.angle += 0.1;
+    }
+    else { this.body.angularVelocity = 0; }
   }
 
   setupAnimations () {
@@ -48,6 +77,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     return point.setToPolar(rotation, speed)
   }
+
 }
 
 export default PlayerBoat
