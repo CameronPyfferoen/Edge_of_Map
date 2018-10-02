@@ -12,6 +12,7 @@ import MainMenuState from './states/MainMenu'
 import PType1State from './states/PrototypeLevel1'
 import TestLevelState from './states/TestLevel' // The main game level for testing
 import Cam_TestLevelState from './states/Cam_TestLevel'
+import FiringTest from './states/FiringTest'
 
 // Import our general configuration file
 import config from './config'
@@ -34,6 +35,7 @@ class Game extends Phaser.Game {
     this.state.add('TestLevel', TestLevelState, false)
     this.state.add('PrototypeLevel1', PType1State, false)
     this.state.add('Cam_TestLevel', Cam_TestLevelState, false)
+    this.state.add('FiringTest', FiringTest, false)
 
     // Start the 'boot' state
     // Note: during development it may be helpful to skip this and load right into the
