@@ -54,7 +54,7 @@ class PlayerBoat extends Phaser.Sprite {
     }
     if (this.leftKey.isDown)
     {
-      this.body.angle -= 0.8;
+      this.body.angle -= 0.5;
       if (!this.forwardKey.isDown && this.body.speed !== 0) {
         this.body.thrust(35)
       }
@@ -65,7 +65,7 @@ class PlayerBoat extends Phaser.Sprite {
     }
     if (this.rightKey.isDown)
     {
-      this.body.angle += 0.8;
+      this.body.angle += 0.5;
       if (!this.forwardKey.isDown && this.body.speed !== 0) {
         this.body.thrust(35)
       }
