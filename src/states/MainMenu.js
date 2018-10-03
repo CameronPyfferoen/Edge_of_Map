@@ -9,3 +9,4 @@ class MainMenu extends Phaser.State {
     this.game.world.setBounds(0, 0, this.game.width, this.game.height)
   }
 }
+export default MainMenu
