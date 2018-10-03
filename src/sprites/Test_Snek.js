@@ -72,7 +72,7 @@ class Test_Snek extends Phaser.Sprite
     this.animations.play('snek');
     //this.player_dist = 
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    this.patrol()
+    this.patrol() 
     
   }
 
