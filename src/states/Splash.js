@@ -51,7 +51,7 @@ class Splash extends Phaser.State {
 
     this.load.image('map', './assets/images/maptemplate.png')
 
-    this.load.image('sea_snake_16x', './assets/images/seasnake_16x.png', 64, 64);
+    this.load.image('sea_snake_16x', './assets/images/seasnake_16x.png');
 
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
@@ -113,8 +113,8 @@ class Splash extends Phaser.State {
       if (this.game.sounds.get('music-intro').isDecoded) {
         // this.state.start('MainMenu')
         // this.state.start('TestLevel')
-        this.state.start('PrototypeLevel1')
-        // this.state.start('Cam_TestLevel');
+        // this.state.start('PrototypeLevel1')
+        this.state.start('Cam_TestLevel');
         // this.state.start('FiringTest')
 
       }
