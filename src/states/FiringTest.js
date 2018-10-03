@@ -43,18 +43,45 @@ class FiringTest extends Phaser.State {
     this.setupKeyboard()
     // frame of the game
     // change size later
-    this.game.camera.scale.x = 0.1
-    this.game.camera.scale.y = 0.1
+    this.game.camera.scale.x = 0.5
+    this.game.camera.scale.y = 0.5
     this.game.camera.follow(this.player)
+
+
+
+    var localPlayer = this.player
 
     // test code
     // create a dragon for every mouse click and give it an initial velocity in the x direction
     this.game.input.mouse.capture = true
-    var seasnake
+    // var projectile
     addEventListener('click', function () {
-      seasnakes.create(this.game.world.randomX, this.game.world.randomY, 'sea_snake_16x')
-      // the line below is incorrect for some reason
-      seasnake.body.velocity.x = 1000
+      console.log(this.player)
+      console.log(localPlayer)
+      var projectileWidth = 100
+      var projectileHeight = 200
+      var projectile = seasnakes.create(localPlayer.x - (projectileWidth / 2), localPlayer.y - (projectileHeight / 2), 'sea_snake_16x')
+      projectile.width = projectileWidth
+      projectile.height = projectileHeight
+
+
+    //   the multiple lines of code are suppose to set the projectile to face the direction of movement
+    //   projectile.body.velocity.x = 1000
+
+    //   var u_xVector = projectile.body.velocity.x
+    //   var u_yVector = projectile.body.velocity.y
+    //   var v_xVector = 1
+    //   var v_yVector = 0
+
+    //   var cosTheta = (u_xVector*v_xVector+u_yVector*v_yVector) /
+    // ((Math.sqrt(u_xVector*u_xVector+u_yVector*u_yVector)) * (Math.sqrt(v_xVector*v_xVector+v_yVector*v_yVector)))
+
+    //   var theta = Math.acos(cosTheta)
+    //   projectile.angle = theta
+
+
+      
+      // projectile.body.velocity.x = 1000
       // y += 48;
       console.log('o')
     })
@@ -79,6 +106,16 @@ class FiringTest extends Phaser.State {
     // if (this.forward.isDown) { this.player.velocityFromAngle(this.player.body.angle, 75, this.player.body.velocity) }
     else { this.player.body.angularVelocity = 0 }
   }
+
+  // attempted to create a function to set the face of the projectile in the direction of the velocity
+  angleBetweenVectors (u_xVector, v_xVector, u_yVector, v_yVector) {
+    var cosTheta = (u_xVector*v_xVector+u_yVector*v_yVector) /
+    ((Math.sqrt(u_xVector*u_xVector+u_yVector*u_yVector)) * (Math.sqrt(v_xVector*v_xVector+v_yVector*v_yVector)))
+
+    var theta = Math.acos(cosTheta)
+    return theta
+  }
+
 }
 
 // Expose the class FiringTest to other files
