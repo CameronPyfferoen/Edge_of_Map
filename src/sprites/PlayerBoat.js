@@ -5,6 +5,7 @@ import config from '../config'
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     super(game, x, y, 'Pirat_Ship_1', 0)
+    // super(game, x, y, 'sharkSheet', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -29,8 +30,6 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
 
-    this.forward = false
-
     this.fwdspd = 50;
     this.turnspd = 25;
     this.bckspd = 10;
@@ -41,10 +40,12 @@ class PlayerBoat extends Phaser.Sprite {
     // Always give parent a chance to update
     super.update()
     this.animations.play('idle')
+    // this.player.animations.play('swim')
   }
 
   setupAnimations () {
     this.animations.add('idle', [0], 1, false)
+    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
   }
 
   velocityFromRotation (rotation, speed, point) {
