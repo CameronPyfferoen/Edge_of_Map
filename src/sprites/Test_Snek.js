@@ -5,7 +5,7 @@ import PlayerBoat from '../sprites/PlayerBoat'
 class Test_Snek extends Phaser.Sprite
 {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'sea_snake_16x', 0);
+    super(game, x, y, 'seasnake', 0);
     this.name = 'Test Snek';
     this.anchor.setTo(0.5, 0.5);
 
@@ -13,7 +13,7 @@ class Test_Snek extends Phaser.Sprite
 
     this.game = game;
 
-    this._SCALE = 1
+    this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this);
@@ -21,8 +21,8 @@ class Test_Snek extends Phaser.Sprite
     this.body.debug = __DEV__;
     this.body.colliderWorldBounds = false
     
-    // this.body.setRectangle(1024 * this._SCALE, 2048 * this._SCALE, 0, 0);
-    // this.body.offset.setTo(0,0);
+     this.body.setRectangle(64 * this._SCALE, 128 * this._SCALE, 0, 0);
+     this.body.offset.setTo(0,0);
 
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
@@ -50,7 +50,7 @@ class Test_Snek extends Phaser.Sprite
   } */
 
   patrol () {
-    if(!this.turn) {
+    if (!this.turn) {
       this.body.moveForward(this.fwdspd)
       if(this.pat_dist <= this.start_diff) {
         this.turn = true;
@@ -59,8 +59,9 @@ class Test_Snek extends Phaser.Sprite
     else if(this.turn) {
       this.body.angle += this.angspd
       this.body.moveForward(this.turnspd)
-      if(this.body.angle == this.startang || this.body.angle == -this.startang) {
+      if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
         this.turn = false;
+        console.log("else if statement was entered" )
       }
     }
     

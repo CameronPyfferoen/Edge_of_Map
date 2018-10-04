@@ -20,9 +20,13 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.add.existing(this.snek);
 
-    // this.game.camera.scale.x = 4.2
-    // this.game.camera.scale.y = 4.2
+    this.game.camera.scale.x = 4.2
+    this.game.camera.scale.y = 4.2
     this.game.camera.follow(this.snek)
+  }
+
+  update () {
+    this.game.debug.spriteInfo(this.snek)
   }
 }
 
