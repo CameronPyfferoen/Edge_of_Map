@@ -21,8 +21,8 @@ class Test_Snek extends Phaser.Sprite
     this.body.debug = __DEV__;
     this.body.colliderWorldBounds = false
     
-     this.body.setRectangle(64 * this._SCALE, 128 * this._SCALE, 0, 0);
-     this.body.offset.setTo(0,0);
+     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0);
+     this.body.offset.setTo(0.5, 1.5);
 
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
@@ -39,6 +39,8 @@ class Test_Snek extends Phaser.Sprite
     this.starty = this.body.y
     this.startang = this.body.angle
     this.turn = false
+
+    this.setupAnimations()
   }
 
   /*
@@ -50,6 +52,7 @@ class Test_Snek extends Phaser.Sprite
   } */
 
   patrol () {
+    this.animations.play('swim')
     if (!this.turn) {
       this.body.moveForward(this.fwdspd)
       if(this.pat_dist <= this.start_diff) {
@@ -70,7 +73,7 @@ class Test_Snek extends Phaser.Sprite
   update () {
     super.update();
     // this.sprite.body.setZeroVelocity();
-    this.animations.play('snek');
+    //this.animations.play('snek');
     //this.player_dist = 
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     this.patrol() 
@@ -79,6 +82,7 @@ class Test_Snek extends Phaser.Sprite
 
   setupAnimations () {
     this.animations.add('snek', [0], 1, false);
+    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6 , 7], 10, true)
   }
 }
 export default Test_Snek
