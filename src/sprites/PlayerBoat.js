@@ -4,8 +4,8 @@ import config from '../config'
 
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'Pirat_Ship_1', 0)
-    // super(game, x, y, 'sharkSheet', 0)
+    // super(game, x, y, 'Pirat_Ship_1', 0)
+    super(game, x, y, 'sharkSheet', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -34,27 +34,29 @@ class PlayerBoat extends Phaser.Sprite {
     this.turnspd = 25;
     this.bckspd = 10;
     this.turnangle = 0.6;
+
+    this.setupAnimations()
+    this.animations.play('swim', true)
   }
 
   update () {
     // Always give parent a chance to update
     super.update()
-    this.animations.play('idle')
-    // this.player.animations.play('swim')
+    // this.animations.play('idle')
   }
 
   setupAnimations () {
     this.animations.add('idle', [0], 1, false)
     this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
   }
-
+  /* not in use
   velocityFromRotation (rotation, speed, point) {
     if (speed === undefined) { speed = 60 }
     point = point || new Phaser.Point()
 
     return point.setToPolar(rotation, speed)
   }
-
+  */
 }
 
 export default PlayerBoat

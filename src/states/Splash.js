@@ -27,6 +27,7 @@ class Splash extends Phaser.State {
     this.logo = this.game.add.sprite(
       this.game.world.centerX, this.game.world.centerY, 'conceptArt')
     centerGameObjects([this.logo])
+    // this.game.PlayerGroup = new Phaser.Physics.p2.createGroup
   }
 
   preload () {
