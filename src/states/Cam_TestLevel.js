@@ -13,7 +13,7 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
-    this.player = new PlayerBoat({
+    this.playerMP = new PlayerBoat({
       game: this.game,
       x: this.world.centerX - 100,
       y: this.world.centerY
@@ -22,14 +22,16 @@ class Cam_TestLevel extends Phaser.State {
     this.snek = new Test_Snek({
       game: this.game,
       x: this.world.centerX,
-      y: this.world.centerY + 32
+      y: this.world.centerY + 32,
+      player: this.playerMP
     })
 
+    this.game.add.existing(this.playerMP)
     this.game.add.existing(this.snek);
 
     this.game.camera.scale.x = 4.2
     this.game.camera.scale.y = 4.2
-    this.game.camera.follow(this.player)
+    this.game.camera.follow(this.playerMP)
 
     this.setupKeyboard()
   }
@@ -42,36 +44,36 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   update () {
-    this.game.debug.spriteInfo(this.player, 32, 32)
+    this.game.debug.spriteInfo(this.playerMP, 32, 32)
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
     // this.player.angle += 1
     // ...body.moveForward(x)
     if (this.forwardKey.isDown) {
       if (__DEV__) console.log('forward key')
-      this.player.body.moveForward(this.player.fwdspd);
+      this.playerMP.body.moveForward(this.playerMP.fwdspd);
     }
     if (this.leftKey.isDown)
     {
       if (__DEV__) console.log('left key')
-      this.player.body.angle -= this.player.turnangle;
-      if (!this.forwardKey.isDown && this.player.body.speed !== 0) {
-        this.player.body.thrust(this.player.turnspd)
+      this.playerMP.body.angle -= this.playerMP.turnangle;
+      if (!this.forwardKey.isDown && this.playerMP.body.speed !== 0) {
+        this.playerMP.body.thrust(this.playerMP.turnspd)
       }
     }
     if (this.backwardKey.isDown)
     {
       if (__DEV__) console.log('back key')
-      this.player.body.moveBackward(this.player.bckspd);
+      this.playerMP.body.moveBackward(this.playerMP.bckspd);
     }
     if (this.rightKey.isDown)
     {
       if (__DEV__) console.log('right key')
-      this.player.body.angle += this.player.turnangle;
-      if (!this.forwardKey.isDown && this.player.body.speed !== 0) {
-        this.player.body.thrust(this.player.turnspd)
+      this.playerMP.body.angle += this.playerMP.turnangle;
+      if (!this.forwardKey.isDown && this.playerMP.body.speed !== 0) {
+        this.playerMP.body.thrust(this.playerMP.turnspd)
       }
     }
-    else { this.player.body.angularVelocity = 0; }
+    else { this.playerMP.body.angularVelocity = 0; }
   }
 }
 

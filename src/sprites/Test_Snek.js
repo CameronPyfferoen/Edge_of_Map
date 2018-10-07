@@ -4,17 +4,17 @@ import PlayerBoat from '../sprites/PlayerBoat'
 
 class Test_Snek extends Phaser.Sprite
 {
-  constructor ({ game, x, y }) {
+  constructor ({ game, x, y, player }) {
     super(game, x, y, 'seasnake', 0);
     this.name = 'Test Snek';
+    this.player = player
     this.anchor.setTo(0.5, 0.5);
 
     this.smoothed = true;
 
     this.game = game;
-    
-    this.playerFind = this.game.PlayerBoat;
-    console.log('Player: ' + this.playerFind)
+  
+    console.log('Player: ' + this.player)
 
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
@@ -76,12 +76,12 @@ class Test_Snek extends Phaser.Sprite
 
   chase () {
     this.animations.play('swim')
-    this.moveToObject(this.Sprite, this.playerFind)
+    this.moveToObject(this.body, this.player)
   }
 
   update () {
     super.update();
-    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.playerFind.body.x, this.playerFind.body.y)
+    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > 50) {
       this.patrol()
@@ -100,9 +100,9 @@ class Test_Snek extends Phaser.Sprite
 
   moveToObject(obj1, obj2) {
     var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
-    obj1.body.rotation = angle + Phaser.Math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
-    obj1.body.force.x = Math.cos(angle) * this.chasespd;    // accelerateToObject 
-    obj1.body.force.y = Math.sin(angle) * this.chasespd;
+    obj1.rotation = angle + Phaser.Math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
+    obj1.force.x = Math.cos(angle) * this.chasespd;    // accelerateToObject 
+    obj1.force.y = Math.sin(angle) * this.chasespd;
   }
 }
 export default Test_Snek
