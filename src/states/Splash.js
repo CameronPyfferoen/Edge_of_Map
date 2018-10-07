@@ -1,5 +1,6 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
+import P2 from 'p2'
 
 // Import needed functions from utils and config settings
 import { centerGameObjects } from '../utils'
@@ -27,7 +28,7 @@ class Splash extends Phaser.State {
     this.logo = this.game.add.sprite(
       this.game.world.centerX, this.game.world.centerY, 'conceptArt')
     centerGameObjects([this.logo])
-    // this.game.PlayerGroup = new Phaser.Physics.p2.createGroup
+
   }
 
   preload () {
@@ -52,6 +53,7 @@ class Splash extends Phaser.State {
 
     this.load.spritesheet('seasnake', 'assets/images/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
+    this.load.spritesheet('medBoatMove', 'assets/images/P_Medium_Ship_Move_sp_96x96.png', 96, 96)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
@@ -80,6 +82,11 @@ class Splash extends Phaser.State {
 
     // Setup the audio which should now be loaded
     this.setupAudio()
+
+    this.game.playerGroup = this.game.physics.p2.createCollisionGroup()
+    this.game.enemyGroup = this.game.physics.p2.createCollisionGroup()
+    this.game.itemGroup = this.game.physics.p2.createCollisionGroup()
+    this.game.landGroup = this.game.physics.p2.createCollisionGroup()
   }
 
   setupAudio () {
