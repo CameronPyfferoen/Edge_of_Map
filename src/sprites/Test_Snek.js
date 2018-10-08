@@ -1,70 +1,108 @@
 import Phaser from 'phaser';
 import config from '../config';
+import PlayerBoat from '../sprites/PlayerBoat'
 
 class Test_Snek extends Phaser.Sprite
 {
-  constructor ({ game, x, y }) {
-    super(game, x, y, 'sea_snake_16x', 0);
+  constructor ({ game, x, y, player }) {
+    super(game, x, y, 'seasnake', 0);
     this.name = 'Test Snek';
+    this.player = player
     this.anchor.setTo(0.5, 0.5);
 
     this.smoothed = true;
 
     this.game = game;
+  
+    console.log('Player: ' + this.player)
 
-    this._SCALE = config.PLAYER_SCALE;
+    this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this);
     
     this.body.debug = __DEV__;
-    this.body.colliderWorldBounds = false;
+    this.body.colliderWorldBounds = false
     
-    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0);
-    this.body.offset.setTo(0,0);
+     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0);
+     this.body.offset.setTo(0.5, 1.5);
 
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
 
-    this.setupKeyboard();
-    //this.sprite.inputEnabled = true;
+    this.player_dist = 1000000;
+    this.pat_dist = 200;
+    this.start_diff = 0;
 
+    this.fwdspd = 20;
+    this.turnspd = 10;
+    this.angspd = 0.8;
+    this.chasespd = 30
+
+    this.startx = this.body.x
+    this.starty = this.body.y
+    this.startang = this.body.angle
+    this.turn = false
+
+    this.setupAnimations()
   }
 
+  /*
   setupKeyboard () {
     this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+  } */
+
+  patrol () {
+    this.animations.play('swim')
+    if (!this.turn) {
+      this.body.moveForward(this.fwdspd)
+      if(this.pat_dist <= this.start_diff) {
+        this.turn = true;
+      }
+    }
+    else if(this.turn) {
+      this.body.angle += this.angspd
+      this.body.moveForward(this.turnspd)
+      if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
+        this.turn = false;
+        console.log("else if statement was entered" )
+      }
+    }
+    
+  }
+
+  chase () {
+    this.animations.play('swim')
+    this.moveToObject(this.body, this.player)
   }
 
   update () {
     super.update();
-    // this.sprite.body.setZeroVelocity();
-    this.animations.play('snek');
-
-    // input
-    if (this.forwardKey.isDown)
-    {
-      this.body.moveForward(50);
+    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
+    if(this.player_dist > 50) {
+      this.patrol()
     }
-    if (this.leftKey.isDown)
+    else if(this.player_dist <= 50)
     {
-      this.body.angle -= 0.1;
-    }
-    if (this.backwardKey.isDown)
-    {
-      this.body.moveBackward(10);
-    }
-    if (this.rightKey.isDown)
-    {
-      this.body.angle += 0.1;
-    }
-     else { this.body.angularVelocity = 0; }
+      this.chase()
+    } 
+    
   }
 
   setupAnimations () {
     this.animations.add('snek', [0], 1, false);
+    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6 , 7], 10, true)
+  }
+
+  moveToObject(obj1, obj2) {
+    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
+    obj1.rotation = angle + Phaser.Math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
+    obj1.force.x = Math.cos(angle) * this.chasespd;    // accelerateToObject 
+    obj1.force.y = Math.sin(angle) * this.chasespd;
   }
 }
 export default Test_Snek

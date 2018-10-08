@@ -4,7 +4,8 @@ import config from '../config'
 
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'Pirat_Ship_1', 0)
+    // super(game, x, y, 'Pirat_Ship_1', 0)
+    super(game, x, y, 'medBoatMove', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -13,6 +14,7 @@ class PlayerBoat extends Phaser.Sprite {
     // Set a reference to the top-level phaser game object
     this.game = game
 
+    // set player scale
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
 
@@ -22,68 +24,48 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body
-    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
-    this.body.offset.setTo(0, 0)
+    this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    this.body.offset.setTo(0.25, 0)
 
     // Configure custom physics properties
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
 
-    this.forward = false
-    this.setupKeyboard();
-
+    // setup movement physics
     this.fwdspd = 50;
+    this.turnspd = 25;
     this.bckspd = 10;
-  }
+    this.turnangle = 0.6;
 
-  setupKeyboard () {
-    this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    // setup collisions
+
+    this.body.setCollisionGroup(this.game.playerGroup)
+    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
+
+    // adds the animations to the sprite
+    this.setupAnimations()
+    this.animations.play('move', true)
   }
 
   update () {
     // Always give parent a chance to update
     super.update()
-    this.animations.play('idle')
-
-    // input
-    if (this.forwardKey.isDown) {
-      this.body.moveForward(this.fwdspd);
-    }
-    if (this.leftKey.isDown)
-    {
-      this.body.angle -= 0.5;
-      if (!this.forwardKey.isDown && this.body.speed !== 0) {
-        this.body.thrust(35)
-      }
-    }
-    if (this.backwardKey.isDown)
-    {
-      this.body.moveBackward(this.bckspd);
-    }
-    if (this.rightKey.isDown)
-    {
-      this.body.angle += 0.5;
-      if (!this.forwardKey.isDown && this.body.speed !== 0) {
-        this.body.thrust(35)
-      }
-    }
-    else { this.body.angularVelocity = 0; }
+    // this.animations.play('idle')
   }
 
   setupAnimations () {
-    this.animations.add('idle', [0], 1, false)
+    // this.animations.add('idle', [0], 1, false)
+    // this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
+    this.animations.add('move', [0, 1, 2, 3], 10, true)
   }
-
+  /* not in use
   velocityFromRotation (rotation, speed, point) {
     if (speed === undefined) { speed = 60 }
     point = point || new Phaser.Point()
 
     return point.setToPolar(rotation, speed)
   }
-
+  */
 }
 
 export default PlayerBoat
