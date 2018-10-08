@@ -10,7 +10,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.game = game
 
     this._SCALE = config.PLAYER_SCALE
-    this._SCALE.setTo(this._SCALE)
+    this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
     // this.game.debug.body(this)
@@ -34,3 +34,5 @@ class Test_Cannonball extends Phaser.Sprite {
   }
 
 }
+
+export default Test_Cannonball
