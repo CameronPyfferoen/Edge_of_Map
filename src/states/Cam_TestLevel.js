@@ -46,6 +46,7 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   update () {
+    super.update()
     // info on screen
     this.game.debug.spriteInfo(this.playerMP, 32, 32);
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
@@ -54,27 +55,27 @@ class Cam_TestLevel extends Phaser.State {
     if (this.forwardKey.isDown) {
       // if (__DEV__) console.log('forward key')
       this.game.curBoatSpeed = this.game.intBoatSpeed;
-      this.playerMP.body.moveForward(this.game.curBoatSpeed);
+      //this.playerMP.body.moveForward(this.game.curBoatSpeed); //bad line, breaks it
     } else {
       if (this.game.curBoatSpeed > 0) {
         this.game.curBoatSpeed--;
       }
-      this.playerMP.body.moveForward(this.game.curBoatSpeed);
+       //this.playerMP.body.moveForward(this.game.curBoatSpeed); //bad line, breaks it
     }
     // turn left
     if (this.leftKey.isDown) {
       // if (__DEV__) console.log('left key')
-      this.playerMP.body.angle -= this.playerMP.turnangle;
+       this.playerMP.body.angle -= this.playerMP.turnangle; //this line is fine
     }
     // move back
     if (this.backwardKey.isDown) {
       // if (__DEV__) console.log('back key')
-      this.playerMP.body.moveBackward(this.playerMP.bckspd);
+      this.playerMP.body.moveBackward(this.playerMP.bckspd); //this line is fine
     }
     // turn right
     if (this.rightKey.isDown) {
       // if (__DEV__) console.log('right key')
-      this.playerMP.body.angle += this.playerMP.turnangle;
+       this.playerMP.body.angle += this.playerMP.turnangle; //this line is fine
     }
   }
 }

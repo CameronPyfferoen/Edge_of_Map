@@ -39,17 +39,15 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
 
+    this.body.setCollisionGroup(this.game.playerGroup)
+    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
+
     // setup movement physics
     this.intBoatSpeed = 60;
     this.curBoatSpeed = 0;
     this.turnspd = 25;
     this.bckspd = 10;
     this.turnangle = 0.6;
-
-    // setup collisions
-
-    this.body.setCollisionGroup(this.game.playerGroup)
-    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
 
     // adds the animations to the sprite
     this.setupAnimations()
