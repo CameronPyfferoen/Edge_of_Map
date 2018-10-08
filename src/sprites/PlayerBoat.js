@@ -5,7 +5,7 @@ import config from '../config'
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'Pirat_Ship_1', 0)
-    super(game, x, y, 'medBoatMove', 0)
+    super(game, x, y, 'medBoat', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -32,7 +32,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.data.gravityScale = 0
 
     // setup movement physics
-    this.fwdspd = 50;
+    this.intBoatSpeed = 60;
+    this.curBoatSpeed = 0;
     this.turnspd = 25;
     this.bckspd = 10;
     this.turnangle = 0.6;
@@ -44,19 +45,24 @@ class PlayerBoat extends Phaser.Sprite {
 
     // adds the animations to the sprite
     this.setupAnimations()
-    this.animations.play('move', true)
+    this.animations.play('idle', true)
   }
 
   update () {
     // Always give parent a chance to update
     super.update()
-    // this.animations.play('idle')
+    if (this.curBoatSpeed > 20) {
+      this.animations.play('move');
+    } else {
+      this.animations.play('idle');
+    }
   }
 
   setupAnimations () {
     // this.animations.add('idle', [0], 1, false)
     // this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
-    this.animations.add('move', [0, 1, 2, 3], 10, true)
+    this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
+    this.animations.add('move', [5, 6, 7, 8], 10, true)
   }
   /* not in use
   velocityFromRotation (rotation, speed, point) {

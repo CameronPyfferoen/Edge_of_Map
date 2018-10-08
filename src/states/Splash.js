@@ -53,7 +53,7 @@ class Splash extends Phaser.State {
 
     this.load.spritesheet('seasnake', 'assets/images/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
-    this.load.spritesheet('medBoatMove', 'assets/images/P_Medium_Ship_Move_sp_96x96.png', 96, 96)
+    this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 

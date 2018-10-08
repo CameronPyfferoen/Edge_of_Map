@@ -17,8 +17,8 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.time.desiredFPS = 60;
 
     // set the initial and current speeds of the boat
-    this.game.intBoatSpeed = 60;
-    this.game.curBoatSpeed = 0;
+    // this.game.intBoatSpeed = 60;
+    // this.game.curBoatSpeed = 0;
   }
 
   preload () {}
@@ -64,13 +64,13 @@ class PrototypeLevel1 extends Phaser.State {
     // move forward
     if (this.forwardKey.isDown) {
       // if (__DEV__) console.log('forward key')
-      this.game.curBoatSpeed = this.game.intBoatSpeed;
-      this.player.body.moveForward(this.game.curBoatSpeed);
+      this.player.curBoatSpeed = this.player.intBoatSpeed;
+      this.player.body.moveForward(this.player.curBoatSpeed);
     } else {
-      if (this.game.curBoatSpeed > 0) {
-        this.game.curBoatSpeed -= 0.2;
+      if (this.player.curBoatSpeed > 0) {
+        this.player.curBoatSpeed -= 0.2;
       }
-      this.player.body.moveForward(this.game.curBoatSpeed);
+      this.player.body.moveForward(this.player.curBoatSpeed);
     }
 
     // turn left
@@ -82,13 +82,13 @@ class PrototypeLevel1 extends Phaser.State {
     // move back
     if (this.backwardKey.isDown) {
       // if (__DEV__) console.log('back key')
-      if (this.game.curBoatSpeed > 1) {
-        this.game.curBoatSpeed--;
+      if (this.player.curBoatSpeed > 1) {
+        this.player.curBoatSpeed--;
       } else {
         this.player.body.moveBackward(this.player.bckspd);
       }
     }
-    
+
     // turn right
     if (this.rightKey.isDown) {
       // if (__DEV__) console.log('right key')
