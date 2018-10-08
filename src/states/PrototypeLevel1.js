@@ -68,20 +68,27 @@ class PrototypeLevel1 extends Phaser.State {
       this.player.body.moveForward(this.game.curBoatSpeed);
     } else {
       if (this.game.curBoatSpeed > 0) {
-        this.game.curBoatSpeed--;
+        this.game.curBoatSpeed -= 0.2;
       }
       this.player.body.moveForward(this.game.curBoatSpeed);
     }
+
     // turn left
     if (this.leftKey.isDown) {
       // if (__DEV__) console.log('left key')
       this.player.body.angle -= this.player.turnangle;
     }
+
     // move back
     if (this.backwardKey.isDown) {
       // if (__DEV__) console.log('back key')
-      this.player.body.moveBackward(this.player.bckspd);
+      if (this.game.curBoatSpeed > 1) {
+        this.game.curBoatSpeed--;
+      } else {
+        this.player.body.moveBackward(this.player.bckspd);
+      }
     }
+    
     // turn right
     if (this.rightKey.isDown) {
       // if (__DEV__) console.log('right key')
