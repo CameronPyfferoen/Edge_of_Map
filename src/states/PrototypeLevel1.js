@@ -64,7 +64,10 @@ class PrototypeLevel1 extends Phaser.State {
     // move forward
     if (this.forwardKey.isDown) {
       // if (__DEV__) console.log('forward key')
-      this.player.curBoatSpeed = this.player.intBoatSpeed;
+      // this.player.curBoatSpeed = this.player.intBoatSpeed;
+      if (this.player.curBoatSpeed < this.player.intBoatSpeed) {
+        this.player.curBoatSpeed += 2;
+      }
       this.player.body.moveForward(this.player.curBoatSpeed);
     } else {
       if (this.player.curBoatSpeed > 0) {
