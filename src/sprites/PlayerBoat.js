@@ -80,6 +80,36 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
   }
+
+  moveForward () {
+    if (this.curBoatSpeed < this.intBoatSpeed) {
+      this.curBoatSpeed += 2;
+    }
+    this.body.moveForward(this.curBoatSpeed);
+  }
+
+  slowDown () {
+    if (this.curBoatSpeed > 0) {
+      this.curBoatSpeed -= 0.2;
+    }
+    this.body.moveForward(this.curBoatSpeed);
+  }
+
+  turnLeft () {
+    this.body.angle -= this.turnangle;
+  }
+
+  turnRight () {
+    this.body.angle += this.turnangle;
+  }
+
+  moveBackward () {
+    if (this.curBoatSpeed > 1) {
+      this.curBoatSpeed--;
+    } else {
+      this.body.moveBackward(this.bckspd);
+    }
+  }
 }
 
 export default PlayerBoat

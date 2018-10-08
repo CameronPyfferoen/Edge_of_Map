@@ -125,7 +125,7 @@ class Splash extends Phaser.State {
         // this.state.start('MainMenu')
         // this.state.start('TestLevel')
         // this.state.start('PrototypeLevel1')
-         this.state.start('Cam_TestLevel');
+        this.state.start('Cam_TestLevel');
         // this.state.start('FiringTest')
 
       }

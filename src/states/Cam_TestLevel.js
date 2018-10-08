@@ -54,28 +54,27 @@ class Cam_TestLevel extends Phaser.State {
     // move forward
     if (this.forwardKey.isDown) {
       // if (__DEV__) console.log('forward key')
-      this.game.curBoatSpeed = this.game.intBoatSpeed;
-      //this.playerMP.body.moveForward(this.game.curBoatSpeed); //bad line, breaks it
+      this.playerMP.moveForward();
     } else {
-      if (this.game.curBoatSpeed > 0) {
-        this.game.curBoatSpeed--;
-      }
-       //this.playerMP.body.moveForward(this.game.curBoatSpeed); //bad line, breaks it
+      this.playerMP.slowDown();
     }
+
     // turn left
     if (this.leftKey.isDown) {
       // if (__DEV__) console.log('left key')
-       this.playerMP.body.angle -= this.playerMP.turnangle; //this line is fine
+      this.playerMP.turnLeft();
     }
+
     // move back
     if (this.backwardKey.isDown) {
       // if (__DEV__) console.log('back key')
-      this.playerMP.body.moveBackward(this.playerMP.bckspd); //this line is fine
+      this.playerMP.moveBackward();
     }
+
     // turn right
     if (this.rightKey.isDown) {
       // if (__DEV__) console.log('right key')
-       this.playerMP.body.angle += this.playerMP.turnangle; //this line is fine
+      this.playerMP.turnRight();
     }
   }
 }
