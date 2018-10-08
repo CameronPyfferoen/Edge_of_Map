@@ -9,10 +9,17 @@ class PlayerBoat extends Phaser.Sprite {
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
-    this.smoothed = false
+    this.smoothed = false;
 
     // Set a reference to the top-level phaser game object
-    this.game = game
+    this.game = game;
+    
+    // setup the states
+    this.TURNINGL = false;
+    this.TURNINGR = false;
+    this.MOVEFWD = false;
+    this.MOVEBCK = false;
+    this.STOPPED = true;
 
     // set player scale
     this._SCALE = config.PLAYER_SCALE
@@ -51,27 +58,29 @@ class PlayerBoat extends Phaser.Sprite {
   update () {
     // Always give parent a chance to update
     super.update()
+
+    // set animation states
     if (this.curBoatSpeed > 20) {
-      this.animations.play('move');
+      this.MOVEFWD = true;
+      this.STOPPED = false;
+    } else {
+      this.MOVEFWD = false;
+      this.STOPPED = true;
+    }
+
+    // check animation states, play appropriate animation
+    if (this.MOVEFWD === true && this.TURNINGL === false && this.TURNINGR === false) {
+      this.animations.play('moveFWD');
     } else {
       this.animations.play('idle');
     }
   }
 
+  // create the animations
   setupAnimations () {
-    // this.animations.add('idle', [0], 1, false)
-    // this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
-    this.animations.add('move', [5, 6, 7, 8], 10, true)
+    this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
   }
-  /* not in use
-  velocityFromRotation (rotation, speed, point) {
-    if (speed === undefined) { speed = 60 }
-    point = point || new Phaser.Point()
-
-    return point.setToPolar(rotation, speed)
-  }
-  */
 }
 
 export default PlayerBoat
