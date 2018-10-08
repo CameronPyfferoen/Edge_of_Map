@@ -10,10 +10,6 @@ class Cam_TestLevel extends Phaser.State {
     this.game.world.setBounds(0, 0, 3149, 2007)
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
-
-    this.game.intBoatSpeed = 60;
-    this.game.curBoatSpeed = 0;
-
   }
 
   preload () {}

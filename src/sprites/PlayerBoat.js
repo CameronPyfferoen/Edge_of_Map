@@ -5,14 +5,21 @@ import config from '../config'
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'Pirat_Ship_1', 0)
-    super(game, x, y, 'medBoatMove', 0)
+    super(game, x, y, 'medBoat', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
-    this.smoothed = false
+    this.smoothed = false;
 
     // Set a reference to the top-level phaser game object
-    this.game = game
+    this.game = game;
+    
+    // setup the states
+    this.TURNINGL = false;
+    this.TURNINGR = false;
+    this.MOVEFWD = false;
+    this.MOVEBCK = false;
+    this.STOPPED = true;
 
     // set player scale
     this._SCALE = config.PLAYER_SCALE
@@ -32,7 +39,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.data.gravityScale = 0
 
     // setup movement physics
-    this.fwdspd = 50;
+    this.intBoatSpeed = 60;
+    this.curBoatSpeed = 0;
     this.turnspd = 25;
     this.bckspd = 10;
     this.turnangle = 0.6;
@@ -44,28 +52,35 @@ class PlayerBoat extends Phaser.Sprite {
 
     // adds the animations to the sprite
     this.setupAnimations()
-    this.animations.play('move', true)
+    this.animations.play('idle', true)
   }
 
   update () {
     // Always give parent a chance to update
     super.update()
-    // this.animations.play('idle')
+
+    // set animation states
+    if (this.curBoatSpeed > 20) {
+      this.MOVEFWD = true;
+      this.STOPPED = false;
+    } else {
+      this.MOVEFWD = false;
+      this.STOPPED = true;
+    }
+
+    // check animation states, play appropriate animation
+    if (this.MOVEFWD === true && this.TURNINGL === false && this.TURNINGR === false) {
+      this.animations.play('moveFWD');
+    } else {
+      this.animations.play('idle');
+    }
   }
 
+  // create the animations
   setupAnimations () {
-    // this.animations.add('idle', [0], 1, false)
-    // this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7, 8], 10, true)
-    this.animations.add('move', [0, 1, 2, 3], 10, true)
+    this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
+    this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
   }
-  /* not in use
-  velocityFromRotation (rotation, speed, point) {
-    if (speed === undefined) { speed = 60 }
-    point = point || new Phaser.Point()
-
-    return point.setToPolar(rotation, speed)
-  }
-  */
 }
 
 export default PlayerBoat
