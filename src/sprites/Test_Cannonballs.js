@@ -13,6 +13,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this._SCALE.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
+    // this.game.debug.body(this)
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
