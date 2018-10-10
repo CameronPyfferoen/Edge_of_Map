@@ -30,6 +30,8 @@ class Test_Snek extends Phaser.Sprite
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
 
+    this.autocull = true;
+
     this.player_dist = 1000000;
     this.pat_dist = 200;
     this.start_diff = 0;

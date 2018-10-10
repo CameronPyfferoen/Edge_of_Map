@@ -30,8 +30,8 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.add.existing(this.playerMP)
     this.game.add.existing(this.snek)
-    this.worldsprites = []
-    this.numsprites = 0
+    // this.worldsprites = []
+    // this.numsprites = 0
 
     this.game.camera.scale.x = 4.2
     this.game.camera.scale.y = 4.2
