@@ -4,10 +4,11 @@ import PlayerBoat from '../sprites/PlayerBoat'
 
 class Test_Snek extends Phaser.Sprite
 {
-  constructor ({ game, x, y, player }) {
+  constructor ({ game, x, y, player, camera }) {
     super(game, x, y, 'seasnake', 0);
     this.name = 'Test Snek';
     this.player = player
+    this.camera = camera
     this.anchor.setTo(0.5, 0.5);
 
     this.smoothed = true;
@@ -30,7 +31,8 @@ class Test_Snek extends Phaser.Sprite
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
 
-    this.autocull = true;
+    //this.autocull = true;
+    this.isOffCamera = false
 
     this.player_dist = 1000000;
     this.pat_dist = 200;
@@ -81,7 +83,21 @@ class Test_Snek extends Phaser.Sprite
   }
 
   update () {
-    super.update();
+    super.update()
+    /*
+    if(!this.inCamera)
+    {
+      this.kill()
+      this.isOffCamera = true
+      console.log('killed')
+    }
+    else if(this.inCamera && this.isOffCamera)
+    {
+      this.revive()
+      this.isOffCamera = false
+      console.log('revived')
+    }
+    */
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > 50) {

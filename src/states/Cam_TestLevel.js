@@ -25,7 +25,8 @@ class Cam_TestLevel extends Phaser.State {
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY + 32,
-      player: this.playerMP
+      player: this.playerMP,
+      camera: this.game.camera
     })
 
     this.game.add.existing(this.playerMP)
