@@ -39,17 +39,15 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
 
+    this.body.setCollisionGroup(this.game.playerGroup)
+    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
+
     // setup movement physics
     this.intBoatSpeed = 60;
     this.curBoatSpeed = 0;
     this.turnspd = 25;
     this.bckspd = 10;
     this.turnangle = 0.6;
-
-    // setup collisions
-
-    this.body.setCollisionGroup(this.game.playerGroup)
-    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
 
     // adds the animations to the sprite
     this.setupAnimations()
@@ -81,6 +79,36 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
+  }
+
+  moveForward () {
+    if (this.curBoatSpeed < this.intBoatSpeed) {
+      this.curBoatSpeed += 2;
+    }
+    this.body.moveForward(this.curBoatSpeed);
+  }
+
+  slowDown () {
+    if (this.curBoatSpeed > 0) {
+      this.curBoatSpeed -= 0.2;
+    }
+    this.body.moveForward(this.curBoatSpeed);
+  }
+
+  turnLeft () {
+    this.body.angle -= this.turnangle;
+  }
+
+  turnRight () {
+    this.body.angle += this.turnangle;
+  }
+
+  moveBackward () {
+    if (this.curBoatSpeed > 1) {
+      this.curBoatSpeed--;
+    } else {
+      this.body.moveBackward(this.bckspd);
+    }
   }
 }
 

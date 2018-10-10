@@ -16,7 +16,7 @@ class Test_Snek extends Phaser.Sprite
   
     console.log('Player: ' + this.player)
 
-    this._SCALE = config.PLAYER_SCALE
+    this._SCALE = 0.4;
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this);
@@ -33,6 +33,7 @@ class Test_Snek extends Phaser.Sprite
     this.player_dist = 1000000;
     this.pat_dist = 200;
     this.start_diff = 0;
+    this.chase_dist = 200;
 
     this.fwdspd = 20;
     this.turnspd = 10;
@@ -68,7 +69,6 @@ class Test_Snek extends Phaser.Sprite
       this.body.moveForward(this.turnspd)
       if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
         this.turn = false;
-        console.log("else if statement was entered" )
       }
     }
     
@@ -86,7 +86,7 @@ class Test_Snek extends Phaser.Sprite
     if(this.player_dist > 50) {
       this.patrol()
     }
-    else if(this.player_dist <= 50)
+    else if(this.player_dist <= this.chase_dist)
     {
       this.chase()
     } 
