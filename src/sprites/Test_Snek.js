@@ -44,7 +44,6 @@ class Test_Snek extends Phaser.Sprite
     this.starty = this.body.y
     this.startang = this.body.angle
     this.turn = false
-
     this.setupAnimations()
   }
 

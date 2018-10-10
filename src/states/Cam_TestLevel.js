@@ -29,7 +29,9 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     this.game.add.existing(this.playerMP)
-    this.game.add.existing(this.snek);
+    this.game.add.existing(this.snek)
+    this.worldsprites = []
+    this.numsprites = 0
 
     this.game.camera.scale.x = 4.2
     this.game.camera.scale.y = 4.2
@@ -47,6 +49,25 @@ class Cam_TestLevel extends Phaser.State {
 
   update () {
     super.update()
+    /*
+    this.numsprites = this.game.camera.totalInView
+    this.game.world.forEach(this.game.Sprite)
+    {
+      if(this.game.Sprite.inCamera) {
+        this.game.Sprite.autocull = true
+      }
+      else if(!this.game.Sprite.inCamera)
+      {
+        this.game.Sprite.autocull = false
+      }
+    }
+    */
+    /*
+    for (this.n = 0; this.n < this.numsprites; this.n++)
+    {
+      this.camsprites[this.n] 
+    }
+    */
     // info on screen
     this.game.debug.spriteInfo(this.playerMP, 32, 32);
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
