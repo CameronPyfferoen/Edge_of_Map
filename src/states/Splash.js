@@ -55,7 +55,6 @@ class Splash extends Phaser.State {
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
     this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 10, 10)
-
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', './assets/images/maptemplate.png')
@@ -128,8 +127,6 @@ class Splash extends Phaser.State {
         this.state.start('PrototypeLevel1')
         // this.state.start('Cam_TestLevel');
         // this.state.start('FiringTest')
-
-
       }
     }
   }
