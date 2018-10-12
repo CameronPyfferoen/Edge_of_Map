@@ -38,11 +38,13 @@ class Test_Snek extends Phaser.Sprite
     this.pat_dist = 200;
     this.start_diff = 0;
     this.chase_dist = 200;
+    
 
     this.fwdspd = 20;
     this.turnspd = 10;
     this.angspd = 0.8;
     this.chasespd = 30
+    this.renderdist = 500
 
     this.startx = this.body.x
     this.starty = this.body.y
@@ -85,7 +87,7 @@ class Test_Snek extends Phaser.Sprite
   update () {
     super.update()
     /*
-    if(!this.inCamera)
+    if(!this.inCamera && !this.isOffCamera)
     {
       this.kill()
       this.isOffCamera = true
@@ -98,7 +100,20 @@ class Test_Snek extends Phaser.Sprite
       console.log('revived')
     }
     */
+    
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    if(this.player_dist > this.renderdist && !this.isOffCamera)
+    {
+      this.isOffCamera = true
+      this.kill();
+      console.log('killed')
+    }
+    else if(this.player_dist <= this.renderdist && this.isOffCamera)
+    {
+      this.isOffCamera = false
+      this.revive();
+      console.log('revived')
+    }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > 50) {
       this.patrol()

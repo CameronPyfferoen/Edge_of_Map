@@ -26,7 +26,7 @@ class Cam_TestLevel extends Phaser.State {
       x: this.world.centerX,
       y: this.world.centerY + 32,
       player: this.playerMP,
-      camera: this.game.camera
+      camera: this.game.world.camera
     })
 
     this.game.add.existing(this.playerMP)
@@ -50,25 +50,6 @@ class Cam_TestLevel extends Phaser.State {
 
   update () {
     super.update()
-    /*
-    this.numsprites = this.game.camera.totalInView
-    this.game.world.forEach(this.game.Sprite)
-    {
-      if(this.game.Sprite.inCamera) {
-        this.game.Sprite.autocull = true
-      }
-      else if(!this.game.Sprite.inCamera)
-      {
-        this.game.Sprite.autocull = false
-      }
-    }
-    */
-    /*
-    for (this.n = 0; this.n < this.numsprites; this.n++)
-    {
-      this.camsprites[this.n] 
-    }
-    */
     // info on screen
     this.game.debug.spriteInfo(this.playerMP, 32, 32);
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
