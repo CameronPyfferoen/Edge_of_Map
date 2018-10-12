@@ -69,8 +69,8 @@ class FiringTest extends Phaser.State {
     this.game.physics.p2.updateBoundsCollisionGroup()
 
 
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+    this.cannonballWidth = 100
+    this.cannonballHeight = 200
     this.game.input.mouse.capture = true
     // replaced anon function w/ firingCallback function
     // used this.firingCallback to read the function from below the create function
@@ -78,6 +78,7 @@ class FiringTest extends Phaser.State {
     // the addEventListener class
     // everytime I want to create an addEventListener, I should create a non-anon function below create(), and use .bind(this)
     addEventListener('click', this.firingCallback.bind(this))
+    // this.game.time.events.add(Phaser.Timer.SECOND * 4, destroy)
 
     //  Set the ships collision group
     // is the first part of the code correct?
@@ -87,15 +88,24 @@ class FiringTest extends Phaser.State {
     //  When pandas collide with each other, nothing happens to them.
     this.player.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
+
+
     
 
   }
+
+  // destroy () {
+  //   this.cannonball.destroy()
+  // }
 
   hitCannonball (body1, body2) {
     //  body1 is the space ship (as it's the body that owns the callback)
     //  body2 is the body it impacted with, in this case our panda
     //  As body2 is a Phaser.Physics.P2.Body object, you access its own (the sprite) via the sprite property:
-    body2.sprite.alpha -= 0.1
+    // body2.sprite.alpha -= 0.1
+    body2.sprite.kill()
+    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
+    // body2.destroy()
   }
 
   firingCallback () {
@@ -103,7 +113,7 @@ class FiringTest extends Phaser.State {
       console.log('o')
       let cannonball = new Test_Cannonball({
         game: this.game,
-        x: this.player.x,
+        x: this.player.x + 100,
         y: this.player.y
       })
       
@@ -123,6 +133,8 @@ class FiringTest extends Phaser.State {
       cannonball.width = this.cannonballWidth
       cannonball.height = this.cannonballHeight
       cannonball.body.moveForward(1000)
+
+
 
       // // PoS code below is supposed to delete cannonball sprite after a certain amount of distance?
       // cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)
