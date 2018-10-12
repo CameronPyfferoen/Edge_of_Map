@@ -4,10 +4,11 @@ import PlayerBoat from '../sprites/PlayerBoat'
 
 class Test_Snek extends Phaser.Sprite
 {
-  constructor ({ game, x, y, player }) {
+  constructor ({ game, x, y, player, camera }) {
     super(game, x, y, 'seasnake', 0);
     this.name = 'Test Snek';
     this.player = player
+    this.camera = camera
     this.anchor.setTo(0.5, 0.5);
 
     this.smoothed = true;
@@ -30,21 +31,25 @@ class Test_Snek extends Phaser.Sprite
     this.body.damping = 0.5;
     this.body.data.gravityScale = 0;
 
+    //this.autocull = true;
+    this.isOffCamera = false
+
     this.player_dist = 1000000;
     this.pat_dist = 200;
     this.start_diff = 0;
     this.chase_dist = 200;
+    
 
     this.fwdspd = 20;
     this.turnspd = 10;
     this.angspd = 0.8;
     this.chasespd = 30
+    this.renderdist = 500
 
     this.startx = this.body.x
     this.starty = this.body.y
     this.startang = this.body.angle
     this.turn = false
-
     this.setupAnimations()
   }
 
@@ -80,8 +85,35 @@ class Test_Snek extends Phaser.Sprite
   }
 
   update () {
-    super.update();
+    super.update()
+    /*
+    if(!this.inCamera && !this.isOffCamera)
+    {
+      this.kill()
+      this.isOffCamera = true
+      console.log('killed')
+    }
+    else if(this.inCamera && this.isOffCamera)
+    {
+      this.revive()
+      this.isOffCamera = false
+      console.log('revived')
+    }
+    */
+    
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    if(this.player_dist > this.renderdist && !this.isOffCamera)
+    {
+      this.isOffCamera = true
+      this.kill();
+      console.log('killed')
+    }
+    else if(this.player_dist <= this.renderdist && this.isOffCamera)
+    {
+      this.isOffCamera = false
+      this.revive();
+      console.log('revived')
+    }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > 50) {
       this.patrol()
