@@ -63,14 +63,11 @@ class FiringTest extends Phaser.State {
     //  (which we do) - what this does is adjust the bounds to use its own collision group.
     this.game.physics.p2.updateBoundsCollisionGroup()
 
-<<<<<<< HEAD
+
 
     this.cannonballWidth = 100
     this.cannonballHeight = 200
-=======
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
->>>>>>> 6c6cfe0a45006a17e636125ea004c68639a35c03
+
     this.game.input.mouse.capture = true
     // replaced anon function w/ firingCallback function
     // used this.firingCallback to read the function from below the create function
@@ -123,7 +120,7 @@ class FiringTest extends Phaser.State {
       //  If you don't set this they'll not collide with anything.
       //  The first parameter is either an array or a single collision group.
       
-      cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+      // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
       cannonball.body.angle = this.player.angle + 90
       cannonball.width = this.cannonballWidth
