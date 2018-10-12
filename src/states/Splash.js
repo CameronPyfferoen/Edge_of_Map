@@ -54,7 +54,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('seasnake', 'assets/images/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
-
+    this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 10, 10)
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', './assets/images/maptemplate.png')
@@ -124,11 +124,17 @@ class Splash extends Phaser.State {
       if (this.game.sounds.get('music-intro').isDecoded) {
         // this.state.start('MainMenu')
         // this.state.start('TestLevel')
+<<<<<<< HEAD
         // this.state.start('PrototypeLevel1')
         // this.state.start('Cam_TestLevel');
         this.state.start('FiringTest')
 
 
+=======
+        this.state.start('PrototypeLevel1')
+        // this.state.start('Cam_TestLevel');
+        // this.state.start('FiringTest')
+>>>>>>> 2329aa3861049e92c0531d422ab16a7b5a57a5b2
       }
     }
   }
