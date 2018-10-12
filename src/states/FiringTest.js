@@ -41,25 +41,20 @@ class FiringTest extends Phaser.State {
       y: 1850
     })
 
-    
-
-
     this.game.add.existing(this.player)
     this.setupKeyboard()
     this.game.camera.scale.x = 0.5
     this.game.camera.scale.y = 0.5
     this.game.camera.follow(this.player)
 
-    //this.localPlayer = this.player
-
-    
+    // this.localPlayer = this.player
 
     //  Turn on impact events for the world, without this we get no collision callbacks
     this.game.physics.p2.setImpactEvents(true)
 
     this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
-    
+
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.localCannonballCollisionGroup = this.cannonballCollisionGroup
     this.localPlayerCollisionGroup = this.playerCollisionGroup
@@ -68,9 +63,14 @@ class FiringTest extends Phaser.State {
     //  (which we do) - what this does is adjust the bounds to use its own collision group.
     this.game.physics.p2.updateBoundsCollisionGroup()
 
+<<<<<<< HEAD
 
     this.cannonballWidth = 100
     this.cannonballHeight = 200
+=======
+    this.cannonballWidth = 10
+    this.cannonballHeight = 20
+>>>>>>> 6c6cfe0a45006a17e636125ea004c68639a35c03
     this.game.input.mouse.capture = true
     // replaced anon function w/ firingCallback function
     // used this.firingCallback to read the function from below the create function
@@ -87,10 +87,6 @@ class FiringTest extends Phaser.State {
     //  The ship will collide with the pandas, and when it strikes one the hitPanda callback will fire, causing it to alpha out a bit
     //  When pandas collide with each other, nothing happens to them.
     this.player.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-
-
-
-    
 
   }
 
@@ -172,6 +168,7 @@ class FiringTest extends Phaser.State {
       // cannonball.body.collides([cannonballCollisionGroup, playerCollisionGroup])
       
     
+
   }
 
   setupKeyboard () {
