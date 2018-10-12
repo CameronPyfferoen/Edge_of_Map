@@ -63,7 +63,7 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.curBoatSpeed > 20) {
       this.MOVEFWD = true;
       this.STOPPED = false;
-      this.spawnWake();
+      // this.spawnWake();
     } else {
       this.MOVEFWD = false;
       this.STOPPED = true;

@@ -21,16 +21,28 @@ class Cam_TestLevel extends Phaser.State {
       y: this.world.centerY
     })
 
+    /*
     this.snek = new Test_Snek({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY + 32,
-      player: this.playerMP,
-      camera: this.game.world.camera
+      player: this.playerMP
     })
+    */
+
+    this.sneks = []
+    for (let i = 0; i < 10; i++) {
+      this.sneks[i] = new Test_Snek({
+        game: this.game,
+        x: Phaser.Math.random(0, 3149),
+        y: Phaser.Math.random(0, 2007),
+        player: this.playerMP
+      })
+
+      this.game.add.existing(this.sneks[i])
+    }
 
     this.game.add.existing(this.playerMP)
-    this.game.add.existing(this.snek)
     // this.worldsprites = []
     // this.numsprites = 0
 
