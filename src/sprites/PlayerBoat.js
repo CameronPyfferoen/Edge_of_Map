@@ -1,6 +1,7 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 import config from '../config'
+import Wake from '../sprites/wake.js'
 
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
@@ -62,6 +63,7 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.curBoatSpeed > 20) {
       this.MOVEFWD = true;
       this.STOPPED = false;
+      this.spawnWake();
     } else {
       this.MOVEFWD = false;
       this.STOPPED = true;
@@ -109,6 +111,15 @@ class PlayerBoat extends Phaser.Sprite {
     } else {
       this.body.moveBackward(this.bckspd);
     }
+  }
+
+  // create the wakes
+  spawnWake () {
+    let wake = new Wake({
+      game: this.game,
+      x: this.body.x,
+      y: this.body.y
+    })
   }
 }
 

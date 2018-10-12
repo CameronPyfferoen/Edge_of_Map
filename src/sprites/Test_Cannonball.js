@@ -22,6 +22,14 @@ class Test_Cannonball extends Phaser.Sprite {
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
+
+    this.game.time.events.add(Phaser.Timer.SECOND * 2, this.destroy.bind(this), this)
+  }
+
+  destroy () {
+    
+    this.body.sprite.kill()
+    this.body.destroy()
   }
     
   update () {
