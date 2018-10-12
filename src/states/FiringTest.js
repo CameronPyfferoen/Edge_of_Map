@@ -41,25 +41,20 @@ class FiringTest extends Phaser.State {
       y: 1850
     })
 
-    
-
-
     this.game.add.existing(this.player)
     this.setupKeyboard()
     this.game.camera.scale.x = 0.5
     this.game.camera.scale.y = 0.5
     this.game.camera.follow(this.player)
 
-    //this.localPlayer = this.player
-
-    
+    // this.localPlayer = this.player
 
     //  Turn on impact events for the world, without this we get no collision callbacks
     this.game.physics.p2.setImpactEvents(true)
 
     this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
-    
+
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.localCannonballCollisionGroup = this.cannonballCollisionGroup
     this.localPlayerCollisionGroup = this.playerCollisionGroup
@@ -67,7 +62,6 @@ class FiringTest extends Phaser.State {
     //  This part is vital if you want the objects with their own collision groups to still collide with the world bounds
     //  (which we do) - what this does is adjust the bounds to use its own collision group.
     this.game.physics.p2.updateBoundsCollisionGroup()
-
 
     this.cannonballWidth = 10
     this.cannonballHeight = 20
@@ -86,9 +80,6 @@ class FiringTest extends Phaser.State {
     //  The ship will collide with the pandas, and when it strikes one the hitPanda callback will fire, causing it to alpha out a bit
     //  When pandas collide with each other, nothing happens to them.
     this.player.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-
-    
-
   }
 
   hitCannonball (body1, body2) {
@@ -99,67 +90,61 @@ class FiringTest extends Phaser.State {
   }
 
   firingCallback () {
-    
-      console.log('o')
-      let cannonball = new Test_Cannonball({
-        game: this.game,
-        x: this.player.x,
-        y: this.player.y
-      })
-      
-      this.projectile.add(cannonball)
+    console.log('o')
+    let cannonball = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
 
-      
-      cannonball.body.setRectangle(4, 4)
-      //  Tell the panda to use the cannonballCollisionGroup
-      cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
-      //  Pandas will collide against themselves and the player
-      //  If you don't set this they'll not collide with anything.
-      //  The first parameter is either an array or a single collision group.
-      
-      cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+    this.projectile.add(cannonball)
 
-      cannonball.body.angle = this.player.angle + 90
-      cannonball.width = this.cannonballWidth
-      cannonball.height = this.cannonballHeight
-      cannonball.body.moveForward(1000)
+    cannonball.body.setRectangle(4, 4)
+    //  Tell the panda to use the cannonballCollisionGroup
+    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+    //  Pandas will collide against themselves and the player
+    //  If you don't set this they'll not collide with anything.
+    //  The first parameter is either an array or a single collision group.
 
-      // // PoS code below is supposed to delete cannonball sprite after a certain amount of distance?
-      // cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)
-      // if (cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)) {
-      //   cannonball.destroy()
-      // }
+    cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
-      // // PoS code below is supposed to add a rate of fire for ship
-      // // set of code below should be a function
-      // // var sprite, sprite was replaced with cannonball
-      // // var bullets, replaced with projectiles
-      // // keep an eye out for bullet var in the if statement below
-      // var fireRate = 10000
-      // var nextFire = 0
-      // if (this.game.time.now > nextFire && projectile.countDead() > 0) {
-      //   nextFire = this.game.time.now + fireRate
-      //   var bullet = projectile.getFirstDead()
-      //   bullet.reset(cannonball.x - 8, cannonball.y - 8)
-      //   this.game.physics.arcade.moveToPointer(bullet, 300)
-      // }
+    cannonball.body.angle = this.player.angle + 90
+    cannonball.width = this.cannonballWidth
+    cannonball.height = this.cannonballHeight
+    cannonball.body.moveForward(1000)
 
-      // // below is an unknown line of code
-      // cannonball.body.setRectangle(40, 40)
+    // // PoS code below is supposed to delete cannonball sprite after a certain amount of distance?
+    // cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)
+    // if (cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)) {
+    //   cannonball.destroy()
+    // }
 
+    // // PoS code below is supposed to add a rate of fire for ship
+    // // set of code below should be a function
+    // // var sprite, sprite was replaced with cannonball
+    // // var bullets, replaced with projectiles
+    // // keep an eye out for bullet var in the if statement below
+    // var fireRate = 10000
+    // var nextFire = 0
+    // if (this.game.time.now > nextFire && projectile.countDead() > 0) {
+    //   nextFire = this.game.time.now + fireRate
+    //   var bullet = projectile.getFirstDead()
+    //   bullet.reset(cannonball.x - 8, cannonball.y - 8)
+    //   this.game.physics.arcade.moveToPointer(bullet, 300)
+    // }
 
+    // // below is an unknown line of code
+    // cannonball.body.setRectangle(40, 40)
 
-      // // COLLISION
-      // // the two sets of commented code below relate to collision
-      // //  Tell the panda to use the pandaCollisionGroup
-      // cannonball.body.setCollisionGroup(cannonballCollisionGroup)
+    // // COLLISION
+    // // the two sets of commented code below relate to collision
+    // //  Tell the panda to use the pandaCollisionGroup
+    // cannonball.body.setCollisionGroup(cannonballCollisionGroup)
 
-      // //  Pandas will collide against themselves and the player
-      // //  If you don't set this they'll not collide with anything.
-      // //  The first parameter is either an array or a single collision group.
-      // cannonball.body.collides([cannonballCollisionGroup, playerCollisionGroup])
-      
-    
+    // //  Pandas will collide against themselves and the player
+    // //  If you don't set this they'll not collide with anything.
+    // //  The first parameter is either an array or a single collision group.
+    // cannonball.body.collides([cannonballCollisionGroup, playerCollisionGroup])
   }
 
   setupKeyboard () {
