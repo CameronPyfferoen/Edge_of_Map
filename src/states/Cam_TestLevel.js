@@ -4,9 +4,10 @@ import Test_Snek from '../sprites/Test_Snek';
 import { Sprite } from 'phaser-ce';
 import PlayerBoat from '../sprites/PlayerBoat';
 
+
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0 , 0, 3149, 2007, 'map')
+    this.game.add.tileSprite(0, 0, 3149, 2007, 'map')
     this.game.world.setBounds(0, 0, 3149, 2007)
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
@@ -31,6 +32,18 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.add.existing(this.playerMP)
     this.game.add.existing(this.snek)
+
+    // layer groups
+    this.underWater = this.game.add.group()
+    this.water = this.game.add.group()
+    this.aboveWater = this.game.add.group()
+    this.playerGroup = this.game.add.group()
+
+    // adding the objects to the groups
+    // this.water.add(1574.5, 1003.5, 'mapoverlay')
+    this.playerGroup.add(this.playerMP)
+    this.underWater.add(this.snek)
+
     // this.worldsprites = []
     // this.numsprites = 0
 
