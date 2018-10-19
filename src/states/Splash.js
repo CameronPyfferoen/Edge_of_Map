@@ -55,17 +55,15 @@ class Splash extends Phaser.State {
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
     this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 8, 8)
+    this.load.spritesheet('mapoverlay', 'assets/images/maptemplatewater.png', 2000, 1000)
+
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', '/assets/images/maptemplate.png')
-    this.load.image('mapoverlay', '/assets/images/maptemplatewater.png')
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
     this.load.image('wake3', '/assets/images/spr_wake_3.png')
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
-
-
-
 
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [

@@ -40,16 +40,17 @@ class Cam_TestLevel extends Phaser.State {
     this.playerGroup = this.game.add.group()
 
     // adding the objects to the groups
-    // this.water.add(1574.5, 1003.5, 'mapoverlay')
-    this.playerGroup.add(this.playerMP)
     this.underWater.add(this.snek)
+    this.playerGroup.add(this.playerMP)
 
+    this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
+    this.water.add(this.aqua)
     // this.worldsprites = []
     // this.numsprites = 0
 
     this.game.camera.scale.x = 4.2
     this.game.camera.scale.y = 4.2
-    this.game.camera.follow(this.playerMP)
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     this.setupKeyboard()
   }
@@ -92,6 +93,9 @@ class Cam_TestLevel extends Phaser.State {
       // if (__DEV__) console.log('right key')
       this.playerMP.turnRight();
     }
+
+    this.aqua.x = this.playerMP.body.x - 1000;
+    this.aqua.y = this.playerMP.body.y - 500;
   }
 }
 
