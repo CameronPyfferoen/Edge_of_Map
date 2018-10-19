@@ -44,7 +44,7 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     this.game.add.existing(this.playerMP)
-    this.game.add.existing(this.snek)
+    // this.game.add.existing(this.snek)
 
     // layer groups
     this.underWater = this.game.add.group()
