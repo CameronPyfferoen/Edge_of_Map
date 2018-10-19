@@ -58,10 +58,13 @@ class Splash extends Phaser.State {
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', '/assets/images/maptemplate.png')
+    this.load.image('mapoverlay', '/assets/images/maptemplatewater.png')
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
     this.load.image('wake3', '/assets/images/spr_wake_3.png')
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
+
+
 
 
     // The audiosprite with all music and SFX
@@ -133,7 +136,7 @@ class Splash extends Phaser.State {
         // this.state.start('MainMenu')
         // this.state.start('TestLevel')
         // this.state.start('PrototypeLevel1')
-         this.state.start('Cam_TestLevel');
+        this.state.start('Cam_TestLevel');
         // this.state.start('FiringTest')
       }
     }
