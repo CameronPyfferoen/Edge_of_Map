@@ -1,47 +1,47 @@
-import Phaser from 'phaser';
-import config from '../config';
+import Phaser from 'phaser'
+import config from '../config'
 import PlayerBoat from '../sprites/PlayerBoat'
-import Enemies from '../sprites/Enemies'
+import Enemies from './Enemy'
 // import Enemies from '../Groups/Enemies'
 
 class Test_Snek extends Phaser.Group.Enemies
 { 
   constructor (game) {
     super(game)
-    this.name = 'Test Snek';
-    this.anchor.setTo(0.5, 0.5);
-    this.maxHealth = 100;
-    this.smoothed = true;
+    this.name = 'Test Snek'
+    this.anchor.setTo(0.5, 0.5)
+    this.maxHealth = 100
+    this.smoothed = true
 
     console.log('snake created')
-    //console.log('Player: ' + this.player)
+    // console.log('Player: ' + this.player)
 
-    this._SCALE = 0.4;
+    this._SCALE = 0.4
     this.scale.setTo(this._SCALE)
 
-    this.game.physics.p2.enable(this);
+    this.game.physics.p2.enable(this)
     
-    this.body.debug = __DEV__;
+    this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
     
-     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0);
-     this.body.offset.setTo(0.5, 1.5);
+     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
+     this.body.offset.setTo(0.5, 1.5)
 
-    this.body.damping = 0.5;
-    this.body.data.gravityScale = 0;
+    this.body.damping = 0.5
+    this.body.data.gravityScale = 0
 
-    //this.autocull = true;
+    // this.autocull = true;
     this.isOffCamera = false
 
-    this.player_dist = 1000000;
-    this.pat_dist = 200;
-    this.start_diff = 0;
-    this.chase_dist = 200;
+    this.player_dist = 1000000
+    this.pat_dist = 200
+    this.start_diff = 0
+    this.chase_dist = 200
     this.renderdist = 300
 
-    this.fwdspd = 20;
-    this.turnspd = 10;
-    this.angspd = 0.8;
+    this.fwdspd = 20
+    this.turnspd = 10
+    this.angspd = 0.8
     this.chasespd = 30
 
     this.startx = this.body.x
@@ -56,14 +56,14 @@ class Test_Snek extends Phaser.Group.Enemies
     if (!this.turn) {
       this.body.moveForward(this.fwdspd)
       if(this.pat_dist <= this.start_diff) {
-        this.turn = true;
+        this.turn = true
       }
     }
     else if(this.turn) {
       this.body.angle += this.angspd
       this.body.moveForward(this.turnspd)
       if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
-        this.turn = false;
+        this.turn = false
       }
     }
     
@@ -81,13 +81,13 @@ class Test_Snek extends Phaser.Group.Enemies
     if(this.player_dist > this.renderdist && !this.isOffCamera)
     {
       this.isOffCamera = true
-      this.kill();
+      this.kill()
       console.log('killed')
     }
     else if(this.player_dist <= this.renderdist && this.isOffCamera)
     {
       this.isOffCamera = false
-      this.revive();
+      this.revive()
       console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
@@ -102,15 +102,15 @@ class Test_Snek extends Phaser.Group.Enemies
   }
 
   setupAnimations () {
-    this.animations.add('snek', [0], 1, false);
+    this.animations.add('snek', [0], 1, false)
     this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6 , 7], 10, true)
   }
 
   moveToObject(obj1, obj2) {
-    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x);
-    obj1.rotation = angle + Phaser.Math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
-    obj1.force.x = Math.cos(angle) * this.chasespd;    // accelerateToObject 
-    obj1.force.y = Math.sin(angle) * this.chasespd;
+    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x)
+    obj1.rotation = angle + Phaser.Math.degToRad(90)  // correct angle of angry bullets (depends on the sprite used)
+    obj1.force.x = Math.cos(angle) * this.chasespd    // accelerateToObject 
+    obj1.force.y = Math.sin(angle) * this.chasespd
   }
 }
 export default Test_Snek
