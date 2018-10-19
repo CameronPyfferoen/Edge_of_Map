@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import config from '../config'
 import PlayerBoat from '../sprites/PlayerBoat'
-import Enemies from './Enemy'
+import Enemy from './Enemy'
 // import Enemies from '../Groups/Enemies'
 
 class Test_Snek extends Phaser.Group.Enemies
