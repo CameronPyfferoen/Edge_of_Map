@@ -94,8 +94,8 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.turnRight();
     }
 
-    this.aqua.x = this.playerMP.body.x - 1000;
-    this.aqua.y = this.playerMP.body.y - 500;
+    this.aqua.x = this.playerMP.body.x - 250;
+    this.aqua.y = this.playerMP.body.y - 130;
   }
 }
 
