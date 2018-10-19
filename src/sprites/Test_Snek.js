@@ -5,7 +5,7 @@ import Enemy from './Enemy'
 import { Group } from 'phaser-ce'
 // import Enemies from '../Groups/Enemies'
 
-class Test_Snek extends Phaser.Group.Enemies
+class Test_Snek extends Enemy
 { 
   constructor (game) {
     super(game)

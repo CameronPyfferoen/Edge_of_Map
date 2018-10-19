@@ -52,6 +52,11 @@ class Cam_TestLevel extends Phaser.State {
     this.aboveWater = this.game.add.group()
     this.playerGroup = this.game.add.group()
 
+    this.enemies = this.game.add.group()
+    for(let k = 0; k < 10; k++) {
+      this.enemies.add(this.sneks[k])
+    }
+
     // adding the objects to the groups
     // this.water.add(1574.5, 1003.5, 'mapoverlay')
     this.playerGroup.add(this.playerMP)

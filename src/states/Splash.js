@@ -95,9 +95,6 @@ class Splash extends Phaser.State {
     this.game.enemyGroup = this.game.physics.p2.createCollisionGroup()
     this.game.itemGroup = this.game.physics.p2.createCollisionGroup()
     this.game.landGroup = this.game.physics.p2.createCollisionGroup()
-
-    this.game.add.group(this.game, 'Enemies.js', 'Enemies')
-    this.game.group.Enemies.addChild('Test_Snek.js')
   }
 
   setupAudio () {
