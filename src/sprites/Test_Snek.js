@@ -1,18 +1,18 @@
 import Phaser from 'phaser';
 import config from '../config';
 import PlayerBoat from '../sprites/PlayerBoat'
+import Enemies from '../sprites/Enemies'
+// import Enemies from '../Groups/Enemies'
 
-class Test_Snek extends Phaser.Sprite
-{
-  constructor ({ game, x, y, player }) {
-    super(game, x, y, 'seasnake', 0);
+class Test_Snek extends Phaser.Group.Enemies
+{ 
+  constructor (game) {
+    super(game)
     this.name = 'Test Snek';
-    this.player = player
     this.anchor.setTo(0.5, 0.5);
-
+    this.maxHealth = 100;
     this.smoothed = true;
 
-    this.game = game;
     console.log('snake created')
     //console.log('Player: ' + this.player)
 
@@ -50,14 +50,6 @@ class Test_Snek extends Phaser.Sprite
     this.turn = false
     this.setupAnimations()
   }
-
-  /*
-  setupKeyboard () {
-    this.forwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-    this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-    this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-  } */
 
   patrol () {
     this.animations.play('swim')
