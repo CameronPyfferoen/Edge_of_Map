@@ -2,15 +2,20 @@ import Phaser from 'phaser'
 import config from '../config'
 import PlayerBoat from '../sprites/PlayerBoat'
 import Enemy from './Enemy'
-import { Group } from 'phaser-ce'
-// import Enemies from '../Groups/Enemies'
 
-class Test_Snek extends Phaser.Sprite
+class Test_Snek extends Enemy
 { 
-  constructor ({ game, x, y, player }) {
-    super(game, x, y, 'seasnake', 0)
+  constructor ( game ) {
+    super(game)
+    /*
     this.game = game
+    
+    this.x = x
+    this.y = y
+    
+    
     this.player = player
+    
     this.name = 'Test Snek'
     this.anchor.setTo(0.5, 0.5)
     this.maxHealth = 100
@@ -70,9 +75,10 @@ class Test_Snek extends Phaser.Sprite
         this.turn = false
       }
     }
-    
+    */
   }
 
+  /*
   chase () {
     this.animations.play('swim')
     this.moveToObject(this.body, this.player)
@@ -116,6 +122,6 @@ class Test_Snek extends Phaser.Sprite
     obj1.force.x = Math.cos(angle) * this.chasespd    // accelerateToObject 
     obj1.force.y = Math.sin(angle) * this.chasespd
   }
-  
+  */
 }
 export default Test_Snek
