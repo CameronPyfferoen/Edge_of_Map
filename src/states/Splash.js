@@ -124,17 +124,10 @@ class Splash extends Phaser.State {
       if (this.game.sounds.get('music-intro').isDecoded) {
         // this.state.start('MainMenu')
         // this.state.start('TestLevel')
-<<<<<<< HEAD
         // this.state.start('PrototypeLevel1')
         // this.state.start('Cam_TestLevel');
         this.state.start('FiringTest')
 
-
-=======
-        this.state.start('PrototypeLevel1')
-        // this.state.start('Cam_TestLevel');
-        // this.state.start('FiringTest')
->>>>>>> 2329aa3861049e92c0531d422ab16a7b5a57a5b2
       }
     }
   }

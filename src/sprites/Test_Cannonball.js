@@ -27,11 +27,10 @@ class Test_Cannonball extends Phaser.Sprite {
   }
 
   destroy () {
-    
     this.body.sprite.kill()
     this.body.destroy()
   }
-    
+
   update () {
     super.update()
     this.animations.play('ball')
