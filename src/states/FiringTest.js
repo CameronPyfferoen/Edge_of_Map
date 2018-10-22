@@ -12,15 +12,19 @@ import { Sprite } from 'phaser-ce'
 // What I did previously
 // Improved projectiles
 // Projectiles are deleted after an x amount of time, or if they collide with anything
+// Can fire from right side of the ship
+// Removed right click context menu
+// Scatter shot implemented
 
 // What I want to do
+// consider adding a sprite count, to see if sprites are deleted or not
 // add a cooldown to firing projectiles
-// fire from the right side of the ship
 // add another set of projectiles that fire towards the mouse cursor
 // SOMEWHAT IMPORTANT, figure out if I can move any code from FiringTest class into functions outside of the create function or js files in sprites
 // ^IN OTHER WORDS, make code more efficient
 // Check out bullet function, see if it's more efficient
-// Different projectiles: spreadshot, rapid fire, etc
+// Different projectiles: Rapid Fire and Harpoons
+// ^Look at Eliot's link on Slack
 // Finally move Test_Cannonballs to Player file in sprites
 
 // Phaser examples to look at
@@ -71,9 +75,9 @@ class FiringTest extends Phaser.State {
     this.game.input.mouse.capture = true
 
     // prevent the right mouse button click menu from popping up
-    // document.oncontextmenu = function () {
-    //   return false
-    // }
+    document.oncontextmenu = function () {
+      return false
+    }
     this.timer = 0
     this.timer2 = 0
     // replaced anon function w/ firingCallback function
@@ -167,15 +171,15 @@ class FiringTest extends Phaser.State {
 
     cannonball2.body.setRectangle(4, 4)
     cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball2.body.moveForward(1000)
     cannonball2.body.angle = this.player.angle - 45
+    cannonball2.body.moveForward(1000)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     cannonball3.body.setRectangle(4, 4)
     cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball3.body.moveForward(1000)
     cannonball3.body.angle = this.player.angle - 135
+    cannonball3.body.moveForward(1000)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
 
@@ -202,8 +206,20 @@ class FiringTest extends Phaser.State {
       x: this.player.x,
       y: this.player.y
     })
+    let cannonball2 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    let cannonball3 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
+    this.projectile.add(cannonball2)
+    this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
     cannonball.body.setRectangle(4, 4)
@@ -223,6 +239,20 @@ class FiringTest extends Phaser.State {
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
     cannonball.body.moveForward(1000)
+
+    cannonball2.body.setRectangle(4, 4)
+    cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball2.body.angle = this.player.angle + 45
+    cannonball2.body.moveForward(1000)
+    cannonball2.width = this.cannonballWidth
+    cannonball2.height = this.cannonballHeight
+
+    cannonball3.body.setRectangle(4, 4)
+    cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball3.body.angle = this.player.angle + 135
+    cannonball3.body.moveForward(1000)
+    cannonball3.width = this.cannonballWidth
+    cannonball3.height = this.cannonballHeight
 
     // // PoS code below is supposed to add a rate of fire for ship
     // // set of code below should be a function
