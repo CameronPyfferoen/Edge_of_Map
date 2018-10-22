@@ -1,22 +1,18 @@
 import Phaser from 'phaser'
 import config from '../config'
-import PlayerBoat from '../sprites/PlayerBoat'
-import Enemy from './Enemy'
-import { Group } from 'phaser-ce'
-// import Enemies from '../Groups/Enemies'
 
-class Test_Snek extends Phaser.Sprite
-{ 
+class Enemy extends Phaser.Sprite
+{
   constructor ({ game, x, y, player }) {
     super(game, x, y, 'seasnake', 0)
-    this.game = game
+    this.name = 'Enemy'
     this.player = player
-    this.name = 'Test Snek'
     this.anchor.setTo(0.5, 0.5)
     this.maxHealth = 100
     this.smoothed = true
 
-    console.log('snake created')
+    this.game = game
+    console.log('Enemies created')
     // console.log('Player: ' + this.player)
 
     this._SCALE = 0.4
@@ -27,8 +23,8 @@ class Test_Snek extends Phaser.Sprite
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
     
-     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
-     this.body.offset.setTo(0.5, 1.5)
+    this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
+    this.body.offset.setTo(0.5, 1.5)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
@@ -52,21 +48,20 @@ class Test_Snek extends Phaser.Sprite
     this.startang = this.body.angle
     this.turn = false
     this.setupAnimations()
-    
   }
 
   patrol () {
     this.animations.play('swim')
     if (!this.turn) {
       this.body.moveForward(this.fwdspd)
-      if(this.pat_dist <= this.start_diff) {
+      if (this.pat_dist <= this.start_diff) {
         this.turn = true
       }
     }
-    else if(this.turn) {
+    else if (this.turn) {
       this.body.angle += this.angspd
       this.body.moveForward(this.turnspd)
-      if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
+      if ((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
         this.turn = false
       }
     }
@@ -82,23 +77,23 @@ class Test_Snek extends Phaser.Sprite
     super.update()
 
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
-    if(this.player_dist > this.renderdist && !this.isOffCamera)
+    if (this.player_dist > this.renderdist && !this.isOffCamera)
     {
       this.isOffCamera = true
       this.kill()
       console.log('killed')
     }
-    else if(this.player_dist <= this.renderdist && this.isOffCamera)
+    else if (this.player_dist <= this.renderdist && this.isOffCamera)
     {
       this.isOffCamera = false
       this.revive()
       console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if(this.player_dist > 50) {
+    if (this.player_dist > 50) {
       this.patrol()
     }
-    else if(this.player_dist <= this.chase_dist)
+    else if (this.player_dist <= this.chase_dist)
     {
       this.chase()
     } 
@@ -107,15 +102,13 @@ class Test_Snek extends Phaser.Sprite
 
   setupAnimations () {
     this.animations.add('snek', [0], 1, false)
-    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6 , 7], 10, true)
   }
 
-  moveToObject(obj1, obj2) {
+  moveToObject (obj1, obj2) {
     var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x)
     obj1.rotation = angle + Phaser.Math.degToRad(90)  // correct angle of angry bullets (depends on the sprite used)
     obj1.force.x = Math.cos(angle) * this.chasespd    // accelerateToObject 
     obj1.force.y = Math.sin(angle) * this.chasespd
   }
-  
 }
-export default Test_Snek
+export default Enemy

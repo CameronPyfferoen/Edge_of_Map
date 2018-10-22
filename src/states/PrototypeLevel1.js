@@ -30,6 +30,8 @@ class PrototypeLevel1 extends Phaser.State {
       x: 260,
       y: 1850
     })
+    this.player.z = 20
+    console.log('spawn player at layer '+this.player.z)
 
     this.game.add.existing(this.player)
 
