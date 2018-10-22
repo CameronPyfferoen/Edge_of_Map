@@ -22,14 +22,12 @@ class Cam_TestLevel extends Phaser.State {
       y: this.world.centerY
     })
 
-    /*
-    this.snek = new Test_Snek({
+    this.bcrab = new Crab_Blue({
       game: this.game,
       x: this.world.centerX,
-      y: this.world.centerY + 32,
+      y: this.world.centerY,
       player: this.playerMP
     })
-    */
 
     this.sneks = []
     for (let i = 0; i < 10; i++) {
