@@ -9,6 +9,7 @@ import Megalodon from '../sprites/Megalodon'
 import Pirhanas from '../sprites/Pirhanas'
 import Jellyfish from '../sprites/Jellyfish'
 import PlayerBoat from '../sprites/PlayerBoat'
+import Shark from '../sprites/Shark';
 
 
 class Cam_TestLevel extends Phaser.State {
@@ -35,6 +36,14 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.bcrab)
+
+    this.shark = new Shark({
+      game: this.game,
+      x: this.world.centerX,
+      y: this.world.centerY - 50,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.shark)
 
     this.sneks = []
     for (let i = 0; i < 10; i++) {
