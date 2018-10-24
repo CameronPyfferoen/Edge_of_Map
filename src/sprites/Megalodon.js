@@ -5,13 +5,20 @@ class Megalodon extends Enemy
 {
   constructor ( game ) {
     super ( game )
-    Phaser.Sprite.loadtexture('megalodon')
+    this.changeTexture()
     this.setupAnimations()
+    this.animations.play('mega_swim')
+  }
+
+  changeTexture()
+  {
+    this.loadTexture('megalodon', 0, false)
+    this.body.setRectangleFromSprite(this)
   }
 
   setupAnimations()
   {
-    this.setupAnimations.add('swim', [0], 1, false)
+    this.animations.add('mega_swim', [0], 1, false)
   }
 }
 

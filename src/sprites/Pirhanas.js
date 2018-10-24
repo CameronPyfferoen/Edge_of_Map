@@ -5,13 +5,20 @@ class Pirhanas extends Enemy
 {
   constructor ( game ) {
     super ( game )
-    Phaser.Sprite.loadtexture('pirhanas')
+    this.changeTexture()
     this.setupAnimations()
+    this.animations.play('pir_swim')
+  }
+
+  changeTexture()
+  {
+    this.loadTexture('pirhanas', 0, false)
+    this.body.setRectangleFromSprite(this)
   }
 
   setupAnimations()
   {
-    this.setupAnimations.add('swim', [0], 1, false)
+    this.animations.add('pir_swim', [0], 1, false)
   }
 }
 

@@ -5,13 +5,20 @@ class Jellyfish extends Enemy
 {
   constructor ( game ) {
     super ( game )
-    Phaser.Sprite.loadtexture('jellyfish')
+    this.changeTexture()
     this.setupAnimations()
+    this.animations.play('jelly_swim')
+  }
+
+  changeTexture()
+  {
+    this.loadTexture('jellyfish', 0, false)
+    this.body.setRectangleFromSprite(this)
   }
 
   setupAnimations()
   {
-    this.setupAnimations.add('swim', [0], 1, false)
+    this.animations.add('jelly_swim', [0], 1, false)
   }
 }
 

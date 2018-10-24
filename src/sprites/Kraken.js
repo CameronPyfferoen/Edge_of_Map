@@ -5,13 +5,20 @@ class Kraken extends Enemy
 {
   constructor ( game ) {
     super ( game )
-    Phaser.Sprite.loadtexture('kraken')
+    this.changeTexture()
     this.setupAnimations()
+    this.animations.play('kraken_swim')
+  }
+
+  changeTexture()
+  {
+    this.loadTexture('kraken', 0, false)
+    this.body.setRectangleFromSprite(this)
   }
 
   setupAnimations()
   {
-    this.setupAnimations.add('swim', [0], 1, false)
+    this.animations.add('kraken_swim', [0], 1, false)
   }
 }
 

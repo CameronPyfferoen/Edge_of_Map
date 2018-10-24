@@ -34,6 +34,7 @@ class Cam_TestLevel extends Phaser.State {
       y: this.world.centerY,
       player: this.playerMP
     })
+    this.game.add.existing(this.bcrab)
 
     this.sneks = []
     for (let i = 0; i < 10; i++) {
