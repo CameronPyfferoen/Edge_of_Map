@@ -1,8 +1,14 @@
 import Phaser from 'phaser';
-import config from '../config';
-import Test_Snek from '../sprites/Test_Snek';
+import config from '../config'
 import { Sprite } from 'phaser-ce';
-import PlayerBoat from '../sprites/PlayerBoat';
+import Test_Snek from '../sprites/Test_Snek'
+import Crab_Blue from '../sprites/Crab_Blue'
+import Crab_Orange from '../sprites/Crab_Orange'
+import Kraken from '../sprites/Kraken'
+import Megalodon from '../sprites/Megalodon'
+import Pirhanas from '../sprites/Pirhanas'
+import Jellyfish from '../sprites/Jellyfish'
+import PlayerBoat from '../sprites/PlayerBoat'
 
 
 class Cam_TestLevel extends Phaser.State {
