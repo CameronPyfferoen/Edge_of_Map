@@ -4,6 +4,7 @@ import config from '../config'
 class Test_Cannonball extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     super(game, x, y, 'sea_snake_16x', 0)
+    // super(game, x, y, 'cannonball', 0)
     this.name = 'Cannonball'
     this.anchor.setTo(0.5, 0.5)
 

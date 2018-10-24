@@ -17,6 +17,7 @@ import { Sprite } from 'phaser-ce'
 // Scatter shot implemented
 
 // What I want to do
+// switch seasnake sprite to cannonball sprites
 // consider adding a sprite count, to see if sprites are deleted or not
 // add a cooldown to firing projectiles
 // add another set of projectiles that fire towards the mouse cursor
@@ -40,6 +41,7 @@ class FiringTest extends Phaser.State {
   preload () {
     // Load sprites, specifically the sea snake sprite for projectiles
     this.game.load.image('sea_snake_16x', './assets/images/seasnake_16x.png', 64, 64)
+    // this.game.load.image('cannonball', './assets/images/Projectils_75%_opacity.png', 32, 32)
   }
 
   create () {
