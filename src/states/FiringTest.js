@@ -20,13 +20,10 @@ import { Sprite } from 'phaser-ce'
 // switch seasnake sprite to cannonball sprites
 // consider adding a sprite count, to see if sprites are deleted or not
 // add a cooldown to firing projectiles
-// add another set of projectiles that fire towards the mouse cursor
-// SOMEWHAT IMPORTANT, figure out if I can move any code from FiringTest class into functions outside of the create function or js files in sprites
-// ^IN OTHER WORDS, make code more efficient
+// add another set of projectiles that fire towards the mouse cursor for harpoon
+// make code more efficient
 // Check out bullet function, see if it's more efficient
-// Different projectiles: Rapid Fire and Harpoons
-// ^Look at Eliot's link on Slack
-// Finally move Test_Cannonballs to Player file in sprites
+// Look at Eliot's link on Slack
 
 // Phaser examples to look at
 // body click in p2 physics?
