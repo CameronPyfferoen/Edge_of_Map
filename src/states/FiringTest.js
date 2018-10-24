@@ -11,16 +11,22 @@ import { Sprite } from 'phaser-ce'
 
 // What I did previously
 // Improved projectiles
-// Projectiles fire from the right side of the player's ship
-// Projectiles face the direction they are travelling in
+// Projectiles are deleted after an x amount of time, or if they collide with anything
+// Can fire from right side of the ship
+// Removed right click context menu
+// Scatter shot implemented
 
 // What I want to do
+// switch seasnake sprite to cannonball sprites
+// consider adding a sprite count, to see if sprites are deleted or not
 // add a cooldown to firing projectiles
-// delete the projectile sprite after a certain distance
+// add another set of projectiles that fire towards the mouse cursor for harpoon
+// make code more efficient
+// Check out bullet function, see if it's more efficient
+// Look at Eliot's link on Slack
 
 // Phaser examples to look at
-// Consider looking at rat attack in create in phaser
-// Consider looking at multiball in arcade physics
+// body click in p2 physics?
 
 class FiringTest extends Phaser.State {
   init () {
@@ -30,11 +36,14 @@ class FiringTest extends Phaser.State {
   }
 
   preload () {
+    // Load sprites, specifically the sea snake sprite for projectiles
     this.game.load.image('sea_snake_16x', './assets/images/seasnake_16x.png', 64, 64)
+    // this.game.load.image('cannonball', './assets/images/Projectils_75%_opacity.png', 32, 32)
   }
 
   create () {
-    // create the player object and setup the camera and inputs
+    // Create the player object
+    // Setup the camera and inputs
     this.player = new PlayerBoat({
       game: this.game,
       x: 260,
@@ -47,85 +56,131 @@ class FiringTest extends Phaser.State {
     this.game.camera.scale.y = 0.5
     this.game.camera.follow(this.player)
 
-    // this.localPlayer = this.player
-
-    //  Turn on impact events for the world, without this we get no collision callbacks
+    // Turn on impact events for the world, without this we get no collision callbacks
     this.game.physics.p2.setImpactEvents(true)
 
+    // Create collision groups for player and projectile
+    // Consider creating collision groups for enemy AI
     this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
 
+    // Add p2 physics group to this.projectile
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    this.localCannonballCollisionGroup = this.cannonballCollisionGroup
-    this.localPlayerCollisionGroup = this.playerCollisionGroup
 
-    //  This part is vital if you want the objects with their own collision groups to still collide with the world bounds
-    //  (which we do) - what this does is adjust the bounds to use its own collision group.
+    // Objects with collision groups will collide with world bounds
+    // Adjust the bounds to use its own collision group.
     this.game.physics.p2.updateBoundsCollisionGroup()
 
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
     this.game.input.mouse.capture = true
+
+    // prevent the right mouse button click menu from popping up
+    document.oncontextmenu = function () {
+      return false
+    }
+    this.timer = 0
+    this.timer2 = 0
     // replaced anon function w/ firingCallback function
     // used this.firingCallback to read the function from below the create function
     // added .bind(this) afterwards, so that, every this inside of the firingCallback function, refers to the FiringTest class rather than...
     // the addEventListener class
-    // everytime I want to create an addEventListener, I should create a non-anon function below create(), and use .bind(this)
-    addEventListener('click', this.firingCallback.bind(this))
-    // this.game.time.events.add(Phaser.Timer.SECOND * 4, destroy)
+    // every time I want to create an addEventListener, I should create a non-anon function below create(), and use .bind(this)
+    // or if I want to create anything similar to addEventListener
+    // addEventListener('click', this.firingCallback.bind(this))
+    addEventListener('click', this.firingCallbackCooldown.bind(this))
+    addEventListener('contextmenu', this.firingCallbackCooldown2.bind(this))
 
-    //  Set the ships collision group
-    // is the first part of the code correct?
+    // Set the ships collision group
     this.player.body.setCollisionGroup(this.playerCollisionGroup)
 
-    //  The ship will collide with the pandas, and when it strikes one the hitPanda callback will fire, causing it to alpha out a bit
-    //  When pandas collide with each other, nothing happens to them.
+    // Look at callback function notes
+    // When the ship collides with projectiles, the hitCannonball callback is called, killing the projectiles
+    // When projectiles collide with each other, they are not killed
     this.player.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
   }
 
-  // destroy () {
-  //   this.cannonball.destroy()
-  // }
-
   hitCannonball (body1, body2) {
-    //  body1 is the space ship (as it's the body that owns the callback)
-    //  body2 is the body it impacted with, in this case our panda
-    //  As body2 is a Phaser.Physics.P2.Body object, you access its own (the sprite) via the sprite property:
-    // body2.sprite.alpha -= 0.1
+    // body1 is the ship (as it's the body that owns the callback)
+    // body2 is the body it impacted with, in this case projectiles
+
+    // CONCERN, what if the player deletes enemies when collision occurs?
+    // body2 is a Phaser.Physics.P2.Body object, you can access its sprite via the sprite property?
     body2.sprite.kill()
     // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
     // body2.destroy()
   }
-
+  firingCallbackCooldown () {
+    if (this.timer == 0) {
+      this.firingCallback()
+      this.timer = 4000
+      while (this.timer > 0) {
+        this.timer--
+      }
+    }
+  }
+  firingCallbackCooldown2 () {
+    if (this.timer2 == 0) {
+      this.firingCallback2()
+      this.timer2 = 4000
+      while (this.timer2 > 0) {
+        this.timer2--
+      }
+    }
+  }
   firingCallback () {
+    // Create projectile object
     console.log('o')
     let cannonball = new Test_Cannonball({
       game: this.game,
-      x: this.player.x + 100,
+      x: this.player.x,
       y: this.player.y
     })
-
+    let cannonball2 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    let cannonball3 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
+    this.projectile.add(cannonball2)
+    this.projectile.add(cannonball3)
 
+    // Set hitbox size for projectile
     cannonball.body.setRectangle(4, 4)
-    //  Tell the panda to use the cannonballCollisionGroup
+    // Tell cannonball to use cannonballCollisionGroup
     cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
-    //  Pandas will collide against themselves and the player
-    //  If you don't set this they'll not collide with anything.
-    //  The first parameter is either an array or a single collision group.
 
-    cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+    //  Cannonballs will collide against themselves and the player
+    //  If this is not set, cannonballs will not collide with anything.
+    //  The first parameter is either an array or a single collision group. WHAT IS THIS LINE OF COMMENT
+    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
-    cannonball.body.angle = this.player.angle + 90
+    // Set projectile sprite size, spawn location, and velocity
+    this.cannonballWidth = 100
+    this.cannonballHeight = 200
+    cannonball.body.angle = this.player.angle - 90
+    // this.game.p2.moveToPointer(cannonball, 100)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
     cannonball.body.moveForward(1000)
 
-    // // PoS code below is supposed to delete cannonball sprite after a certain amount of distance?
-    // cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)
-    // if (cannonball.distanceConstraint(this.game, localPlayer, null, 10, null, null, null)) {
-    //   cannonball.destroy()
-    // }
+    cannonball2.body.setRectangle(4, 4)
+    cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball2.body.angle = this.player.angle - 45
+    cannonball2.body.moveForward(1000)
+    cannonball2.width = this.cannonballWidth
+    cannonball2.height = this.cannonballHeight
+
+    cannonball3.body.setRectangle(4, 4)
+    cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball3.body.angle = this.player.angle - 135
+    cannonball3.body.moveForward(1000)
+    cannonball3.width = this.cannonballWidth
+    cannonball3.height = this.cannonballHeight
 
     // // PoS code below is supposed to add a rate of fire for ship
     // // set of code below should be a function
@@ -140,21 +195,79 @@ class FiringTest extends Phaser.State {
     //   bullet.reset(cannonball.x - 8, cannonball.y - 8)
     //   this.game.physics.arcade.moveToPointer(bullet, 300)
     // }
-
-    // // below is an unknown line of code
-    // cannonball.body.setRectangle(40, 40)
-
-    // // COLLISION
-    // // the two sets of commented code below relate to collision
-    // //  Tell the panda to use the pandaCollisionGroup
-    // cannonball.body.setCollisionGroup(cannonballCollisionGroup)
-
-    // //  Pandas will collide against themselves and the player
-    // //  If you don't set this they'll not collide with anything.
-    // //  The first parameter is either an array or a single collision group.
-    // cannonball.body.collides([cannonballCollisionGroup, playerCollisionGroup])
   }
 
+  firingCallback2 () {
+    // Create projectile object
+    console.log('o')
+    let cannonball = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    let cannonball2 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    let cannonball3 = new Test_Cannonball({
+      game: this.game,
+      x: this.player.x,
+      y: this.player.y
+    })
+    // Add sprite to the projectile physics group
+    this.projectile.add(cannonball)
+    this.projectile.add(cannonball2)
+    this.projectile.add(cannonball3)
+
+    // Set hitbox size for projectile
+    cannonball.body.setRectangle(4, 4)
+    // Tell cannonball to use cannonballCollisionGroup
+    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+
+    //  Cannonballs will collide against themselves and the player
+    //  If this is not set, cannonballs will not collide with anything.
+    //  The first parameter is either an array or a single collision group. WHAT IS THIS LINE OF COMMENT
+    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+
+    // Set projectile sprite size, spawn location, and velocity
+    this.cannonballWidth = 100
+    this.cannonballHeight = 200
+    cannonball.body.angle = this.player.angle + 90
+    // this.game.p2.moveToPointer(cannonball, 100)
+    cannonball.width = this.cannonballWidth
+    cannonball.height = this.cannonballHeight
+    cannonball.body.moveForward(1000)
+
+    cannonball2.body.setRectangle(4, 4)
+    cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball2.body.angle = this.player.angle + 45
+    cannonball2.body.moveForward(1000)
+    cannonball2.width = this.cannonballWidth
+    cannonball2.height = this.cannonballHeight
+
+    cannonball3.body.setRectangle(4, 4)
+    cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
+    cannonball3.body.angle = this.player.angle + 135
+    cannonball3.body.moveForward(1000)
+    cannonball3.width = this.cannonballWidth
+    cannonball3.height = this.cannonballHeight
+
+    // // PoS code below is supposed to add a rate of fire for ship
+    // // set of code below should be a function
+    // // var sprite, sprite was replaced with cannonball
+    // // var bullets, replaced with projectiles
+    // // keep an eye out for bullet var in the if statement below
+    // var fireRate = 10000
+    // var nextFire = 0
+    // if (this.game.time.now > nextFire && projectile.countDead() > 0) {
+    //   nextFire = this.game.time.now + fireRate
+    //   var bullet = projectile.getFirstDead()
+    //   bullet.reset(cannonball.x - 8, cannonball.y - 8)
+    //   this.game.physics.arcade.moveToPointer(bullet, 300)
+    // }
+  }
+  
   setupKeyboard () {
     // register keys
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
