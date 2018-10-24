@@ -56,8 +56,9 @@ class Test_Snek extends Enemy
     this.starty = this.body.y
     this.startang = this.body.angle
     this.turn = false
+    */
     this.setupAnimations()
-    
+    /*
   }
 
   patrol () {
@@ -110,11 +111,11 @@ class Test_Snek extends Enemy
     } 
     
   }
-
+  */
   setupAnimations () {
-    this.animations.add('snek', [0], 1, false)
     this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6 , 7], 10, true)
   }
+  /*
 
   moveToObject(obj1, obj2) {
     var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x)
