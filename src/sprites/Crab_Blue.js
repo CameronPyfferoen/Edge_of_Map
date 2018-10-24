@@ -1,10 +1,11 @@
 import Enemy from './Enemy'
+import Phaser from 'phaser'
 
 class Crab_Blue extends Enemy
 {
   constructor ( game ) {
     super ( game )
-    Enemy.key = 'bluecrab'
+    Phaser.Sprite.loadtexture('bluecrab')
     this.setupAnimations()
   }
 
