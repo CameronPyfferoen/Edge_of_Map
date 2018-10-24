@@ -64,6 +64,9 @@ class Splash extends Phaser.State {
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
     this.load.image('wake3', '/assets/images/spr_wake_3.png')
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
+    this.load.image('starting_port', '/assets/images/Starting_Port.png')
+
+    this.load.physics('physicsList', 'assets/physicsList.json')
 
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
