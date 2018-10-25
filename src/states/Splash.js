@@ -26,7 +26,7 @@ class Splash extends Phaser.State {
 
     // Add the logo to the screen and center it
     this.logo = this.game.add.sprite(
-      this.game.world.centerX, this.game.world.centerY, 'conceptArt')
+      this.game.world.centerX, this.game.world.centerY + 100, 'ourLogo')
     centerGameObjects([this.logo])
 
   }
@@ -55,10 +55,12 @@ class Splash extends Phaser.State {
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
     this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 8, 8)
     this.load.spritesheet('mapoverlay', 'assets/images/maptemplatewater.png', 500, 260)
+    // this.load.spritesheet('cannonball', 'assets/images/Projectils_75%_opacity.png', 32, 32)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', '/assets/images/maptemplate.png')
+    this.load.image('mainMenuBackground', '/assets/images/menu_main_background.png')
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
     this.load.image('wake3', '/assets/images/spr_wake_3.png')
@@ -75,6 +77,10 @@ class Splash extends Phaser.State {
     this.load.image('megalodon', '/assets/images/meg_wip.png')
     this.load.image('pirhanas', '/assets/images/piranha_swarm.png')
 
+    this.load.spritesheet('playButton', '/assets/images/Buttons/SpriteSheet_main_play.png', 358, 121)
+    this.load.spritesheet('controlsButton', '/assets/images/Buttons/SpriteSheet_main_controls.png', 667, 121)
+    this.load.spritesheet('settingsButton', '/assets/images/Buttons/SpriteSheet_main_settings.png', 616, 121)
+    this.load.spritesheet('exitButton', '/assets/images/Buttons/SpriteSheet_main_exit.png', 358, 121)
 
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
@@ -139,10 +145,10 @@ class Splash extends Phaser.State {
     if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
       // Make sure the audio is not only loaded but also decoded before advancing
       if (this.game.sounds.get('music-intro').isDecoded) {
-        // this.state.start('MainMenu')
+        this.state.start('MainMenu')
         // this.state.start('TestLevel')
         // this.state.start('PrototypeLevel1')
-        this.state.start('Cam_TestLevel');
+        // this.state.start('Cam_TestLevel');
         // this.state.start('FiringTest')
       }
     }
