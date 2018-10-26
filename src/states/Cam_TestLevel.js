@@ -86,8 +86,8 @@ class Cam_TestLevel extends Phaser.State {
     // this.worldsprites = []
     // this.numsprites = 0
 
-    this.game.camera.scale.x = 1 // 4.2
-    this.game.camera.scale.y = 1 // 4.2
+    this.game.camera.scale.x = 4.2 // 4.2
+    this.game.camera.scale.y = 4.2 // 4.2
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     this.setupKeyboard()
