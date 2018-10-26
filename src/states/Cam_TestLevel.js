@@ -45,6 +45,14 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.shark)
 
+    this.meg = new Megalodon({
+      game: this.game,
+      x: this.world.centerX + 30,
+      y: this.world.centerY,
+      player:this.playerMP
+    })
+    this.game.add.existing(this.meg)
+
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -58,11 +66,13 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // land testing
+    /*
     this.port0 = this.game.add.sprite(200, 500, 'starting_port')
     this.game.physics.p2.enable(this.port0, true)
     this.port0.body.clearShapes()
     this.port0.body.loadPolygon('physicsList', 'Starting_Port')
     this.port0.body.gravityScale = 0
+    */
     this.game.add.existing(this.playerMP)
 
     // layer groups
@@ -80,7 +90,7 @@ class Cam_TestLevel extends Phaser.State {
     // adding the objects to the groups
     // this.underWater.add(this.snek)
     this.playerGroup.add(this.playerMP)
-    this.aboveWater.add(this.port0)
+    // this.aboveWater.add(this.port0)
     this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
     this.water.add(this.aqua)
     // this.worldsprites = []
