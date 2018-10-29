@@ -16,7 +16,7 @@ import { Sprite } from 'phaser-ce'
 // What I want to do
 // harpoon projectile!!!
 // add projectile code to player class!!!
-// consider adding a sprite count, to see if sprites are deleted or not
+// figure out how to replace kill cannonball w/ destroy cannonball
 // look at Eliot's link on Slack
 
 // Phaser examples to look at
@@ -106,13 +106,13 @@ class FiringTest extends Phaser.State {
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
-    this.spreadShotLeft()
-    // this.harpoon()
+    // this.spreadShotLeft()
+    this.harpoon()
   }
 
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
-    this.spreadShotRight()
+    // this.spreadShotRight()
   }
 
   // Firing rate for the left side of the ship
@@ -157,8 +157,18 @@ class FiringTest extends Phaser.State {
       y: this.player.y
     })
 
-    cannonball.body.velocity.x = directionx * 100
-    cannonball.body.velocity.y = directiony * 100
+    this.projectile.add(cannonball)
+    cannonball.body.setRectangle(4, 4)
+    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+
+    this.cannonballWidth = 100
+    this.cannonballHeight = 200
+
+    cannonball.body.velocity.x = directionx * 1000
+    cannonball.body.velocity.y = directiony * 1000
+
+    cannonball.width = this.cannonballWidth
+    cannonball.height = this.cannonballHeight
 
     // this.game.p2.moveToPointer(cannonball, 100)
   }
