@@ -12,7 +12,7 @@ class Test_Snek extends Enemy
     this.touch_damage = 10
     this.setupAnimations()
 
-    this.fireb = Fireball(this.game, this.x, this.y)
+    this.fireb = Fireball(this.game, this.x, this.y, this.angle)
   }
 
   attack () {
@@ -21,7 +21,10 @@ class Test_Snek extends Enemy
   }
 
   fire () {
-    this.game.
+    this.fireb.x = this.x
+    this.fireb.y = this.y
+    this.fireb.angle = this.angle
+    this.game.add.existing(this.fireb)
   }
 
   setupAnimations () {

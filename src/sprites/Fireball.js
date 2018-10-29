@@ -3,11 +3,12 @@ import { sequentialNumArray } from '../utils'
 import config from '../config'
 
 class Fireball extends Phaser.Sprite {
-  constructor ({ game, x, y }) {
+  constructor ({ game, x, y, angle }) {
     super(game, x, y, 'fireball', 0)
     this.game = game
     this.x = x
     this.y = y
+    this.angle = angle
 
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
