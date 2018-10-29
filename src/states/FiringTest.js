@@ -142,8 +142,8 @@ class FiringTest extends Phaser.State {
     let mousex = this.game.input.x
     let mousey = this.game.input.y
     console.log('MousePos: [' + mousex + ',' + mousey + ']')
-    let shipx = this.player.x
-    let shipy = this.player.y
+    let shipx = this.player.x / 2
+    let shipy = this.player.y / 2
     console.log('ShipPos: [' + shipx + ',' + shipy + ']')
     let directionx = mousex - shipx
     let directiony = mousey - shipy
