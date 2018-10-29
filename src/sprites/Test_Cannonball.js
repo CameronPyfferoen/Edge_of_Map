@@ -3,10 +3,12 @@ import config from '../config'
 
 class Test_Cannonball extends Phaser.Sprite {
   constructor ({ game, x, y }) {
-    super(game, x, y, 'sea_snake_16x', 0)
-    // super(game, x, y, 'cannonball', 0)
+    // super(game, x, y, 'sea_snake_16x', 0)
+    super(game, x, y, 'cannonball', 0)
     this.name = 'Cannonball'
     this.anchor.setTo(0.5, 0.5)
+
+    this.smoothed = false
 
     this.game = game
 
@@ -25,6 +27,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.data.gravityScale = 0
 
     this.game.time.events.add(Phaser.Timer.SECOND * 2, this.destroy.bind(this), this)
+    this.setupAnimations()
   }
 
   destroy () {
@@ -34,13 +37,14 @@ class Test_Cannonball extends Phaser.Sprite {
 
   update () {
     super.update()
-    this.animations.play('ball')
   }
 
   setupAnimations () {
-    this.animations.add('ball', [0], 1, false)
+    this.animations.add('ball', [2], 10, true)
+    this.animations.play('ball')
+    // this.frame = 2
+    console.log('k')
   }
-
 }
 
 export default Test_Cannonball
