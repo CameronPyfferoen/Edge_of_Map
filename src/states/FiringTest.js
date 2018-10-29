@@ -106,13 +106,13 @@ class FiringTest extends Phaser.State {
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
-    // this.spreadShotLeft()
-    this.harpoon()
+    this.spreadShotLeft()
+    // this.harpoon()
   }
 
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
-    // this.spreadShotRight()
+    this.spreadShotRight()
   }
 
   // Firing rate for the left side of the ship
