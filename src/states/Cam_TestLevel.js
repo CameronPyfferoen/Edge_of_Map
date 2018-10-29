@@ -9,6 +9,7 @@ import Megalodon from '../sprites/Megalodon'
 import Pirhanas from '../sprites/Pirhanas'
 import Jellyfish from '../sprites/Jellyfish'
 import PlayerBoat from '../sprites/PlayerBoat'
+import Shark from '../sprites/Shark';
 
 
 class Cam_TestLevel extends Phaser.State {
@@ -36,6 +37,22 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.bcrab)
 
+    this.shark = new Shark({
+      game: this.game,
+      x: this.world.centerX,
+      y: this.world.centerY - 50,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.shark)
+
+    this.meg = new Megalodon({
+      game: this.game,
+      x: this.world.centerX + 30,
+      y: this.world.centerY,
+      player:this.playerMP
+    })
+    this.game.add.existing(this.meg)
+
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -49,11 +66,13 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // land testing
+    /*
     this.port0 = this.game.add.sprite(200, 500, 'starting_port')
     this.game.physics.p2.enable(this.port0, true)
     this.port0.body.clearShapes()
     this.port0.body.loadPolygon('physicsList', 'Starting_Port')
     this.port0.body.gravityScale = 0
+    */
     this.game.add.existing(this.playerMP)
 
     // layer groups
@@ -71,14 +90,14 @@ class Cam_TestLevel extends Phaser.State {
     // adding the objects to the groups
     // this.underWater.add(this.snek)
     this.playerGroup.add(this.playerMP)
-    this.aboveWater.add(this.port0)
+    // this.aboveWater.add(this.port0)
     this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
     this.water.add(this.aqua)
     // this.worldsprites = []
     // this.numsprites = 0
 
-    this.game.camera.scale.x = 1 // 4.2
-    this.game.camera.scale.y = 1 // 4.2
+    this.game.camera.scale.x = 4.2 // 4.2
+    this.game.camera.scale.y = 4.2 // 4.2
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     this.setupKeyboard()
