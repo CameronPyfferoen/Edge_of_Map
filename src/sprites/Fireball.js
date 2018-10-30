@@ -25,8 +25,8 @@ class Fireball extends Phaser.Sprite {
 
     this.setupAnimations()
 
-    this.timer = Phaser.Timer(this.game, false)
-    this.timer.second = 1
+    this.timer = new Phaser.Timer(this.game, false)
+    this.timer.add(1000, this.end(), this)
     this.timer.start()
 
     this.speed = 30
