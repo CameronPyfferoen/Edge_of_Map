@@ -56,7 +56,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
     this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 8, 8)
     this.load.spritesheet('mapoverlay', 'assets/images/maptemplatewater.png', 500, 260)
-    // this.load.spritesheet('cannonball', 'assets/images/Projectils_75%_opacity.png', 32, 32)
+    this.load.spritesheet('cannonball', 'assets/images/Projectiles_75_opacity.png', 32, 32, 4)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
