@@ -90,7 +90,7 @@ class Enemy extends Phaser.Sprite
       console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if (this.player_dist > 50) {
+    if (this.player_dist > this.chase_dist) {
       this.patrol()
     }
     else if (this.player_dist <= this.chase_dist)
