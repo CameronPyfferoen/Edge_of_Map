@@ -23,7 +23,12 @@ class Test_Snek extends Enemy {
   }
 
   fire () {
-    this.fireb = new Fireball(this.parent.game, this.x, this.y, this.angle)
+    this.fireb = new Fireball({
+      game: this.game,
+      x: this.x,
+      y: this.y,
+      angle: this.angle
+    })
     this.game.add.existing(this.fireb)
     this.fireb.body.moveForward(this.fireb.speed)
   }

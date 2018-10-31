@@ -10,6 +10,12 @@ class Fireball extends Phaser.Sprite {
     this.y = y
     this.angle = angle
 
+    this.startx = this.x
+    this.starty = this.y
+
+    this.travel_dist = 0
+    this.destroy_dist = 150
+
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
 
@@ -18,17 +24,13 @@ class Fireball extends Phaser.Sprite {
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
-    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
+    this.body.setRectangleFromSprite()
     this.body.offset.setTo(0, 0)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
 
     this.setupAnimations()
-
-    this.timer = new Phaser.Timer(this.game, false)
-    this.timer.add(1000, this.end(), this)
-    this.timer.start()
 
     this.speed = 30
     this.damage = 15
@@ -46,9 +48,9 @@ class Fireball extends Phaser.Sprite {
   update () {
     super.update()
     this.animations.play('fire')
-    if(this.timer <= 0)
+    this.travel_dist = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
+    if(this.travel_dist >= this.destroy_dist)
     {
-      this.timer.destroy()
       this.end()
     }
   }
