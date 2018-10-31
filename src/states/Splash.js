@@ -46,11 +46,8 @@ class Splash extends Phaser.State {
 
     // The main player spritesheet
     this.load.spritesheet('Pirat_Ship_1', 'assets/images/Pirat_Ship_1.jpg', 64, 64)
-
     this.load.spritesheet('player-main', 'assets/images/player-main.png', 64, 64)
-
     this.load.spritesheet('seasnake', 'assets/images/SpriteSheet_SeaSnake.png', 64, 128)
-    
     this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
     this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
     this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 8, 8)
@@ -60,16 +57,16 @@ class Splash extends Phaser.State {
     // this.load.image('map', './assets/images/maptemplate.png')
 
     this.load.image('map', '/assets/images/maptemplate.png')
-    this.load.image('mainMenuBackground', '/assets/images/menu_main_background.png')
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
     this.load.image('wake3', '/assets/images/spr_wake_3.png')
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
-
+    
+    // Polygon Testing
     this.load.image('starting_port', '/assets/images/Starting_Port.png')
-
     this.load.physics('physicsList', 'assets/physicsList.json')
 
+    // Enemies
     this.load.image('bluecrab', '/assets/images/crab_blue.png')
     this.load.image('orangecrab', '/assets/images/crab_orange.png')
     this.load.image('jellyfish', '/assets/images/jellyfish_swarm.png')
@@ -77,6 +74,14 @@ class Splash extends Phaser.State {
     this.load.image('megalodon', '/assets/images/meg_wip.png')
     this.load.image('pirhanas', '/assets/images/piranha_swarm.png')
 
+    // Tilemap Assets
+    this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json')
+    this.load.image('backgroundImage', '/assets/images/maptemplatewater (1).png')
+    this.load.image('islandSprites', '/assets/images/inprogress_map_template_no_back.png')
+    this.load.image('cloudBarrier', '/assets/images/cloudedge.png')
+
+    // Menu Assets
+    this.load.image('mainMenuBackground', '/assets/images/menu_main_background.png')
     this.load.spritesheet('playButton', '/assets/images/Buttons/SpriteSheet_main_play.png', 358, 121)
     this.load.spritesheet('controlsButton', '/assets/images/Buttons/SpriteSheet_main_controls.png', 667, 121)
     this.load.spritesheet('settingsButton', '/assets/images/Buttons/SpriteSheet_main_settings.png', 616, 121)

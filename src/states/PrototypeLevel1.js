@@ -11,8 +11,8 @@ import { Sprite } from 'phaser-ce';
 class PrototypeLevel1 extends Phaser.State {
   init () {
     // Set / Reset world bounds
-    this.game.add.tileSprite(0, 0, 3149, 2007, 'map');
-    this.game.world.setBounds(0, 0, 3149, 2007);
+    // this.game.add.tileMap(0, 0, 3149, 2007, 'map');
+    this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true;
     this.game.time.desiredFPS = 60;
 
@@ -24,6 +24,14 @@ class PrototypeLevel1 extends Phaser.State {
   preload () {}
 
   create () {
+    this.map = this.game.add.tilemap('map1', 32, 32);
+    this.map.addTilesetImage('islands', 'islandSprites');
+    this.map.addTilesetImage('clouds', 'cloudBarrier');
+
+    // this.background = this.map.createLayer('Background');
+    this.landLayer = this.map.createLayer('Lands');
+    this.cloudLayer = this.map.createLayer('Clouds');
+
     // create the player object and setup the camera and inputs
     this.player = new PlayerBoat({
       game: this.game,
@@ -39,9 +47,9 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // frame of the game
-    this.game.camera.scale.x = 4.2;
-    this.game.camera.scale.y = 4.2;
-    this.game.camera.follow(this.player);
+    this.game.camera.scale.x = 1; // 4.2
+    this.game.camera.scale.y = 1; // 4.2
+    this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     // add controls
     this.setupKeyboard();
