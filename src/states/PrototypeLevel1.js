@@ -25,8 +25,8 @@ class PrototypeLevel1 extends Phaser.State {
 
   create () {
     this.map = this.game.add.tilemap('map1', 32, 32);
-    this.map.addTilesetImage('islands', 'islandSprites');
-    this.map.addTilesetImage('clouds', 'cloudBarrier');
+    this.map.addTilesetImage('landTiles', 'islandSprites');
+    this.map.addTilesetImage('Clouds', 'cloudBarrier');
 
     // this.background = this.map.createLayer('Background');
     this.landLayer = this.map.createLayer('Lands');
