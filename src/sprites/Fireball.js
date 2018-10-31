@@ -14,6 +14,7 @@ class Fireball extends Phaser.Sprite {
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
+    this.body.angle = this.angle
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
@@ -43,6 +44,7 @@ class Fireball extends Phaser.Sprite {
   }
 
   update () {
+    super.update()
     this.animations.play('fire')
     if(this.timer <= 0)
     {

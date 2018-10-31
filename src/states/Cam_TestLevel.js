@@ -28,7 +28,7 @@ class Cam_TestLevel extends Phaser.State {
       x: this.world.centerX - 100,
       y: this.world.centerY
     })
-
+    /*
     this.bcrab = new Crab_Blue({
       game: this.game,
       x: this.world.centerX,
@@ -52,7 +52,7 @@ class Cam_TestLevel extends Phaser.State {
       player:this.playerMP
     })
     this.game.add.existing(this.meg)
-
+    */
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
