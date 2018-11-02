@@ -71,6 +71,7 @@ class Splash extends Phaser.State {
 
     this.load.physics('physicsList', 'assets/physicsList.json')
 
+    this.load.image('seasnake_still', '/assets/images/seasnake_16x.png')
     this.load.image('bluecrab', '/assets/images/crab_blue.png')
     this.load.image('orangecrab', '/assets/images/crab_orange.png')
     this.load.image('jellyfish', '/assets/images/jellyfish_swarm.png')
