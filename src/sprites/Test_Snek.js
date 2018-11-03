@@ -18,13 +18,17 @@ class Test_Snek extends Enemy {
   }
 
   idle () {
-    this.loadtexture()
+    this.loadTexture('seasnake')
+    this.animations.play('swim')
+    this.animations.stop()
   }
 
   attack () {
-    this.loadTexture('seasnake_attack', 0)
+    this.loadTexture('seasnake_attack')
     this.setupAnimations()
     this.body.setRectangleFromSprite()
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
     this.animations.play('attack')
     if (this.animations.currentAnim.complete) {
       this.loadTexture('seasnake', 0)
@@ -47,6 +51,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
+    this.game.physics.projectileGroup.add(this.fireb)
     this.fireb.body.moveForward(this.fireb.speed)
     this.shot = true
   }
@@ -71,6 +76,7 @@ class Test_Snek extends Enemy {
         this.attack()
         if (this.animations.currentAnim.complete) {
           this.fire()
+          this.idle()
         }
       } else if (this.fireb.travel_dist >= this.fireb.destroy_dist) {
         this.shot = false
