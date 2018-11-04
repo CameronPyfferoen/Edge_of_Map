@@ -11,6 +11,8 @@ import { Sprite } from 'phaser-ce';
 class PrototypeLevel1 extends Phaser.State {
   init () {
     // Set / Reset world bounds
+    // this.game.width = 762;
+    // this.game.heigth = 488;
     this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
     this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true;
@@ -53,6 +55,8 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.cameraScale = 1; // 4.2
     this.game.camera.scale.x = this.game.cameraScale; 
     this.game.camera.scale.y = this.game.cameraScale; 
+    this.game.camera.view.x = 762;
+    this.game.camera.view.y = 488;
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     /*

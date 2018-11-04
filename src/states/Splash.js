@@ -45,20 +45,20 @@ class Splash extends Phaser.State {
     // Load all the assets needed for next state
 
     // The main player spritesheet
-    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Pirat_Ship_1.jpg', 64, 64)
-    this.load.spritesheet('player-main', 'assets/images/player-main.png', 64, 64)
-    this.load.spritesheet('seasnake', 'assets/images/SpriteSheet_SeaSnake.png', 64, 128)
-    this.load.spritesheet('seasnake_attack', './assets/images/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
-    this.load.spritesheet('fireball', './assets/images/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
-    this.load.spritesheet('sharkSheet', './assets/images/SpriteSheet_Shark.png', 32, 48)
-    this.load.spritesheet('medBoat', 'assets/images/Player_M_96.png', 96, 96)
-    this.load.spritesheet('wake', 'assets/images/spr_wake_8x8.png', 8, 8)
-    this.load.spritesheet('mapoverlay', 'assets/images/maptemplatewater.png', 500, 260)
-    this.load.spritesheet('cannonball', 'assets/images/Projectiles_75_opacity.png', 32, 32, 4)
+    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Player/Pirat_Ship_1.jpg', 64, 64)
+    this.load.spritesheet('player-main', 'assets/images/Player/player-main.png', 64, 64)
+    this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
+    this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
+    this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
+    this.load.spritesheet('sharkSheet', './assets/images/Enemies/SpriteSheet_Shark.png', 32, 48)
+    this.load.spritesheet('medBoat', 'assets/images/Player/Player_M_96.png', 96, 96)
+    this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
+    this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
+    this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
-    this.load.image('map', '/assets/images/maptemplate.png')
+    this.load.image('map', '/assets/images/Terrain/maptemplate.png')
     /*
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
@@ -66,29 +66,29 @@ class Splash extends Phaser.State {
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
     */
     // Polygon Testing
-    this.load.image('starting_port', '/assets/images/Starting_Port.png')
+    this.load.image('starting_port', '/assets/images/Terrain/Starting_Port.png')
     this.load.physics('physicsList', 'assets/physicsList.json')
 
     // Enemies
-    this.load.image('bluecrab', '/assets/images/crab_blue.png')
-    this.load.image('orangecrab', '/assets/images/crab_orange.png')
-    this.load.image('jellyfish', '/assets/images/jellyfish_swarm.png')
-    this.load.image('kraken', '/assets/images/kraken_wip.png')
-    this.load.image('megalodon', '/assets/images/meg_wip.png')
-    this.load.image('pirhanas', '/assets/images/piranha_swarm.png')
+    this.load.image('bluecrab', '/assets/images/Enemies/crab_blue.png')
+    this.load.image('orangecrab', '/assets/images/Enemies/crab_orange.png')
+    this.load.image('jellyfish', '/assets/images/Enemies/jellyfish_swarm.png')
+    this.load.image('kraken', '/assets/images/Enemies/kraken_wip.png')
+    this.load.image('megalodon', '/assets/images/Enemies/meg_wip.png')
+    this.load.image('pirhanas', '/assets/images/Enemies/piranha_swarm.png')
 
     // Tilemap Assets
-    this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json', null, Phaser.Tilemap.TILED_JSON)
-    this.load.image('backgroundImage', '/assets/images/maptemplatewater (1).png')
-    this.load.image('islandSprites', '/assets/images/inprogress_map_template_no_back.png')
-    this.load.image('cloudBarrier', '/assets/images/cloudedge.png')
+    this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
+    this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
+    this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
+    this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
 
     // Menu Assets
-    this.load.image('mainMenuBackground', '/assets/images/menu_main_background.png')
-    this.load.spritesheet('playButton', '/assets/images/Buttons/SpriteSheet_main_play.png', 358, 121)
-    this.load.spritesheet('controlsButton', '/assets/images/Buttons/SpriteSheet_main_controls.png', 667, 121)
-    this.load.spritesheet('settingsButton', '/assets/images/Buttons/SpriteSheet_main_settings.png', 616, 121)
-    this.load.spritesheet('exitButton', '/assets/images/Buttons/SpriteSheet_main_exit.png', 358, 121)
+    this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
+    this.load.spritesheet('playButton', '/assets/images/Ui/SpriteSheet_main_play.png', 358, 121)
+    this.load.spritesheet('controlsButton', '/assets/images/Ui/SpriteSheet_main_controls.png', 667, 121)
+    this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
+    this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
 
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [

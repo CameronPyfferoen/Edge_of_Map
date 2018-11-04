@@ -52,11 +52,11 @@ class Boot extends Phaser.State {
     text.anchor.setTo(0.5, 0.5)
 
     // Read the assets for the splash screen (used in next stage)
-    this.load.image('loaderBg', './assets/images/loader-bg.png')
-    this.load.image('loaderBar', './assets/images/loader-bar.png')
-    this.load.image('logo', './assets/images/blaze.jpg')
-    this.load.image('conceptArt', './assets/images/Concept Art.png')
-    this.load.image('ourLogo', '/assets/images/logo.png')
+    this.load.image('loaderBg', './assets/images/Ui/loader-bg.png')
+    this.load.image('loaderBar', './assets/images/Ui/loader-bar.png')
+    this.load.image('logo', './assets/images/Ui/blaze.jpg')
+    this.load.image('conceptArt', './assets/images/Ui/Concept Art.png')
+    this.load.image('ourLogo', '/assets/images/Ui/logo.png')
   }
 
   // Called repeatedly after pre-load to draw the stage
