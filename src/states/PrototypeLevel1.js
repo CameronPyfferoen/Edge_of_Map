@@ -55,8 +55,8 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.cameraScale = 1; // 4.2
     this.game.camera.scale.x = this.game.cameraScale; 
     this.game.camera.scale.y = this.game.cameraScale; 
-    this.game.camera.view.x = 762;
-    this.game.camera.view.y = 488;
+    // this.game.camera.view.x = 762;
+    // this.game.camera.view.y = 488;
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     /*

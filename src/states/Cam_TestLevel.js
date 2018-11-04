@@ -152,6 +152,8 @@ class Cam_TestLevel extends Phaser.State {
 
     this.aqua.x = this.playerMP.body.x - 250;
     this.aqua.y = this.playerMP.body.y - 130;
+    // this.aqua.x = this.game.camera.position.x - 250;
+    // this.aqua.y = this.game.camera.position.y - 130;
   }
 }
 
