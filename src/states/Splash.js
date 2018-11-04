@@ -69,6 +69,7 @@ class Splash extends Phaser.State {
     this.load.image('starting_port', '/assets/images/Terrain/Starting_Port.png')
     this.load.physics('physicsList', 'assets/physicsList.json')
 
+    this.load.image('seasnake_still', '/assets/images/seasnake_16x.png')
     // Enemies
     this.load.image('bluecrab', '/assets/images/Enemies/crab_blue.png')
     this.load.image('orangecrab', '/assets/images/Enemies/crab_orange.png')
@@ -118,6 +119,7 @@ class Splash extends Phaser.State {
     this.game.enemyGroup = this.game.physics.p2.createCollisionGroup()
     this.game.itemGroup = this.game.physics.p2.createCollisionGroup()
     this.game.landGroup = this.game.physics.p2.createCollisionGroup()
+    this.game.projectileGroup = this.game.physics.p2.createCollisionGroup()
   }
 
   setupAudio () {

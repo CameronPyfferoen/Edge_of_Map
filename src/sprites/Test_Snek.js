@@ -10,16 +10,37 @@ class Test_Snek extends Enemy {
     super(game)
     this.touch_damage = 10
     this.setupAnimations()
+    this.body.setRectangleFromSprite()
     this.fire_dist = 50
+    this.shot = false
+    this.attack_called = false
+    this.idle_called = false
+  }
 
-    this.timer = new Phaser.Timer(this.game, false)
-
-    // this.fireb = new Fireball(game, this.x, this.y, this.angle)
+  idle () {
+    this.loadTexture('seasnake')
+    this.animations.play('swim')
+    this.animations.stop()
   }
 
   attack () {
     this.loadTexture('seasnake_attack')
+    this.setupAnimations()
+    this.body.setRectangleFromSprite()
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
     this.animations.play('attack')
+    if (this.animations.currentAnim.complete) {
+      this.loadTexture('seasnake', 0)
+      this.setupAnimations()
+      this.body.setRectangleFromSprite()
+      this.animations.play('swim')
+    }
+  }
+
+  chase () {
+    this.animations.play('swim')
+    this.moveToObject(this.body, this.player)
   }
 
   fire () {
@@ -30,31 +51,36 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
+    this.game.physics.projectileGroup.add(this.fireb)
     this.fireb.body.moveForward(this.fireb.speed)
+    this.shot = true
   }
 
   update () {
     super.update()
-
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()
-      console.log('killed')
     } else if (this.player_dist <= this.renderdist && this.isOffCamera) {
       this.isOffCamera = false
       this.revive()
-      console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if (this.player_dist > this.chase_dist) {
       this.patrol()
     } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
       this.chase()
-    }
-    else if (this.player_dist <= this.fire_dist) {
-      this.attack()
-      this.timer.loop(1000, this.fire(), this, true)
+    } else if (this.player_dist <= this.fire_dist) {
+      if (!this.shot) {
+        this.attack()
+        if (this.animations.currentAnim.complete) {
+          this.fire()
+          this.idle()
+        }
+      } else if (this.fireb.travel_dist >= this.fireb.destroy_dist) {
+        this.shot = false
+      }
     }
   }
 
