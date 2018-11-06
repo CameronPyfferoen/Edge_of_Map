@@ -25,7 +25,6 @@ class Fireball extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     this.body.setCollisionGroup(this.game.projectileGroup)
-    this.body.collides(this.game.playerGroup)
 
     this.body.setRectangleFromSprite()
     this.body.offset.setTo(0, 0)
@@ -37,10 +36,12 @@ class Fireball extends Phaser.Sprite {
 
     this.speed = 30
     this.damage = 15
+    this.fire = false
   }
 
   end () {
     this.destroy()
+    console.log('fireball destroyed')
   }
 
   setupAnimations () {
@@ -51,6 +52,10 @@ class Fireball extends Phaser.Sprite {
     super.update()
     this.animations.play('fire')
     this.travel_dist = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
+    if(this.fire)
+    {
+      this.body.moveForward(this.speed)
+    }
     if(this.travel_dist >= this.destroy_dist)
     {
       this.end()

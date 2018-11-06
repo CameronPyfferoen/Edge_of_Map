@@ -18,27 +18,42 @@ class Test_Snek extends Enemy {
   }
 
   idle () {
-    this.loadTexture('seasnake')
+    if(this.texture !== 'seasnake')
+    {
+      this.loadTexture('seasnake')
+      this.setupAnimations()
+    }
     this.animations.play('swim')
     this.animations.stop()
   }
 
   attack () {
-    this.loadTexture('seasnake_attack')
-    this.setupAnimations()
-    this.body.setRectangleFromSprite()
+    if(this.texture !== 'seasnake_attack')
+    {
+      this.loadTexture('seasnake_attack')
+      this.setupAnimations()
+      this.body.setRectangleFromSprite()
+    }
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.play('attack')
-    if (this.animations.currentAnim.complete) {
+    this.fire()
+    /*
+    if (this.animations.currentAnim.complete()) {
       this.loadTexture('seasnake', 0)
       this.setupAnimations()
       this.body.setRectangleFromSprite()
       this.animations.play('swim')
     }
+    */
   }
 
   chase () {
+    if(this.texture !== 'seasnake')
+    {
+      this.loadTexture('seasnake')
+      this.setupAnimations()
+    }
     this.animations.play('swim')
     this.moveToObject(this.body, this.player)
   }
@@ -51,7 +66,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    this.fireb.body.moveForward(this.fireb.speed)
+    this.fireb.fire = true
     this.shot = true
   }
 
@@ -76,12 +91,9 @@ class Test_Snek extends Enemy {
     else if (this.player_dist <= this.fire_dist) {
       if (!this.shot) {
         this.attack()
-        if (this.animations.currentAnim.complete) {
-          this.fire()
-          this.idle()
-        }
       }
       else if(this.shot){
+        this.idle()
         if (this.fireb.end()) {
           console.log('shot is false')
          this.shot = false
