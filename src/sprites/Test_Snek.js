@@ -15,6 +15,7 @@ class Test_Snek extends Enemy {
     this.shot = false
     this.attack_called = false
     this.idle_called = false
+    this.reset_count = 0
   }
 
   idle () {
@@ -103,6 +104,17 @@ class Test_Snek extends Enemy {
   }
 
   setupAnimations () {
+    console.log('reset animations')
+    if(this.animations.currentAnim === 'swim')
+    {
+      this.animations.getAnimation('swim').destroy()
+      console.log('swim destroyed')
+    }
+    if(this.animations.currentAnim === 'attack')
+    {
+      this.animations.getAnimation('attack').destroy()
+      console.log('attack destroyed')
+    }
     this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7], 10, true)
     this.animations.add('attack', sequentialNumArray(0, 8), false)
   }
