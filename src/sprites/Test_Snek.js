@@ -61,16 +61,19 @@ class Test_Snek extends Enemy {
     if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()
-    } else if (this.player_dist <= this.renderdist && this.isOffCamera) {
+    } 
+    else if (this.player_dist <= this.renderdist && this.isOffCamera) {
       this.isOffCamera = false
       this.revive()
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if (this.player_dist > this.chase_dist) {
       this.patrol()
-    } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
+    } 
+    else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
       this.chase()
-    } else if (this.player_dist <= this.fire_dist) {
+    } 
+    else if (this.player_dist <= this.fire_dist) {
       if (!this.shot) {
         this.attack()
         if (this.animations.currentAnim.complete) {
@@ -78,10 +81,13 @@ class Test_Snek extends Enemy {
           this.idle()
         }
       }
-       else if (this.fireb.travel_dist >= this.fireb.destroy_dist) {
-        this.shot = false
+      else if(this.shot){
+        if (this.fireb.end()) {
+          console.log('shot is false')
+         this.shot = false
       }
     }
+   }
   }
 
   setupAnimations () {

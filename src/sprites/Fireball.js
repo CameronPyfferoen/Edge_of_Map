@@ -40,7 +40,6 @@ class Fireball extends Phaser.Sprite {
   }
 
   end () {
-    this.body.destroy()
     this.destroy()
   }
 
@@ -56,7 +55,7 @@ class Fireball extends Phaser.Sprite {
     {
       this.end()
     }
-      this.body.collides(this.game.playerGroup, this.fireb.end(), this)
+    this.body.collides(this.game.playerGroup, this.end(), this)
   }
 }
 
