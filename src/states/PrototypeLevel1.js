@@ -43,8 +43,8 @@ class PrototypeLevel1 extends Phaser.State {
       x: 260,
       y: 1850
     })
-    this.player.z = 20
-    console.log('spawn player at layer '+this.player.z)
+    // this.player.z = 20
+    // console.log('spawn player at layer '+this.player.z)
 
     this.game.add.existing(this.player)
 
@@ -52,9 +52,13 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // frame of the game
-    this.game.cameraScale = 1; // 4.2
+    this.game.world.scale.setTo(1);
+    /*
+    this.game.cameraScale = 2; // 4.2
     this.game.camera.scale.x = this.game.cameraScale; 
     this.game.camera.scale.y = this.game.cameraScale; 
+    */
+    
     // this.game.camera.view.x = 762;
     // this.game.camera.view.y = 488;
     this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)

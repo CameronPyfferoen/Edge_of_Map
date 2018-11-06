@@ -14,8 +14,8 @@ import Shark from '../sprites/Shark';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3149, 2007, 'map')
-    this.game.world.setBounds(0, 0, 3149, 2007)
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
+    this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
   }
@@ -23,10 +23,25 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
+    // add tiled map
+    this.map = this.game.add.tilemap('map1', 32, 32);
+
+    this.map.addTilesetImage('landTiles', 'islandSprites');
+    this.map.addTilesetImage('Clouds', 'cloudBarrier');
+
+    this.landLayer = this.map.createLayer('Lands');
+    this.cloudLayer = this.map.createLayer('Clouds');
+
+    this.landLayer.smoothed = false;
+    this.cloudLayer.smoothed = false;
+
+    // Start playing the background music
+    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX - 100,
-      y: this.world.centerY
+      x: 1507,
+      y: 1168
     })
     /*
     this.bcrab = new Crab_Blue({
@@ -73,15 +88,8 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.test_fire)
 
-    // land testing
-    /*
-    this.port0 = this.game.add.sprite(200, 500, 'starting_port')
-    this.game.physics.p2.enable(this.port0, true)
-    this.port0.body.clearShapes()
-    this.port0.body.loadPolygon('physicsList', 'Starting_Port')
-    this.port0.body.gravityScale = 0
-    */
     this.game.add.existing(this.playerMP)
+    this.playerMP.body.rotation = 1.57; // uses radians 
 
     // layer groups
     this.underWater = this.game.add.group()
@@ -96,16 +104,17 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // adding the objects to the groups
-    // this.underWater.add(this.snek)
     this.playerGroup.add(this.playerMP)
-    // this.aboveWater.add(this.port0)
     this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
     this.water.add(this.aqua)
-    // this.worldsprites = []
-    // this.numsprites = 0
+    this.aboveWater.add(this.landLayer);
+    this.aboveWater.add(this.cloudLayer);
 
-    this.game.camera.scale.x = 4.2 // 4.2
-    this.game.camera.scale.y = 4.2 // 4.2
+
+    // frame of the game
+    // this.game.camera.scale.x = 4.2 // 4.2
+    // this.game.camera.scale.y = 4.2 // 4.2
+    this.game.world.scale.setTo(1);
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     this.setupKeyboard()

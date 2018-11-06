@@ -54,8 +54,8 @@ class Boot extends Phaser.State {
     // Read the assets for the splash screen (used in next stage)
     this.load.image('loaderBg', './assets/images/Ui/loader-bg.png')
     this.load.image('loaderBar', './assets/images/Ui/loader-bar.png')
-    this.load.image('logo', './assets/images/Ui/blaze.jpg')
-    this.load.image('conceptArt', './assets/images/Ui/Concept Art.png')
+    this.load.image('logo', './assets/images/Misc/blaze.jpg')
+    this.load.image('conceptArt', './assets/images/Misc/Concept Art.png')
     this.load.image('ourLogo', '/assets/images/Ui/logo.png')
   }
 
