@@ -51,7 +51,6 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    this.game.physics.projectileGroup.add(this.fireb)
     this.fireb.body.moveForward(this.fireb.speed)
     this.shot = true
   }
@@ -78,7 +77,8 @@ class Test_Snek extends Enemy {
           this.fire()
           this.idle()
         }
-      } else if (this.fireb.travel_dist >= this.fireb.destroy_dist) {
+      }
+       else if (this.fireb.travel_dist >= this.fireb.destroy_dist) {
         this.shot = false
       }
     }

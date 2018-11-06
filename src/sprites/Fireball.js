@@ -24,10 +24,13 @@ class Fireball extends Phaser.Sprite {
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
+    this.body.setCollisionGroup(this.game.projectileGroup)
+    this.body.collides(this.game.playerGroup)
+
     this.body.setRectangleFromSprite()
     this.body.offset.setTo(0, 0)
 
-    this.body.damping = 0.5
+    this.body.damping = 0
     this.body.data.gravityScale = 0
 
     this.setupAnimations()
@@ -53,6 +56,7 @@ class Fireball extends Phaser.Sprite {
     {
       this.end()
     }
+      this.body.collides(this.game.playerGroup, this.fireb.end(), this)
   }
 }
 
