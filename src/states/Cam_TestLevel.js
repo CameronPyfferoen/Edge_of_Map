@@ -31,7 +31,11 @@ class Cam_TestLevel extends Phaser.State {
 
     this.landLayer = this.map.createLayer('Lands');
     this.cloudLayer = this.map.createLayer('Clouds');
+    this.game.world.scale.setTo(2);
+    this.cloudLayer.scale.set(1.78);
+    this.landLayer.scale.set(1.78);
 
+    // this.cloudLayer.resizeWorld();
     this.landLayer.smoothed = false;
     this.cloudLayer.smoothed = false;
 
@@ -40,8 +44,8 @@ class Cam_TestLevel extends Phaser.State {
 
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 1507,
-      y: 1168
+      x: this.world.centerX,
+      y: this.world.centerY
     })
     /*
     this.bcrab = new Crab_Blue({
@@ -105,16 +109,13 @@ class Cam_TestLevel extends Phaser.State {
 
     // adding the objects to the groups
     this.playerGroup.add(this.playerMP)
-    this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
+    /*
+    this.aqua = this.game.add.sprite(0, 0,'mapoverlay')
     this.water.add(this.aqua)
+    */
     this.aboveWater.add(this.landLayer);
     this.aboveWater.add(this.cloudLayer);
 
-
-    // frame of the game
-    // this.game.camera.scale.x = 4.2 // 4.2
-    // this.game.camera.scale.y = 4.2 // 4.2
-    this.game.world.scale.setTo(1);
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
 
     this.setupKeyboard()
@@ -159,8 +160,8 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.turnRight();
     }
 
-    this.aqua.x = this.playerMP.body.x - 250;
-    this.aqua.y = this.playerMP.body.y - 130;
+    // this.aqua.x = this.playerMP.body.x - 250;
+    // this.aqua.y = this.playerMP.body.y - 130;
     // this.aqua.x = this.game.camera.position.x - 250;
     // this.aqua.y = this.game.camera.position.y - 130;
   }
