@@ -116,9 +116,14 @@ class Cam_TestLevel extends Phaser.State {
     this.aboveWater.add(this.landLayer);
     this.aboveWater.add(this.cloudLayer);
 
-    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     this.setupKeyboard()
+    
+    // pause listener
+    
+    // this.escKey.onDown.add(this.setPause(), this);
+    
   }
 
   setupKeyboard () {
@@ -126,6 +131,12 @@ class Cam_TestLevel extends Phaser.State {
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+  }
+
+  // pause function, changes pause state on call
+  setPause () {
+    this.game.paused = !this.game.paused;
   }
 
   update () {
@@ -136,7 +147,6 @@ class Cam_TestLevel extends Phaser.State {
 
     // move forward
     if (this.forwardKey.isDown) {
-      // if (__DEV__) console.log('forward key')
       this.playerMP.moveForward();
     } else {
       this.playerMP.slowDown();
@@ -144,22 +154,23 @@ class Cam_TestLevel extends Phaser.State {
 
     // turn left
     if (this.leftKey.isDown) {
-      // if (__DEV__) console.log('left key')
       this.playerMP.turnLeft();
     }
 
     // move back
     if (this.backwardKey.isDown) {
-      // if (__DEV__) console.log('back key')
       this.playerMP.moveBackward();
     }
 
     // turn right
     if (this.rightKey.isDown) {
-      // if (__DEV__) console.log('right key')
       this.playerMP.turnRight();
     }
-
+    /*
+    if (this.escKey.isDown) {
+      this.setPause();
+    }
+    */
     // this.aqua.x = this.playerMP.body.x - 250;
     // this.aqua.y = this.playerMP.body.y - 130;
     // this.aqua.x = this.game.camera.position.x - 250;
