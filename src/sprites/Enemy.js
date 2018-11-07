@@ -19,6 +19,8 @@ class Enemy extends Phaser.Sprite
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
+    this.body.setCollisionGroup(this.game.enemyGroup)
+    this.body.collides(this.game.playerGroup)
     
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false

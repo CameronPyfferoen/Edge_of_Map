@@ -25,6 +25,7 @@ class Fireball extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     this.body.setCollisionGroup(this.game.projectileGroup)
+    this.body.collides(this.game.playerGroup)
 
     this.body.setRectangleFromSprite()
     this.body.offset.setTo(0, 0)
@@ -48,6 +49,10 @@ class Fireball extends Phaser.Sprite {
     this.animations.add('fire', sequentialNumArray(0, 8), true)
   }
 
+  interact () {
+    this.end()
+  }
+
   update () {
     super.update()
     this.animations.play('fire')
@@ -60,7 +65,7 @@ class Fireball extends Phaser.Sprite {
     {
       this.end()
     }
-    this.body.collides(this.game.playerGroup, this.end(), this)
+    // this.body.collides(this.game.playerGroup, this.end(), this)
   }
 }
 
