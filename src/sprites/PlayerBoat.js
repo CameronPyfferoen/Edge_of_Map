@@ -1,7 +1,7 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 import config from '../config'
-import Wake from '../sprites/wake.js'
+// import Wake from '../sprites/wake.js'
 
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
@@ -11,11 +11,12 @@ class PlayerBoat extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
     this.smoothed = false
-
+    /*
     // create an emitter for the wake
     this.wakeEmitter = this.game.add.emitter(0, 0, 100)
     this.wakeEmitter.makeParticles(['wake1', 'wake2', 'wake3', 'wake4'])
     this.wakeEmitter.gravity = 0;
+    */
     // Set a reference to the top-level phaser game object
     this.game = game
 
@@ -46,6 +47,10 @@ class PlayerBoat extends Phaser.Sprite {
 
     this.body.setCollisionGroup(this.game.playerGroup)
     this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
+    this.body.onBeginContact.add(this.onBeginContact, this)
+    this.body.onEndContact.add(this.onExitContact, this)
+
+    this._overlapping = new Set()
 
     // setup movement physics
     this.intBoatSpeed = 60
@@ -117,9 +122,27 @@ class PlayerBoat extends Phaser.Sprite {
     }
   }
 
+  onBeginContact (otherPhaserBody, otherP2Body, myShape, otherShape, contactEquation){
+    if((otherPhaserBody.x <= this.body.x + 1 || otherPhaserBody.x >= this.body.x - 1) && (otherPhaserBody.y <= this.body.y + 1 || otherPhaserBody.y >= this.body.y - 1)){
+      console.log('collidable')
+      this._overlapping.add(otherPhaserBody.Sprite)
+    }
+  }
+
+  onExitContact (otherPhaserBody, otherP2Body, myShape, otherShape, contactEquation){
+    this._overlapping.delete(otherPhaserBody.Sprite)
+  }
+
+  interact () {
+    this._overlapping.forEach(function (item) {
+      item.interact()
+    })
+  }
+
+  /*
   // create the wakes
   spawnWake () {
-    /*
+    
     let wake = new Wake({
       game: this.game,
       x: this.x,
@@ -128,7 +151,7 @@ class PlayerBoat extends Phaser.Sprite {
     console.log('create wake')
     // this.wake.z = 11
     // console.log('create wake at layer ' + wake.z)
-    */
+    
 
     //  Position
     this.wakeEmitter.x = this.body.x
@@ -141,6 +164,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.wakeEmitter.start(false, 2000, null, 10)
     console.log('spawning wake')
   }
+  */
 }
 
 export default PlayerBoat

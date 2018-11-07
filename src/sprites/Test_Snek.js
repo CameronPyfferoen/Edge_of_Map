@@ -2,127 +2,121 @@ import Phaser from 'phaser'
 import config from '../config'
 import PlayerBoat from '../sprites/PlayerBoat'
 import Enemy from './Enemy'
+import { sequentialNumArray } from '../utils'
+import Fireball from '../sprites/Fireball'
 
-class Test_Snek extends Enemy
-{ 
-  constructor ( game ) {
+class Test_Snek extends Enemy {
+  constructor (game) {
     super(game)
-    /*
-    this.game = game
-    
-    this.x = x
-    this.y = y
-    
-    
-    this.player = player
-    
-    this.name = 'Test Snek'
-    this.anchor.setTo(0.5, 0.5)
-    this.maxHealth = 100
-    this.smoothed = true
-
-    console.log('snake created')
-    // console.log('Player: ' + this.player)
-
-    this._SCALE = 0.4
-    this.scale.setTo(this._SCALE)
-
-    this.game.physics.p2.enable(this)
-    
-    this.body.debug = __DEV__
-    this.body.colliderWorldBounds = false
-    
-     this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
-     this.body.offset.setTo(0.5, 1.5)
-
-    this.body.damping = 0.5
-    this.body.data.gravityScale = 0
-
-    // this.autocull = true;
-    this.isOffCamera = false
-
-    this.player_dist = 1000000
-    this.pat_dist = 200
-    this.start_diff = 0
-    this.chase_dist = 200
-    this.renderdist = 300
-
-    this.fwdspd = 20
-    this.turnspd = 10
-    this.angspd = 0.8
-    this.chasespd = 30
-
-    this.startx = this.body.x
-    this.starty = this.body.y
-    this.startang = this.body.angle
-    this.turn = false
-    */
+    this.touch_damage = 10
     this.setupAnimations()
-    /*
+    this.body.setRectangleFromSprite()
+    this.fire_dist = 50
+    this.shot = false
+    this.attack_called = false
+    this.idle_called = false
+    this.reset_count = 0
   }
 
-  patrol () {
-    this.animations.play('swim')
-    if (!this.turn) {
-      this.body.moveForward(this.fwdspd)
-      if(this.pat_dist <= this.start_diff) {
-        this.turn = true
-      }
+  idle () {
+    if(this.texture !== 'seasnake')
+    {
+      this.loadTexture('seasnake')
+      this.setupAnimations()
     }
-    else if(this.turn) {
-      this.body.angle += this.angspd
-      this.body.moveForward(this.turnspd)
-      if((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
-        this.turn = false
-      }
+    this.animations.play('swim')
+    this.animations.stop()
+  }
+
+  attack () {
+    if(this.texture !== 'seasnake_attack')
+    {
+      this.loadTexture('seasnake_attack')
+      this.setupAnimations()
+      this.body.setRectangleFromSprite()
+    }
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
+    this.animations.play('attack')
+    this.fire()
+    /*
+    if (this.animations.currentAnim.complete()) {
+      this.loadTexture('seasnake', 0)
+      this.setupAnimations()
+      this.body.setRectangleFromSprite()
+      this.animations.play('swim')
     }
     */
   }
 
-  /*
   chase () {
+    if(this.texture !== 'seasnake')
+    {
+      this.loadTexture('seasnake')
+      this.setupAnimations()
+    }
     this.animations.play('swim')
     this.moveToObject(this.body, this.player)
   }
 
+  fire () {
+    this.fireb = new Fireball({
+      game: this.game,
+      x: this.x,
+      y: this.y,
+      angle: this.angle
+    })
+    this.game.add.existing(this.fireb)
+    this.fireb.fire = true
+    this.shot = true
+  }
+
   update () {
     super.update()
-
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
-    if(this.player_dist > this.renderdist && !this.isOffCamera)
-    {
+    if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()
-      console.log('killed')
-    }
-    else if(this.player_dist <= this.renderdist && this.isOffCamera)
-    {
+    } 
+    else if (this.player_dist <= this.renderdist && this.isOffCamera) {
       this.isOffCamera = false
       this.revive()
-      console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if(this.player_dist > 50) {
+    if (this.player_dist > this.chase_dist) {
       this.patrol()
-    }
-    else if(this.player_dist <= this.chase_dist)
-    {
+    } 
+    else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
       this.chase()
     } 
-    
+    else if (this.player_dist <= this.fire_dist) {
+      if (!this.shot) {
+        this.attack()
+      }
+      else if(this.shot){
+        this.idle()
+        if (this.fireb.end()) {
+          console.log('shot is false')
+         this.shot = false
+      }
+    }
+   }
   }
-  */
-  setupAnimations () {
-    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7], 10, true)
-  }
-  /*
 
-  moveToObject(obj1, obj2) {
-    var angle = Math.atan2(obj2.y - obj1.y, obj2.x - obj1.x)
-    obj1.rotation = angle + Phaser.Math.degToRad(90)  // correct angle of angry bullets (depends on the sprite used)
-    obj1.force.x = Math.cos(angle) * this.chasespd    // accelerateToObject 
-    obj1.force.y = Math.sin(angle) * this.chasespd
+  setupAnimations () {
+    console.log('reset animations')
+    if(this.animations.currentAnim === 'swim')
+    {
+      this.animations.getAnimation('swim').destroy()
+      console.log('swim destroyed')
+    }
+    if(this.animations.currentAnim === 'attack')
+    {
+      this.animations.getAnimation('attack').destroy()
+      console.log('attack destroyed')
+    }
+    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7], 10, true)
+    this.animations.add('attack', sequentialNumArray(0, 8), false)
   }
-  */
 }
 export default Test_Snek

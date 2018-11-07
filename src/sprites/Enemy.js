@@ -19,11 +19,13 @@ class Enemy extends Phaser.Sprite
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
+    this.body.setCollisionGroup(this.game.enemyGroup)
+    this.body.collides(this.game.playerGroup)
     
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
     
-    this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
+    this.body.setRectangleFromSprite()
     this.body.offset.setTo(0.5, 1.5)
 
     this.body.damping = 0.5
@@ -81,16 +83,14 @@ class Enemy extends Phaser.Sprite
     {
       this.isOffCamera = true
       this.kill()
-      console.log('killed')
     }
     else if (this.player_dist <= this.renderdist && this.isOffCamera)
     {
       this.isOffCamera = false
       this.revive()
-      console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if (this.player_dist > 50) {
+    if (this.player_dist > this.chase_dist) {
       this.patrol()
     }
     else if (this.player_dist <= this.chase_dist)

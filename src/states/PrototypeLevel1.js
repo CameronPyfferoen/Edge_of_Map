@@ -11,8 +11,10 @@ import { Sprite } from 'phaser-ce';
 class PrototypeLevel1 extends Phaser.State {
   init () {
     // Set / Reset world bounds
-    this.game.add.tileSprite(0, 0, 3149, 2007, 'map');
-    this.game.world.setBounds(0, 0, 3149, 2007);
+    // this.game.width = 762;
+    // this.game.heigth = 488;
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
+    this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true;
     this.game.time.desiredFPS = 60;
 
@@ -24,14 +26,25 @@ class PrototypeLevel1 extends Phaser.State {
   preload () {}
 
   create () {
+    this.map = this.game.add.tilemap('map1', 32, 32);
+
+    this.map.addTilesetImage('landTiles', 'islandSprites');
+    this.map.addTilesetImage('Clouds', 'cloudBarrier');
+
+    this.landLayer = this.map.createLayer('Lands');
+    this.cloudLayer = this.map.createLayer('Clouds');
+
+    this.landLayer.smoothed = false;
+    this.cloudLayer.smoothed = false;
+
     // create the player object and setup the camera and inputs
     this.player = new PlayerBoat({
       game: this.game,
       x: 260,
       y: 1850
     })
-    this.player.z = 20
-    console.log('spawn player at layer '+this.player.z)
+    // this.player.z = 20
+    // console.log('spawn player at layer '+this.player.z)
 
     this.game.add.existing(this.player)
 
@@ -39,9 +52,25 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // frame of the game
-    this.game.camera.scale.x = 4.2;
-    this.game.camera.scale.y = 4.2;
-    this.game.camera.follow(this.player);
+    this.game.world.scale.setTo(1);
+    /*
+    this.game.cameraScale = 2; // 4.2
+    this.game.camera.scale.x = this.game.cameraScale; 
+    this.game.camera.scale.y = this.game.cameraScale; 
+    */
+    
+    // this.game.camera.view.x = 762;
+    // this.game.camera.view.y = 488;
+    this.game.camera.follow(this.player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
+
+    /*
+    this.game.mapScale = 1;
+    this.landLayer.scale.x = this.game.mapScale;
+    this.landLayer.scale.y = this.game.mapScale;
+
+    this.cloudLayer.scale.x = this.game.mapScale;
+    this.cloudLayer.scale.y = this.game.mapScale;
+    */
 
     // add controls
     this.setupKeyboard();

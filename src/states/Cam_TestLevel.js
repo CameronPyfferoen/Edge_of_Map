@@ -14,8 +14,8 @@ import Shark from '../sprites/Shark';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3149, 2007, 'map')
-    this.game.world.setBounds(0, 0, 3149, 2007)
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
+    this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
   }
@@ -23,12 +23,31 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
+    // add tiled map
+    this.map = this.game.add.tilemap('map1', 32, 32);
+
+    this.map.addTilesetImage('landTiles', 'islandSprites');
+    this.map.addTilesetImage('Clouds', 'cloudBarrier');
+
+    this.landLayer = this.map.createLayer('Lands');
+    this.cloudLayer = this.map.createLayer('Clouds');
+    this.game.world.scale.setTo(2);
+    this.cloudLayer.scale.set(1.78);
+    this.landLayer.scale.set(1.78);
+
+    // this.cloudLayer.resizeWorld();
+    this.landLayer.smoothed = false;
+    this.cloudLayer.smoothed = false;
+
+    // Start playing the background music
+    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX - 100,
+      x: this.world.centerX,
       y: this.world.centerY
     })
-
+    /*
     this.bcrab = new Crab_Blue({
       game: this.game,
       x: this.world.centerX,
@@ -52,7 +71,7 @@ class Cam_TestLevel extends Phaser.State {
       player:this.playerMP
     })
     this.game.add.existing(this.meg)
-
+    */
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -65,15 +84,16 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[i])
     }
 
-    // land testing
-    /*
-    this.port0 = this.game.add.sprite(200, 500, 'starting_port')
-    this.game.physics.p2.enable(this.port0, true)
-    this.port0.body.clearShapes()
-    this.port0.body.loadPolygon('physicsList', 'Starting_Port')
-    this.port0.body.gravityScale = 0
-    */
+    this.test_fire = new Test_Snek({
+      game: this.game,
+      x: this.world.centerX + 50,
+      y: this.world.centerY + 50,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.test_fire)
+
     this.game.add.existing(this.playerMP)
+    this.playerMP.body.rotation = 1.57; // uses radians 
 
     // layer groups
     this.underWater = this.game.add.group()
@@ -88,19 +108,25 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // adding the objects to the groups
-    // this.underWater.add(this.snek)
     this.playerGroup.add(this.playerMP)
-    // this.aboveWater.add(this.port0)
-    this.aqua = this.game.add.sprite(0, 0, 'mapoverlay')
+    /*
+    this.aqua = this.game.add.sprite(0, 0,'mapoverlay')
     this.water.add(this.aqua)
-    // this.worldsprites = []
-    // this.numsprites = 0
+    */
+    this.aboveWater.add(this.landLayer);
+    this.aboveWater.add(this.cloudLayer);
 
-    this.game.camera.scale.x = 4.2 // 4.2
-    this.game.camera.scale.y = 4.2 // 4.2
-    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 
     this.setupKeyboard()
+    
+    // pause listener
+    window.onkeydown = function (event) { 
+      if (event.keyCode === 27) {
+        this.game.paused = !this.game.paused;
+      }
+    };
+    
   }
 
   setupKeyboard () {
@@ -108,6 +134,7 @@ class Cam_TestLevel extends Phaser.State {
     this.leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+    this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
   }
 
   update () {
@@ -118,7 +145,6 @@ class Cam_TestLevel extends Phaser.State {
 
     // move forward
     if (this.forwardKey.isDown) {
-      // if (__DEV__) console.log('forward key')
       this.playerMP.moveForward();
     } else {
       this.playerMP.slowDown();
@@ -126,24 +152,27 @@ class Cam_TestLevel extends Phaser.State {
 
     // turn left
     if (this.leftKey.isDown) {
-      // if (__DEV__) console.log('left key')
       this.playerMP.turnLeft();
     }
 
     // move back
     if (this.backwardKey.isDown) {
-      // if (__DEV__) console.log('back key')
       this.playerMP.moveBackward();
     }
 
     // turn right
     if (this.rightKey.isDown) {
-      // if (__DEV__) console.log('right key')
       this.playerMP.turnRight();
     }
-
-    this.aqua.x = this.playerMP.body.x - 250;
-    this.aqua.y = this.playerMP.body.y - 130;
+    /*
+    if (this.escKey.isDown) {
+      this.setPause();
+    }
+    */
+    // this.aqua.x = this.playerMP.body.x - 250;
+    // this.aqua.y = this.playerMP.body.y - 130;
+    // this.aqua.x = this.game.camera.position.x - 250;
+    // this.aqua.y = this.game.camera.position.y - 130;
   }
 }
 
