@@ -121,8 +121,11 @@ class Cam_TestLevel extends Phaser.State {
     this.setupKeyboard()
     
     // pause listener
-    
-    // this.escKey.onDown.add(this.setPause(), this);
+    window.onkeydown = function (event) { 
+      if (event.keyCode === 27) {
+        this.game.paused = !this.game.paused;
+      }
+    };
     
   }
 
@@ -132,11 +135,6 @@ class Cam_TestLevel extends Phaser.State {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-  }
-
-  // pause function, changes pause state on call
-  setPause () {
-    this.game.paused = !this.game.paused;
   }
 
   update () {
