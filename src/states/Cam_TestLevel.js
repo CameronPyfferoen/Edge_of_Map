@@ -31,6 +31,7 @@ class Cam_TestLevel extends Phaser.State {
 
     this.landLayer = this.map.createLayer('Lands');
     this.cloudLayer = this.map.createLayer('Clouds');
+    // Scaling black magic here
     this.game.world.scale.setTo(2);
     this.cloudLayer.scale.set(1.78);
     this.landLayer.scale.set(1.78);

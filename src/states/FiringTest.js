@@ -45,8 +45,8 @@ class FiringTest extends Phaser.State {
 
     this.game.add.existing(this.player)
     this.setupKeyboard()
-    this.game.camera.scale.x = 0.5
-    this.game.camera.scale.y = 0.5
+    this.game.camera.scale.x = 4.2
+    this.game.camera.scale.y = 4.2
     this.game.camera.follow(this.player)
 
     // Turn on impact events for the world, without this we get no collision callbacks
@@ -99,9 +99,9 @@ class FiringTest extends Phaser.State {
     // body1 is the ship (as it's the body that owns the callback)
     // body2 is the body it impacted with, in this case projectiles
 
-    body2.sprite.kill()
+    // body2.sprite.kill()
     // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
-    // body2.destroy()
+    body2.destroy()
   }
 
   // Choose projectile type for the left side of the ship
@@ -148,8 +148,9 @@ class FiringTest extends Phaser.State {
     let directionx = mousex - shipx
     let directiony = mousey - shipy
     let magnitude = Math.sqrt(((Math.pow(directionx, 2)) + (Math.pow(directiony, 2))))
-    directionx = directionx / magnitude
-    directiony = directiony / magnitude
+    let unitx = directionx / magnitude
+    let unity = directiony / magnitude
+    let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI) )
     console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
     let cannonball = new Test_Cannonball({
       game: this.game,
@@ -158,14 +159,33 @@ class FiringTest extends Phaser.State {
     })
 
     this.projectile.add(cannonball)
-    cannonball.body.setRectangle(4, 4)
+    cannonball.body.setRectangle(2, 2)
     cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    this.cannonballWidth = 100
-    this.cannonballHeight = 200
+    this.cannonballWidth = 10
+    this.cannonballHeight = 20
 
-    cannonball.body.velocity.x = directionx * 1000
-    cannonball.body.velocity.y = directiony * 1000
+    if (harpoonAngle > 0) {
+      cannonball.body.angle = harpoonAngle - 90
+    }
+    else {
+      cannonball.body.angle = harpoonAngle + 90
+    }
+
+    cannonball.body.velocity.x = unitx * 50
+    cannonball.body.velocity.y = unity * 50
+
+    console.log(harpoonAngle)
+
+
+    // let shipP = new Phaser.Point(shipx, shipy)
+    // let mouseP = new Phaser.Point(mousex, mousey)
+    // cannonball.body.angle = shipP.angle(mouseP)
+
+    // cannonball.angle = Math.atan2(mousey - shipy, mousex - shipx)
+
+    // cannonball.body.moveForward(1000)
+
 
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
@@ -184,12 +204,12 @@ class FiringTest extends Phaser.State {
     let cannonball2 = new Test_Cannonball({
       game: this.game,
       x: this.player.x,
-      y: this.player.y
+      y: this.player.y + 7.5
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
       x: this.player.x,
-      y: this.player.y
+      y: this.player.y - 7.5
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -197,9 +217,9 @@ class FiringTest extends Phaser.State {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(4, 4)
-    cannonball2.body.setRectangle(4, 4)
-    cannonball3.body.setRectangle(4, 4)
+    cannonball.body.setRectangle(2, 2)
+    cannonball2.body.setRectangle(2, 2)
+    cannonball3.body.setRectangle(2, 2)
     // Tell cannonball to use cannonballCollisionGroup
     cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
@@ -210,22 +230,26 @@ class FiringTest extends Phaser.State {
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 100
-    this.cannonballHeight = 200
+    this.cannonballWidth = 10
+    this.cannonballHeight = 20
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.player.angle - 90
-    cannonball.body.moveForward(1000)
+    cannonball.body.moveForward(50)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
-    cannonball2.body.angle = this.player.angle - 45
-    cannonball2.body.moveForward(1000)
+    // cannonball2.x = this.player.angle + 100
+    // cannonball2.y = this.player.angle + 100
+    cannonball2.body.angle = this.player.angle - 90
+    cannonball2.body.moveForward(50)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
-    cannonball3.body.angle = this.player.angle - 135
-    cannonball3.body.moveForward(1000)
+    // cannonball3.x = this.player.angle - 100
+    // cannonball3.y = this.player.angle - 100
+    cannonball3.body.angle = this.player.angle - 90
+    cannonball3.body.moveForward(50)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
@@ -241,12 +265,12 @@ class FiringTest extends Phaser.State {
     let cannonball2 = new Test_Cannonball({
       game: this.game,
       x: this.player.x,
-      y: this.player.y
+      y: this.player.y + 7.5
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
       x: this.player.x,
-      y: this.player.y
+      y: this.player.y - 7.5
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -254,9 +278,9 @@ class FiringTest extends Phaser.State {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(4, 4)
-    cannonball2.body.setRectangle(4, 4)
-    cannonball3.body.setRectangle(4, 4)
+    cannonball.body.setRectangle(2, 2)
+    cannonball2.body.setRectangle(2, 2)
+    cannonball3.body.setRectangle(2, 2)
     // Tell cannonball to use cannonballCollisionGroup
     cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
@@ -267,22 +291,26 @@ class FiringTest extends Phaser.State {
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 100
-    this.cannonballHeight = 200
+    this.cannonballWidth = 10
+    this.cannonballHeight = 20
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.player.angle + 90
-    cannonball.body.moveForward(1000)
+    cannonball.body.moveForward(50)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
-    cannonball2.body.angle = this.player.angle + 45
-    cannonball2.body.moveForward(1000)
+    // cannonball2.x = this.player.angle + 10
+    // cannonball2.y = this.player.angle + 10
+    cannonball2.body.angle = this.player.angle + 90
+    cannonball2.body.moveForward(50)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
-    cannonball3.body.angle = this.player.angle + 135
-    cannonball3.body.moveForward(1000)
+    // cannonball3.x = this.player.angle + 10
+    // cannonball3.y = this.player.angle + 10
+    cannonball3.body.angle = this.player.angle + 90
+    cannonball3.body.moveForward(50)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
