@@ -28,7 +28,6 @@ class Splash extends Phaser.State {
     this.logo = this.game.add.sprite(
       this.game.world.centerX, this.game.world.centerY + 100, 'ourLogo')
     centerGameObjects([this.logo])
-
   }
 
   preload () {
@@ -55,7 +54,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
     this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
     this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
-    this.load.spritesheet('seasnake_final','assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
+    this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
@@ -67,8 +66,11 @@ class Splash extends Phaser.State {
     this.load.image('wake4', '/assets/images/spr_wake_4.png')
     */
     // Polygon Testing
-    this.load.image('starting_port', '/assets/images/Terrain/Starting_Port.png')
-    this.load.physics('physicsList', 'assets/physicsList.json')
+    // this.load.image('starting_port', '/assets/images/Terrain/Starting_Port.png')
+    // this.load.physics('physicsList', 'assets/physicsList.json')
+
+    // Tiled Physics
+    this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
 
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
@@ -92,6 +94,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
 
+    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png');
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',

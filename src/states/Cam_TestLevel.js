@@ -32,13 +32,24 @@ class Cam_TestLevel extends Phaser.State {
     this.landLayer = this.map.createLayer('Lands');
     this.cloudLayer = this.map.createLayer('Clouds');
     // Scaling black magic here
-    this.game.world.scale.setTo(2);
-    this.cloudLayer.scale.set(1.78);
-    this.landLayer.scale.set(1.78);
-
+    this.game.world.scale.setTo(1); // 2
+    //this.cloudLayer.scale.set(1.78);
+    //this.landLayer.scale.set(1.78);
     // this.cloudLayer.resizeWorld();
     this.landLayer.smoothed = false;
     this.cloudLayer.smoothed = false;
+    /*
+    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
+    this.game.physics.p2.enable(this.skullIslandTop, true);
+    this.skullIslandTop.body.clearShapes();
+    this.skullIslandTop.body.loadPolygon('GameObjects', 'Skull_Island_Top');
+    */
+    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
+    this.game.physics.p2.enable(this.skullIslandTop, true);
+    this.skullIslandTop.body.clearShapes();
+    this.skullIslandTop = this.map.objects['GameObjects'][6]; 
+    // this.skullIslandTop.body.debug = __DEV__;
+  
 
     // Start playing the background music
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
