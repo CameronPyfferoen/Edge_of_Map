@@ -44,11 +44,14 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.clearShapes();
     this.skullIslandTop.body.loadPolygon('GameObjects', 'Skull_Island_Top');
     */
-    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
-    this.game.physics.p2.enable(this.skullIslandTop, true);
-    this.skullIslandTop.body.clearShapes();
-    this.skullIslandTop = this.map.objects['GameObjects'][6]; 
-    // this.skullIslandTop.body.debug = __DEV__;
+    
+    let skullPoly = this.map.objects['GameObjects'][1]; 
+    this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
+    this.game.physics.p2.enable(this.skullIslandTop);
+    this.skullIslandTop.body.debug = __DEV__;
+    this.skullIslandTop.body.addPolygon({}, skullPoly.polygon);
+    this.skullIslandTop.body.static = true;
+    this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
   
 
     // Start playing the background music
@@ -56,7 +59,7 @@ class Cam_TestLevel extends Phaser.State {
 
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX,
+      x: this.world.centerX - 300,
       y: this.world.centerY
     })
     /*
