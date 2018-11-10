@@ -41,7 +41,10 @@ class Fireball extends Phaser.Sprite {
     this.damage = 15
     this.fire = false
 
-    console.log('collides with' + this.body.collidesWith)
+    var coll  = this.body.collidesWith
+    coll.forEach(element => {
+      console.log('fireball collides with: ' + element)
+    });
   }
 
   end () {
