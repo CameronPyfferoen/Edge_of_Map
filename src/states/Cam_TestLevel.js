@@ -23,6 +23,9 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
+
+    this.game.physics.p2.updateBoundsCollisionGroup();
+
     // add tiled map
     this.map = this.game.add.tilemap('map1', 32, 32);
 
@@ -52,6 +55,8 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.addPolygon({}, skullPoly.polygon);
     this.skullIslandTop.body.static = true;
     this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
+    this.skullIslandTop.body.collides([this.game.enemyGroup, this.game.playerGroup]);
+
   
 
     // Start playing the background music
@@ -178,6 +183,10 @@ class Cam_TestLevel extends Phaser.State {
     // turn right
     if (this.rightKey.isDown) {
       this.playerMP.turnRight();
+    }
+
+    if (!this.rightKey.isDown && !this.leftKey.isDown) {
+      this.playerMP.body.angularVelocity = 0;
     }
     /*
     if (this.escKey.isDown) {
