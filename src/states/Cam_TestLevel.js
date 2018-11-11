@@ -55,7 +55,7 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.addPolygon({}, skullPoly.polygon);
     this.skullIslandTop.body.static = true;
     this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
-    this.skullIslandTop.body.collides([this.game.enemyGroup, this.game.playerGroup]);
+    this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
 
   
 
