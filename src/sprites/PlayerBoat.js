@@ -3,6 +3,9 @@ import Phaser from 'phaser'
 import config from '../config'
 // import Wake from '../sprites/wake.js'
 
+// GameData in src
+import GameData from '../GameData'
+
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'Pirat_Ship_1', 0)
@@ -62,6 +65,10 @@ class PlayerBoat extends Phaser.Sprite {
     // adds the animations to the sprite
     this.setupAnimations()
     this.animations.play('idle', true)
+
+    // keeps track of projectiles
+    this.shotType = GameData.shotTypes.MULTISHOT
+
   }
 
   update () {
