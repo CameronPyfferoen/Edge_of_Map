@@ -23,6 +23,9 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
+
+    this.game.physics.p2.updateBoundsCollisionGroup();
+
     // add tiled map
     this.map = this.game.add.tilemap('map1', 32, 32);
 
@@ -31,20 +34,37 @@ class Cam_TestLevel extends Phaser.State {
 
     this.landLayer = this.map.createLayer('Lands');
     this.cloudLayer = this.map.createLayer('Clouds');
-    this.game.world.scale.setTo(2);
-    this.cloudLayer.scale.set(1.78);
-    this.landLayer.scale.set(1.78);
-
+    // Scaling black magic here
+    this.game.world.scale.setTo(1); // 2
+    //this.cloudLayer.scale.set(1.78);
+    //this.landLayer.scale.set(1.78);
     // this.cloudLayer.resizeWorld();
     this.landLayer.smoothed = false;
     this.cloudLayer.smoothed = false;
+    /*
+    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
+    this.game.physics.p2.enable(this.skullIslandTop, true);
+    this.skullIslandTop.body.clearShapes();
+    this.skullIslandTop.body.loadPolygon('GameObjects', 'Skull_Island_Top');
+    */
+    
+    let skullPoly = this.map.objects['GameObjects'][1]; 
+    this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
+    this.game.physics.p2.enable(this.skullIslandTop);
+    this.skullIslandTop.body.debug = __DEV__;
+    this.skullIslandTop.body.addPolygon({}, skullPoly.polygon);
+    this.skullIslandTop.body.static = true;
+    this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
+    this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+  
 
     // Start playing the background music
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX,
+      x: this.world.centerX - 300,
       y: this.world.centerY
     })
     /*
@@ -163,6 +183,10 @@ class Cam_TestLevel extends Phaser.State {
     // turn right
     if (this.rightKey.isDown) {
       this.playerMP.turnRight();
+    }
+
+    if (!this.rightKey.isDown && !this.leftKey.isDown) {
+      this.playerMP.body.angularVelocity = 0;
     }
     /*
     if (this.escKey.isDown) {

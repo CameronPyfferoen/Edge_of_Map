@@ -9,6 +9,7 @@ class Test_Snek extends Enemy {
   constructor (game) {
     super(game)
     this.touch_damage = 10
+    this.loadTexture('seasnake_final')
     this.setupAnimations()
     this.body.setRectangleFromSprite()
     this.fire_dist = 50
@@ -19,22 +20,13 @@ class Test_Snek extends Enemy {
   }
 
   idle () {
-    if(this.texture !== 'seasnake')
-    {
-      this.loadTexture('seasnake')
-      this.setupAnimations()
-    }
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
     this.animations.play('swim')
     this.animations.stop()
   }
 
   attack () {
-    if(this.texture !== 'seasnake_attack')
-    {
-      this.loadTexture('seasnake_attack')
-      this.setupAnimations()
-      this.body.setRectangleFromSprite()
-    }
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.play('attack')
@@ -50,11 +42,6 @@ class Test_Snek extends Enemy {
   }
 
   chase () {
-    if(this.texture !== 'seasnake')
-    {
-      this.loadTexture('seasnake')
-      this.setupAnimations()
-    }
     this.animations.play('swim')
     this.moveToObject(this.body, this.player)
   }
@@ -77,7 +64,7 @@ class Test_Snek extends Enemy {
     if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()
-    } 
+    }
     else if (this.player_dist <= this.renderdist && this.isOffCamera) {
       this.isOffCamera = false
       this.revive()
@@ -85,38 +72,27 @@ class Test_Snek extends Enemy {
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if (this.player_dist > this.chase_dist) {
       this.patrol()
-    } 
+    }
     else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
       this.chase()
-    } 
+    }
     else if (this.player_dist <= this.fire_dist) {
       if (!this.shot) {
         this.attack()
-      }
-      else if(this.shot){
+      } 
+      else if (this.shot) {
         this.idle()
-        if (this.fireb.end()) {
+        if (!this.fireb.fire) {
           console.log('shot is false')
-         this.shot = false
+          this.shot = false
+        }
       }
     }
-   }
   }
 
   setupAnimations () {
-    console.log('reset animations')
-    if(this.animations.currentAnim === 'swim')
-    {
-      this.animations.getAnimation('swim').destroy()
-      console.log('swim destroyed')
-    }
-    if(this.animations.currentAnim === 'attack')
-    {
-      this.animations.getAnimation('attack').destroy()
-      console.log('attack destroyed')
-    }
-    this.animations.add('swim', [0, 1, 2, 3, 4, 5, 6, 7], 10, true)
-    this.animations.add('attack', sequentialNumArray(0, 8), false)
+    this.animations.add('swim', sequentialNumArray(0, 8), 10, true)
+    this.animations.add('attack', sequentialNumArray(9, 17), 10, false)
   }
 }
 export default Test_Snek

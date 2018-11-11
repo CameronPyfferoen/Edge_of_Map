@@ -31,22 +31,30 @@ class Fireball extends Phaser.Sprite {
     this.body.offset.setTo(0, 0)
 
     this.body.damping = 0
+    this.body.angularDamping = 0
+    this.body.fixedRotation = true
     this.body.data.gravityScale = 0
 
     this.setupAnimations()
 
-    this.speed = 30
+    this.speed = 100
     this.damage = 15
     this.fire = false
+
+    var coll  = this.body.collidesWith
+    coll.forEach(element => {
+      console.log('fireball collides with: ' + element)
+    });
   }
 
   end () {
+    this.fire = false
     this.destroy()
     console.log('fireball destroyed')
   }
 
   setupAnimations () {
-    this.animations.add('fire', sequentialNumArray(0, 8), true)
+    this.animations.add('fire', sequentialNumArray(0, 8), 10, true)
   }
 
   interact () {

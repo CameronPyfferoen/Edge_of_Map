@@ -49,11 +49,11 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.data.gravityScale = 0
 
     this.body.setCollisionGroup(this.game.playerGroup)
-    this.body.collides([this.game.enemyGroup], [this.game.itemGroup], [this.game.landGroup])
-    this.body.onBeginContact.add(this.onBeginContact, this)
-    this.body.onEndContact.add(this.onExitContact, this)
+    this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
+    // this.body.onBeginContact.add(this.onBeginContact, this)
+    // this.body.onEndContact.add(this.onExitContact, this)
 
-    this._overlapping = new Set()
+    // this._overlapping = new Set()
 
     // setup movement physics
     this.intBoatSpeed = 60
@@ -129,6 +129,7 @@ class PlayerBoat extends Phaser.Sprite {
     }
   }
 
+  /*
   onBeginContact (otherPhaserBody, otherP2Body, myShape, otherShape, contactEquation){
     if((otherPhaserBody.x <= this.body.x + 1 || otherPhaserBody.x >= this.body.x - 1) && (otherPhaserBody.y <= this.body.y + 1 || otherPhaserBody.y >= this.body.y - 1)){
       console.log('collidable')
@@ -145,6 +146,7 @@ class PlayerBoat extends Phaser.Sprite {
       item.interact()
     })
   }
+  */
 
   /*
   // create the wakes
