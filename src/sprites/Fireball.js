@@ -20,15 +20,17 @@ class Fireball extends Phaser.Sprite {
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
-    this.body.angle = this.angle
+    this.body.angle = angle
     this.body.debug = __DEV__
-    this.body.collideWorldBounds = true
 
-    this.body.setCollisionGroup(this.game.projectileGroup)
-    this.body.collides(this.game.playerGroup)
+    // this.game.playerGroup.add(this)
 
-    this.body.setRectangleFromSprite()
-    this.body.offset.setTo(0, 0)
+    // this.body.collideWorldBounds = true
+    // this.body.setCollisionGroup(this.game.projectileGroup)
+    // this.body.collides([this.game.playerGroup])
+
+    // this.body.setRectangleFromSprite()
+    // this.body.offset.setTo(0, 0)
 
     this.body.damping = 0
     this.body.angularDamping = 0
@@ -41,10 +43,24 @@ class Fireball extends Phaser.Sprite {
     this.damage = 15
     this.fire = false
 
+    // Turn into a sensor
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
+
+    this.body.onBeginContact.add(this.contact, this)
+    /*
     var coll  = this.body.collidesWith
     coll.forEach(element => {
-      console.log('fireball collides with: ' + element)
+      console.log('fbireball collides with: ' + element)
     });
+    */
+  }
+
+  contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
+    console.log('Hi')
+    if (otherBody !== null && otherBody.sprite.name === 'PlayerBoat') {
+      console.log('HIT!!')
+    }
   }
 
   end () {

@@ -34,7 +34,7 @@ class PlayerBoat extends Phaser.Sprite {
     // Create a P2 physics body for this sprite
     this.game.physics.p2.enable(this)
 
-    // this.body.debug = __DEV__ // shows hitbox
+    this.body.debug = __DEV__ // shows hitbox
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body

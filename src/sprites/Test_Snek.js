@@ -54,6 +54,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
+    this.playerGroup.add(this.fireb)
     this.fireb.fire = true
     this.shot = true
   }
