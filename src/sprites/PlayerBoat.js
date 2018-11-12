@@ -9,7 +9,7 @@ import GameData from '../GameData'
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'Pirat_Ship_1', 0)
-    super(game, x, y, 'medBoat', 0)
+    super(game, x, y, 'player-med', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -69,6 +69,9 @@ class PlayerBoat extends Phaser.Sprite {
     // keeps track of projectiles
     this.shotType = GameData.shotTypes.MULTISHOT
 
+    // player health
+    this.maxHealth = 100;
+    this.health = 50;
   }
 
   update () {
@@ -96,7 +99,7 @@ class PlayerBoat extends Phaser.Sprite {
   // create the animations
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
-    this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
+    this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
   }
 
   moveForward () {

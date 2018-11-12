@@ -34,7 +34,7 @@ class Cam_TestLevel extends Phaser.State {
     this.cloudLayer = this.map.createLayer('Clouds');
     */
     // Scaling black magic here
-    this.game.world.scale.setTo(1); // 2
+    this.game.world.scale.setTo(2); // 2
 
     /*
     this.cloudLayer.scale.set(1.78);
@@ -43,13 +43,6 @@ class Cam_TestLevel extends Phaser.State {
     this.cloudLayer.smoothed = false;
     */
 
-    /*
-    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
-    this.game.physics.p2.enable(this.skullIslandTop, true);
-    this.skullIslandTop.body.clearShapes();
-    this.skullIslandTop.body.loadPolygon('GameObjects', 'Skull_Island_Top');
-    */
-    
     let skullPoly = this.map.objects['GameObjects'][1]; 
     this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
     // this.skullIslandTop.scale.setTo(1.78, 1.78);
@@ -125,7 +118,9 @@ class Cam_TestLevel extends Phaser.State {
     this.water = this.game.add.group()
     this.aboveWater = this.game.add.group()
     this.playerGroup = this.game.add.group()
-    this.UI = this.game.add.group()
+    this.UIback = this.game.add.group()
+    this.UImid = this.game.add.group()
+    this.UIfwd = this.game.add.group()
 
     this.enemies = this.game.add.group()
     for (let k = 0; k < 10; k++) {
@@ -143,12 +138,11 @@ class Cam_TestLevel extends Phaser.State {
     this.aboveWater.add(this.landLayer);
     this.aboveWater.add(this.cloudLayer);
     */
-    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON); /// 0.1 , 0.1
 
     this.setupKeyboard()
     
     // pause listener
-    
     window.onkeydown = function (event) { 
       if (event.keyCode === 27) {
         this.game.paused = !this.game.paused;
@@ -163,6 +157,25 @@ class Cam_TestLevel extends Phaser.State {
         }
       }
     };
+
+    // UI
+    this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
+    this.healthBar = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBar');
+    this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
+
+    this.UIback.add(this.healthBG);
+    this.UImid.add(this.healthBar);
+    this.UIfwd.add(this.healthFG);
+
+    this.UIback.fixedToCamera = true;
+    this.UImid.fixedToCamera = true;
+    this.UIfwd.fixedToCamera = true;
+
+    this.UIback.scale.setTo(1/2);
+    this.UImid.scale.setTo(1/2);
+    this.UIfwd.scale.setTo(1/2);
+
+    this.healthBar.cropEnabled = true;
   }
 
   setupKeyboard () {
@@ -205,16 +218,9 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.body.angularVelocity = 0;
     }
 
-
-    /*
-    if (this.escKey.isDown) {
-      this.setPause();
-    }
-    */
-    // this.aqua.x = this.playerMP.body.x - 250;
-    // this.aqua.y = this.playerMP.body.y - 130;
-    // this.aqua.x = this.game.camera.position.x - 250;
-    // this.aqua.y = this.game.camera.position.y - 130;
+    // UI update
+    this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
+    
   }
 
   sendToMain () {
