@@ -9,6 +9,9 @@ import PlayerBoat from '../sprites/PlayerBoat'
 import Test_Cannonball from '../sprites/Test_Cannonball'
 import { Sprite } from 'phaser-ce'
 
+// GameData
+import GameData from '../GameData'
+
 // What I did previously
 // Added cannonball spirtes
 // Modified harpoon code
@@ -106,8 +109,20 @@ class FiringTest extends Phaser.State {
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
+    switch (this.player.shotType) {
+      case GameData.shotTypes.HARPOON:
+        this.harpoon()
+        break
+      case GameData.shotTypes.MULTISHOT:
+        this.spreadShotLeft()
+        break
+      case GameData.shotTypes.EXTRA:
+        //
+        break
+      default:
+    }
     // this.spreadShotLeft()
-    this.harpoon()
+    // this.harpoon()
   }
 
   // Choose projectile type for the right side of the ship
