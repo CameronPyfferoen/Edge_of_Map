@@ -162,8 +162,14 @@ class Cam_TestLevel extends Phaser.State {
     this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
     this.healthBar = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
+    this.goldTXT = this.game.add.text(this.game.camera.x, this.game.camera.y, 'Gold: 0', {
+      font: '65px Arial',
+      fill: '#ff0044',
+      align: 'center'
+    });
 
     this.UIback.add(this.healthBG);
+    this.UIback.add(this.goldTXT);
     this.UImid.add(this.healthBar);
     this.UIfwd.add(this.healthFG);
 
@@ -176,6 +182,10 @@ class Cam_TestLevel extends Phaser.State {
     this.UIfwd.scale.setTo(1/2);
 
     this.healthBar.cropEnabled = true;
+    this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
+
+    
+
   }
 
   setupKeyboard () {
@@ -220,7 +230,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // UI update
     this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
-    
+
   }
 
   sendToMain () {
