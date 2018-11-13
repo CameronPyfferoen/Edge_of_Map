@@ -138,7 +138,8 @@ class Cam_TestLevel extends Phaser.State {
     this.aboveWater.add(this.landLayer);
     this.aboveWater.add(this.cloudLayer);
     */
-    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON); /// 0.1 , 0.1
+    
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     this.setupKeyboard()
     
@@ -167,6 +168,7 @@ class Cam_TestLevel extends Phaser.State {
       fill: '#ff0044',
       align: 'center'
     });
+    this.goldTXT.anchor.setTo(0.5, 0.5);
 
     this.UIback.add(this.healthBG);
     this.UIback.add(this.goldTXT);
@@ -184,6 +186,8 @@ class Cam_TestLevel extends Phaser.State {
     this.healthBar.cropEnabled = true;
     this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
 
+    this.game.camera.x = this.playerMP.body.x;
+    this.game.camera.y = this.playerMP.body.y;
     
 
   }
