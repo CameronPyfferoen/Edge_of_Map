@@ -16,7 +16,6 @@ class Cam_TestLevel extends Phaser.State {
   init () {
     this.game.add.tileSprite(0, 0, 3200, 2048, 'comboMap'); // 'backGroundImage'
     this.game.stage.smoothed = false;
-    this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
@@ -35,6 +34,7 @@ class Cam_TestLevel extends Phaser.State {
     */
     // Scaling black magic here
     this.game.world.scale.setTo(2); // 2
+    this.game.world.setBounds(0, 0, 3200, 2048);
 
     /*
     this.cloudLayer.scale.set(1.78);
@@ -64,7 +64,8 @@ class Cam_TestLevel extends Phaser.State {
       x: this.world.centerX - 300,
       y: this.world.centerY
     })
-    this.playerMP.body.collideWorldBounds = true; // broken as hell
+    // this.playerMP.body.collideWorldBounds = true; // broken as hell
+    this.playerMP.body.onBeginContact.add(this.rammed, this);
     /*
     this.bcrab = new Crab_Blue({
       game: this.game,
@@ -198,6 +199,10 @@ class Cam_TestLevel extends Phaser.State {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+  }
+
+  rammed () {
+
   }
 
   update () {
