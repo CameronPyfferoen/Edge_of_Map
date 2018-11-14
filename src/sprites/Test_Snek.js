@@ -11,7 +11,7 @@ class Test_Snek extends Enemy {
     this.touch_damage = 10
     this.loadTexture('seasnake_final')
     this.setupAnimations()
-    this.body.setRectangleFromSprite()
+    // this.body.setRectangleFromSprite()
     this.fire_dist = 50
     this.shot = false
     this.attack_called = false
@@ -54,7 +54,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    this.playerGroup.add(this.fireb)
+    // this.playerGroup.add(this.fireb)
     this.fireb.fire = true
     this.shot = true
   }
