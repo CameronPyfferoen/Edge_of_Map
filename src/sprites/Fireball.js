@@ -57,7 +57,6 @@ class Fireball extends Phaser.Sprite {
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
-    console.log(`Hi ${otherBody.sprite.name}`)
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
       console.log('HIT!!')
       this.end()

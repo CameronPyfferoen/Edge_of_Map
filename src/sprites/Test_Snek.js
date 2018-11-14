@@ -11,7 +11,6 @@ class Test_Snek extends Enemy {
     this.touch_damage = 10
     this.loadTexture('seasnake_final')
     this.setupAnimations()
-    // this.body.setRectangleFromSprite()
     this.fire_dist = 50
     this.shot = false
     this.attack_called = false
@@ -30,15 +29,10 @@ class Test_Snek extends Enemy {
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.play('attack')
-    this.fire()
-    /*
-    if (this.animations.currentAnim.complete()) {
-      this.loadTexture('seasnake', 0)
-      this.setupAnimations()
-      this.body.setRectangleFromSprite()
-      this.animations.play('swim')
+    if(this.animations.currentAnim.isFinished)
+    {
+      this.fire()
     }
-    */
   }
 
   chase () {
@@ -54,7 +48,6 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    // this.playerGroup.add(this.fireb)
     this.fireb.fire = true
     this.shot = true
   }
