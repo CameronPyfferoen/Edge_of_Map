@@ -1,6 +1,5 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
-
 // Import config settings
 import config from '../config'
 
@@ -13,14 +12,15 @@ import { Sprite } from 'phaser-ce'
 import GameData from '../GameData'
 
 // What I did previously
-// Added cannonball spirtes
-// Modified harpoon code
+// Integrated shooting from PlayerBoat to Cam_TestLevel(the main game)
 
 // What I want to do
 // harpoon projectile!!!
-// add projectile code to player class!!!
 // figure out how to replace kill cannonball w/ destroy cannonball
 // look at Eliot's link on Slack
+// add more comments to large commented code below
+// consider adding --- lines to comments for readability
+// change hitbox position
 
 // Phaser examples to look at
 // ...
@@ -98,238 +98,239 @@ class FiringTest extends Phaser.State {
     this.timer2 = 0
   }
 
-  // Delete projectiles after x amount of seconds or collision
-  hitCannonball (body1, body2) {
-    // body1 is the ship (as it's the body that owns the callback)
-    // body2 is the body it impacted with, in this case projectiles
+  // LARGE CODE MOVED TO PLAYERBOAT FOR EFFICIENCY
+  // // Delete projectiles after x amount of seconds or collision
+  // hitCannonball (body1, body2) {
+  //   // body1 is the ship (as it's the body that owns the callback)
+  //   // body2 is the body it impacted with, in this case projectiles
 
-    // body2.sprite.kill()
-    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
-    body2.destroy()
-  }
+  //   // body2.sprite.kill()
+  //   // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
+  //   body2.destroy()
+  // }
 
-  // Choose projectile type for the left side of the ship
-  firingCallback () {
-    switch (this.player.shotType) {
-      case GameData.shotTypes.HARPOON:
-        this.harpoon()
-        break
-      case GameData.shotTypes.MULTISHOT:
-        this.spreadShotLeft()
-        break
-      case GameData.shotTypes.EXTRA:
-        //
-        break
-      default:
-    }
-    // this.spreadShotLeft()
-    // this.harpoon()
-  }
+  // // Choose projectile type for the left side of the ship
+  // firingCallback () {
+  //   switch (this.player.shotType) {
+  //     case GameData.shotTypes.HARPOON:
+  //       this.harpoon()
+  //       break
+  //     case GameData.shotTypes.MULTISHOT:
+  //       this.spreadShotLeft()
+  //       break
+  //     case GameData.shotTypes.EXTRA:
+  //       //
+  //       break
+  //     default:
+  //   }
+  //   // this.spreadShotLeft()
+  //   // this.harpoon()
+  // }
 
-  // Choose projectile type for the right side of the ship
-  firingCallback2 () {
-    // this.spreadShotRight()
-  }
+  // // Choose projectile type for the right side of the ship
+  // firingCallback2 () {
+  //   // this.spreadShotRight()
+  // }
 
-  // Firing rate for the left side of the ship
-  firingCallbackCooldown () {
-    if (this.timer == 0) {
-      this.firingCallback()
-      this.timer = 4000
-      while (this.timer > 0) {
-        this.timer--
-      }
-    }
-  }
+  // // Firing rate for the left side of the ship
+  // firingCallbackCooldown () {
+  //   if (this.timer == 0) {
+  //     this.firingCallback()
+  //     this.timer = 4000
+  //     while (this.timer > 0) {
+  //       this.timer--
+  //     }
+  //   }
+  // }
 
-  // Firing rate for the right side of the ship
-  firingCallbackCooldown2 () {
-    if (this.timer2 == 0) {
-      this.firingCallback2()
-      this.timer2 = 4000
-      while (this.timer2 > 0) {
-        this.timer2--
-      }
-    }
-  }
+  // // Firing rate for the right side of the ship
+  // firingCallbackCooldown2 () {
+  //   if (this.timer2 == 0) {
+  //     this.firingCallback2()
+  //     this.timer2 = 4000
+  //     while (this.timer2 > 0) {
+  //       this.timer2--
+  //     }
+  //   }
+  // }
 
-  harpoon () {
-    console.log('o')
-    let mousex = this.game.input.x
-    let mousey = this.game.input.y
-    console.log('MousePos: [' + mousex + ',' + mousey + ']')
-    let shipx = this.player.x / 2
-    let shipy = this.player.y / 2
-    console.log('ShipPos: [' + shipx + ',' + shipy + ']')
-    let directionx = mousex - shipx
-    let directiony = mousey - shipy
-    let magnitude = Math.sqrt(((Math.pow(directionx, 2)) + (Math.pow(directiony, 2))))
-    let unitx = directionx / magnitude
-    let unity = directiony / magnitude
-    let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI) )
-    console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
-    let cannonball = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y
-    })
+  // harpoon () {
+  //   console.log('o')
+  //   let mousex = this.game.input.x
+  //   let mousey = this.game.input.y
+  //   console.log('MousePos: [' + mousex + ',' + mousey + ']')
+  //   let shipx = this.player.x / 2
+  //   let shipy = this.player.y / 2
+  //   console.log('ShipPos: [' + shipx + ',' + shipy + ']')
+  //   let directionx = mousex - shipx
+  //   let directiony = mousey - shipy
+  //   let magnitude = Math.sqrt(((Math.pow(directionx, 2)) + (Math.pow(directiony, 2))))
+  //   let unitx = directionx / magnitude
+  //   let unity = directiony / magnitude
+  //   let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI) )
+  //   console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
+  //   let cannonball = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y
+  //   })
 
-    this.projectile.add(cannonball)
-    cannonball.body.setRectangle(2, 2)
-    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   this.projectile.add(cannonball)
+  //   cannonball.body.setRectangle(2, 2)
+  //   cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+  //   this.cannonballWidth = 10
+  //   this.cannonballHeight = 20
 
-    if (harpoonAngle > 0) {
-      cannonball.body.angle = harpoonAngle - 90
-    }
-    else {
-      cannonball.body.angle = harpoonAngle + 90
-    }
+  //   if (harpoonAngle > 0) {
+  //     cannonball.body.angle = harpoonAngle - 90
+  //   }
+  //   else {
+  //     cannonball.body.angle = harpoonAngle + 90
+  //   }
 
-    cannonball.body.velocity.x = unitx * 50
-    cannonball.body.velocity.y = unity * 50
+  //   cannonball.body.velocity.x = unitx * 50
+  //   cannonball.body.velocity.y = unity * 50
 
-    console.log(harpoonAngle)
-
-
-    // let shipP = new Phaser.Point(shipx, shipy)
-    // let mouseP = new Phaser.Point(mousex, mousey)
-    // cannonball.body.angle = shipP.angle(mouseP)
-
-    // cannonball.angle = Math.atan2(mousey - shipy, mousex - shipx)
-
-    // cannonball.body.moveForward(1000)
+  //   console.log(harpoonAngle)
 
 
-    cannonball.width = this.cannonballWidth
-    cannonball.height = this.cannonballHeight
+  //   // let shipP = new Phaser.Point(shipx, shipy)
+  //   // let mouseP = new Phaser.Point(mousex, mousey)
+  //   // cannonball.body.angle = shipP.angle(mouseP)
 
-    // this.game.p2.moveToPointer(cannonball, 100)
-  }
+  //   // cannonball.angle = Math.atan2(mousey - shipy, mousex - shipx)
 
-  spreadShotLeft () {
-    // Create projectile object
-    console.log('o')
-    let cannonball = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y
-    })
-    let cannonball2 = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y + 7.5
-    })
-    let cannonball3 = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y - 7.5
-    })
-    // Add sprite to the projectile physics group
-    this.projectile.add(cannonball)
-    this.projectile.add(cannonball2)
-    this.projectile.add(cannonball3)
+  //   // cannonball.body.moveForward(1000)
 
-    // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2)
-    cannonball2.body.setRectangle(2, 2)
-    cannonball3.body.setRectangle(2, 2)
-    // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    //  Cannonballs will collide against themselves and the player
-    //  If this is not set, cannonballs will not collide with anything
-    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+  //   cannonball.width = this.cannonballWidth
+  //   cannonball.height = this.cannonballHeight
 
-    // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+  //   // this.game.p2.moveToPointer(cannonball, 100)
+  // }
 
-    // Set cannonball angle, velocity, and size
-    cannonball.body.angle = this.player.angle - 90
-    cannonball.body.moveForward(50)
-    cannonball.width = this.cannonballWidth
-    cannonball.height = this.cannonballHeight
+  // spreadShotLeft () {
+  //   // Create projectile object
+  //   console.log('o')
+  //   let cannonball = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y
+  //   })
+  //   let cannonball2 = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y + 7.5
+  //   })
+  //   let cannonball3 = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y - 7.5
+  //   })
+  //   // Add sprite to the projectile physics group
+  //   this.projectile.add(cannonball)
+  //   this.projectile.add(cannonball2)
+  //   this.projectile.add(cannonball3)
 
-    // cannonball2.x = this.player.angle + 100
-    // cannonball2.y = this.player.angle + 100
-    cannonball2.body.angle = this.player.angle - 90
-    cannonball2.body.moveForward(50)
-    cannonball2.width = this.cannonballWidth
-    cannonball2.height = this.cannonballHeight
+  //   // Set hitbox size for projectile
+  //   cannonball.body.setRectangle(2, 2)
+  //   cannonball2.body.setRectangle(2, 2)
+  //   cannonball3.body.setRectangle(2, 2)
+  //   // Tell cannonball to use cannonballCollisionGroup
+  //   cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    // cannonball3.x = this.player.angle - 100
-    // cannonball3.y = this.player.angle - 100
-    cannonball3.body.angle = this.player.angle - 90
-    cannonball3.body.moveForward(50)
-    cannonball3.width = this.cannonballWidth
-    cannonball3.height = this.cannonballHeight
-  }
+  //   //  Cannonballs will collide against themselves and the player
+  //   //  If this is not set, cannonballs will not collide with anything
+  //   // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
-  spreadShotRight () {
-    // Create projectile object
-    console.log('o')
-    let cannonball = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y
-    })
-    let cannonball2 = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y + 7.5
-    })
-    let cannonball3 = new Test_Cannonball({
-      game: this.game,
-      x: this.player.x,
-      y: this.player.y - 7.5
-    })
-    // Add sprite to the projectile physics group
-    this.projectile.add(cannonball)
-    this.projectile.add(cannonball2)
-    this.projectile.add(cannonball3)
+  //   // Set projectile sprite size, spawn location, and velocity
+  //   this.cannonballWidth = 10
+  //   this.cannonballHeight = 20
 
-    // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2)
-    cannonball2.body.setRectangle(2, 2)
-    cannonball3.body.setRectangle(2, 2)
-    // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   // Set cannonball angle, velocity, and size
+  //   cannonball.body.angle = this.player.angle - 90
+  //   cannonball.body.moveForward(50)
+  //   cannonball.width = this.cannonballWidth
+  //   cannonball.height = this.cannonballHeight
 
-    //  Cannonballs will collide against themselves and the player
-    //  If this is not set, cannonballs will not collide with anything
-    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+  //   // cannonball2.x = this.player.angle + 100
+  //   // cannonball2.y = this.player.angle + 100
+  //   cannonball2.body.angle = this.player.angle - 90
+  //   cannonball2.body.moveForward(50)
+  //   cannonball2.width = this.cannonballWidth
+  //   cannonball2.height = this.cannonballHeight
 
-    // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+  //   // cannonball3.x = this.player.angle - 100
+  //   // cannonball3.y = this.player.angle - 100
+  //   cannonball3.body.angle = this.player.angle - 90
+  //   cannonball3.body.moveForward(50)
+  //   cannonball3.width = this.cannonballWidth
+  //   cannonball3.height = this.cannonballHeight
+  // }
 
-    // Set cannonball angle, velocity, and size
-    cannonball.body.angle = this.player.angle + 90
-    cannonball.body.moveForward(50)
-    cannonball.width = this.cannonballWidth
-    cannonball.height = this.cannonballHeight
+  // spreadShotRight () {
+  //   // Create projectile object
+  //   console.log('o')
+  //   let cannonball = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y
+  //   })
+  //   let cannonball2 = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y + 7.5
+  //   })
+  //   let cannonball3 = new Test_Cannonball({
+  //     game: this.game,
+  //     x: this.player.x,
+  //     y: this.player.y - 7.5
+  //   })
+  //   // Add sprite to the projectile physics group
+  //   this.projectile.add(cannonball)
+  //   this.projectile.add(cannonball2)
+  //   this.projectile.add(cannonball3)
 
-    // cannonball2.x = this.player.angle + 10
-    // cannonball2.y = this.player.angle + 10
-    cannonball2.body.angle = this.player.angle + 90
-    cannonball2.body.moveForward(50)
-    cannonball2.width = this.cannonballWidth
-    cannonball2.height = this.cannonballHeight
+  //   // Set hitbox size for projectile
+  //   cannonball.body.setRectangle(2, 2)
+  //   cannonball2.body.setRectangle(2, 2)
+  //   cannonball3.body.setRectangle(2, 2)
+  //   // Tell cannonball to use cannonballCollisionGroup
+  //   cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   cannonball2.body.setCollisionGroup(this.cannonballCollisionGroup)
+  //   cannonball3.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    // cannonball3.x = this.player.angle + 10
-    // cannonball3.y = this.player.angle + 10
-    cannonball3.body.angle = this.player.angle + 90
-    cannonball3.body.moveForward(50)
-    cannonball3.width = this.cannonballWidth
-    cannonball3.height = this.cannonballHeight
-  }
+  //   //  Cannonballs will collide against themselves and the player
+  //   //  If this is not set, cannonballs will not collide with anything
+  //   // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
+
+  //   // Set projectile sprite size, spawn location, and velocity
+  //   this.cannonballWidth = 10
+  //   this.cannonballHeight = 20
+
+  //   // Set cannonball angle, velocity, and size
+  //   cannonball.body.angle = this.player.angle + 90
+  //   cannonball.body.moveForward(50)
+  //   cannonball.width = this.cannonballWidth
+  //   cannonball.height = this.cannonballHeight
+
+  //   // cannonball2.x = this.player.angle + 10
+  //   // cannonball2.y = this.player.angle + 10
+  //   cannonball2.body.angle = this.player.angle + 90
+  //   cannonball2.body.moveForward(50)
+  //   cannonball2.width = this.cannonballWidth
+  //   cannonball2.height = this.cannonballHeight
+
+  //   // cannonball3.x = this.player.angle + 10
+  //   // cannonball3.y = this.player.angle + 10
+  //   cannonball3.body.angle = this.player.angle + 90
+  //   cannonball3.body.moveForward(50)
+  //   cannonball3.width = this.cannonballWidth
+  //   cannonball3.height = this.cannonballHeight
+  // }
 
   setupKeyboard () {
     // register keys
