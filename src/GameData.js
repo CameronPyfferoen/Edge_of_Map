@@ -1,5 +1,5 @@
 class GameData {
-  
+
 }
 
 GameData.shotTypes = {
