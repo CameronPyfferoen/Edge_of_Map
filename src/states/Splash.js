@@ -134,6 +134,8 @@ class Splash extends Phaser.State {
     this.game.enemyGroup = this.game.physics.p2.createCollisionGroup()
     this.game.itemGroup = this.game.physics.p2.createCollisionGroup()
     this.game.landGroup = this.game.physics.p2.createCollisionGroup()
+    // delet later, game?
+    this.game.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.game.projectileGroup = this.game.physics.p2.createCollisionGroup()
   }
 
