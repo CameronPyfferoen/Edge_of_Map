@@ -200,7 +200,7 @@ class PlayerBoat extends Phaser.Sprite {
   // Choose projectile type for the left side of the ship
   firingCallback () {
     console.log(GameData.shotTypes.HARPOON)
-    switch (GameData.shotTypes.HARPOON) {
+    switch (GameData.shotTypes.MULTISHOT) {
       case GameData.shotTypes.HARPOON:
         console.log('o')
         this.harpoon()

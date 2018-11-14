@@ -60,7 +60,7 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
 
     // Start playing the background music -----------------------------
-    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -219,7 +219,7 @@ class Cam_TestLevel extends Phaser.State {
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
     addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this))
+    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
