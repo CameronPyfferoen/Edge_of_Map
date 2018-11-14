@@ -26,8 +26,8 @@ class Fireball extends Phaser.Sprite {
     // this.game.playerGroup.add(this)
 
     // this.body.collideWorldBounds = true
-    // this.body.setCollisionGroup(this.game.projectileGroup)
-    // this.body.collides([this.game.playerGroup])
+    this.body.setCollisionGroup(this.game.projectileGroup)
+    this.body.collides([this.game.playerGroup])
 
     // this.body.setRectangleFromSprite()
     // this.body.offset.setTo(0, 0)
@@ -57,9 +57,11 @@ class Fireball extends Phaser.Sprite {
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
-    console.log('Hi')
-    if (otherBody !== null && otherBody.sprite.name === 'PlayerBoat') {
+    if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
       console.log('HIT!!')
+      this.end()
+      otherBody.sprite.health -= this.damage
+      console.log(`Player health: ${otherBody.sprite.health}`)
     }
   }
 
