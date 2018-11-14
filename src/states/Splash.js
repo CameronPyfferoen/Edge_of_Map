@@ -73,6 +73,7 @@ class Splash extends Phaser.State {
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
+    this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
 
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
