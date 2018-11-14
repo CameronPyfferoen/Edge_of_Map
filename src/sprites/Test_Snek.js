@@ -26,9 +26,11 @@ class Test_Snek extends Enemy {
   }
 
   attack () {
+    console.log(`current animation: ${this.animations.currentAnim.name}`)
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.play('attack')
+    console.log('swtich to attack')
     if(this.animations.currentAnim.isFinished)
     {
       this.fire()
@@ -71,6 +73,7 @@ class Test_Snek extends Enemy {
       this.chase()
     }
     else if (this.player_dist <= this.fire_dist) {
+      console.log(`shot is: ${this.shot}`)
       if (!this.shot) {
         this.attack()
       } 
