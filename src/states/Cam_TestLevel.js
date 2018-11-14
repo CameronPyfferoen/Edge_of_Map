@@ -26,8 +26,8 @@ class Cam_TestLevel extends Phaser.State {
   create () {
     // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32);
-    this.map.addTilesetImage('Clouds', 'cloudBarrier');
-    this.cloudLayer = this.map.createLayer('Clouds');
+    // this.map.addTilesetImage('Clouds', 'cloudBarrier');
+    // this.cloudLayer = this.map.createLayer('Clouds');
     /*
     this.map.addTilesetImage('landTiles', 'islandSprites');
     this.landLayer = this.map.createLayer('Lands');
@@ -63,7 +63,6 @@ class Cam_TestLevel extends Phaser.State {
       x: 260,
       y: 1850
     })
-    // this.playerMP.body.collideWorldBounds = true; // broken as hell
     this.playerMP.body.onBeginContact.add(this.rammed, this);
     this.playerMP.body.collideWorldBounds = true; // broken as hell
     this.gold = 123456789; 
@@ -148,7 +147,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // UI -------------------------------------------------------------------
     this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
-    this.healthBar = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBar');
+    this.healthBar = this.game.add.sprite(this.game.camera.x + 202, this.game.camera.y + 863, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
     this.goldTXT = this.game.add.text(this.game.camera.x + 350, this.game.camera.y + 810, '0', {
       font: '65px Arial',
@@ -253,6 +252,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // UI update
     this.goldTXT.text = this.gold;
+    this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
     /*
     this.cropRect.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
     this.healthBar.updateCrop();
