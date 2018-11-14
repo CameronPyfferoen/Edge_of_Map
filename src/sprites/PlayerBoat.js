@@ -74,7 +74,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     // player health
     this.maxHealth = 100;
-    this.health = 50;
+    this.health = 100;
     this.minHealth = 0;
   }
 
@@ -111,9 +111,6 @@ class PlayerBoat extends Phaser.Sprite {
       this.curBoatSpeed += 2
     }
     this.body.moveForward(this.curBoatSpeed)
-    if (this.health < this.maxHealth) {
-      this.health++;
-    }
   }
 
   slowDown () {
@@ -121,9 +118,6 @@ class PlayerBoat extends Phaser.Sprite {
       this.curBoatSpeed -= 0.2
     }
     this.body.moveForward(this.curBoatSpeed)
-    if (this.health > this.minHealth) {
-      this.health--;
-    }
   }
 
   turnLeft () {

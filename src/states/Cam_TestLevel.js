@@ -40,6 +40,7 @@ class Cam_TestLevel extends Phaser.State {
     // Scaling black magic here --------------------------------
     this.game.world.scale.setTo(2); // 2
     this.game.world.setBounds(0, 0, 3200, 2048);
+    this.game.physics.p2.setBounds(0, 0, 3200, 2048)
 
     /*
     this.cloudLayer.scale.set(1.78);
@@ -49,7 +50,7 @@ class Cam_TestLevel extends Phaser.State {
     this.landLayer.scale.set(1.78);
     this.landLayer.smoothed = false;
     */
-
+    /*
     let skullPoly = this.map.objects['GameObjects'][1]; 
     this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
     this.game.physics.p2.enable(this.skullIslandTop);
@@ -58,6 +59,18 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.static = true;
     this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
     this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+    */
+    
+    let customCollider = this.map.objects['GameObjects']
+    customCollider.forEach(element => {
+      this.Collider = this.add.sprite(element.x, element.y)
+      this.game.physics.p2.enable(this.Collider)
+      this.Collider.body.debug = __DEV__
+      this.Collider.body.addPolygon({}, element.polygon)
+      this.Collider.body.static = true
+      this.Collider.body.setCollisionGroup(this.game.landGroup)
+      this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
+    })
 
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
@@ -71,6 +84,8 @@ class Cam_TestLevel extends Phaser.State {
     this.playerMP.body.onBeginContact.add(this.rammed, this);
     this.playerMP.body.collideWorldBounds = true; // broken as hell
     this.gold = 123456789; 
+    this.goldMax = 999999999;
+    this.goldMin = 0;
     /*
     this.bcrab = new Crab_Blue({
       game: this.game,
@@ -155,7 +170,7 @@ class Cam_TestLevel extends Phaser.State {
     this.healthBar = this.game.add.sprite(this.game.camera.x + 202, this.game.camera.y + 863, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
     this.goldTXT = this.game.add.text(this.game.camera.x + 350, this.game.camera.y + 810, '0', {
-      font: '65px Arial',
+      font: '65px Arial', // Lucida Handwriting
       fill: '#dad000',
       align: 'left'
     });
@@ -191,10 +206,12 @@ class Cam_TestLevel extends Phaser.State {
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
           this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          this.pauseBG.fixedToCamera = true;
+          this.menuButton.fixedToCamera = true;
           // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
           // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          this.pauseBG.scale.setTo(1);
-          this.menuButton.scale.setTo(1);
+          this.pauseBG.scale.setTo(1/4);
+          this.menuButton.scale.setTo(1/4);
           // this.UIfwd.add(this.pauseBG);
           // this.UIfwd.add(this.menuButton);
 
