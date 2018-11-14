@@ -38,7 +38,7 @@ class Enemy extends Phaser.Sprite
     this.pat_dist = 200
     this.start_diff = 0
     this.chase_dist = 200
-    this.renderdist = 300
+    this.renderdist = 700
 
     this.fwdspd = 20
     this.turnspd = 10

@@ -18,8 +18,9 @@ import Shark from '../sprites/Shark';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
-    this.game.world.setBounds(0, 0, 3200, 2048);
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'comboMap'); // 'backGroundImage'
+    this.game.stage.smoothed = false;
+    this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
     this.shotType = GameData.shotTypes.MULTISHOT
@@ -28,31 +29,27 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
-
-    this.game.physics.p2.updateBoundsCollisionGroup();
-
-    // add tiled map
+    // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32);
-
-    this.map.addTilesetImage('landTiles', 'islandSprites');
-    this.map.addTilesetImage('Clouds', 'cloudBarrier');
-
-    this.landLayer = this.map.createLayer('Lands');
-    this.cloudLayer = this.map.createLayer('Clouds');
-    // Scaling black magic here
-    this.game.world.scale.setTo(1); // 2
-    //this.cloudLayer.scale.set(1.78);
-    //this.landLayer.scale.set(1.78);
-    // this.cloudLayer.resizeWorld();
-    this.landLayer.smoothed = false;
-    this.cloudLayer.smoothed = false;
+    // this.map.addTilesetImage('Clouds', 'cloudBarrier');
+    // this.cloudLayer = this.map.createLayer('Clouds');
     /*
-    this.skullIslandTop = this.game.add.sprite(1509.21, 912.51);
-    this.game.physics.p2.enable(this.skullIslandTop, true);
-    this.skullIslandTop.body.clearShapes();
-    this.skullIslandTop.body.loadPolygon('GameObjects', 'Skull_Island_Top');
+    this.map.addTilesetImage('landTiles', 'islandSprites');
+    this.landLayer = this.map.createLayer('Lands');
     */
-    
+    // Scaling black magic here --------------------------------
+    this.game.world.scale.setTo(2); // 2
+    this.game.world.setBounds(0, 0, 3200, 2048);
+
+    /*
+    this.cloudLayer.scale.set(1.78);
+    this.cloudLayer.smoothed = false;
+    this.cloudLayer.autoCull = true;
+    /*
+    this.landLayer.scale.set(1.78);
+    this.landLayer.smoothed = false;
+    */
+
     let skullPoly = this.map.objects['GameObjects'][1]; 
     this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
     this.game.physics.p2.enable(this.skullIslandTop);
@@ -62,17 +59,18 @@ class Cam_TestLevel extends Phaser.State {
     this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
     this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
 
-    // Start playing the background music
-    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    // Start playing the background music -----------------------------
+    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
+    // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX - 300,
-      y: this.world.centerY
+      x: 260,
+      y: 1850
     })
-
-
-
+    this.playerMP.body.onBeginContact.add(this.rammed, this);
+    this.playerMP.body.collideWorldBounds = true; // broken as hell
+    this.gold = 123456789; 
     /*
     this.bcrab = new Crab_Blue({
       game: this.game,
@@ -98,6 +96,7 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.meg)
     */
+    // Add Enemies ----------------------------------------------------
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -119,13 +118,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.test_fire)
 
     this.game.add.existing(this.playerMP)
-    this.playerMP.body.rotation = 1.57; // uses radians 
+    // this.playerMP.body.rotation = 1.57; // uses radians 
 
-    // layer groups
+    // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
     this.aboveWater = this.game.add.group()
     this.playerGroup = this.game.add.group()
+    this.UIback = this.game.add.group()
+    this.UImid = this.game.add.group()
+    this.UIfwd = this.game.add.group()
 
     this.enemies = this.game.add.group()
     for (let k = 0; k < 10; k++) {
@@ -133,23 +135,73 @@ class Cam_TestLevel extends Phaser.State {
       this.underWater.add(this.sneks[k])
     }
 
-    // adding the objects to the groups
+    // adding the objects to the groups -------------------------------------
     this.playerGroup.add(this.playerMP)
     /*
     this.aqua = this.game.add.sprite(0, 0,'mapoverlay')
     this.water.add(this.aqua)
     */
+    /*
     this.aboveWater.add(this.landLayer);
     this.aboveWater.add(this.cloudLayer);
-
-    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+    */
+    
+    this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     this.setupKeyboard()
-    
-    // pause listener
+
+    // UI -------------------------------------------------------------------
+    this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
+    this.healthBar = this.game.add.sprite(this.game.camera.x + 202, this.game.camera.y + 863, 'healthBar');
+    this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
+    this.goldTXT = this.game.add.text(this.game.camera.x + 350, this.game.camera.y + 810, '0', {
+      font: '65px Arial',
+      fill: '#dad000',
+      align: 'left'
+    });
+    this.goldTXT.stroke = '#000000';
+    this.goldTXT.strokeThickness = 6;
+    this.goldTXT.anchor.setTo(0, 0.5);
+
+    this.UIback.add(this.healthBG);
+    this.UIback.add(this.goldTXT);
+    this.UImid.add(this.healthBar);
+    this.healthBar.cropEnabled = true;
+    this.UIfwd.add(this.healthFG);
+
+    this.UIback.fixedToCamera = true;
+    this.UImid.fixedToCamera = true;
+    this.UIfwd.fixedToCamera = true;
+
+    this.UIback.scale.setTo(1/2);
+    this.UImid.scale.setTo(1/2);
+    this.UIfwd.scale.setTo(1/2);
+
+
+    this.game.camera.x = this.playerMP.body.x;
+    this.game.camera.y = this.playerMP.body.y;
+    /*
+    this.cropRect = Phaser.Rectangle(0, 0, 0, this.healthBar.width);
+    this.healthBar.crop(this.cropRect);
+    */
+    // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) { 
       if (event.keyCode === 27) {
         this.game.paused = !this.game.paused;
+        if (this.game.paused) {
+          this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
+          this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
+          // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          this.pauseBG.scale.setTo(1);
+          this.menuButton.scale.setTo(1);
+          // this.UIfwd.add(this.pauseBG);
+          // this.UIfwd.add(this.menuButton);
+
+        } else {
+          this.pauseBG.destroy();
+          this.menuButton.destroy();
+        }
       }
     };
 
@@ -180,6 +232,14 @@ class Cam_TestLevel extends Phaser.State {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+  }
+
+  rammed () {
+  
+  }
+
+  sendToMain () {
+    this.state.start('MainMenu');
   }
 
   update () {
@@ -213,15 +273,14 @@ class Cam_TestLevel extends Phaser.State {
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
     }
+
+    // UI update
+    this.goldTXT.text = this.gold;
+    this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
     /*
-    if (this.escKey.isDown) {
-      this.setPause();
-    }
+    this.cropRect.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
+    this.healthBar.updateCrop();
     */
-    // this.aqua.x = this.playerMP.body.x - 250;
-    // this.aqua.y = this.playerMP.body.y - 130;
-    // this.aqua.x = this.game.camera.position.x - 250;
-    // this.aqua.y = this.game.camera.position.y - 130;
   }
 
   // // COMMENT ALMOST EVERYTHING BELOW

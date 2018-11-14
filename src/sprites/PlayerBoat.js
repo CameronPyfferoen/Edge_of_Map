@@ -10,7 +10,7 @@ import Test_Cannonball from './Test_Cannonball'
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'Pirat_Ship_1', 0)
-    super(game, x, y, 'medBoat', 0)
+    super(game, x, y, 'player-med', 0)
     this.name = 'Player Ship'
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
@@ -38,7 +38,7 @@ class PlayerBoat extends Phaser.Sprite {
     // Create a P2 physics body for this sprite
     this.game.physics.p2.enable(this)
 
-    // this.body.debug = __DEV__ // shows hitbox
+    this.body.debug = __DEV__ // shows hitbox
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body
@@ -71,7 +71,11 @@ class PlayerBoat extends Phaser.Sprite {
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     // keeps track of projectiles
     this.shotType = GameData.shotTypes.MULTISHOT
-    // this.spreadShotLeft()
+
+    // player health
+    this.maxHealth = 100;
+    this.health = 50;
+    this.minHealth = 0;
   }
 
   update () {
@@ -99,7 +103,7 @@ class PlayerBoat extends Phaser.Sprite {
   // create the animations
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
-    this.animations.add('moveFWD', [5, 6, 7, 8], 10, true)
+    this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
   }
 
   moveForward () {
@@ -107,6 +111,9 @@ class PlayerBoat extends Phaser.Sprite {
       this.curBoatSpeed += 2
     }
     this.body.moveForward(this.curBoatSpeed)
+    if (this.health < this.maxHealth) {
+      this.health++;
+    }
   }
 
   slowDown () {
@@ -114,6 +121,9 @@ class PlayerBoat extends Phaser.Sprite {
       this.curBoatSpeed -= 0.2
     }
     this.body.moveForward(this.curBoatSpeed)
+    if (this.health > this.minHealth) {
+      this.health--;
+    }
   }
 
   turnLeft () {

@@ -46,6 +46,8 @@ class Splash extends Phaser.State {
     // The main player spritesheet
     this.load.spritesheet('Pirat_Ship_1', 'assets/images/Player/Pirat_Ship_1.jpg', 64, 64)
     this.load.spritesheet('player-main', 'assets/images/Player/player-main.png', 64, 64)
+    this.load.spritesheet('player-med', '/assets/images/PLayer_M_Ship_96x96/Player_M_96_Sprite_Sheet.png', 96, 96)
+
     this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
     this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
@@ -86,6 +88,7 @@ class Splash extends Phaser.State {
     this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
     this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
+    this.load.image('comboMap', '/assets/images/Terrain/mapCombo.png')
 
     // Menu Assets
     this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
@@ -93,6 +96,14 @@ class Splash extends Phaser.State {
     this.load.spritesheet('controlsButton', '/assets/images/Ui/SpriteSheet_main_controls.png', 667, 121)
     this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
+    this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 358, 121)
+
+
+    // In-game UI
+    this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
+    this.load.image('healthBar', '/assets/images/UI/health_health.png')
+    this.load.image('healthFG', '/assets/images/UI/health_front.png')
+
 
     this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png');
     // The audiosprite with all music and SFX
