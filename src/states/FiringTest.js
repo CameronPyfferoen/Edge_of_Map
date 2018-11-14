@@ -60,6 +60,7 @@ class FiringTest extends Phaser.State {
     this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
 
+    // add the two lines of code below?
     // Set the ships collision group
     this.player.body.setCollisionGroup(this.playerCollisionGroup)
 
