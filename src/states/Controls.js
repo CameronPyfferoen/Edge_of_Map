@@ -14,7 +14,7 @@ class Controls extends Phaser.State {
   create () {
     this.game.add.tileSprite(0, 0, 1900, 950, 'mainMenuBackground')
     this.game.add.sprite(this.world.centerX - 1165/2, this.world.centerY - 394, 'controlBoard')
-    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0)
+    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0)
   }
 
   update () {

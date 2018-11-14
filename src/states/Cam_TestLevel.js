@@ -25,46 +25,44 @@ class Cam_TestLevel extends Phaser.State {
   preload () {}
 
   create () {
-    // add tiled map
+    // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32);
+    this.map.addTilesetImage('Clouds', 'cloudBarrier');
+    this.cloudLayer = this.map.createLayer('Clouds');
     /*
     this.map.addTilesetImage('landTiles', 'islandSprites');
-    this.map.addTilesetImage('Clouds', 'cloudBarrier');
     this.landLayer = this.map.createLayer('Lands');
-    this.cloudLayer = this.map.createLayer('Clouds');
     */
-    // Scaling black magic here
+    // Scaling black magic here --------------------------------
     this.game.world.scale.setTo(2); // 2
-
-    /*
     this.cloudLayer.scale.set(1.78);
+    this.cloudLayer.smoothed = false;
+    this.cloudLayer.autoCull = true;
+    /*
     this.landLayer.scale.set(1.78);
     this.landLayer.smoothed = false;
-    this.cloudLayer.smoothed = false;
     */
 
     let skullPoly = this.map.objects['GameObjects'][1]; 
     this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y);
-    // this.skullIslandTop.scale.setTo(1.78, 1.78);
     this.game.physics.p2.enable(this.skullIslandTop);
     this.skullIslandTop.body.debug = __DEV__;
     this.skullIslandTop.body.addPolygon({}, skullPoly.polygon);
     this.skullIslandTop.body.static = true;
     this.skullIslandTop.body.setCollisionGroup(this.game.landGroup);
     this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup]);
-    // this.skullIslandTop.body.scale.set(1.78);
 
-  
-
-    // Start playing the background music
+    // Start playing the background music -----------------------------
     this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
+    // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: this.world.centerX - 300,
-      y: this.world.centerY
+      x: 260,
+      y: 1850
     })
     this.playerMP.body.collideWorldBounds = true; // broken as hell
+    this.gold = 123456789; 
     /*
     this.bcrab = new Crab_Blue({
       game: this.game,
@@ -90,6 +88,7 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.meg)
     */
+    // Add Enemies ----------------------------------------------------
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -111,9 +110,9 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.test_fire)
 
     this.game.add.existing(this.playerMP)
-    this.playerMP.body.rotation = 1.57; // uses radians 
+    // this.playerMP.body.rotation = 1.57; // uses radians 
 
-    // layer groups
+    // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
     this.aboveWater = this.game.add.group()
@@ -128,7 +127,7 @@ class Cam_TestLevel extends Phaser.State {
       this.underWater.add(this.sneks[k])
     }
 
-    // adding the objects to the groups
+    // adding the objects to the groups -------------------------------------
     this.playerGroup.add(this.playerMP)
     /*
     this.aqua = this.game.add.sprite(0, 0,'mapoverlay')
@@ -142,37 +141,24 @@ class Cam_TestLevel extends Phaser.State {
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     this.setupKeyboard()
-    
-    // pause listener
-    window.onkeydown = function (event) { 
-      if (event.keyCode === 27) {
-        this.game.paused = !this.game.paused;
-        if (this.game.paused) {
-          this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
-          this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          // this.UI.add(this.pauseBG);
-          // this.UI.add(this.menuButton);
-        } else {
-          this.pauseBG.destroy();
-          this.menuButton.destroy();
-        }
-      }
-    };
 
-    // UI
+    // UI -------------------------------------------------------------------
     this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
     this.healthBar = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
-    this.goldTXT = this.game.add.text(this.game.camera.x, this.game.camera.y, 'Gold: 0', {
+    this.goldTXT = this.game.add.text(this.game.camera.x + 350, this.game.camera.y + 810, '0', {
       font: '65px Arial',
-      fill: '#ff0044',
-      align: 'center'
+      fill: '#dad000',
+      align: 'left'
     });
-    this.goldTXT.anchor.setTo(0.5, 0.5);
+    this.goldTXT.stroke = '#000000';
+    this.goldTXT.strokeThickness = 6;
+    this.goldTXT.anchor.setTo(0, 0.5);
 
     this.UIback.add(this.healthBG);
     this.UIback.add(this.goldTXT);
     this.UImid.add(this.healthBar);
+    this.healthBar.cropEnabled = true;
     this.UIfwd.add(this.healthFG);
 
     this.UIback.fixedToCamera = true;
@@ -183,12 +169,33 @@ class Cam_TestLevel extends Phaser.State {
     this.UImid.scale.setTo(1/2);
     this.UIfwd.scale.setTo(1/2);
 
-    this.healthBar.cropEnabled = true;
-    this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
 
     this.game.camera.x = this.playerMP.body.x;
     this.game.camera.y = this.playerMP.body.y;
-    
+    /*
+    this.cropRect = Phaser.Rectangle(0, 0, 0, this.healthBar.width);
+    this.healthBar.crop(this.cropRect);
+    */
+    // pause listener -----------------------------------------------------------
+    window.onkeydown = function (event) { 
+      if (event.keyCode === 27) {
+        this.game.paused = !this.game.paused;
+        if (this.game.paused) {
+          this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
+          this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
+          // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          this.pauseBG.scale.setTo(1);
+          this.menuButton.scale.setTo(1);
+          // this.UIfwd.add(this.pauseBG);
+          // this.UIfwd.add(this.menuButton);
+
+        } else {
+          this.pauseBG.destroy();
+          this.menuButton.destroy();
+        }
+      }
+    };
 
   }
 
@@ -198,6 +205,10 @@ class Cam_TestLevel extends Phaser.State {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+  }
+
+  sendToMain () {
+    this.state.start('MainMenu');
   }
 
   update () {
@@ -233,12 +244,11 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // UI update
-    this.healthBar.crop.width = (this.playerMP.health / this.playerMP.maxHealth) * this.healthBar.width;
-
-  }
-
-  sendToMain () {
-    this.state.start('MainMenu');
+    this.goldTXT.text = this.gold;
+    /*
+    this.cropRect.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
+    this.healthBar.updateCrop();
+    */
   }
 }
 
