@@ -29,11 +29,9 @@ class Test_Snek extends Enemy {
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.play('attack')
-    console.log('swtich to attack')
-    if(this.animations.currentAnim.isFinished)
-    {
-      this.fire()
-    }
+    console.log(`switch to: ${this.animations.currentAnim.name}`)
+    console.log(`attack is playing: ${this.animations.currentAnim.isPlaying}`)
+    this.animations.currentAnim.onComplete.add(this.fire, this)
   }
 
   chase () {
@@ -79,7 +77,7 @@ class Test_Snek extends Enemy {
       else if (this.shot) {
         this.idle()
         if (!this.fireb.fire) {
-          console.log('shot is false')
+          // console.log('shot is false')
           this.shot = false
         }
       }
