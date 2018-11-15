@@ -13,9 +13,8 @@ class Test_Snek extends Enemy {
     this.setupAnimations()
     this.fire_dist = 50
     this.shot = false
-    this.attack_called = false
-    this.idle_called = false
-    this.reset_count = 0
+    this.maxHealth = 80
+    this.health = this.maxHealth
   }
 
   idle () {
