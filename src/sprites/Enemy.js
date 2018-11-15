@@ -20,13 +20,13 @@ class Enemy extends Phaser.Sprite
 
     this.game.physics.p2.enable(this)
     this.body.setCollisionGroup(this.game.enemyGroup)
-    this.body.collides(this.game.playerGroup)
+    this.body.collides([this.game.playerGroup, this.game.landGroup])
     
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
     
-    this.body.setRectangleFromSprite()
-    this.body.offset.setTo(0.5, 1.5)
+    //this.body.setRectangleFromSprite()
+    //this.body.offset.setTo(0.5, 1.5)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0

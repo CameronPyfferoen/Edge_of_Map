@@ -73,6 +73,7 @@ class Splash extends Phaser.State {
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
+    this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
 
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
@@ -98,12 +99,10 @@ class Splash extends Phaser.State {
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
     this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 358, 121)
 
-
     // In-game UI
     this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', '/assets/images/UI/health_health.png')
     this.load.image('healthFG', '/assets/images/UI/health_front.png')
-
 
     this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png');
     // The audiosprite with all music and SFX

@@ -67,9 +67,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.setupAnimations()
     this.animations.play('idle', true)
 
-
+    // keeps track of projectile type
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    // keeps track of projectiles
     this.shotType = GameData.shotTypes.MULTISHOT
 
     // player health
@@ -158,7 +157,6 @@ class PlayerBoat extends Phaser.Sprite {
   /*
   // create the wakes
   spawnWake () {
-
     let wake = new Wake({
       game: this.game,
       x: this.x,
@@ -418,12 +416,10 @@ class PlayerBoat extends Phaser.Sprite {
     cannonball3.height = this.cannonballHeight
   }
 
-
   // destroy () {
   //   this.body.sprite.kill()
   //   this.body.destroy()
   // }
-
 }
 
 export default PlayerBoat
