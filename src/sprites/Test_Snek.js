@@ -13,7 +13,6 @@ class Test_Snek extends Enemy {
     this.setupAnimations()
     this.animations.play('swim')
     this.attacking = false
-    this.canSwitch = true
     this.fire_dist = 50
     this.shot = false
     this.maxHealth = 80
@@ -34,7 +33,8 @@ class Test_Snek extends Enemy {
     // this.animations.play('attack')
     // console.log(`switch to: ${this.animations.currentAnim.name}`)
     // console.log(`attack is playing: ${this.animations.currentAnim.isPlaying}`)
-    this.animations.currentAnim.onComplete.add(this.fire, this)
+    //  this.animations.currentAnim.onComplete.add(this.fire, this)
+    this.fire()
   }
 
   chase () {

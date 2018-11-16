@@ -130,6 +130,14 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[i])
     }
 
+    this.corner_snek = new Test_Snek({
+      game: this.game,
+      x: this.playerMP.x + 70,
+      y: this.playerMP.y + 70,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.corner_snek)
+
     this.test_fire = new Test_Snek({
       game: this.game,
       x: this.world.centerX + 50,
