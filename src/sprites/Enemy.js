@@ -71,7 +71,7 @@ class Enemy extends Phaser.Sprite
   }
 
   chase () {
-    this.animations.play('swim')
+    this.animations.play('snek')
     this.moveToObject(this.body, this.player)
   }
 

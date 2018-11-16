@@ -108,6 +108,14 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[i])
     }
 
+    this.corner_snek = new Test_Snek({
+      game: this.game,
+      x: this.playerMP.x + 70,
+      y: this.playerMP.y + 70,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.corner_snek)
+
     this.test_fire = new Test_Snek({
       game: this.game,
       x: this.world.centerX + 50,
@@ -117,6 +125,7 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.test_fire)
 
     this.game.add.existing(this.playerMP)
+    
     // this.playerMP.body.rotation = 1.57; // uses radians
 
     // layer groups ----------------------------------------------------------
@@ -208,6 +217,9 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
+    // THE BROKEN LINES OF CODE
+    // this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
+    // this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
 
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
