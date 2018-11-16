@@ -103,8 +103,8 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.body.collideWorldBounds = true; // broken as hell
-    this.gold = 123456789;
-    this.goldMax = 999999999;
+    this.gold = 0;
+    this.goldMax = 999999999; // nine spaces
     this.goldMin = 0;
 
     /*
