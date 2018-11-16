@@ -57,6 +57,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
     this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
     this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
+    this.load.spritesheet('enemyship', 'assets/images/Enemies/Enemy_Ships_L_128.png', 128, 128)
 
     // this.load.image('map', './assets/images/maptemplate.png')
 
@@ -105,7 +106,7 @@ class Splash extends Phaser.State {
     this.load.image('healthBar', '/assets/images/UI/health_health.png')
     this.load.image('healthFG', '/assets/images/UI/health_front.png')
 
-    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png');
+    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png')
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',

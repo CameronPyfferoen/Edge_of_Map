@@ -7,7 +7,7 @@ class EnemyShip extends Enemy
 {
   constructor ( game) {
     super ( game )
-    this.loadtexture()
+    this.loadtexture('enemyship')
     this.setupAnimations()
 
     this.intBoatSpeed = 40
@@ -50,12 +50,11 @@ class EnemyShip extends Enemy
     } else {
       this.body.moveBackward(this.bckspd)
     }
-
-  update () {
-    super.update()
-
   }
-}
+
+  setupAnimations () {
+    this.an
+  }
 }
 
 export default EnemyShip
