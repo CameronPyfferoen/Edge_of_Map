@@ -36,23 +36,13 @@ class Cam_TestLevel extends Phaser.State {
     this.landLayer = this.map.createLayer('Lands')
     */
     // Scaling black magic here --------------------------------
-    this.game.world.scale.setTo(2) // 2
     this.game.world.setBounds(0, 0, 3200, 2048)
-    this.game.physics.p2.setBounds(0, 0, 3200, 2048)
+    // this.game.physics.p2.setBounds(0, 0, 3200, 2048)
+    this.game.world.scale.setTo(2) // 2
     
-    /*
-    this.leftWall = this.game.add.sprite(0, 0);
-    this.game.physics.p2.enable(this.leftWall);
-    this.leftWall.body.clearBody();
-    this.leftWall.body.addRectangle(1, 2048, 0, 0);
-    this.leftWall.body.static = true;
-    this.leftWall.body.debug = __DEV__;
-    this.leftWall.body.setCollisionGroup(this.game.landGroup);
-    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
-    */
+    // add world bounds
+    this.addBounds()
 
-    // look at https://phaser.io/examples/v2/p2-physics/collide-custom-bounds
-    
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -64,19 +54,7 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
     })
-
-    // Add World Border Colliders -------------------------------------------------------------------------
-    let customWall = this.map.objects['WallObjects']
-    customWall.forEach(element => {
-      this.Collider = this.add.sprite(element.x, element.y)
-      this.game.physics.p2.enable(this.Collider)
-      this.Collider.body.debug = __DEV__
-      this.Collider.body.addRectangle({}, element.rectangle)
-      this.Collider.body.static = true
-      this.Collider.body.setCollisionGroup(this.game.landGroup)
-      this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
-    })
-
+   
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
@@ -85,11 +63,11 @@ class Cam_TestLevel extends Phaser.State {
       game: this.game,
       x: 260,
       y: 1850
-    })
+    }) // x = 260, y = 1850
     this.playerMP.body.onBeginContact.add(this.rammed, this)
-    this.playerMP.body.collideWorldBounds = true; // broken as hell
-    this.gold = 123456789;
-    this.goldMax = 999999999;
+    // this.playerMP.body.collideWorldBounds = true;
+    this.gold = 0;
+    this.goldMax = 999999999; // nine spaces
     this.goldMin = 0;
 
     /*
@@ -167,20 +145,15 @@ class Cam_TestLevel extends Phaser.State {
 
     // adding the objects to the groups -------------------------------------
     this.playerGroup.add(this.playerMP);
-    /*
-    this.aqua = this.game.add.sprite(0, 0,'mapoverlay');
-    this.water.add(this.aqua);
-    */
-    /*
-    this.aboveWater.add(this.landLayer);
-    this.aboveWater.add(this.cloudLayer);
-    */
 
+    // Lock camera to player -----------------------------------------------
+    
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
+    // Add keyboard input --------------------------------------------------
     this.setupKeyboard()
 
-    // UI -------------------------------------------------------------------
+    // Adding UI Elements-------------------------------------------------------------------
     this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
     this.healthBar = this.game.add.sprite(this.game.camera.x + 202, this.game.camera.y + 863, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
@@ -209,6 +182,8 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.camera.x = this.playerMP.body.x;
     this.game.camera.y = this.playerMP.body.y;
+
+    
     /*
     this.cropRect = Phaser.Rectangle(0, 0, 0, this.healthBar.width);
     this.healthBar.crop(this.cropRect);
@@ -277,6 +252,48 @@ class Cam_TestLevel extends Phaser.State {
     this.state.start('MainMenu');
   }
 
+  addBounds () {
+    this.leftWall = this.game.add.sprite(0, 0, 'nothing');
+    this.game.physics.p2.enable(this.leftWall);
+    this.leftWall.body.collideWorldBounds = false;
+    this.leftWall.body.clearShapes();
+    this.leftWall.body.addRectangle(50, 4096, 0, 0);
+    this.leftWall.body.static = true;
+    this.leftWall.body.debug = __DEV__;
+    this.leftWall.body.setCollisionGroup(this.game.landGroup);
+    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.rightWall = this.game.add.sprite(3200, 0, 'nothing');
+    this.game.physics.p2.enable(this.rightWall);
+    this.rightWall.body.collideWorldBounds = false;
+    this.rightWall.body.clearShapes();
+    this.rightWall.body.addRectangle(50, 4096, 0, 0);
+    this.rightWall.body.static = true;
+    this.rightWall.body.debug = __DEV__;
+    this.rightWall.body.setCollisionGroup(this.game.landGroup);
+    this.rightWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.botWall = this.game.add.sprite(0, 2048, 'nothing');
+    this.game.physics.p2.enable(this.botWall);
+    this.botWall.body.collideWorldBounds = false;
+    this.botWall.body.clearShapes();
+    this.botWall.body.addRectangle(6400, 50, 0, 4);
+    this.botWall.body.static = true;
+    this.botWall.body.debug = __DEV__;
+    this.botWall.body.setCollisionGroup(this.game.landGroup);
+    this.botWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.topWall = this.game.add.sprite(0, 0, 'nothing');
+    this.game.physics.p2.enable(this.topWall);
+    this.topWall.body.collideWorldBounds = false;
+    this.topWall.body.clearShapes();
+    this.topWall.body.addRectangle(6400, 50, 0, -4);
+    this.topWall.body.static = true;
+    this.topWall.body.debug = __DEV__;
+    this.topWall.body.setCollisionGroup(this.game.landGroup);
+    this.topWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+  }
+
   update () {
     super.update()
     // info on screen
@@ -318,5 +335,7 @@ class Cam_TestLevel extends Phaser.State {
     */
   }
 }
+
+
 
 export default Cam_TestLevel
