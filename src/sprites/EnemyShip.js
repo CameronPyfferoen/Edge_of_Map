@@ -2,6 +2,7 @@ import Enemy from './Enemy'
 import Phaser from 'phaser'
 import GameData from '../GameData'
 import Test_Cannonball from './Test_Cannonball'
+import { sequentialNumArray } from '../utils';
 
 class EnemyShip extends Enemy
 {
@@ -53,7 +54,9 @@ class EnemyShip extends Enemy
   }
 
   setupAnimations () {
-    this.an
+    this.animations.add('idle', sequentialNumArray(0, 5), 10, true)
+    this.animations.add('forward', sequentialNumArray(5, 8), 10, true)
+    this.animations.add('death', sequentialNumArray(34, 59), 10, false)
   }
 }
 
