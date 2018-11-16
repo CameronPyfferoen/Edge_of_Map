@@ -39,34 +39,19 @@ class Cam_TestLevel extends Phaser.State {
     this.game.world.scale.setTo(2) // 2
     this.game.world.setBounds(0, 0, 3200, 2048)
     this.game.physics.p2.setBounds(0, 0, 3200, 2048)
+    
     /*
-    this.leftWall = this.game.add.sprite(0, 0)
-    this.game.physics.p2.enable(this.leftWall)
-    this.leftWall.body.addRectangle(1, 2048, 0, 0)
-    this.leftWall.body.static = true
-    this.leftWall.body.debug = __DEV__
-    this.leftWall.body.setCollisionGroup(this.game.landGroup)
-    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup])
+    this.leftWall = this.game.add.sprite(0, 0);
+    this.game.physics.p2.enable(this.leftWall);
+    this.leftWall.body.clearBody();
+    this.leftWall.body.addRectangle(1, 2048, 0, 0);
+    this.leftWall.body.static = true;
+    this.leftWall.body.debug = __DEV__;
+    this.leftWall.body.setCollisionGroup(this.game.landGroup);
+    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
     */
 
-    /*
-    this.cloudLayer.scale.set(1.78)
-    this.cloudLayer.smoothed = false
-    this.cloudLayer.autoCull = true
-    /*
-    this.landLayer.scale.set(1.78)
-    this.landLayer.smoothed = false
-    */
-    /*
-    let skullPoly = this.map.objects['GameObjects'][1]
-    this.skullIslandTop = this.game.add.sprite(skullPoly.x, skullPoly.y)
-    this.game.physics.p2.enable(this.skullIslandTop)
-    this.skullIslandTop.body.debug = __DEV__
-    this.skullIslandTop.body.addPolygon({}, skullPoly.polygon)
-    this.skullIslandTop.body.static = true
-    this.skullIslandTop.body.setCollisionGroup(this.game.landGroup)
-    this.skullIslandTop.body.collides([this.game.playerGroup, this.game.enemyGroup])
-    */
+    // look at https://phaser.io/examples/v2/p2-physics/collide-custom-bounds
     
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
