@@ -236,8 +236,9 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
-    this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
+    // THE BROKEN LINES OF CODE
+    // this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
+    // this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
 
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
