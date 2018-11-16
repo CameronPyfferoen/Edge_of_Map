@@ -34,7 +34,10 @@ class Test_Snek extends Enemy {
     // console.log(`switch to: ${this.animations.currentAnim.name}`)
     // console.log(`attack is playing: ${this.animations.currentAnim.isPlaying}`)
     //  this.animations.currentAnim.onComplete.add(this.fire, this)
-    this.fire()
+    if(this.player.health > 0)
+    {
+      this.fire()
+    }
   }
 
   chase () {
