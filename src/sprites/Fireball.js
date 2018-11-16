@@ -60,7 +60,11 @@ class Fireball extends Phaser.Sprite {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
       console.log('HIT!!')
       this.end()
-      otherBody.sprite.health -= this.damage
+      if ((otherBody.sprite.health -= this.damage) <= 0) {
+        otherBody.sprite.health = 0;
+      } else {
+        otherBody.sprite.health -= this.damage
+      }
       console.log(`Player health: ${otherBody.sprite.health}`)
     }
   }

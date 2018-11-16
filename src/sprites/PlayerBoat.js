@@ -42,7 +42,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body
-    this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    // this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    this.body.clearShapes();
+    this.body.addCapsule(12, 6, 0, 0, -1.55)
     this.body.offset.setTo(0.25, 0)
 
     // Configure custom physics properties
