@@ -139,6 +139,7 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.test_fire)
 
     this.game.add.existing(this.playerMP)
+    
     // this.playerMP.body.rotation = 1.57; // uses radians
 
     // layer groups ----------------------------------------------------------
@@ -235,6 +236,8 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
+    this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
+    this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
 
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)

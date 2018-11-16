@@ -5,6 +5,7 @@ import config from '../config'
 
 // Import the player boat
 import PlayerBoat from '../sprites/PlayerBoat'
+import Test_Snek from '../sprites/Test_Snek'
 import Test_Cannonball from '../sprites/Test_Cannonball'
 import { Sprite } from 'phaser-ce'
 
@@ -83,8 +84,8 @@ class FiringTest extends Phaser.State {
     // every time I want to create an addEventListener, I should create a non-anon function below create(), and use .bind(this)...
     // or if I want to create anything similar to addEventListener
     // addEventListener('click', this.firingCallback.bind(this))
-    addEventListener('click', this.firingCallback.bind(this))
-    addEventListener('contextmenu', this.firingCallback2.bind(this))
+    addEventListener('click', this.player.firingCallback.bind(this.player))
+    addEventListener('contextmenu', this.player.firingCallback2.bind(this.player))
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
 
@@ -96,6 +97,19 @@ class FiringTest extends Phaser.State {
     // timer variables for firing rate
     this.timer = 0
     this.timer2 = 0
+
+    this.sneks = []
+    for (let i = 0; i < 10; i++) {
+      this.sneks[i] = new Test_Snek({
+        game: this.game,
+        x: Phaser.Math.random(0, 3149),
+        y: Phaser.Math.random(0, 2007),
+        player: this.playerMP
+      })
+
+      this.game.add.existing(this.sneks[i])
+    }
+
   }
 
   // LARGE CODE MOVED TO PLAYERBOAT FOR EFFICIENCY

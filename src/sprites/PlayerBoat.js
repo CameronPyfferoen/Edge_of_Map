@@ -69,7 +69,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     // keeps track of projectile type
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    this.shotType = GameData.shotTypes.MULTISHOT
+    this.shotType = GameData.shotTypes.MULTISHOTx
 
     // player health
     this.maxHealth = 100;
