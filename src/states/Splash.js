@@ -73,6 +73,7 @@ class Splash extends Phaser.State {
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
+    this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
 
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
@@ -92,11 +93,12 @@ class Splash extends Phaser.State {
 
     // Menu Assets
     this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
+    this.load.image('settingsMenuBoard', '/assets/images/Ui/menu_main_board.png')
     this.load.spritesheet('playButton', '/assets/images/Ui/SpriteSheet_main_play.png', 358, 121)
     this.load.spritesheet('controlsButton', '/assets/images/Ui/SpriteSheet_main_controls.png', 667, 121)
     this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
-    this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 358, 121)
+    this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 357, 121)
 
     // In-game UI
     this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
