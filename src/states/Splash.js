@@ -90,6 +90,7 @@ class Splash extends Phaser.State {
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
     this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
     this.load.image('comboMap', '/assets/images/Terrain/mapCombo.png')
+    this.load.image('nothing', '/assets/images/Terrain/spr_nothing.png')
 
     // Menu Assets
     this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
