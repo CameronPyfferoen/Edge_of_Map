@@ -147,8 +147,7 @@ class Cam_TestLevel extends Phaser.State {
     this.playerGroup.add(this.playerMP);
 
     // Lock camera to player -----------------------------------------------
-    this.game.camera.x = this.playerMP.body.x;
-    this.game.camera.y = this.playerMP.body.y;
+    
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     // Add keyboard input --------------------------------------------------
@@ -180,6 +179,9 @@ class Cam_TestLevel extends Phaser.State {
     this.UIback.scale.setTo(1 / 2);
     this.UImid.scale.setTo(1 / 2);
     this.UIfwd.scale.setTo(1 / 2);
+
+    this.game.camera.x = this.playerMP.body.x;
+    this.game.camera.y = this.playerMP.body.y;
 
     
     /*
