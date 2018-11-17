@@ -17,7 +17,7 @@ import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'comboMap'); // 'backGroundImage'
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap'); // 'backGroundImage'
     this.game.stage.smoothed = false;
     this.game.physics.startSystem(Phaser.Physics.P2JS);
     this.game.time.advancedTiming = true
@@ -49,7 +49,7 @@ class Cam_TestLevel extends Phaser.State {
     customCollider.forEach(element => {
       this.Collider = this.add.sprite(element.x, element.y)
       this.game.physics.p2.enable(this.Collider)
-      // this.Collider.body.debug = __DEV__
+      // this.Collider.body.debug = __DEV__ // sends the fps to the garbage
       this.Collider.body.addPolygon({}, element.polygon)
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
@@ -62,8 +62,8 @@ class Cam_TestLevel extends Phaser.State {
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 260,
-      y: 1850
+      x: 300,
+      y: 700
     }) // x = 260, y = 1850
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     // this.playerMP.body.collideWorldBounds = true;

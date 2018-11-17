@@ -13,7 +13,7 @@ class PrototypeLevel1 extends Phaser.State {
     // Set / Reset world bounds
     // this.game.width = 762;
     // this.game.heigth = 488;
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'backgroundImage');
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'backGround'); // backgroundImage
     this.game.world.setBounds(0, 0, 3200, 2048);
     this.game.time.advancedTiming = true;
     this.game.time.desiredFPS = 60;
