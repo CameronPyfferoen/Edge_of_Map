@@ -87,6 +87,7 @@ class Splash extends Phaser.State {
 
     // Tilemap Assets
     this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
+    this.load.image('FinalMap', '/assets/images/Terrain/Map_With_Border.png')
     this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
     this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
