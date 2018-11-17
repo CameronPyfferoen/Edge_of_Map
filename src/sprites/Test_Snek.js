@@ -59,7 +59,7 @@ class Test_Snek extends Enemy {
   }
 
   update () {
-    super.update()
+    //super.update()
     // console.log(`attack start: ${this.attacking}`)
     if (!this.attacking) {
       this.animations.play('swim')
@@ -92,7 +92,7 @@ class Test_Snek extends Enemy {
       if (!this.shot) {
         this.attack()
       } else if (this.shot) {
-        console.log('I shouldnt be here')
+        // console.log('I shouldnt be here')
         this.idle()
         if (!this.fireb.fire) {
           // console.log('shot is false')

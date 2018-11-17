@@ -13,6 +13,7 @@ import Test_Cannonball from '../sprites/Test_Cannonball'
 import FiringTest from '../states/FiringTest'
 import GameData from '../GameData'
 import Shark from '../sprites/Shark'
+import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
@@ -96,6 +97,15 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
+this.eBoat = new EnemyShip({
+  game: this.game,
+  x: this.playerMP.x + 100,
+  y: this.playerMP.y - 100,
+  player: this.playerMP
+})
+
+this.game.add.existing(this.eBoat)
+
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
