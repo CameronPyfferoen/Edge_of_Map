@@ -48,7 +48,7 @@ class Cam_TestLevel extends Phaser.State {
     customCollider.forEach(element => {
       this.Collider = this.add.sprite(element.x, element.y)
       this.game.physics.p2.enable(this.Collider)
-      this.Collider.body.debug = __DEV__
+      // this.Collider.body.debug = __DEV__ // sends the fps to the garbage
       this.Collider.body.addPolygon({}, element.polygon)
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
