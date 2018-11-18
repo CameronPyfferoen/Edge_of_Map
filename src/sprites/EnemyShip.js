@@ -8,7 +8,7 @@ class EnemyShip extends Enemy
 {
   constructor ( game) {
     super ( game )
-    this.loadtexture('enemyship')
+    this.loadTexture('enemyship', 0)
     this.setupAnimations()
 
     this.intBoatSpeed = 40
@@ -16,15 +16,16 @@ class EnemyShip extends Enemy
     this.turnSpeed = 15
     this.backSpeed = 10
     this.turnAngle = 0.6
+    this.FWD = false
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    this.shotType = GameData.shotTypes.MULTISHOT
+    this.shotType = GameData.shotTypes.MULTISHOTx
 
     this.damage = 20
   }
 
-  moveForward () {
-    if (this.curBoatSpeed < this.intBoatSpeed) {
+  moveForward (speed) {
+    if (this.curBoatSpeed < speed) {
       this.curBoatSpeed += 2
     }
     this.body.moveForward(this.curBoatSpeed)
@@ -49,14 +50,58 @@ class EnemyShip extends Enemy
     if (this.curBoatSpeed > 1) {
       this.curBoatSpeed--
     } else {
-      this.body.moveBackward(this.bckspd)
+      this.body.moveBackward(this.backSpeed)
+    }
+  }
+
+  patrol () {
+    if (!this.turn) {
+      this.moveForward(this.intBoatSpeed)
+      if (this.pat_dist <= this.start_diff) {
+        this.turn = true
+      }
+    }
+    else if (this.turn) {
+      this.turnRight()
+      if(this.curBoatSpeed > this.turnSpeed)
+      {
+        this.slowDown()
+      }
+      this.moveForward(this.turnSpeed)
+      if ((this.body.angle >= this.startang + 175 && this.body.angle <= this.startang + 180 ) || (this.body.angle <= this.startang - 175 && this.body.angle >= this.startang - 180) || (this.body.angle >= this.startang && this.body.angle <= this.startang + 5 ) || (this.body.angle <= this.startang && this.body.angle >= this.startang - 5)) {
+        this.turn = false
+      }
+    }
+  }
+
+  update () {
+    // super.update()
+    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
+    this.patrol()
+    if(this.curBoatSpeed > 20)
+    {
+      console.log('should play forward')
+      this.FWD = true
+    }
+    else
+    {
+      this.FWD = false
+    }
+    if(this.FWD)
+    {
+      this.animations.play('forward')
+    }
+    else
+    {
+      this.animations.play('idle')
     }
   }
 
   setupAnimations () {
-    this.animations.add('idle', sequentialNumArray(0, 5), 10, true)
-    this.animations.add('forward', sequentialNumArray(5, 8), 10, true)
-    this.animations.add('death', sequentialNumArray(34, 59), 10, false)
+    this.animations.add('idle', sequentialNumArray(0, 4), 10, true)
+    this.animations.add('forward', sequentialNumArray(26, 29), 10, true)
+    this.animations.add('death', sequentialNumArray(155, 180), 10, false)
   }
 }
 

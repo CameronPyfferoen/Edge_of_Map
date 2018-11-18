@@ -13,6 +13,7 @@ import Test_Cannonball from '../sprites/Test_Cannonball'
 import FiringTest from '../states/FiringTest'
 import GameData from '../GameData'
 import Shark from '../sprites/Shark'
+import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
@@ -89,6 +90,15 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
+this.eBoat = new EnemyShip({
+  game: this.game,
+  x: this.playerMP.x + 100,
+  y: this.playerMP.y - 100,
+  player: this.playerMP
+})
+
+this.game.add.existing(this.eBoat)
+
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -187,14 +197,18 @@ class Cam_TestLevel extends Phaser.State {
       if (event.keyCode === 27) {
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
-          this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
-          this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          this.pauseBG.fixedToCamera = true;
-          this.menuButton.fixedToCamera = true;
+          this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
+          this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
           // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
           // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          this.pauseBG.scale.setTo(1 / 4);
-          this.menuButton.scale.setTo(1 / 4);
+          this.pauseBG.anchor.setTo(0.5, 0.5);
+          this.menuButton.anchor.setTo(0.5, 0.5);
+          this.pauseBG.scale.setTo(1 / 2.5);
+          this.menuButton.scale.setTo(1 / 2.5);
+          this.pauseBG.fixedToCamera = true;
+          this.menuButton.fixedToCamera = true;
+         
+          
           // this.UIfwd.add(this.pauseBG);
           // this.UIfwd.add(this.menuButton);
         } else {
