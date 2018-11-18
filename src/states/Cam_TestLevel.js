@@ -97,14 +97,14 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-this.eBoat = new EnemyShip({
-  game: this.game,
-  x: this.playerMP.x + 100,
-  y: this.playerMP.y - 100,
-  player: this.playerMP
-})
+    this.eBoat = new EnemyShip({
+      game: this.game,
+      x: this.playerMP.x + 100,
+      y: this.playerMP.y - 100,
+      player: this.playerMP
+    })
 
-this.game.add.existing(this.eBoat)
+    this.game.add.existing(this.eBoat)
 
     this.sneks = []
     for (let i = 0; i < 10; i++) {
@@ -315,27 +315,28 @@ this.game.add.existing(this.eBoat)
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
 
     // move forward
-    if (this.forwardKey.isDown) {
-      this.playerMP.moveForward();
-    } else {
-      this.playerMP.slowDown();
-    }
-
-    // turn left
-    if (this.leftKey.isDown) {
-      this.playerMP.turnLeft();
-    }
-
-    // move back
-    if (this.backwardKey.isDown) {
+    if (this.playerMP.health > 0) {
+      if (this.forwardKey.isDown) {
+        this.playerMP.moveForward();
+      } else {
+        this.playerMP.slowDown();
+      }
+      // turn left
+      if (this.leftKey.isDown) {
+        this.playerMP.turnLeft();
+      }
+      // move back
+      if (this.backwardKey.isDown) {
+        this.playerMP.moveBackward();
+      }
+      // turn right
+      if (this.rightKey.isDown) {
+        this.playerMP.turnRight();
+      }
+    } else if (this.playerMP.curBoatSpeed > 0) {
       this.playerMP.moveBackward();
     }
-
-    // turn right
-    if (this.rightKey.isDown) {
-      this.playerMP.turnRight();
-    }
-
+   
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
     }

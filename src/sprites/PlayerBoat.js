@@ -1,6 +1,7 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 import config from '../config'
+import { sequentialNumArray } from '../utils.js'
 // import Wake from '../sprites/wake.js'
 
 // GameData in src
@@ -84,7 +85,7 @@ class PlayerBoat extends Phaser.Sprite {
     super.update()
 
     // set animation states
-    if (this.curBoatSpeed > 20) {
+    if (this.curBoatSpeed > 20 && this.health > 0) {
       this.MOVEFWD = true
       this.STOPPED = false
       // this.spawnWake();
@@ -94,10 +95,12 @@ class PlayerBoat extends Phaser.Sprite {
     }
 
     // check animation states, play appropriate animation
-    if (this.MOVEFWD === true && this.TURNINGL === false && this.TURNINGR === false) {
+    if (this.MOVEFWD === true && this.health > 0) {
       this.animations.play('moveFWD')
-    } else {
+    } else if (this.health > 0) {
       this.animations.play('idle')
+    } else {
+      this.animations.play('death')
     }
   }
 
@@ -105,6 +108,7 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
+    this.animations.add('death', sequentialNumArray(138, 160), 10, false);
   }
 
   moveForward () {
