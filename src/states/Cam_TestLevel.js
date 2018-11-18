@@ -335,6 +335,8 @@ class Cam_TestLevel extends Phaser.State {
       }
     } else if (this.playerMP.curBoatSpeed > 0) {
       this.playerMP.moveBackward();
+    } else {
+      this.playerMP.curBoatSpeed = 0;
     }
    
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
