@@ -29,18 +29,11 @@ class Cam_TestLevel extends Phaser.State {
   create () {
     // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32)
-    // this.map.addTilesetImage('Clouds', 'cloudBarrier')
-    // this.cloudLayer = this.map.createLayer('Clouds')
-    /*
-    this.map.addTilesetImage('landTiles', 'islandSprites')
-    this.landLayer = this.map.createLayer('Lands')
-    */
     // Scaling black magic here --------------------------------
     this.game.world.setBounds(0, 0, 3200, 2048)
     // this.game.physics.p2.setBounds(0, 0, 3200, 2048)
     this.game.world.scale.setTo(2) // 2
-    
-    // add world bounds
+    // add world bounds ---------------------------------
     this.addBounds()
 
     // Add Island Colliders -------------------------------------------------------------------------------
