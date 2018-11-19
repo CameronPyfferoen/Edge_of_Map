@@ -16,6 +16,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
     this.smoothed = false
+    this.dead = false;
     /*
     // create an emitter for the wake
     this.wakeEmitter = this.game.add.emitter(0, 0, 100)
@@ -99,8 +100,11 @@ class PlayerBoat extends Phaser.Sprite {
       this.animations.play('moveFWD')
     } else if (this.health > 0) {
       this.animations.play('idle')
-    } else {
+    } else if (this.dead === false) {
       this.animations.play('death')
+      this.animations.currentAnim.onComplete.add(this.youAreDead, this);
+    } else {
+      this.animations.play('ded');
     }
   }
 
@@ -109,6 +113,11 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
     this.animations.add('death', sequentialNumArray(138, 160), 10, false);
+    this.animations.add('ded', [27], 1, false);
+  }
+
+  youAreDead () {
+    this.dead = true;
   }
 
   moveForward () {
@@ -159,32 +168,6 @@ class PlayerBoat extends Phaser.Sprite {
     })
   }
   */
-
-  /*
-  // create the wakes
-  spawnWake () {
-    let wake = new Wake({
-      game: this.game,
-      x: this.x,
-      y: this.y
-    })
-    console.log('create wake')
-    // this.wake.z = 11
-    // console.log('create wake at layer ' + wake.z)
-
-    //  Position
-    this.wakeEmitter.x = this.body.x
-    this.wakeEmitter.y = this.body.y
-
-    //  The first parameter sets the effect to "explode" which means all particles are emitted at once
-    //  The second gives each particle a 2000ms lifespan
-    //  The third is ignored when using burst/explode mode
-    //  The final parameter (10) is how many particles will be emitted in this single burst
-    this.wakeEmitter.start(false, 2000, null, 10)
-    console.log('spawning wake')
-  }
-  */
-
   // Delete projectiles after x amount of seconds or collision
   hitCannonball (body1, body2) {
     // body1 is the ship (as it's the body that owns the callback)
