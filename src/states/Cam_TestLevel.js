@@ -17,11 +17,16 @@ import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap'); // 'backGroundImage'
+    // Add background Image
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap');
+    // Set pixel smoothing to false 
     this.game.stage.smoothed = false;
+    // Enable p2 physics
     this.game.physics.startSystem(Phaser.Physics.P2JS);
+    // Enable FPS counter
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
+    // Set shottype
     this.shotType = GameData.shotTypes.MULTISHOT
   }
 
