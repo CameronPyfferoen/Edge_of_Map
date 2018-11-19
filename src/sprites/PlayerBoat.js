@@ -197,28 +197,32 @@ class PlayerBoat extends Phaser.Sprite {
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
-    console.log(GameData.shotTypes.HARPOON)
-    switch (GameData.shotTypes.MULTISHOT) {
-      case GameData.shotTypes.HARPOON:
-        console.log('o')
-        this.harpoon()
-        break
-      case GameData.shotTypes.MULTISHOT:
-        console.log('k')
-        this.spreadShotLeft()
-        break
-      case GameData.shotTypes.EXTRA:
-        //
-        break
-      default:
-    }
+    if (this.health > 0) {
+      console.log(GameData.shotTypes.HARPOON)
+      switch (GameData.shotTypes.MULTISHOT) {
+        case GameData.shotTypes.HARPOON:
+          console.log('o')
+          this.harpoon()
+          break
+        case GameData.shotTypes.MULTISHOT:
+          console.log('k')
+          this.spreadShotLeft()
+          break
+        case GameData.shotTypes.EXTRA:
+          //
+          break
+        default:
+      }
     // this.spreadShotLeft()
     // this.harpoon()
+    }
   }
 
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
-    this.spreadShotRight()
+    if (this.health > 0) {
+      this.spreadShotRight()
+    }
   }
 
   // DOES NOT WORK ATM
