@@ -246,7 +246,19 @@ class Cam_TestLevel extends Phaser.State {
 
   }
 
+  endScreen () {
+    this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
+    this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+    this.pauseBG.anchor.setTo(0.5, 0.5);
+    this.menuButton.anchor.setTo(0.5, 0.5);
+    this.pauseBG.scale.setTo(1 / 2.5);
+    this.menuButton.scale.setTo(1 / 2.5);
+    this.pauseBG.fixedToCamera = true;
+    this.menuButton.fixedToCamera = true;
+  }
+
   sendToMain () {
+    // this.game.world.scale.setTo(1) // 2
     this.state.start('MainMenu');
   }
 
@@ -327,7 +339,13 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.body.angularVelocity = 0;
     }
 
+    if (this.playerMP.health <= 0) {
+      this.game.input.onDown.removeAll();
+      this.endScreen();
+    }
+
     // UI update ---------------------------------------------------------
+
     this.goldTXT.text = this.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
   }

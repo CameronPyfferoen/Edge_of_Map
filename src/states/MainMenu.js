@@ -6,7 +6,8 @@ import config from '../config'
 
 class MainMenu extends Phaser.State {
   init () {
-    this.game.world.setBounds(0, 0, this.game.width, this.game.height)
+    this.game.world.setBounds(0, 0, 1900, 950)
+    this.game.world.scale.setTo(1) // 2
   }
 
   preLoad () {}
