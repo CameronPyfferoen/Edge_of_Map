@@ -55,7 +55,7 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     // Start playing the background music -----------------------------
-    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -197,7 +197,13 @@ class Cam_TestLevel extends Phaser.State {
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
-          this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, 
+            this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 
+            'exitButton', 
+            function exitButton () {
+              this.state.start('MainMenu');
+            }, 
+            this, 1, 0, 1, 0);
           this.pauseBG.anchor.setTo(0.5, 0.5);
           this.menuButton.anchor.setTo(0.5, 0.5);
           this.pauseBG.scale.setTo(1 / 2.5);
@@ -226,8 +232,9 @@ class Cam_TestLevel extends Phaser.State {
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
-    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
+    // -------------------------------------------------------------
+    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
@@ -248,7 +255,12 @@ class Cam_TestLevel extends Phaser.State {
 
   endScreen () {
     this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
-    this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+    this.menuButton = this.game.add.button(
+      this.game.camera.x - this.game.camera.x / 2 + 475, 
+      this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 
+      'exitButton', 
+      this.sendToMain, 
+      this, 1, 0, 1, 0);
     this.pauseBG.anchor.setTo(0.5, 0.5);
     this.menuButton.anchor.setTo(0.5, 0.5);
     this.pauseBG.scale.setTo(1 / 2.5);
@@ -258,7 +270,6 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   sendToMain () {
-    // this.game.world.scale.setTo(1) // 2
     this.state.start('MainMenu');
   }
 
