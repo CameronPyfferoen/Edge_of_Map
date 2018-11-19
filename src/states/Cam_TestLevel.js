@@ -254,19 +254,19 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   endScreen () {
-    this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
-    this.menuButton = this.game.add.button(
-      this.game.camera.x - this.game.camera.x / 2 + 475, 
-      this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 
+    this.endScreenBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 4 + 475, this.game.camera.y - this.game.camera.y / 4 + 237.5, 'controlBoard');
+    this.endExitButton = this.game.add.button(
+      this.game.camera.x, 
+      this.game.camera.y, 
       'exitButton', 
       this.sendToMain, 
       this, 1, 0, 1, 0);
-    this.pauseBG.anchor.setTo(0.5, 0.5);
-    this.menuButton.anchor.setTo(0.5, 0.5);
-    this.pauseBG.scale.setTo(1 / 2.5);
-    this.menuButton.scale.setTo(1 / 2.5);
-    this.pauseBG.fixedToCamera = true;
-    this.menuButton.fixedToCamera = true;
+    this.endScreenBG.anchor.setTo(0.5, 0.5);
+    this.endExitButton.anchor.setTo(0.5, 0.5);
+    this.endScreenBG.scale.setTo(1 / 2.5);
+    this.endExitButton.scale.setTo(1 / 2.5);
+    this.endScreenBG.fixedToCamera = true;
+    this.endExitButton.fixedToCamera = true;
   }
 
   sendToMain () {
