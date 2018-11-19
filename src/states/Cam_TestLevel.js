@@ -17,11 +17,16 @@ import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap'); // 'backGroundImage'
+    // Add background Image
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap');
+    // Set pixel smoothing to false 
     this.game.stage.smoothed = false;
+    // Enable p2 physics
     this.game.physics.startSystem(Phaser.Physics.P2JS);
+    // Enable FPS counter
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
+    // Set shottype
     this.shotType = GameData.shotTypes.MULTISHOT
   }
 
@@ -30,11 +35,11 @@ class Cam_TestLevel extends Phaser.State {
   create () {
     // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32)
-    // Scaling black magic here --------------------------------
+    // Scaling here -------------------------------------------
     this.game.world.setBounds(0, 0, 3200, 2048)
     // this.game.physics.p2.setBounds(0, 0, 3200, 2048)
     this.game.world.scale.setTo(2) // 2
-    // add world bounds ---------------------------------
+    // add world bounds ----------------------------------------------------------
     this.addBounds()
 
     // Add Island Colliders -------------------------------------------------------------------------------
@@ -48,7 +53,7 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
     })
-   
+
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
@@ -90,14 +95,14 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-this.eBoat = new EnemyShip({
-  game: this.game,
-  x: this.playerMP.x + 100,
-  y: this.playerMP.y - 100,
-  player: this.playerMP
-})
+    this.eBoat = new EnemyShip({
+      game: this.game,
+      x: this.playerMP.x + 100,
+      y: this.playerMP.y - 100,
+      player: this.playerMP
+    })
 
-this.game.add.existing(this.eBoat)
+    this.game.add.existing(this.eBoat)
 
     this.sneks = []
     for (let i = 0; i < 10; i++) {
@@ -128,7 +133,7 @@ this.game.add.existing(this.eBoat)
     this.game.add.existing(this.test_fire)
 
     this.game.add.existing(this.playerMP)
-    
+
     // this.playerMP.body.rotation = 1.57; // uses radians
 
     // layer groups ----------------------------------------------------------
@@ -150,7 +155,7 @@ this.game.add.existing(this.eBoat)
     this.playerGroup.add(this.playerMP);
 
     // Lock camera to player -----------------------------------------------
-    
+
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     // Add keyboard input --------------------------------------------------
@@ -186,12 +191,6 @@ this.game.add.existing(this.eBoat)
     this.game.camera.x = this.playerMP.body.x;
     this.game.camera.y = this.playerMP.body.y;
 
-    
-    /*
-    this.cropRect = Phaser.Rectangle(0, 0, 0, this.healthBar.width);
-    this.healthBar.crop(this.cropRect);
-    */
-
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
       if (event.keyCode === 27) {
@@ -199,18 +198,13 @@ this.game.add.existing(this.eBoat)
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
           this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
-          // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
           this.pauseBG.anchor.setTo(0.5, 0.5);
           this.menuButton.anchor.setTo(0.5, 0.5);
           this.pauseBG.scale.setTo(1 / 2.5);
           this.menuButton.scale.setTo(1 / 2.5);
           this.pauseBG.fixedToCamera = true;
           this.menuButton.fixedToCamera = true;
-         
-          
-          // this.UIfwd.add(this.pauseBG);
-          // this.UIfwd.add(this.menuButton);
+
         } else {
           this.pauseBG.destroy();
           this.menuButton.destroy();
@@ -218,8 +212,7 @@ this.game.add.existing(this.eBoat)
       }
     };
 
-
-    // turn off context menu
+    // turn off context menu ----------------------------------------------------
     this.game.input.mouse.capture = true
     document.oncontextmenu = function () {
       return false
@@ -230,7 +223,6 @@ this.game.add.existing(this.eBoat)
     // this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
     // this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
-
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
@@ -240,7 +232,6 @@ this.game.add.existing(this.eBoat)
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-
   }
 
   setupKeyboard () {
@@ -303,46 +294,43 @@ this.game.add.existing(this.eBoat)
 
   update () {
     super.update()
-    // info on screen
+    // info on screen -----------------------------------------------
     this.game.debug.spriteInfo(this.playerMP, 32, 32);
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
 
-    // move forward
-    if (this.forwardKey.isDown) {
-      this.playerMP.moveForward();
-    } else {
-      this.playerMP.slowDown();
-    }
-
-    // turn left
-    if (this.leftKey.isDown) {
-      this.playerMP.turnLeft();
-    }
-
-    // move back
-    if (this.backwardKey.isDown) {
+    // move forward ------------------------
+    if (this.playerMP.health > 0) {
+      if (this.forwardKey.isDown) {
+        this.playerMP.moveForward();
+      } else {
+        this.playerMP.slowDown();
+      }
+      // turn left --------------------------
+      if (this.leftKey.isDown) {
+        this.playerMP.turnLeft();
+      }
+      // move back --------------------------
+      if (this.backwardKey.isDown) {
+        this.playerMP.moveBackward();
+      }
+      // turn right -------------------------
+      if (this.rightKey.isDown) {
+        this.playerMP.turnRight();
+      }
+    } else if (this.playerMP.curBoatSpeed > 0) {
       this.playerMP.moveBackward();
-    }
-
-    // turn right
-    if (this.rightKey.isDown) {
-      this.playerMP.turnRight();
+    } else {
+      this.playerMP.curBoatSpeed = 0;
     }
 
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
     }
 
-    // UI update
+    // UI update ---------------------------------------------------------
     this.goldTXT.text = this.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
-    /*
-    this.cropRect.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
-    this.healthBar.updateCrop();
-    */
   }
 }
-
-
 
 export default Cam_TestLevel
