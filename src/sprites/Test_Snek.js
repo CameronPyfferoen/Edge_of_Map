@@ -13,7 +13,8 @@ class Test_Snek extends Enemy {
     this.setupAnimations()
     this.animations.play('swim')
     this.attacking = false
-    this.fire_dist = 50
+    this.canSwitch = true
+    this.fire_dist = 80
     this.shot = false
     this.maxHealth = 80
     this.health = this.maxHealth
@@ -21,26 +22,26 @@ class Test_Snek extends Enemy {
 
   idle () {
     this.attacking = false
+    // this.canSwitch = true
     this.body.velocity.x = 0
     this.body.velocity.y = 0
-    this.animations.stop()
+    if (this.animations.currentAnim.name === 'swim') {
+      this.animations.stop()
+    }
   }
 
   attack () {
-    // console.log(`current animation: ${this.animations.currentAnim.name}`)
+    this.attacking = true
+    // this.canSwitch = false
     this.body.velocity.x = 0
     this.body.velocity.y = 0
-    // this.animations.play('attack')
-    // console.log(`switch to: ${this.animations.currentAnim.name}`)
-    // console.log(`attack is playing: ${this.animations.currentAnim.isPlaying}`)
-    //  this.animations.currentAnim.onComplete.add(this.fire, this)
-    if(this.player.health > 0)
-    {
-      this.fire()
+    if (this.player.health > 0) {
+      this.animations.currentAnim.onComplete.add(this.fire, this)
     }
   }
 
   chase () {
+    // this.canSwitch = true
     this.attacking = false
     // this.animations.play('swim')
     this.moveToObject(this.body, this.player)
@@ -59,12 +60,10 @@ class Test_Snek extends Enemy {
   }
 
   update () {
-    //super.update()
-    // console.log(`attack start: ${this.attacking}`)
+    this.canSwitch = !this.attacking
     if (!this.attacking) {
       this.animations.play('swim')
     } else if (this.attacking) {
-      console.log('play attack')
       this.animations.play('attack')
     }
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
@@ -76,26 +75,19 @@ class Test_Snek extends Enemy {
       this.revive()
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if (this.player_dist > this.chase_dist) {
-      if (!this.attacking) {
+    if (this.canSwitch) {
+      if (this.player_dist > this.chase_dist) {
         this.patrol()
-      }
-    } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
-      if (!this.attacking) {
+      } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
         this.chase()
       }
-    } else if (this.player_dist <= this.fire_dist) {
-      // console.log(`shot is: ${this.shot}`)
-      console.log(`attacking before: ${this.attacking}`)
-      this.attacking = true
-      console.log(`attacking after: ${this.attacking}`)
+    } if (this.player_dist <= this.fire_dist) {
+      console.log(`canSwitch: ${this.canSwitch}`)
       if (!this.shot) {
         this.attack()
       } else if (this.shot) {
-        // console.log('I shouldnt be here')
         this.idle()
         if (!this.fireb.fire) {
-          // console.log('shot is false')
           this.shot = false
         }
       }

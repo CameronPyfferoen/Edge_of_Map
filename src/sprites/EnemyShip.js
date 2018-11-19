@@ -81,7 +81,7 @@ class EnemyShip extends Enemy
     this.patrol()
     if(this.curBoatSpeed > 20)
     {
-      console.log('should play forward')
+      // console.log('should play forward')
       this.FWD = true
     }
     else

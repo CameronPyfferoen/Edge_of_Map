@@ -58,21 +58,18 @@ class Fireball extends Phaser.Sprite {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      console.log('HIT!!')
       this.end()
       if ((otherBody.sprite.health -= this.damage) <= 0) {
         otherBody.sprite.health = 0;
       } else {
         otherBody.sprite.health -= this.damage
       }
-      console.log(`Player health: ${otherBody.sprite.health}`)
     }
   }
 
   end () {
     this.fire = false
     this.destroy()
-    console.log('fireball destroyed')
   }
 
   setupAnimations () {
