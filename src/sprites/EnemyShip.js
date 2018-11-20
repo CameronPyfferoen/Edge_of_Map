@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import GameData from '../GameData'
 import Test_Cannonball from './Test_Cannonball'
 import { sequentialNumArray } from '../utils';
+import { Line } from 'phaser-ce';
 
 class EnemyShip extends Enemy
 {
@@ -17,11 +18,17 @@ class EnemyShip extends Enemy
     this.backSpeed = 10
     this.turnAngle = 0.6
     this.FWD = false
-
+    this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
+    this.perpLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
+    this.perpSlope = 0
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
     this.damage = 20
+  }
+
+  positioning () {
+    
   }
 
   moveForward (speed) {
@@ -75,7 +82,9 @@ class EnemyShip extends Enemy
   }
 
   update () {
-    // super.update()
+    this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
+    this.perpSlope = this.playerLine.perpSlope
+    this.perpLine.fromAngle(this.body.x, this.body.y, this.perpSlope, this.player_dist)
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     this.patrol()
