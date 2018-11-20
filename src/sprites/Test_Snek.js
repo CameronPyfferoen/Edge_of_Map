@@ -25,7 +25,7 @@ class Test_Snek extends Enemy {
     this.animations.play('swim')
     this.state = 1
     this.attacking = false
-    // this.canSwitch = true
+    // this.switch()
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     this.animations.stop()
@@ -38,12 +38,25 @@ class Test_Snek extends Enemy {
     */
     this.state = 2
     this.animations.play('attack')
+    this.canSwitch = false
     this.attacking = true
-    // this.canSwitch = false
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     if (this.player.health > 0 && !this.shot) {
       this.animations.currentAnim.onComplete.add(this.fire, this)
+      // this.animations.currentAnim.onComplete.add(this.switch, this)
+    }
+  }
+
+  switch()
+  {
+    if(this.canSwitch)
+    {
+      this.canSwitch = false
+    }
+    else
+    {
+      this.canSwitch = true
     }
   }
 
@@ -64,12 +77,20 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    // this.fireb.fire = true
+    this.canSwitch = true
     this.shot = true
   }
 
   update () {
     this.canSwitch = !this.attacking
+    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    if(this.animations.currentAnim.name === 'attack')
+    {
+      if(this.shot && this.player_dist > this.fire_dist)
+      {
+        this.canSwitch = true
+      }
+    }
     /*
     if (!this.attacking) {
       this.animations.play('swim')
@@ -78,7 +99,7 @@ class Test_Snek extends Enemy {
     }
     */
     console.log(`state: ${this.state}`)
-    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+    console.log(`canSwitch: ${this.canSwitch}`)
     if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()
@@ -94,7 +115,6 @@ class Test_Snek extends Enemy {
         this.chase()
       }
     } if (this.player_dist <= this.fire_dist) {
-      console.log(`canSwitch: ${this.canSwitch}`)
       if (!this.shot) {
         this.attack()
       } else if (this.shot) {
