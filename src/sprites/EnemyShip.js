@@ -20,15 +20,26 @@ class EnemyShip extends Enemy
     this.FWD = false
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.perpLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
-    this.perpSlope = 0
+    // this.perpSlope = 0
+    this.perpAngle = 0
+    this.playerAngle = 0
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
     this.damage = 20
+    this.chase_dist = 300
+    this.post_dist = 150
   }
 
   positioning () {
-    
+    if(this.body.rotation < this.perpAngle)
+    {
+      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+    }
+    else if(this.body.rotation > this.perpAngle)
+    {
+      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+    }
   }
 
   moveForward (speed) {
@@ -81,13 +92,41 @@ class EnemyShip extends Enemy
     }
   }
 
+  chase () {
+    if (this.body.rotation < this.playerAngle)
+    {
+      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+    }
+    else if(this.body.rotation > this.playerAngle)
+    {
+      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+    }
+    else
+    {
+      this.moveForward(this.intBoatSpeed)
+    }
+  }
+
   update () {
     this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
-    this.perpSlope = this.playerLine.perpSlope
-    this.perpLine.fromAngle(this.body.x, this.body.y, this.perpSlope, this.player_dist)
+    // this.perpSlope = this.playerLine.perpSlope
+    this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
+    this.perpAngle = this.playerLine.normalAngle
+    this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    this.patrol()
+    if(this.player_dist > this.chase_dist)
+    {
+      this.patrol()
+    }
+    else if(this.player_dist <= this.chase_dist && this.player_dist > this.post_dist)
+    {
+      this.chase()
+    }
+    else if(this.player_dist <= this.post_dist)
+    {
+      this.positioning()
+    }
     if(this.curBoatSpeed > 20)
     {
       // console.log('should play forward')
