@@ -41,7 +41,7 @@ class Fireball extends Phaser.Sprite {
 
     this.speed = 100
     this.damage = 15
-    this.fire = false
+    this.fire = true
 
     // Turn into a sensor
     this.bodyShape = this.body.data.shapes[0]
