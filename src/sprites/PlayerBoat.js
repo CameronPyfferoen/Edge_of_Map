@@ -1,6 +1,7 @@
 // Import the entire 'phaser' namespace
 import Phaser from 'phaser'
 import config from '../config'
+import { sequentialNumArray } from '../utils.js'
 // import Wake from '../sprites/wake.js'
 
 // GameData in src
@@ -15,6 +16,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
     this.smoothed = false
+    this.dead = false;
     /*
     // create an emitter for the wake
     this.wakeEmitter = this.game.add.emitter(0, 0, 100)
@@ -42,7 +44,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body
-    this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    // this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    this.body.clearShapes();
+    this.body.addCapsule(12, 6, 0, 0, -1.55)
     this.body.offset.setTo(0.25, 0)
 
     // Configure custom physics properties
@@ -82,7 +86,7 @@ class PlayerBoat extends Phaser.Sprite {
     super.update()
 
     // set animation states
-    if (this.curBoatSpeed > 20) {
+    if (this.curBoatSpeed > 20 && this.health > 0) {
       this.MOVEFWD = true
       this.STOPPED = false
       // this.spawnWake();
@@ -92,10 +96,15 @@ class PlayerBoat extends Phaser.Sprite {
     }
 
     // check animation states, play appropriate animation
-    if (this.MOVEFWD === true && this.TURNINGL === false && this.TURNINGR === false) {
+    if (this.MOVEFWD === true && this.health > 0) {
       this.animations.play('moveFWD')
-    } else {
+    } else if (this.health > 0) {
       this.animations.play('idle')
+    } else if (this.dead === false) {
+      this.animations.play('death')
+      this.animations.currentAnim.onComplete.add(this.youAreDead, this);
+    } else {
+      this.animations.play('ded');
     }
   }
 
@@ -103,6 +112,12 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
+    this.animations.add('death', sequentialNumArray(138, 160), 10, false);
+    this.animations.add('ded', [27], 1, false);
+  }
+
+  youAreDead () {
+    this.dead = true;
   }
 
   moveForward () {
@@ -153,67 +168,44 @@ class PlayerBoat extends Phaser.Sprite {
     })
   }
   */
-
-  /*
-  // create the wakes
-  spawnWake () {
-    let wake = new Wake({
-      game: this.game,
-      x: this.x,
-      y: this.y
-    })
-    console.log('create wake')
-    // this.wake.z = 11
-    // console.log('create wake at layer ' + wake.z)
-
-    //  Position
-    this.wakeEmitter.x = this.body.x
-    this.wakeEmitter.y = this.body.y
-
-    //  The first parameter sets the effect to "explode" which means all particles are emitted at once
-    //  The second gives each particle a 2000ms lifespan
-    //  The third is ignored when using burst/explode mode
-    //  The final parameter (10) is how many particles will be emitted in this single burst
-    this.wakeEmitter.start(false, 2000, null, 10)
-    console.log('spawning wake')
-  }
-  */
-
   // Delete projectiles after x amount of seconds or collision
-  // hitCannonball (body1, body2) {
-  //   // body1 is the ship (as it's the body that owns the callback)
-  //   // body2 is the body it impacted with, in this case projectiles
+  hitCannonball (body1, body2) {
+    // body1 is the ship (as it's the body that owns the callback)
+    // body2 is the body it impacted with, in this case projectiles
 
-  //   // body2.sprite.kill()
-  //   // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
-  //   console.log('TEST')
-  //   body2.destroy()
-  // }
+    // body2.sprite.kill()
+    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
+    body2.destroy()
+  }
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
-    console.log(GameData.shotTypes.HARPOON)
-    switch (GameData.shotTypes.MULTISHOT) {
-      case GameData.shotTypes.HARPOON:
-        // console.log('o')
-        this.harpoon()
-        break
-      case GameData.shotTypes.MULTISHOT:
-        // console.log('k')
-        this.spreadShotLeft()
-        break
-      case GameData.shotTypes.EXTRA:
-        //
-        break
-      default:
-    }
+    if (this.health > 0) {
+      console.log(GameData.shotTypes.HARPOON)
+      switch (GameData.shotTypes.MULTISHOT) {
+        case GameData.shotTypes.HARPOON:
+          console.log('o')
+          this.harpoon()
+          break
+        case GameData.shotTypes.MULTISHOT:
+          console.log('k')
+          this.spreadShotLeft()
+          break
+        case GameData.shotTypes.EXTRA:
+          //
+          break
+        default:
+      }
     // this.spreadShotLeft()
     // this.harpoon()
+    }
   }
 
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
-    this.spreadShotRight()
+    if (this.health > 0) {
+      this.spreadShotRight()
+    }
   }
 
   // DOES NOT WORK ATM
@@ -307,6 +299,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotLeft () {
     // Create projectile object
     // console.log('o')
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -376,6 +370,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotRight () {
     // Create projectile object
     // console.log('o')
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
