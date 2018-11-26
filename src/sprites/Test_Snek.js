@@ -48,9 +48,9 @@ class Test_Snek extends Enemy {
     }
   }
 
-  switch()
+  switch ()
   {
-    if(this.canSwitch)
+    if (this.canSwitch)
     {
       this.canSwitch = false
     }
@@ -84,9 +84,9 @@ class Test_Snek extends Enemy {
   update () {
     this.canSwitch = !this.attacking
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
-    if(this.animations.currentAnim.name === 'attack')
+    if (this.animations.currentAnim.name === 'attack')
     {
-      if(this.shot && this.player_dist > this.fire_dist)
+      if (this.shot && this.player_dist > this.fire_dist)
       {
         this.canSwitch = true
       }
@@ -98,8 +98,8 @@ class Test_Snek extends Enemy {
       this.animations.play('attack')
     }
     */
-    console.log(`state: ${this.state}`)
-    console.log(`canSwitch: ${this.canSwitch}`)
+    // console.log(`state: ${this.state}`)
+    // console.log(`canSwitch: ${this.canSwitch}`)
     if (this.player_dist > this.renderdist && !this.isOffCamera) {
       this.isOffCamera = true
       this.kill()

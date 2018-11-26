@@ -289,6 +289,8 @@ class PlayerBoat extends Phaser.Sprite {
 
   spreadShotLeft () {
     // Create projectile object
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     console.log('o')
     let cannonball = new Test_Cannonball({
       game: this.game,
@@ -350,6 +352,8 @@ class PlayerBoat extends Phaser.Sprite {
 
   spreadShotRight () {
     // Create projectile object
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     console.log('o')
     let cannonball = new Test_Cannonball({
       game: this.game,

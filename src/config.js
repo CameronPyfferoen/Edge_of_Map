@@ -21,7 +21,7 @@ export default {
 
   // Sound and music settings
   MUSIC_VOLUME: 0.1,
-  SFX_VOLUME: 1.0,
+  SFX_VOLUME: 0.1,
 
   // Minimum time to display the splash screen
   MIN_SPLASH_SECONDS: 2,

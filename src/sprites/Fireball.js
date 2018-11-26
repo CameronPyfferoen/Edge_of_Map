@@ -59,6 +59,8 @@ class Fireball extends Phaser.Sprite {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
       this.end()
+      game.camera.shake(0.005, 500); // this.game is null?
+      game.getHit.play('', 0, config.SFX_VOLUME);
       if ((otherBody.sprite.health -= this.damage) <= 0) {
         otherBody.sprite.health = 0;
       } else {

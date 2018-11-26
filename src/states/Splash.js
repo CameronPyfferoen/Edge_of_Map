@@ -100,6 +100,11 @@ class Splash extends Phaser.State {
     this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
     this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 357, 121)
+    this.load.image('settingBarBG', '/assets/images/Ui/controls_music&sound_backbar.png')
+    this.load.image('settingBarFG', '/assets/images/Ui/controls_music&sound_frontbar.png')
+    this.load.image('settingBarKnob', '/assets/images/Ui/controls_music&sound_controlbutton.png')
+    this.load.spritesheet('SFXVolume', '/assets/images/Ui/SpriteSheet_controls_volume.png', 128, 128)
+
 
     // In-game UI
     this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
@@ -110,8 +115,12 @@ class Splash extends Phaser.State {
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
-      'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3'
+      'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3', 
+      'assets/audio/SFX//q009/explosion.ogg', 'assets/audio/SFX//q009/grenade.ogg'
     ], 'assets/audio/sounds.json')
+    this.load.audio('explosion', 'assets/audio/SFX//q009/explosion.ogg')
+    this.load.audio('getHit', 'assets/audio/SFX//q009/grenade.ogg')
+
   }
 
   // Pre-load is done
@@ -143,7 +152,8 @@ class Splash extends Phaser.State {
   setupAudio () {
     // Load the audio sprite into the global game object (and also make a local variable)
     let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
-
+    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     // Make the different music sections flow into one another in a seemless loop
     // (this is unusually complex and your audio probabaly wont need it)
     sounds.get('music-intro').onStop.add(() => {
@@ -174,10 +184,6 @@ class Splash extends Phaser.State {
       // Make sure the audio is not only loaded but also decoded before advancing
       if (this.game.sounds.get('music-intro').isDecoded) {
         this.state.start('MainMenu')
-        // this.state.start('TestLevel')
-        // this.state.start('PrototypeLevel1')
-        // this.state.start('Cam_TestLevel');
-        // this.state.start('FiringTest')
       }
     }
   }
