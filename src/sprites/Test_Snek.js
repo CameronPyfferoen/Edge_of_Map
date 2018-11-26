@@ -6,6 +6,7 @@ import { sequentialNumArray } from '../utils'
 import Fireball from '../sprites/Fireball'
 import { Line } from 'phaser-ce'
 
+// change htibox to capsule
 class Test_Snek extends Enemy {
   constructor (game) {
     super(game)
@@ -38,6 +39,7 @@ class Test_Snek extends Enemy {
     var pangle = Math.atan2(this.body.y - this.player.y, this.body.x - this.player.x)
     this.body.angle = pangle
     */
+    this.body.rotation = this.playerLine.angle + Phaser.Math.degToRad(90)
     this.state = 2
     this.animations.play('attack')
     this.canSwitch = false

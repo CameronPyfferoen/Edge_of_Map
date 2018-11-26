@@ -105,7 +105,7 @@ class Cam_TestLevel extends Phaser.State {
     
     this.game.add.existing(this.eBoat)
     */
-    
+    /*
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -117,6 +117,7 @@ class Cam_TestLevel extends Phaser.State {
 
       this.game.add.existing(this.sneks[i])
     }
+    */
     
     
     this.corner_snek = new Test_Snek({
