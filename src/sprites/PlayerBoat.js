@@ -42,7 +42,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.collideWorldBounds = true
 
     // Create a custom shape for the collider body
-    this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    // this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
+    this.body.clearShapes();
+    this.body.addCapsule(12, 6, 0, 0, -1.55)
     this.body.offset.setTo(0.25, 0)
 
     // Configure custom physics properties
@@ -307,6 +309,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotLeft () {
     // Create projectile object
     // console.log('o')
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -376,6 +380,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotRight () {
     // Create projectile object
     // console.log('o')
+    this.game.camera.shake(0.001, 250);
+    this.game.explosion.play('', 0, config.SFX_VOLUME);
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]

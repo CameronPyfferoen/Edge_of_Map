@@ -13,7 +13,7 @@ class Dead extends Phaser.State {
   preLoad () {}
 
   create () {
-    this.game.add.tileSprite(0, 0, 1900, 950, 'mainMenuBackground')
+    this.game.add.tileSprite(0, 0, 1900, 950, 'deathScreen')
 
   }
 
