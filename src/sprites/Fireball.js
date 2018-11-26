@@ -27,7 +27,7 @@ class Fireball extends Phaser.Sprite {
 
     // this.body.collideWorldBounds = true
     this.body.setCollisionGroup(this.game.projectileGroup)
-    this.body.collides([this.game.playerGroup. this.game.landGroup])
+    this.body.collides([this.game.playerGroup, this.game.landGroup])
 
     // this.body.setRectangleFromSprite()
     // this.body.offset.setTo(0, 0)
@@ -41,7 +41,7 @@ class Fireball extends Phaser.Sprite {
 
     this.speed = 100
     this.damage = 15
-    this.fire = false
+    this.fire = true
 
     // Turn into a sensor
     this.bodyShape = this.body.data.shapes[0]
@@ -58,17 +58,20 @@ class Fireball extends Phaser.Sprite {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      console.log('HIT!!')
       this.end()
-      otherBody.sprite.health -= this.damage
-      console.log(`Player health: ${otherBody.sprite.health}`)
+      game.camera.shake(0.005, 500); // this.game is null?
+      game.getHit.play('', 0, config.SFX_VOLUME);
+      if ((otherBody.sprite.health -= this.damage) <= 0) {
+        otherBody.sprite.health = 0;
+      } else {
+        otherBody.sprite.health -= this.damage
+      }
     }
   }
 
   end () {
     this.fire = false
     this.destroy()
-    console.log('fireball destroyed')
   }
 
   setupAnimations () {

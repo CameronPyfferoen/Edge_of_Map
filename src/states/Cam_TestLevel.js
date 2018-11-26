@@ -13,14 +13,20 @@ import Test_Cannonball from '../sprites/Test_Cannonball'
 import FiringTest from '../states/FiringTest'
 import GameData from '../GameData'
 import Shark from '../sprites/Shark'
+import EnemyShip from '../sprites/EnemyShip';
 
 class Cam_TestLevel extends Phaser.State {
   init () {
-    this.game.add.tileSprite(0, 0, 3200, 2048, 'comboMap'); // 'backGroundImage'
+    // Add background Image
+    this.game.add.tileSprite(0, 0, 3200, 2048, 'FinalMap');
+    // Set pixel smoothing to false 
     this.game.stage.smoothed = false;
+    // Enable p2 physics
     this.game.physics.startSystem(Phaser.Physics.P2JS);
+    // Enable FPS counter
     this.game.time.advancedTiming = true
     this.game.time.desiredFPS = 60
+    // Set shottype
     this.shotType = GameData.shotTypes.MULTISHOT
   }
 
@@ -29,67 +35,38 @@ class Cam_TestLevel extends Phaser.State {
   create () {
     // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32)
-    // this.map.addTilesetImage('Clouds', 'cloudBarrier')
-    // this.cloudLayer = this.map.createLayer('Clouds')
-    /*
-    this.map.addTilesetImage('landTiles', 'islandSprites')
-    this.landLayer = this.map.createLayer('Lands')
-    */
-    // Scaling black magic here --------------------------------
-    this.game.world.scale.setTo(2) // 2
+    // Scaling here -------------------------------------------
     this.game.world.setBounds(0, 0, 3200, 2048)
-    this.game.physics.p2.setBounds(0, 0, 3200, 2048)
-    
-    /*
-    this.leftWall = this.game.add.sprite(0, 0);
-    this.game.physics.p2.enable(this.leftWall);
-    this.leftWall.body.clearBody();
-    this.leftWall.body.addRectangle(1, 2048, 0, 0);
-    this.leftWall.body.static = true;
-    this.leftWall.body.debug = __DEV__;
-    this.leftWall.body.setCollisionGroup(this.game.landGroup);
-    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
-    */
+    // this.game.physics.p2.setBounds(0, 0, 3200, 2048)
+    this.game.world.scale.setTo(2) // 2
+    // add world bounds ----------------------------------------------------------
+    this.addBounds()
 
-    // look at https://phaser.io/examples/v2/p2-physics/collide-custom-bounds
-    
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
       this.Collider = this.add.sprite(element.x, element.y)
       this.game.physics.p2.enable(this.Collider)
-      // this.Collider.body.debug = __DEV__
+      // this.Collider.body.debug = __DEV__ // sends the fps to the garbage
       this.Collider.body.addPolygon({}, element.polygon)
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
     })
 
-    // Add World Border Colliders -------------------------------------------------------------------------
-    let customWall = this.map.objects['WallObjects']
-    customWall.forEach(element => {
-      this.Collider = this.add.sprite(element.x, element.y)
-      this.game.physics.p2.enable(this.Collider)
-      this.Collider.body.debug = __DEV__
-      this.Collider.body.addRectangle({}, element.rectangle)
-      this.Collider.body.static = true
-      this.Collider.body.setCollisionGroup(this.game.landGroup)
-      this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
-    })
-
     // Start playing the background music -----------------------------
-    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 260,
-      y: 1850
-    })
+      x: 300,
+      y: 700
+    }) // x = 260, y = 1850
     this.playerMP.body.onBeginContact.add(this.rammed, this)
-    this.playerMP.body.collideWorldBounds = true; // broken as hell
-    this.gold = 123456789;
-    this.goldMax = 999999999;
+    // this.playerMP.body.collideWorldBounds = true;
+    this.gold = 0;
+    this.goldMax = 999999999; // nine spaces
     this.goldMin = 0;
 
     /*
@@ -118,6 +95,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
+    
+    this.eBoat = new EnemyShip({
+      game: this.game,
+      x: this.playerMP.x + 100,
+      y: this.playerMP.y - 100,
+      player: this.playerMP
+    })
+
+    this.game.add.existing(this.eBoat)
+    
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -129,7 +116,18 @@ class Cam_TestLevel extends Phaser.State {
 
       this.game.add.existing(this.sneks[i])
     }
+    
+    /*
+    this.corner_snek = new Test_Snek({
+      game: this.game,
+      x: this.playerMP.x + 70,
+      y: this.playerMP.y + 70,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.corner_snek)
+    */
 
+    /*
     this.test_fire = new Test_Snek({
       game: this.game,
       x: this.world.centerX + 50,
@@ -137,9 +135,10 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.test_fire)
+    */
 
     this.game.add.existing(this.playerMP)
-    
+
     // this.playerMP.body.rotation = 1.57; // uses radians
 
     // layer groups ----------------------------------------------------------
@@ -152,27 +151,24 @@ class Cam_TestLevel extends Phaser.State {
     this.UIfwd = this.game.add.group()
 
     this.enemies = this.game.add.group()
+    /*
     for (let k = 0; k < 10; k++) {
       this.enemies.add(this.sneks[k])
       this.underWater.add(this.sneks[k])
     }
+    */
 
     // adding the objects to the groups -------------------------------------
     this.playerGroup.add(this.playerMP);
-    /*
-    this.aqua = this.game.add.sprite(0, 0,'mapoverlay');
-    this.water.add(this.aqua);
-    */
-    /*
-    this.aboveWater.add(this.landLayer);
-    this.aboveWater.add(this.cloudLayer);
-    */
+
+    // Lock camera to player -----------------------------------------------
 
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
+    // Add keyboard input --------------------------------------------------
     this.setupKeyboard()
 
-    // UI -------------------------------------------------------------------
+    // Adding UI Elements-------------------------------------------------------------------
     this.healthBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthBG');
     this.healthBar = this.game.add.sprite(this.game.camera.x + 202, this.game.camera.y + 863, 'healthBar');
     this.healthFG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'healthFG');
@@ -201,26 +197,27 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.camera.x = this.playerMP.body.x;
     this.game.camera.y = this.playerMP.body.y;
-    /*
-    this.cropRect = Phaser.Rectangle(0, 0, 0, this.healthBar.width);
-    this.healthBar.crop(this.cropRect);
-    */
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
       if (event.keyCode === 27) {
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
-          this.pauseBG = this.game.add.sprite(this.game.camera.x + 950 - 1165/2, this.game.camera.y + 475 - 394, 'controlBoard');
-          this.menuButton = this.game.add.button(this.game.camera.x + 950 - 179, this.game.camera.y + 475 + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
+          this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
+          this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, 
+            this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 
+            'exitButton', 
+            function exitButton () {
+              this.state.start('MainMenu');
+            }, 
+            this, 1, 0, 1, 0);
+          this.pauseBG.anchor.setTo(0.5, 0.5);
+          this.menuButton.anchor.setTo(0.5, 0.5);
+          this.pauseBG.scale.setTo(1 / 2.5);
+          this.menuButton.scale.setTo(1 / 2.5);
           this.pauseBG.fixedToCamera = true;
           this.menuButton.fixedToCamera = true;
-          // this.pauseBG = this.game.add.sprite(this.game.center.x /*+ 950 - 1165/2*/, this.game.center.y, 'controlBoard');
-          // this.menuButton = this.game.add.button(this.game.center.x /*+ 950 - 179*/, this.game.center.y /*+ 475 + 180*/, 'exitButton', this.sendToMain, this, 1, 0, 1, 0);
-          this.pauseBG.scale.setTo(1 / 4);
-          this.menuButton.scale.setTo(1 / 4);
-          // this.UIfwd.add(this.pauseBG);
-          // this.UIfwd.add(this.menuButton);
+
         } else {
           this.pauseBG.destroy();
           this.menuButton.destroy();
@@ -228,8 +225,7 @@ class Cam_TestLevel extends Phaser.State {
       }
     };
 
-
-    // turn off context menu
+    // turn off context menu ----------------------------------------------------
     this.game.input.mouse.capture = true
     document.oncontextmenu = function () {
       return false
@@ -240,17 +236,16 @@ class Cam_TestLevel extends Phaser.State {
     // this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
     // this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
 
-
     // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
+    // -------------------------------------------------------------
     addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
     addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-
   }
 
   setupKeyboard () {
@@ -265,49 +260,115 @@ class Cam_TestLevel extends Phaser.State {
 
   }
 
+  endScreen () {
+    // this.endScreenBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 4 + 475, this.game.camera.y - this.game.camera.y / 4 + 237.5, 'controlBoard');
+    this.endScreenBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'controlBoard');
+    this.endExitButton = this.game.add.button(
+      // this.game.camera.x, 
+      // this.game.camera.y,
+      this.playerMP.body.x,
+      this.playerMP.body.y, 
+      'exitButton', 
+      this.sendToMain, 
+      this, 1, 0, 1, 0);
+    // this.endScreenBG.anchor.setTo(0.5, 0.5);
+    // this.endExitButton.anchor.setTo(0.5, 0.5);
+    // this.endScreenBG.scale.setTo(1 / 2.5);
+    // this.endExitButton.scale.setTo(1 / 2.5);
+    // this.endScreenBG.fixedToCamera = true;
+    // this.endExitButton.fixedToCamera = true;
+  }
+
   sendToMain () {
     this.state.start('MainMenu');
   }
 
+  addBounds () {
+    this.leftWall = this.game.add.sprite(0, 0, 'nothing');
+    this.game.physics.p2.enable(this.leftWall);
+    this.leftWall.body.collideWorldBounds = false;
+    this.leftWall.body.clearShapes();
+    this.leftWall.body.addRectangle(50, 4096, 0, 0);
+    this.leftWall.body.static = true;
+    this.leftWall.body.debug = __DEV__;
+    this.leftWall.body.setCollisionGroup(this.game.landGroup);
+    this.leftWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.rightWall = this.game.add.sprite(3200, 0, 'nothing');
+    this.game.physics.p2.enable(this.rightWall);
+    this.rightWall.body.collideWorldBounds = false;
+    this.rightWall.body.clearShapes();
+    this.rightWall.body.addRectangle(50, 4096, 0, 0);
+    this.rightWall.body.static = true;
+    this.rightWall.body.debug = __DEV__;
+    this.rightWall.body.setCollisionGroup(this.game.landGroup);
+    this.rightWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.botWall = this.game.add.sprite(0, 2048, 'nothing');
+    this.game.physics.p2.enable(this.botWall);
+    this.botWall.body.collideWorldBounds = false;
+    this.botWall.body.clearShapes();
+    this.botWall.body.addRectangle(6400, 50, 0, 4);
+    this.botWall.body.static = true;
+    this.botWall.body.debug = __DEV__;
+    this.botWall.body.setCollisionGroup(this.game.landGroup);
+    this.botWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+
+    this.topWall = this.game.add.sprite(0, 0, 'nothing');
+    this.game.physics.p2.enable(this.topWall);
+    this.topWall.body.collideWorldBounds = false;
+    this.topWall.body.clearShapes();
+    this.topWall.body.addRectangle(6400, 50, 0, -4);
+    this.topWall.body.static = true;
+    this.topWall.body.debug = __DEV__;
+    this.topWall.body.setCollisionGroup(this.game.landGroup);
+    this.topWall.body.collides([this.game.playerGroup, this.game.enemyGroup]);
+  }
+
   update () {
     super.update()
-    // info on screen
+    // info on screen -----------------------------------------------
     this.game.debug.spriteInfo(this.playerMP, 32, 32);
     this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
 
-    // move forward
-    if (this.forwardKey.isDown) {
-      this.playerMP.moveForward();
-    } else {
-      this.playerMP.slowDown();
-    }
-
-    // turn left
-    if (this.leftKey.isDown) {
-      this.playerMP.turnLeft();
-    }
-
-    // move back
-    if (this.backwardKey.isDown) {
+    // move forward ------------------------
+    if (this.playerMP.health > 0) {
+      if (this.forwardKey.isDown) {
+        this.playerMP.moveForward();
+      } else {
+        this.playerMP.slowDown();
+      }
+      // turn left --------------------------
+      if (this.leftKey.isDown) {
+        this.playerMP.turnLeft();
+      }
+      // move back --------------------------
+      if (this.backwardKey.isDown) {
+        this.playerMP.moveBackward();
+      }
+      // turn right -------------------------
+      if (this.rightKey.isDown) {
+        this.playerMP.turnRight();
+      }
+    } else if (this.playerMP.curBoatSpeed > 0) {
       this.playerMP.moveBackward();
-    }
-
-    // turn right
-    if (this.rightKey.isDown) {
-      this.playerMP.turnRight();
+    } else {
+      this.playerMP.curBoatSpeed = 0;
     }
 
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
     }
 
-    // UI update
+    if (this.playerMP.health <= 0) {
+      this.game.input.onDown.removeAll();
+      this.endScreen();
+    }
+
+    // UI update ---------------------------------------------------------
+
     this.goldTXT.text = this.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
-    /*
-    this.cropRect.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
-    this.healthBar.updateCrop();
-    */
   }
 }
 

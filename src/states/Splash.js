@@ -44,23 +44,22 @@ class Splash extends Phaser.State {
     // Load all the assets needed for next state
 
     // The main player spritesheet
-    this.load.spritesheet('Pirat_Ship_1', 'assets/images/Player/Pirat_Ship_1.jpg', 64, 64)
-    this.load.spritesheet('player-main', 'assets/images/Player/player-main.png', 64, 64)
+    // this.load.spritesheet('Pirat_Ship_1', 'assets/images/Player/Pirat_Ship_1.jpg', 64, 64)
+    // this.load.spritesheet('player-main', 'assets/images/Player/player-main.png', 64, 64)
     this.load.spritesheet('player-med', '/assets/images/PLayer_M_Ship_96x96/Player_M_96_Sprite_Sheet.png', 96, 96)
 
     this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
     this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
     this.load.spritesheet('sharkSheet', './assets/images/Enemies/SpriteSheet_Shark.png', 32, 48)
-    this.load.spritesheet('medBoat', 'assets/images/Player/Player_M_96.png', 96, 96)
-    this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
-    this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
+    // this.load.spritesheet('medBoat', 'assets/images/Player/Player_M_96.png', 96, 96)
+    // this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
+    // this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
     this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
     this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
+    this.load.spritesheet('enemyship', 'assets/images/Enemies/Enemy_Ships_L_128.png', 128, 128)
 
-    // this.load.image('map', './assets/images/maptemplate.png')
-
-    this.load.image('map', '/assets/images/Terrain/maptemplate.png')
+    // this.load.image('map', '/assets/images/Terrain/maptemplate.png')
     /*
     this.load.image('wake1', '/assets/images/spr_wake_1.png')
     this.load.image('wake2', '/assets/images/spr_wake_2.png')
@@ -73,7 +72,7 @@ class Splash extends Phaser.State {
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
-    this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
+    // this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
 
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
@@ -86,10 +85,12 @@ class Splash extends Phaser.State {
 
     // Tilemap Assets
     this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
+    this.load.image('FinalMap', '/assets/images/Terrain/Map_With_Border.png')
     this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
     this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
     this.load.image('comboMap', '/assets/images/Terrain/mapCombo.png')
+    this.load.image('nothing', '/assets/images/Terrain/spr_nothing.png')
 
     // Menu Assets
     this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
@@ -99,18 +100,27 @@ class Splash extends Phaser.State {
     this.load.spritesheet('settingsButton', '/assets/images/Ui/SpriteSheet_main_settings.png', 616, 121)
     this.load.spritesheet('exitButton', '/assets/images/Ui/SpriteSheet_main_exit.png', 358, 121)
     this.load.spritesheet('backButton', '/assets/images/Ui/SpriteSheet_settings&controls_back.png', 357, 121)
+    this.load.image('settingBarBG', '/assets/images/Ui/controls_music&sound_backbar.png')
+    this.load.image('settingBarFG', '/assets/images/Ui/controls_music&sound_frontbar.png')
+    this.load.image('settingBarKnob', '/assets/images/Ui/controls_music&sound_controlbutton.png')
+    this.load.spritesheet('SFXVolume', '/assets/images/Ui/SpriteSheet_controls_volume.png', 128, 128)
+
 
     // In-game UI
     this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', '/assets/images/UI/health_health.png')
     this.load.image('healthFG', '/assets/images/UI/health_front.png')
 
-    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png');
+    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png')
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
-      'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3'
+      'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3', 
+      'assets/audio/SFX//q009/explosion.ogg', 'assets/audio/SFX//q009/grenade.ogg'
     ], 'assets/audio/sounds.json')
+    this.load.audio('explosion', 'assets/audio/SFX//q009/explosion.ogg')
+    this.load.audio('getHit', 'assets/audio/SFX//q009/grenade.ogg')
+
   }
 
   // Pre-load is done
@@ -143,7 +153,8 @@ class Splash extends Phaser.State {
   setupAudio () {
     // Load the audio sprite into the global game object (and also make a local variable)
     let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
-
+    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     // Make the different music sections flow into one another in a seemless loop
     // (this is unusually complex and your audio probabaly wont need it)
     sounds.get('music-intro').onStop.add(() => {
@@ -174,10 +185,6 @@ class Splash extends Phaser.State {
       // Make sure the audio is not only loaded but also decoded before advancing
       if (this.game.sounds.get('music-intro').isDecoded) {
         this.state.start('MainMenu')
-        // this.state.start('TestLevel')
-        // this.state.start('PrototypeLevel1')
-        // this.state.start('Cam_TestLevel');
-        // this.state.start('FiringTest')
       }
     }
   }

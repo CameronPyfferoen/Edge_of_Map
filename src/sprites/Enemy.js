@@ -20,7 +20,7 @@ class Enemy extends Phaser.Sprite
 
     this.game.physics.p2.enable(this)
     this.body.setCollisionGroup(this.game.enemyGroup)
-    this.body.collides([this.game.playerGroup, this.game.landGroup])
+    this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
     
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
@@ -71,7 +71,7 @@ class Enemy extends Phaser.Sprite
   }
 
   chase () {
-    this.animations.play('swim')
+    this.animations.play('snek')
     this.moveToObject(this.body, this.player)
   }
 
