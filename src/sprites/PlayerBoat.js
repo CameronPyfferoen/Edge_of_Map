@@ -354,21 +354,21 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
-    cannonball.body.moveForward(0)
+    cannonball.body.moveForward(500)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 100
     // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle - 90
-    cannonball2.body.moveForward(0)
+    cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle - 100
     // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle - 90
-    cannonball3.body.moveForward(0)
+    cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
@@ -423,21 +423,21 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
-    cannonball.body.moveForward(0)
+    cannonball.body.moveForward(500)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 10
     // cannonball2.y = this.playerMP.angle + 10
     cannonball2.body.angle = this.angle + 90
-    cannonball2.body.moveForward(0)
+    cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle + 10
     // cannonball3.y = this.playerMP.angle + 10
     cannonball3.body.angle = this.angle + 90
-    cannonball3.body.moveForward(0)
+    cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
