@@ -35,7 +35,7 @@ class MainMenu extends Phaser.State {
     this.state.start('Settings')
   }
   sendToTest () {
-    this.state.start('TestLevel')
+    this.state.start('Dead')
   }
 
 }
