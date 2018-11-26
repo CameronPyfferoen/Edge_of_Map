@@ -4,6 +4,7 @@ import PlayerBoat from '../sprites/PlayerBoat'
 import Enemy from './Enemy'
 import { sequentialNumArray } from '../utils'
 import Fireball from '../sprites/Fireball'
+import { Line } from 'phaser-ce'
 
 class Test_Snek extends Enemy {
   constructor (game) {
@@ -12,6 +13,7 @@ class Test_Snek extends Enemy {
     this.loadTexture('seasnake_final')
     this.setupAnimations()
     this.animations.play('swim')
+    this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.attacking = false
     this.canSwitch = true
     this.fire_dist = 80
@@ -28,7 +30,7 @@ class Test_Snek extends Enemy {
     // this.switch()
     this.body.velocity.x = 0
     this.body.velocity.y = 0
-    this.animations.stop()
+    // this.animations.stop()
   }
 
   attack () {
@@ -82,11 +84,12 @@ class Test_Snek extends Enemy {
   }
 
   update () {
+    this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
     this.canSwitch = !this.attacking
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     if (this.animations.currentAnim.name === 'attack')
     {
-      if (this.shot && this.player_dist > this.fire_dist)
+      if (this.shot )//&& this.player_dist > this.fire_dist)
       {
         this.canSwitch = true
       }
