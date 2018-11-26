@@ -233,7 +233,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   harpoon () {
-    console.log('o')
+    // console.log('o')
     let mousex = this.game.input.x
     let mousey = this.game.input.y
     console.log('MousePos: [' + mousex + ',' + mousey + ']')
@@ -287,25 +287,42 @@ class PlayerBoat extends Phaser.Sprite {
     // this.game.p2.moveToPointer(cannonball, 100)
   }
 
+  rotate (cx, cy, x, y, angle) {
+    let radians = (Math.PI / 180) * angle,
+    cos = Math.cos(radians),
+    sin = Math.sin(radians),
+    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
+    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    return [nx, ny]
+  }
+
   spreadShotLeft () {
     // Create projectile object
+    // console.log('o')
     this.game.camera.shake(0.001, 250);
     this.game.explosion.play('', 0, config.SFX_VOLUME);
-    console.log('o')
+    let canPos1 = [this.x, this.y]
+    let canPos2 = [this.x, this.y + 7.5]
+    let canPos3 = [this.x, this.y - 7.5]
+
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+
     let cannonball = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y
+      x: canPos1[0],
+      y: canPos1[1]
     })
     let cannonball2 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y + 7.5
+      x: canPos2[0],
+      y: canPos2[1]
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y - 7.5
+      x: canPos3[0],
+      y: canPos3[1]
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -352,23 +369,31 @@ class PlayerBoat extends Phaser.Sprite {
 
   spreadShotRight () {
     // Create projectile object
+    // console.log('o')
     this.game.camera.shake(0.001, 250);
     this.game.explosion.play('', 0, config.SFX_VOLUME);
-    console.log('o')
+    let canPos1 = [this.x, this.y]
+    let canPos2 = [this.x, this.y + 7.5]
+    let canPos3 = [this.x, this.y - 7.5]
+
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+
     let cannonball = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y
+      x: canPos1[0],
+      y: canPos1[1]
     })
     let cannonball2 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y + 7.5
+      x: canPos2[0],
+      y: canPos2[1]
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y - 7.5
+      x: canPos3[0],
+      y: canPos3[1]
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)

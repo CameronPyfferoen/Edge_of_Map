@@ -104,6 +104,7 @@ class Splash extends Phaser.State {
     this.load.image('settingBarFG', '/assets/images/Ui/controls_music&sound_frontbar.png')
     this.load.image('settingBarKnob', '/assets/images/Ui/controls_music&sound_controlbutton.png')
     this.load.spritesheet('SFXVolume', '/assets/images/Ui/SpriteSheet_controls_volume.png', 128, 128)
+    this.load.image('deathScreen', '/assets/images/UI/death_menu.png')
 
 
     // In-game UI
@@ -145,6 +146,7 @@ class Splash extends Phaser.State {
     this.game.itemGroup = this.game.physics.p2.createCollisionGroup()
     this.game.landGroup = this.game.physics.p2.createCollisionGroup()
     // delet later, game?
+    this.game.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.game.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.game.projectileGroup = this.game.physics.p2.createCollisionGroup()
   }

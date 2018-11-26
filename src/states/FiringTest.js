@@ -17,11 +17,14 @@ import GameData from '../GameData'
 
 // What I want to do
 // harpoon projectile!!!
-// figure out how to replace kill cannonball w/ destroy cannonball
-// look at Eliot's link on Slack
+// #1 figure out how to replace kill cannonball w/ destroy cannonball
+// #2 multishot distance in between
+// #3 change hitbox position
+// #4 SFX
+// look at Eliot's links on Slack
 // add more comments to large commented code below
 // consider adding --- lines to comments for readability
-// change hitbox position
+// sfc
 
 // Phaser examples to look at
 // ...
@@ -63,13 +66,14 @@ class FiringTest extends Phaser.State {
 
     // add the two lines of code below?
     // Set the ships collision group
-    this.player.body.setCollisionGroup(this.playerCollisionGroup)
+    this.player.body.setCollisionGroup(this.game.playerCollisionGroup)
 
     // Add p2 physics group to this.projectile
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
 
     // Objects with collision groups will collide with world bounds
-    // this.game.physics.p2.updateBoundsCollisionGroup()
+    // COMMENT
+    this.game.physics.p2.updateBoundsCollisionGroup()
 
     // prevent the right mouse button click menu from popping up
     this.game.input.mouse.capture = true
@@ -92,28 +96,28 @@ class FiringTest extends Phaser.State {
     // Look at callback function notes
     // When the ship collides with projectiles, the hitCannonball callback is called, killing the projectiles
     // When projectiles collide with each other, they are not killed
-    this.player.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
+    this.player.body.collides(this.game.cannonballCollisionGroup, this.player.hitCannonball, this)
 
     // timer variables for firing rate
     this.timer = 0
     this.timer2 = 0
 
-    this.sneks = []
-    for (let i = 0; i < 10; i++) {
-      this.sneks[i] = new Test_Snek({
-        game: this.game,
-        x: Phaser.Math.random(0, 3149),
-        y: Phaser.Math.random(0, 2007),
-        player: this.playerMP
-      })
+    // this.sneks = []
+    // for (let i = 0; i < 10; i++) {
+    //   this.sneks[i] = new Test_Snek({
+    //     game: this.game,
+    //     x: Phaser.Math.random(0, 3149),
+    //     y: Phaser.Math.random(0, 2007),
+    //     player: this.playerMP
+    //   })
 
-      this.game.add.existing(this.sneks[i])
-    }
+    //   this.game.add.existing(this.sneks[i])
+    // }
 
   }
 
   // LARGE CODE MOVED TO PLAYERBOAT FOR EFFICIENCY
-  // // Delete projectiles after x amount of seconds or collision
+  // // // Delete projectiles after x amount of seconds or collision
   // hitCannonball (body1, body2) {
   //   // body1 is the ship (as it's the body that owns the callback)
   //   // body2 is the body it impacted with, in this case projectiles
@@ -229,17 +233,17 @@ class FiringTest extends Phaser.State {
   //   console.log('o')
   //   let cannonball = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x - 10,
   //     y: this.player.y
   //   })
   //   let cannonball2 = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x - 10,
   //     y: this.player.y + 7.5
   //   })
   //   let cannonball3 = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x - 10,
   //     y: this.player.y - 7.5
   //   })
   //   // Add sprite to the projectile physics group
@@ -266,21 +270,21 @@ class FiringTest extends Phaser.State {
 
   //   // Set cannonball angle, velocity, and size
   //   cannonball.body.angle = this.player.angle - 90
-  //   cannonball.body.moveForward(50)
+  //   cannonball.body.moveForward(0)
   //   cannonball.width = this.cannonballWidth
   //   cannonball.height = this.cannonballHeight
 
   //   // cannonball2.x = this.player.angle + 100
   //   // cannonball2.y = this.player.angle + 100
   //   cannonball2.body.angle = this.player.angle - 90
-  //   cannonball2.body.moveForward(50)
+  //   cannonball2.body.moveForward(0)
   //   cannonball2.width = this.cannonballWidth
   //   cannonball2.height = this.cannonballHeight
 
   //   // cannonball3.x = this.player.angle - 100
   //   // cannonball3.y = this.player.angle - 100
   //   cannonball3.body.angle = this.player.angle - 90
-  //   cannonball3.body.moveForward(50)
+  //   cannonball3.body.moveForward(0)
   //   cannonball3.width = this.cannonballWidth
   //   cannonball3.height = this.cannonballHeight
   // }
@@ -290,17 +294,17 @@ class FiringTest extends Phaser.State {
   //   console.log('o')
   //   let cannonball = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x + 10,
   //     y: this.player.y
   //   })
   //   let cannonball2 = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x + 10,
   //     y: this.player.y + 7.5
   //   })
   //   let cannonball3 = new Test_Cannonball({
   //     game: this.game,
-  //     x: this.player.x,
+  //     x: this.player.x + 10,
   //     y: this.player.y - 7.5
   //   })
   //   // Add sprite to the projectile physics group
@@ -327,21 +331,21 @@ class FiringTest extends Phaser.State {
 
   //   // Set cannonball angle, velocity, and size
   //   cannonball.body.angle = this.player.angle + 90
-  //   cannonball.body.moveForward(50)
+  //   cannonball.body.moveForward(0)
   //   cannonball.width = this.cannonballWidth
   //   cannonball.height = this.cannonballHeight
 
   //   // cannonball2.x = this.player.angle + 10
   //   // cannonball2.y = this.player.angle + 10
   //   cannonball2.body.angle = this.player.angle + 90
-  //   cannonball2.body.moveForward(50)
+  //   cannonball2.body.moveForward(0)
   //   cannonball2.width = this.cannonballWidth
   //   cannonball2.height = this.cannonballHeight
 
   //   // cannonball3.x = this.player.angle + 10
   //   // cannonball3.y = this.player.angle + 10
   //   cannonball3.body.angle = this.player.angle + 90
-  //   cannonball3.body.moveForward(50)
+  //   cannonball3.body.moveForward(0)
   //   cannonball3.width = this.cannonballWidth
   //   cannonball3.height = this.cannonballHeight
   // }
