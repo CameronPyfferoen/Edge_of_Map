@@ -104,7 +104,7 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     this.game.add.existing(this.eBoat)
-    /*
+    
     this.sneks = []
     for (let i = 0; i < 10; i++) {
       this.sneks[i] = new Test_Snek({
@@ -116,7 +116,7 @@ class Cam_TestLevel extends Phaser.State {
 
       this.game.add.existing(this.sneks[i])
     }
-    */
+    
     /*
     this.corner_snek = new Test_Snek({
       game: this.game,
@@ -240,8 +240,8 @@ class Cam_TestLevel extends Phaser.State {
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
     // -------------------------------------------------------------
-    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
+    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
