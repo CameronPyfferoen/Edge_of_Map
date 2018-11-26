@@ -261,6 +261,8 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   endScreen () {
+    this.state.start('Dead');
+    /*
     // this.endScreenBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 4 + 475, this.game.camera.y - this.game.camera.y / 4 + 237.5, 'controlBoard');
     this.endScreenBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'controlBoard');
     this.endExitButton = this.game.add.button(
@@ -277,11 +279,14 @@ class Cam_TestLevel extends Phaser.State {
     // this.endExitButton.scale.setTo(1 / 2.5);
     // this.endScreenBG.fixedToCamera = true;
     // this.endExitButton.fixedToCamera = true;
+    */
   }
 
   sendToMain () {
     this.state.start('MainMenu');
   }
+
+  
 
   addBounds () {
     this.leftWall = this.game.add.sprite(0, 0, 'nothing');
