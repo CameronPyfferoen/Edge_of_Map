@@ -15,6 +15,8 @@ class Test_Snek extends Enemy {
     this.shot = false
     this.maxHealth = 80
     this.health = this.maxHealth
+
+    this.body.collides([this.game.enemyGroup, this.game.cannonballCollisionGroup])
   }
 
   idle () {

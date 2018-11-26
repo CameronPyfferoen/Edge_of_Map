@@ -180,25 +180,26 @@ class PlayerBoat extends Phaser.Sprite {
   */
 
   // Delete projectiles after x amount of seconds or collision
-  hitCannonball (body1, body2) {
-    // body1 is the ship (as it's the body that owns the callback)
-    // body2 is the body it impacted with, in this case projectiles
+  // hitCannonball (body1, body2) {
+  //   // body1 is the ship (as it's the body that owns the callback)
+  //   // body2 is the body it impacted with, in this case projectiles
 
-    // body2.sprite.kill()
-    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
-    body2.destroy()
-  }
+  //   // body2.sprite.kill()
+  //   // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
+  //   console.log('TEST')
+  //   body2.destroy()
+  // }
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
     console.log(GameData.shotTypes.HARPOON)
     switch (GameData.shotTypes.MULTISHOT) {
       case GameData.shotTypes.HARPOON:
-        console.log('o')
+        // console.log('o')
         this.harpoon()
         break
       case GameData.shotTypes.MULTISHOT:
-        console.log('k')
+        // console.log('k')
         this.spreadShotLeft()
         break
       case GameData.shotTypes.EXTRA:
@@ -240,7 +241,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   harpoon () {
-    console.log('o')
+    // console.log('o')
     let mousex = this.game.input.x
     let mousey = this.game.input.y
     console.log('MousePos: [' + mousex + ',' + mousey + ']')
@@ -294,23 +295,40 @@ class PlayerBoat extends Phaser.Sprite {
     // this.game.p2.moveToPointer(cannonball, 100)
   }
 
+  rotate (cx, cy, x, y, angle) {
+    let radians = (Math.PI / 180) * angle,
+    cos = Math.cos(radians),
+    sin = Math.sin(radians),
+    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
+    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    return [nx, ny]
+  }
+
   spreadShotLeft () {
     // Create projectile object
-    console.log('o')
+    // console.log('o')
+    let canPos1 = [this.x, this.y]
+    let canPos2 = [this.x, this.y + 7.5]
+    let canPos3 = [this.x, this.y - 7.5]
+
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+
     let cannonball = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y
+      x: canPos1[0],
+      y: canPos1[1]
     })
     let cannonball2 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y + 7.5
+      x: canPos2[0],
+      y: canPos2[1]
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y - 7.5
+      x: canPos3[0],
+      y: canPos3[1]
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -336,42 +354,50 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(0)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 100
     // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle - 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(0)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle - 100
     // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle - 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(0)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
 
   spreadShotRight () {
     // Create projectile object
-    console.log('o')
+    // console.log('o')
+    let canPos1 = [this.x, this.y]
+    let canPos2 = [this.x, this.y + 7.5]
+    let canPos3 = [this.x, this.y - 7.5]
+
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+
     let cannonball = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y
+      x: canPos1[0],
+      y: canPos1[1]
     })
     let cannonball2 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y + 7.5
+      x: canPos2[0],
+      y: canPos2[1]
     })
     let cannonball3 = new Test_Cannonball({
       game: this.game,
-      x: this.x,
-      y: this.y - 7.5
+      x: canPos3[0],
+      y: canPos3[1]
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -397,21 +423,21 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(0)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 10
     // cannonball2.y = this.playerMP.angle + 10
     cannonball2.body.angle = this.angle + 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(0)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle + 10
     // cannonball3.y = this.playerMP.angle + 10
     cannonball3.body.angle = this.angle + 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(0)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
