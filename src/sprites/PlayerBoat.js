@@ -112,7 +112,7 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
-    this.animations.add('death', sequentialNumArray(138, 160), 10, false);
+    this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false);
     this.animations.add('ded', [27], 1, false);
   }
 
@@ -181,14 +181,14 @@ class PlayerBoat extends Phaser.Sprite {
   // Choose projectile type for the left side of the ship
   firingCallback () {
     if (this.health > 0) {
-      console.log(GameData.shotTypes.HARPOON)
+      // console.log(GameData.shotTypes.HARPOON)
       switch (GameData.shotTypes.MULTISHOT) {
         case GameData.shotTypes.HARPOON:
-          console.log('o')
+          // console.log('o')
           this.harpoon()
           break
         case GameData.shotTypes.MULTISHOT:
-          console.log('k')
+          // console.log('k')
           this.spreadShotLeft()
           break
         case GameData.shotTypes.EXTRA:

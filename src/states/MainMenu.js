@@ -19,6 +19,7 @@ class MainMenu extends Phaser.State {
     this.game.add.button(this.world.centerX - 333, this.world.centerY - 100, 'controlsButton', this.sendToControls, this, 1, 0, 1, 0)
     this.game.add.button(this.world.centerX - 308, this.world.centerY + 40, 'settingsButton', this.sendToSettings, this, 1, 0, 1, 0)
     this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'exitButton', this.sendToTest, this, 1, 0, 1, 0)
+    
   }
 
   update () {
@@ -35,7 +36,7 @@ class MainMenu extends Phaser.State {
     this.state.start('Settings')
   }
   sendToTest () {
-    this.state.start('TestLevel')
+    this.state.start('Dead')
   }
 
 }

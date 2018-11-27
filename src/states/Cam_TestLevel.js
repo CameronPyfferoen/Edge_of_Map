@@ -64,6 +64,7 @@ class Cam_TestLevel extends Phaser.State {
       y: 700
     }) // x = 260, y = 1850
     this.playerMP.body.onBeginContact.add(this.rammed, this)
+    this.playerMP.death.onComplete.add(this.sendToDead, this);
     // this.playerMP.body.collideWorldBounds = true;
     this.gold = 0;
     this.goldMax = 999999999; // nine spaces
@@ -224,6 +225,9 @@ class Cam_TestLevel extends Phaser.State {
           this.pauseBG.destroy();
           this.menuButton.destroy();
         }
+      } else if (event.keyCode === 13) {
+        console.log('Enter Pressed');
+        
       }
     };
 
@@ -263,6 +267,7 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   endScreen () {
+    /*
     // this.endScreenBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 4 + 475, this.game.camera.y - this.game.camera.y / 4 + 237.5, 'controlBoard');
     this.endScreenBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'controlBoard');
     this.endExitButton = this.game.add.button(
@@ -279,10 +284,12 @@ class Cam_TestLevel extends Phaser.State {
     // this.endExitButton.scale.setTo(1 / 2.5);
     // this.endScreenBG.fixedToCamera = true;
     // this.endExitButton.fixedToCamera = true;
+    */
   }
 
-  sendToMain () {
-    this.state.start('MainMenu');
+  sendToDead () {
+    this.game.sounds.get('thunderchild').fadeOut(500);
+    this.state.start('Dead');
   }
 
   addBounds () {
