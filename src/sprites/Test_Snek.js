@@ -22,6 +22,9 @@ class Test_Snek extends Enemy {
     this.maxHealth = 80
     this.health = this.maxHealth
     this.state = 0
+
+    this.body.clearShapes();
+    this.body.addCapsule(30, 6, 0, 0, -1.55)
   }
 
   idle () {
