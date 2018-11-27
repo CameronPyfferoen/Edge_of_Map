@@ -14,6 +14,7 @@ class Dead extends Phaser.State {
 
   create () {
     this.game.add.tileSprite(0, 0, 1900, 950, 'deathScreen')
+    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'exitButton', this.sendToMain, this, 1, 0, 1, 0)
 
   }
 
