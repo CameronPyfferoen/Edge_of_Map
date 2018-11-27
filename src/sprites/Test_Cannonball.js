@@ -36,11 +36,6 @@ class Test_Cannonball extends Phaser.Sprite {
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
 
-  destroy () {
-    this.body.sprite.kill()
-    this.body.destroy()
-  }
-
   update () {
     super.update()
   }

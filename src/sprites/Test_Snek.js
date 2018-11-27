@@ -6,6 +6,7 @@ import { sequentialNumArray } from '../utils'
 import Fireball from '../sprites/Fireball'
 import { Line } from 'phaser-ce'
 
+// change htibox to capsule
 class Test_Snek extends Enemy {
   constructor (game) {
     super(game)
@@ -21,6 +22,9 @@ class Test_Snek extends Enemy {
     this.maxHealth = 80
     this.health = this.maxHealth
     this.state = 0
+
+    this.body.clearShapes();
+    this.body.addCapsule(30, 6, 0, 0, -1.55)
   }
 
   idle () {
@@ -34,20 +38,25 @@ class Test_Snek extends Enemy {
   }
 
   attack () {
-    /*
-    var pangle = Math.atan2(this.body.y - this.player.y, this.body.x - this.player.x)
-    this.body.angle = pangle
-    */
+    this.body.rotation = this.playerLine.angle + Phaser.Math.degToRad(90)
     this.state = 2
     this.animations.play('attack')
     this.canSwitch = false
     this.attacking = true
     this.body.velocity.x = 0
     this.body.velocity.y = 0
-    if (this.player.health > 0 && !this.shot) {
-      this.animations.currentAnim.onComplete.add(this.fire, this)
-      // this.animations.currentAnim.onComplete.add(this.switch, this)
+    console.log(`player animation: ${this.player.animations.currentAnim.name}`)
+    if(this.player.health <= 0)
+    {
+      this.idle()
     }
+    else if(this.player.animations.currentAnim.name !== 'death' && this.player.animations.currentAnim.name !== 'ded')
+    {
+      if (this.player.health > 0 && !this.shot) {
+        this.animations.currentAnim.onComplete.add(this.fire, this)
+        // this.animations.currentAnim.onComplete.add(this.switch, this)
+      }
+  }
   }
 
   switch ()
