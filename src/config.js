@@ -20,7 +20,7 @@ export default {
   // *** In fact, some of these are quick hacks and not recommended!!
 
   // Sound and music settings
-  MUSIC_VOLUME: 0.1,
+  MUSIC_VOLUME: 0.5,
   SFX_VOLUME: 0.1,
 
   // Minimum time to display the splash screen
