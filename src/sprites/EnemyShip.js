@@ -33,9 +33,9 @@ class EnemyShip extends Enemy
   }
 
   positioning () {
-    if(this.perpAngDiff === 2 * Phaser.Math.HALF_PI || this.perpAngDiff === 0)
+    if((this.perpAngDiff >= -0.010472 && this.perpAngDiff <= 0.010472) || (this.perpAngDiff >= 3.13112 && this.perpAngDiff <= 3.15206) || (this.perpAngDiff >= 6.27271 && this.perpAngDiff <= 6.293657))
     {
-      this.body.rotation += 0
+      this.body.angularVelocity = 0
     }
     else if((this.perpAngle > -2 * Phaser.Math.HALF_PI && this.perpAngle < -1 * Phaser.Math.HALF_PI) || (this.perpAngle > 0 && this.perpAngle < Phaser.Math.HALF_PI))
     {
