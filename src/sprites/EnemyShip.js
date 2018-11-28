@@ -118,8 +118,8 @@ class EnemyShip extends Enemy
     this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
     this.perpAngle = this.playerLine.angle
     this.perpAngDiff = Math.abs(this.body.rotation - this.perpAngle)
-    console.log(`perpAngle: ${this.perpAngle}`)
-    console.log(`enemy ship rotation: ${this.body.rotation}`)
+    // console.log(`perpAngle: ${this.perpAngle}`)
+    // console.log(`enemy ship rotation: ${this.body.rotation}`)
     console.log(`perpAngDiff: ${this.perpAngDiff}`)
     this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)

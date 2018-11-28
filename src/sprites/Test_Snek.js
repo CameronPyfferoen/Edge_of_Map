@@ -25,6 +25,7 @@ class Test_Snek extends Enemy {
 
     this.body.clearShapes();
     this.body.addCapsule(30, 6, 0, 0, -1.55)
+    this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
   }
 
   idle () {
