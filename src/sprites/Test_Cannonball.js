@@ -31,7 +31,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.setupAnimations()
 
     // this.body.collides([this.game.enemyGroup, this.game.cannonballCollisionGroup])
-    this.body.collides(this.game.enemyGroup, this.hitCannonball, this)
+    this.body.collides(this.game.enemyGroup, this.hitCannonball, this.game.landGroup)
   }
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG

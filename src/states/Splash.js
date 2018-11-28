@@ -106,6 +106,9 @@ class Splash extends Phaser.State {
     this.load.spritesheet('SFXVolume', '/assets/images/Ui/SpriteSheet_controls_volume.png', 128, 128)
     this.load.spritesheet('MusicNote', '/assets/images/Ui/SpriteSheet_controls_music.png', 128, 128)
     this.load.image('deathScreen', '/assets/images/UI/death_menu.png')
+    this.load.image('creditsMenu', '/assets/images/UI/menu_credits_board.png')
+    this.load.spritesheet('creditsButton', '/assets/images/Ui/SpriteSheet_main_credits.png', 559, 121)
+
 
 
     // In-game UI
@@ -122,6 +125,8 @@ class Splash extends Phaser.State {
     ], 'assets/audio/sounds.json')
     this.load.audio('explosion', 'assets/audio/SFX//q009/explosion.ogg')
     this.load.audio('getHit', 'assets/audio/SFX//q009/grenade.ogg')
+    this.load.audio('deathTune', 'assets/audio/Music/pirate1uf.ogg')
+    this.load.audio('mainTheme', 'assets/audio/thunderchild.wav')
 
   }
 
@@ -155,8 +160,6 @@ class Splash extends Phaser.State {
   setupAudio () {
     // Load the audio sprite into the global game object (and also make a local variable)
     let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
-    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
-    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     // Make the different music sections flow into one another in a seemless loop
     // (this is unusually complex and your audio probabaly wont need it)
     sounds.get('music-intro').onStop.add(() => {

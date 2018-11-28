@@ -13,8 +13,9 @@ class Dead extends Phaser.State {
   preLoad () {}
 
   create () {
-    this.game.add.tileSprite(0, 0, 1900, 950, 'deathScreen')
-    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0)
+    this.game.deathTune.play('', 1, config.MUSIC_VOLUME);
+    this.game.add.tileSprite(0, 0, 1900, 950, 'deathScreen');
+    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
   }
 
   update () {
@@ -22,6 +23,7 @@ class Dead extends Phaser.State {
   }
 
   sendToMain () {
+    this.game.deathTune.destroy();
     this.state.start('MainMenu');
   }
 }

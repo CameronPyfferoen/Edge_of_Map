@@ -51,11 +51,12 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.addPolygon({}, element.polygon)
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
-      this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup])
+      this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
     // Start playing the background music -----------------------------
-    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    this.game.mainTheme.play('', 1, config.MUSIC_VOLUME);
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -121,7 +122,7 @@ class Cam_TestLevel extends Phaser.State {
     */
     
     
-    /*
+    
     this.corner_snek = new Test_Snek({
       game: this.game,
       x: this.playerMP.x + 70,
@@ -267,29 +268,9 @@ class Cam_TestLevel extends Phaser.State {
 
   }
 
-  endScreen () {
-    /*
-    // this.endScreenBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 4 + 475, this.game.camera.y - this.game.camera.y / 4 + 237.5, 'controlBoard');
-    this.endScreenBG = this.game.add.sprite(this.game.camera.x, this.game.camera.y, 'controlBoard');
-    this.endExitButton = this.game.add.button(
-      // this.game.camera.x, 
-      // this.game.camera.y,
-      this.playerMP.body.x,
-      this.playerMP.body.y, 
-      'exitButton', 
-      this.sendToMain, 
-      this, 1, 0, 1, 0);
-    // this.endScreenBG.anchor.setTo(0.5, 0.5);
-    // this.endExitButton.anchor.setTo(0.5, 0.5);
-    // this.endScreenBG.scale.setTo(1 / 2.5);
-    // this.endExitButton.scale.setTo(1 / 2.5);
-    // this.endScreenBG.fixedToCamera = true;
-    // this.endExitButton.fixedToCamera = true;
-    */
-  }
-
   sendToDead () {
-    this.game.sounds.get('thunderchild').fadeOut(500);
+    // this.game.sounds.get('thunderchild').fadeOut(500);
+    this.game.mainTheme.destroy();
     this.state.start('Dead');
   }
 
@@ -360,19 +341,22 @@ class Cam_TestLevel extends Phaser.State {
       if (this.rightKey.isDown) {
         this.playerMP.turnRight();
       }
+      // Slow down over time ---------------
     } else if (this.playerMP.curBoatSpeed > 0) {
       this.playerMP.moveBackward();
     } else {
       this.playerMP.curBoatSpeed = 0;
     }
-
+    // Zero out angular velocity when not turning -----------
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
     }
 
+    // on player death --------------------------------------------
     if (this.playerMP.health <= 0) {
       this.game.input.onDown.removeAll();
-      this.endScreen();
+      this.game.mainTheme.fadeOut(2250);
+      // this.sendToDead();
     }
 
     // UI update ---------------------------------------------------------
