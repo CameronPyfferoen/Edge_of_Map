@@ -29,16 +29,21 @@ class EnemyShip extends Enemy
     this.damage = 20
     this.chase_dist = 300
     this.post_dist = 150
+    this.perpAngDiff = 0
   }
 
   positioning () {
-    if(this.body.rotation < this.perpAngle)
+    if(this.perpAngDiff === 2 * Phaser.Math.HALF_PI || this.perpAngDiff === 0)
     {
-      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+      this.body.rotation += 0
     }
-    else if(this.body.rotation > this.perpAngle)
+    else if((this.perpAngle > -2 * Phaser.Math.HALF_PI && this.perpAngle < -1 * Phaser.Math.HALF_PI) || (this.perpAngle > 0 && this.perpAngle < Phaser.Math.HALF_PI))
     {
-      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+      this.turnRight()
+    }
+    else if((this.perpAngle > -1 * Phaser.Math.HALF_PI && this.perpAngle < 0) || (this.perpAngle > Phaser.Math.HALF_PI && this.perpAngle < 2 * Phaser.Math.HALF_PI))
+    {
+      this.turnLeft()
     }
   }
 
@@ -111,7 +116,11 @@ class EnemyShip extends Enemy
     this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
     // this.perpSlope = this.playerLine.perpSlope
     this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
-    this.perpAngle = this.playerLine.normalAngle
+    this.perpAngle = this.playerLine.angle
+    this.perpAngDiff = Math.abs(this.body.rotation - this.perpAngle)
+    console.log(`perpAngle: ${this.perpAngle}`)
+    console.log(`enemy ship rotation: ${this.body.rotation}`)
+    console.log(`perpAngDiff: ${this.perpAngDiff}`)
     this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
