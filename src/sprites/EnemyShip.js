@@ -33,15 +33,15 @@ class EnemyShip extends Enemy
   }
 
   positioning () {
-    if((this.perpAngDiff >= -0.010472 && this.perpAngDiff <= 0.010472) || (this.perpAngDiff >= 3.13112 && this.perpAngDiff <= 3.15206) || (this.perpAngDiff >= 6.27271 && this.perpAngDiff <= 6.293657))
+    if((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112))
     {
       this.body.angularVelocity = 0
     }
-    else if((this.perpAngle > -2 * Phaser.Math.HALF_PI && this.perpAngle < -1 * Phaser.Math.HALF_PI) || (this.perpAngle > 0 && this.perpAngle < Phaser.Math.HALF_PI))
+    else if((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math && this.perpAngDiff < 0))
     {
       this.turnRight()
     }
-    else if((this.perpAngle > -1 * Phaser.Math.HALF_PI && this.perpAngle < 0) || (this.perpAngle > Phaser.Math.HALF_PI && this.perpAngle < 2 * Phaser.Math.HALF_PI))
+    else if((this.perpAngDiff > 0 && this.perpAngDiff < Phaser.Math.HALF_PI) || (this.perpAngDiff > -2 * Phaser.Math.HALF_PI && this.perpAngDiff < -1 * Phaser.Math.HALF_PI))
     {
       this.turnLeft()
     }
@@ -100,11 +100,11 @@ class EnemyShip extends Enemy
   chase () {
     if (this.body.rotation < this.playerAngle)
     {
-      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+      this.turnRight()
     }
     else if(this.body.rotation > this.playerAngle)
     {
-      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+      this.turnLeft()
     }
     else
     {
@@ -117,7 +117,7 @@ class EnemyShip extends Enemy
     // this.perpSlope = this.playerLine.perpSlope
     this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
     this.perpAngle = this.playerLine.angle
-    this.perpAngDiff = Math.abs(this.body.rotation - this.perpAngle)
+    this.perpAngDiff = Phaser.Math.degToRad(this.body.angle) - this.perpAngle
     // console.log(`perpAngle: ${this.perpAngle}`)
     // console.log(`enemy ship rotation: ${this.body.rotation}`)
     console.log(`perpAngDiff: ${this.perpAngDiff}`)

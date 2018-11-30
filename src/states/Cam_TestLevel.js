@@ -122,7 +122,7 @@ class Cam_TestLevel extends Phaser.State {
     */
     
     
-    
+    /*
     this.corner_snek = new Test_Snek({
       game: this.game,
       x: this.playerMP.x + 70,
