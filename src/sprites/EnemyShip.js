@@ -126,11 +126,11 @@ class EnemyShip extends Enemy
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > this.chase_dist)
     {
-      this.patrol()
+      // this.patrol()
     }
     else if(this.player_dist <= this.chase_dist && this.player_dist > this.post_dist)
     {
-      this.chase()
+      // this.chase()
     }
     else if(this.player_dist <= this.post_dist)
     {
