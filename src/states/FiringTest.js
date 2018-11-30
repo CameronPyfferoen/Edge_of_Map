@@ -17,10 +17,22 @@ import GameData from '../GameData'
 
 // What I want to do
 // harpoon projectile!!!
-// #1 figure out how to replace kill cannonball w/ destroy cannonball
+// #1 figure out how to replace kill cannonball w/ destroy cannonball-
 // #2 multishot distance in between
-// #3 change hitbox position
-// #4 SFX
+// #3 change hitbox position-
+// #4 code for switching between projectiles
+// #5 collide w/ land-
+// #6 fire rate-
+
+// #3 multishot distance -prioritize
+// #5 code for switching between projectiles
+// #6 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun -prioritize
+// fire rate
+// collision with land
+// relocated hit box
+// destroy
+
+// # SFX
 // look at Eliot's links on Slack
 // add more comments to large commented code below
 // consider adding --- lines to comments for readability

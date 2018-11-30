@@ -31,8 +31,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.setupAnimations()
 
 
-    // this.body.collides([this.game.enemyGroup, this.game.cannonballCollisionGroup])
-    this.body.collides(this.game.enemyGroup, this.hitCannonball, this.game.landGroup)
+    this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
   }
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
@@ -48,14 +47,13 @@ class Test_Cannonball extends Phaser.Sprite {
     // console.log('k')
   }
 
-  hitCannonball (body1, body2) {
+  hitCannonball (cannonball, enemy) {
     // body1 is the ship (as it's the body that owns the callback)
     // body2 is the body it impacted with, in this case projectiles
 
-    body2.sprite.kill()
-    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
-    console.log('TEST')
-    // body2.destroy()
+
+    cannonball.sprite.destroy()
+    // enemy.sprite.destroy()
   }
 }
 

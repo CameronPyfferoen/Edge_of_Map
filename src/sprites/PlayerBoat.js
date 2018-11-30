@@ -79,6 +79,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.maxHealth = 100;
     this.health = 100;
     this.minHealth = 0;
+
+    this.timer = null
+    this.canFire = true
   }
 
   update () {
@@ -180,6 +183,7 @@ class PlayerBoat extends Phaser.Sprite {
 
   // Choose projectile type for the left side of the ship
   firingCallback () {
+    console.log('k')
     if (this.health > 0) {
       // console.log(GameData.shotTypes.HARPOON)
       switch (GameData.shotTypes.MULTISHOT) {
@@ -189,7 +193,12 @@ class PlayerBoat extends Phaser.Sprite {
           break
         case GameData.shotTypes.MULTISHOT:
           // console.log('k')
-          this.spreadShotLeft()
+          if (this.canFire === true) {
+            this.spreadShotLeft()
+            this.canFire = false
+            this.firingCallbackCooldown()
+            console.log('k')
+          }
           break
         case GameData.shotTypes.EXTRA:
           //
@@ -210,26 +219,30 @@ class PlayerBoat extends Phaser.Sprite {
 
   // DOES NOT WORK ATM
   // Firing rate for the left side of the ship
+
+  // My thoughts and questions
+  // why does the firingCallback begin after what seems to be 2000ms
+  // how do I fire instantly?
+  //
   firingCallbackCooldown () {
-    if (this.timer === 0) {
-      this.firingCallback()
-      this.timer = 4000
-      while (this.timer > 0) {
-        this.timer--
-      }
-    }
+    //  Create our Timer
+    this.timer = this.game.time.create(false)
+
+    //  Set a TimerEvent to occur after 2 seconds
+    this.timer.add(2000, function () {
+      this.canFire = true
+    }.bind(this))
+
+    //  Start the timer running - this is important!
+    //  It won't start automatically, allowing you to hook it to button events and the like.
+    this.timer.start()
   }
 
   // DOES NOT WORK ATM
   // Firing rate for the right side of the ship
   firingCallbackCooldown2 () {
-    if (this.timer2 === 0) {
       this.firingCallback2()
       this.timer2 = 4000
-      while (this.timer2 > 0) {
-        this.timer2--
-      }
-    }
   }
 
   harpoon () {
@@ -293,6 +306,8 @@ class PlayerBoat extends Phaser.Sprite {
     sin = Math.sin(radians),
     nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
     ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    console.log(nx)
+    console.log(ny)
     return [nx, ny]
   }
 
@@ -330,9 +345,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2)
-    cannonball2.body.setRectangle(2, 2)
-    cannonball3.body.setRectangle(2, 2)
+    cannonball.body.setRectangle(2, 2, 0, -7)
+    cannonball2.body.setRectangle(2, 2, 0, -7)
+    cannonball3.body.setRectangle(2, 2, 0, -7)
     // Tell cannonball to use cannonballCollisionGroup
     cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
@@ -401,9 +416,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2)
-    cannonball2.body.setRectangle(2, 2)
-    cannonball3.body.setRectangle(2, 2)
+    cannonball.body.setRectangle(2, 2, 0, -7)
+    cannonball2.body.setRectangle(2, 2, 0, -7)
+    cannonball3.body.setRectangle(2, 2, 0, -7)
     // Tell cannonball to use cannonballCollisionGroup
     cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)

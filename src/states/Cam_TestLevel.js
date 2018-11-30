@@ -248,6 +248,8 @@ class Cam_TestLevel extends Phaser.State {
     // addEventListener('click', this.firingCallback.bind(this))
     // addEventListener('contextmenu', this.firingCallback2.bind(this))
     // -------------------------------------------------------------
+    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
     addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
     addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
