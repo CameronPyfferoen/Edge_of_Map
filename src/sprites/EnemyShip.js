@@ -29,16 +29,26 @@ class EnemyShip extends Enemy
     this.damage = 20
     this.chase_dist = 300
     this.post_dist = 150
+    this.perpAngDiff = 0
+
+    this.body.clearShapes();
+    this.body.addCapsule(18, 6, 0, 0, -1.55)
+    this.body.setCollisionGroup(this.game.enemyGroup)
+    this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
   }
 
   positioning () {
-    if(this.body.rotation < this.perpAngle)
+    if((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112))
     {
-      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+      this.body.angularVelocity = 0
     }
-    else if(this.body.rotation > this.perpAngle)
+    else if((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0))
     {
-      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+      this.turnRight()
+    }
+    else if((this.perpAngDiff > 0 && this.perpAngDiff < Phaser.Math.HALF_PI) || (this.perpAngDiff > -2 * Phaser.Math.HALF_PI && this.perpAngDiff < -1 * Phaser.Math.HALF_PI))
+    {
+      this.turnLeft()
     }
   }
 
@@ -95,11 +105,11 @@ class EnemyShip extends Enemy
   chase () {
     if (this.body.rotation < this.playerAngle)
     {
-      this.body.rotation += Phaser.Math.degToRad(this.turnAngle)
+      this.turnRight()
     }
     else if(this.body.rotation > this.playerAngle)
     {
-      this.body.rotation -= Phaser.Math.degToRad(this.turnAngle)
+      this.turnLeft()
     }
     else
     {
@@ -111,7 +121,11 @@ class EnemyShip extends Enemy
     this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
     // this.perpSlope = this.playerLine.perpSlope
     this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
-    this.perpAngle = this.playerLine.normalAngle
+    this.perpAngle = this.playerLine.angle
+    this.perpAngDiff = (Phaser.Math.degToRad(this.body.angle) - this.perpAngle) % (2 * Phaser.Math.HALF_PI)
+    // console.log(`perpAngle: ${this.perpAngle}`)
+    // console.log(`enemy ship rotation: ${this.body.rotation}`)
+    console.log(`perpAngDiff: ${this.perpAngDiff}`)
     this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
     this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)

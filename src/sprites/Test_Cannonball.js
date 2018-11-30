@@ -30,16 +30,12 @@ class Test_Cannonball extends Phaser.Sprite {
     this.game.time.events.add(Phaser.Timer.SECOND * 5, this.destroy.bind(this), this)
     this.setupAnimations()
 
-    this.body.collides([this.game.landGroup, this.game.cannonballCollisionGroup])
-    this.body.collides(this.game.enemyGroup, this.hitCannonball, this)
+
+    // this.body.collides([this.game.enemyGroup, this.game.cannonballCollisionGroup])
+    this.body.collides(this.game.enemyGroup, this.hitCannonball, this.game.landGroup)
   }
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
-
-  destroy () {
-    this.body.sprite.kill()
-    this.body.destroy()
-  }
 
   update () {
     super.update()
