@@ -37,7 +37,7 @@ class EnemyShip extends Enemy
     {
       this.body.angularVelocity = 0
     }
-    else if((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math && this.perpAngDiff < 0))
+    else if((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0))
     {
       this.turnRight()
     }
