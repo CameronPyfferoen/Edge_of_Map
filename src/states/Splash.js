@@ -71,9 +71,8 @@ class Splash extends Phaser.State {
     // this.load.physics('physicsList', 'assets/physicsList.json')
 
     // Tiled Physics
-    this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
-    // this.load.physics('WallObjects', '/assets/maps/TestingTiledV2.json')
-
+    this.load.physics('GameObjects', '/assets/maps/FinalMap.json')
+    // this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
     this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     // Enemies
     this.load.image('bluecrab', '/assets/images/Enemies/crab_blue.png')
@@ -84,7 +83,7 @@ class Splash extends Phaser.State {
     this.load.image('pirhanas', '/assets/images/Enemies/piranha_swarm.png')
 
     // Tilemap Assets
-    this.load.tilemap('map1', '/assets/maps/TestingTiledV2.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
+    this.load.tilemap('map1', '/assets/maps/FinalMap.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
     this.load.image('FinalMap', '/assets/images/Terrain/Map_With_Border.png')
     this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')

@@ -41,7 +41,8 @@ class Cam_TestLevel extends Phaser.State {
     this.game.world.scale.setTo(2) // 2
     // add world bounds ----------------------------------------------------------
     this.addBounds()
-
+    this.shotTimerL = 0;
+    this.shotTimerR = 0;
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -57,6 +58,7 @@ class Cam_TestLevel extends Phaser.State {
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
     this.game.mainTheme.play('', 1, config.MUSIC_VOLUME);
+    
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -264,6 +266,9 @@ class Cam_TestLevel extends Phaser.State {
     this.rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.backwardKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+    this.fireL = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    this.fireR = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
   }
 
   rammed () {
@@ -320,9 +325,24 @@ class Cam_TestLevel extends Phaser.State {
 
   update () {
     super.update()
+    this.shotTimerL++;
+    this.shotTimerR++;
     // info on screen -----------------------------------------------
-    this.game.debug.spriteInfo(this.playerMP, 32, 32);
-    this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
+    // this.game.debug.spriteInfo(this.playerMP, 32, 32);
+    // this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
+    // Shooting Listener ------------------------------------
+    if (this.fireL.isDown) {
+      if (this.shotTimerL > 25) {
+        this.shotTimerL = 0;
+        this.playerMP.firingCallback();
+      }
+    }
+    if (this.fireR.isDown) {
+      if (this.shotTimerR > 25) {
+        this.shotTimerR = 0;
+        this.playerMP.firingCallback2();
+      }
+    }
 
     // move forward ------------------------
     if (this.playerMP.health > 0) {
