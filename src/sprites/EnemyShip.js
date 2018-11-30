@@ -30,6 +30,11 @@ class EnemyShip extends Enemy
     this.chase_dist = 300
     this.post_dist = 150
     this.perpAngDiff = 0
+
+    this.body.clearShapes();
+    this.body.addCapsule(18, 6, 0, 0, -1.55)
+    this.body.setCollisionGroup(this.game.enemyGroup)
+    this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
   }
 
   positioning () {
@@ -126,11 +131,11 @@ class EnemyShip extends Enemy
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
     if(this.player_dist > this.chase_dist)
     {
-      // this.patrol()
+      this.patrol()
     }
     else if(this.player_dist <= this.chase_dist && this.player_dist > this.post_dist)
     {
-      // this.chase()
+      this.chase()
     }
     else if(this.player_dist <= this.post_dist)
     {
