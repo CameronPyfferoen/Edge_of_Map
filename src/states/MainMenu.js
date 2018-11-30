@@ -25,6 +25,8 @@ class MainMenu extends Phaser.State {
     this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     this.game.deathTune = this.game.add.audio('deathTune', config.MUSIC_VOLUME)
     this.game.mainTheme = this.game.add.audio('mainTheme', config.MUSIC_VOLUME)
+    this.game.deathTune.loop = true;
+    this.game.mainTheme.loop = true;
     
   }
 
