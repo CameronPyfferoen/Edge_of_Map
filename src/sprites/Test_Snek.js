@@ -23,7 +23,7 @@ class Test_Snek extends Enemy {
     this.health = this.maxHealth
     this.state = 0
 
-    this.body.clearShapes();
+    this.body.clearShapes()
     this.body.addCapsule(30, 6, 0, 0, -1.55)
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
@@ -92,6 +92,10 @@ class Test_Snek extends Enemy {
     this.game.add.existing(this.fireb)
     this.canSwitch = true
     this.shot = true
+  }
+
+  die () {
+
   }
 
   update () {

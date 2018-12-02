@@ -20,6 +20,9 @@ class Fireball extends Phaser.Sprite {
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
+    this.body.clearShapes()
+    this.body.addCapsule(10, 2, 0, 0)
+
     this.body.angle = angle
     this.body.debug = __DEV__
 
