@@ -65,7 +65,6 @@ class Cam_TestLevel extends Phaser.State {
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
     this.game.mainTheme.play('', 1, config.MUSIC_VOLUME);
-    
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -106,16 +105,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-    
+
     this.eBoat = new EnemyShip({
       game: this.game,
       x: this.playerMP.x + 100,
       y: this.playerMP.y - 100,
       player: this.playerMP
     })
-    
+
     this.game.add.existing(this.eBoat)
-    
+
     /*
     this.sneks = []
     for (let i = 0; i < 10; i++) {
@@ -129,8 +128,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[i])
     }
     */
-    
-    
+
     /*
     this.corner_snek = new Test_Snek({
       game: this.game,
@@ -139,7 +137,6 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.corner_snek)
-    
 
     /*
     this.test_fire = new Test_Snek({
@@ -238,7 +235,7 @@ class Cam_TestLevel extends Phaser.State {
         }
       } else if (event.keyCode === 13) {
         console.log('Enter Pressed');
-        
+
       }
     };
 
@@ -260,13 +257,14 @@ class Cam_TestLevel extends Phaser.State {
     // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
     // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
-    // CONSIDER RECOMMENTING
-    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
-
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
+    // -------------------------------------------------------------
+
+    // WORKING LINES OF CODE
+    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
   }
 
   setupKeyboard () {
