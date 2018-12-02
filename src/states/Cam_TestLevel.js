@@ -55,12 +55,14 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
+    /*
     // Add port positions ---------------------------------------------------------------------------------------
     let portPositions = this.map.objects['LandPositions']
     portPositions.forEach(element => {
       this.portPos = this.add.sprite(element.x, element.y)
       this.portPos.setCollisionGroup(this.game.portGroup)
     })
+    */
 
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
@@ -131,7 +133,7 @@ class Cam_TestLevel extends Phaser.State {
     */
     
     
-    
+    /*
     this.corner_snek = new Test_Snek({
       game: this.game,
       x: this.playerMP.x + 70,
