@@ -219,9 +219,9 @@ class EnemyShip extends Enemy {
 
   firingCallback2 () {
     if (this.canFire) {
-      this.spreadShotLeft()
+      this.spreadShotRight()
       this.canFire = false
-      this.firingCallbackCooldown()
+      this.firingCallbackCooldown2()
     }
   }
 
