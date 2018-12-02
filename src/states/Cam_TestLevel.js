@@ -43,7 +43,7 @@ class Cam_TestLevel extends Phaser.State {
     // add world bounds ----------------------------------------------------------
     this.addBounds()
     // set background numbers --------------------------------
-    this.game.gold = 100;
+    this.game.gold = 0;
     this.goldMax = 999999999; // nine spaces
     this.goldMin = 0;
     this.shotTimerL = 0;
@@ -82,7 +82,7 @@ class Cam_TestLevel extends Phaser.State {
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.death.onComplete.add(this.sendToDead, this);
     this.game.add.existing(this.playerMP)
-
+    // test gold ---------
     this.goldDrop = new GoldDrop({
       game: this.game,
       x: 300,
@@ -284,7 +284,7 @@ class Cam_TestLevel extends Phaser.State {
     this.escKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
     this.fireL = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
     this.fireR = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-
+    this.enterKey = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
   }
 
   rammed () {
@@ -346,6 +346,11 @@ class Cam_TestLevel extends Phaser.State {
     // info on screen -----------------------------------------------
     // this.game.debug.spriteInfo(this.playerMP, 32, 32);
     // this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
+    // Enter Listener -------------------------
+    if (this.enterKey.isDown) {
+      // check for player distance between them and the ports, if close enough create the proper map and pause the game
+    }
+
     // Shooting Listener ------------------------------------
     if (this.fireL.isDown) {
       if (this.shotTimerL > 25) {
