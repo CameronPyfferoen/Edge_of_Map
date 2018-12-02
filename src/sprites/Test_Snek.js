@@ -19,7 +19,7 @@ class Test_Snek extends Enemy {
     this.canSwitch = true
     this.fire_dist = 80
     this.shot = false
-    this.maxHealth = 80
+    this.maxHealth = 30
     this.health = this.maxHealth
     this.state = 0
 

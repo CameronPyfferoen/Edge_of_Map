@@ -2,6 +2,7 @@ import Enemy from './Enemy'
 import Phaser from 'phaser'
 import GameData from '../GameData'
 import Test_Cannonball from './Test_Cannonball'
+import Enemy_Cannonball from './Enemy_Cannonball'
 import { sequentialNumArray } from '../utils'
 import { Line } from 'phaser-ce'
 import config from '../config'
@@ -26,6 +27,8 @@ class EnemyShip extends Enemy {
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
+    this.maxHealth = 50
+    this.health = this.maxHealth
     this.damage = 20
     this.chase_dist = 300
     this.post_dist = 150
@@ -43,7 +46,7 @@ class EnemyShip extends Enemy {
   positioning () {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
-      
+
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
     } else if ((this.perpAngDiff > 0 && this.perpAngDiff < Phaser.Math.HALF_PI) || (this.perpAngDiff > -2 * Phaser.Math.HALF_PI && this.perpAngDiff < -1 * Phaser.Math.HALF_PI)) {
@@ -156,17 +159,17 @@ class EnemyShip extends Enemy {
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
  
-    let cannonball = new Test_Cannonball({
+    let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
       y: canPos1[1]
     })
-    let cannonball2 = new Test_Cannonball({
+    let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
       y: canPos2[1]
     })
-    let cannonball3 = new Test_Cannonball({
+    let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
       y: canPos3[1]
@@ -245,17 +248,17 @@ class EnemyShip extends Enemy {
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
  
-    let cannonball = new Test_Cannonball({
+    let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
       y: canPos1[1]
     })
-    let cannonball2 = new Test_Cannonball({
+    let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
       y: canPos2[1]
     })
-    let cannonball3 = new Test_Cannonball({
+    let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
       y: canPos3[1]
