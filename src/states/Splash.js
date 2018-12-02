@@ -41,11 +41,9 @@ class Splash extends Phaser.State {
     // Display the progress bar
     this.load.setPreloadSprite(this.loaderBar)
 
-    // Load all the assets needed for next state
+    // Load all the assets needed for next state ------------------------------------------------------------------------
 
     // The main player spritesheet
-    // this.load.spritesheet('Pirat_Ship_1', 'assets/images/Player/Pirat_Ship_1.jpg', 64, 64)
-    // this.load.spritesheet('player-main', 'assets/images/Player/player-main.png', 64, 64)
     this.load.spritesheet('player-med', '/assets/images/PLayer_M_Ship_96x96/Player_M_96_Sprite_Sheet.png', 96, 96)
 
     this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
@@ -57,25 +55,23 @@ class Splash extends Phaser.State {
     // this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
     // this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
     this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
-    this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
-    this.load.spritesheet('enemyship', 'assets/images/Enemies/Enemy_Ships_L_128.png', 128, 128)
 
-    // this.load.image('map', '/assets/images/Terrain/maptemplate.png')
-    /*
-    this.load.image('wake1', '/assets/images/spr_wake_1.png')
-    this.load.image('wake2', '/assets/images/spr_wake_2.png')
-    this.load.image('wake3', '/assets/images/spr_wake_3.png')
-    this.load.image('wake4', '/assets/images/spr_wake_4.png')
-    */
-    // Polygon Testing
-    // this.load.image('starting_port', '/assets/images/Terrain/Starting_Port.png')
-    // this.load.physics('physicsList', 'assets/physicsList.json')
+    // Pickups
+    this.load.spritesheet('pickups', '/assets/images/Pickups/pickups_Sprite_Sheet.png', 64, 64)
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/FinalMap.json')
     // this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
-    this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
+
     // Enemies
+    this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
+    this.load.spritesheet('enemyship', 'assets/images/Enemies/Enemy_Ships_L_128.png', 128, 128)
+    this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
+    this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
+    this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
+    this.load.spritesheet('sharkSheet', './assets/images/Enemies/SpriteSheet_Shark.png', 32, 48)
+
+    this.load.image('seasnake_still', '/assets/images/Enemies/seasnake_16x.png')
     this.load.image('bluecrab', '/assets/images/Enemies/crab_blue.png')
     this.load.image('orangecrab', '/assets/images/Enemies/crab_orange.png')
     this.load.image('jellyfish', '/assets/images/Enemies/jellyfish_swarm.png')
@@ -86,11 +82,12 @@ class Splash extends Phaser.State {
     // Tilemap Assets
     this.load.tilemap('map1', '/assets/maps/FinalMap.json', null, Phaser.Tilemap.TILED_JSON) // it needs this
     this.load.image('FinalMap', '/assets/images/Terrain/Map_With_Border.png')
+    this.load.image('nothing', '/assets/images/Terrain/spr_nothing.png')
     this.load.image('backgroundImage', '/assets/images/Terrain/maptemplatewater (1).png')
     this.load.image('islandSprites', '/assets/images/Terrain/inprogress_map_template_no_back.png')
     this.load.image('cloudBarrier', '/assets/images/Terrain/cloudedge.png')
     this.load.image('comboMap', '/assets/images/Terrain/mapCombo.png')
-    this.load.image('nothing', '/assets/images/Terrain/spr_nothing.png')
+    
 
     // Menu Assets
     this.load.image('mainMenuBackground', '/assets/images/Ui/menu_main_background.png')
@@ -108,15 +105,13 @@ class Splash extends Phaser.State {
     this.load.image('deathScreen', '/assets/images/UI/death_menu.png')
     this.load.image('creditsMenu', '/assets/images/UI/menu_credits_board.png')
     this.load.spritesheet('creditsButton', '/assets/images/Ui/SpriteSheet_main_credits.png', 559, 121)
-
-
+    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png')
 
     // In-game UI
     this.load.image('healthBG', '/assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', '/assets/images/UI/health_health.png')
     this.load.image('healthFG', '/assets/images/UI/health_front.png')
 
-    this.load.image('controlBoard', 'assets/images/Ui/menu_controls_board.png')
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',

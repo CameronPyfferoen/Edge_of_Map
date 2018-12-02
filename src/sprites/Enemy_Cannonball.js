@@ -21,35 +21,37 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
-    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
-    this.body.offset.setTo(0, 0)
+    this.body.clearShapes()
+    // this.body.addRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
+    this.body.addRectangle(2, 2, 0, -7)
+    // this.body.setRectangle(2, 2, 0, -7)
+    // this.body.offset.setTo(0, 0)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
+    // this.body.fixedRotation = true
 
     this.game.time.events.add(Phaser.Timer.SECOND * 5, this.destroy.bind(this), this)
     this.setupAnimations()
 
-
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
-    this.body.collides([this.game.playerGroup, this.game.landGroup])
+    this.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    this.body.collides([this.game.enemyGroup, this.game.landGroup])
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 5
+    this.damage = 0
 
     this.body.onBeginContact.add(this.contact, this)
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     console.log(`hit: ${otherBody.sprite.name}`)
-    if(otherBody !== null && otherBody.sprite.name === 'Player Ship')
-    {
+    if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
       this.destroy()
       this.game.camera.shake(0.001, 200)
       this.game.getHit.play('', 0, config.SFX_VOLUME)
-      if((otherBody.sprite.health -= this.damage) <= 0)
-      {
+      if ((otherBody.sprite.health -= this.damage) <= 0) {
         otherBody.sprite.health = 0
       }
       else {
@@ -74,7 +76,6 @@ class Enemy_Cannonball extends Phaser.Sprite {
   hitCannonball (cannonball, enemy) {
     // body1 is the ship (as it's the body that owns the callback)
     // body2 is the body it impacted with, in this case projectiles
-
 
     cannonball.sprite.destroy()
     // enemy.sprite.destroy()

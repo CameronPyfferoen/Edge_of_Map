@@ -16,22 +16,9 @@ import GameData from '../GameData'
 // Integrated shooting from PlayerBoat to Cam_TestLevel(the main game)
 
 // What I want to do
-// harpoon projectile!!!
-// #1 figure out how to replace kill cannonball w/ destroy cannonball-
-// #2 multishot distance in between
-// #3 change hitbox position-
-// #4 code for switching between projectiles
-// #5 collide w/ land-
-// #6 fire rate-
 
-// #3 multishot distance -prioritize
-// #5 code for switching between projectiles -cancel
-// #6 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun -prioritize
-// #7 do not push enemy
-// fire rate
-// collision with land
-// relocated hit box
-// destroy
+// #1 multishot distance
+// #2 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun
 
 // # SFX
 // look at Eliot's links on Slack
@@ -126,7 +113,6 @@ class FiringTest extends Phaser.State {
 
     //   this.game.add.existing(this.sneks[i])
     // }
-
   }
 
   // LARGE CODE MOVED TO PLAYERBOAT FOR EFFICIENCY
