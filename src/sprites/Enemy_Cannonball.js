@@ -35,8 +35,8 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.setupAnimations()
 
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
-    this.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    this.body.collides([this.game.enemyGroup, this.game.landGroup])
+    this.body.setCollisionGroup(this.game.projectileGroup)
+    this.body.collides([this.game.playerGroup, this.game.landGroup])
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true

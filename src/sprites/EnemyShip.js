@@ -50,6 +50,10 @@ class EnemyShip extends Enemy {
       {
         this.firingCallback()
       }
+      else if(this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)
+      {
+        this.firingCallback2()
+      }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
     } else if ((this.perpAngDiff > 0 && this.perpAngDiff < Phaser.Math.HALF_PI) || (this.perpAngDiff > -2 * Phaser.Math.HALF_PI && this.perpAngDiff < -1 * Phaser.Math.HALF_PI)) {
@@ -183,6 +187,7 @@ class EnemyShip extends Enemy {
     this.projectile.add(cannonball3)
  
     // Set hitbox size for projectile
+    /*
     cannonball.body.setRectangle(2, 2, 0, -7)
     cannonball2.body.setRectangle(2, 2, 0, -7)
     cannonball3.body.setRectangle(2, 2, 0, -7)
@@ -190,6 +195,7 @@ class EnemyShip extends Enemy {
     cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    */
  
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
@@ -272,6 +278,7 @@ class EnemyShip extends Enemy {
     this.projectile.add(cannonball3)
  
     // Set hitbox size for projectile
+    /*
     cannonball.body.setRectangle(2, 2, 0, -7)
     cannonball2.body.setRectangle(2, 2, 0, -7)
     cannonball3.body.setRectangle(2, 2, 0, -7)
@@ -279,6 +286,7 @@ class EnemyShip extends Enemy {
     cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    */
  
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
