@@ -17,13 +17,7 @@ class PlayerBoat extends Phaser.Sprite {
     // turn off smoothing (this is pixel art)
     this.smoothed = false
     this.dead = false;
-    /*
-    // create an emitter for the wake
-    this.wakeEmitter = this.game.add.emitter(0, 0, 100)
-    this.wakeEmitter.makeParticles(['wake1', 'wake2', 'wake3', 'wake4'])
-    this.wakeEmitter.gravity = 0;
-    */
-    // Set a reference to the top-level phaser game object
+
     this.game = game
 
     // setup the states
