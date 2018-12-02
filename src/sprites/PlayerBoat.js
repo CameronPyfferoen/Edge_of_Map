@@ -345,13 +345,13 @@ class PlayerBoat extends Phaser.Sprite {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2, 0, -7)
-    cannonball2.body.setRectangle(2, 2, 0, -7)
-    cannonball3.body.setRectangle(2, 2, 0, -7)
+    // cannonball.body.setRectangle(2, 2, 0, -7)
+    // cannonball2.body.setRectangle(2, 2, 0, -7)
+    // cannonball3.body.setRectangle(2, 2, 0, -7)
     // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
 
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
@@ -416,13 +416,14 @@ class PlayerBoat extends Phaser.Sprite {
     this.projectile.add(cannonball3)
 
     // Set hitbox size for projectile
-    cannonball.body.setRectangle(2, 2, 0, -7)
-    cannonball2.body.setRectangle(2, 2, 0, -7)
-    cannonball3.body.setRectangle(2, 2, 0, -7)
+    // cannonball.body.setRectangle(2, 2, 0, -7)
+    // cannonball2.body.setRectangle(2, 2, 0, -7)
+    // cannonball3.body.setRectangle(2, 2, 0, -7)
+
     // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
+    // cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
 
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
