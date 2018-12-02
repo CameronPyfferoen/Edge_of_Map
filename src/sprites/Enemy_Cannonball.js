@@ -40,7 +40,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 0
+    this.damage = 5
 
     this.body.onBeginContact.add(this.contact, this)
 
@@ -49,9 +49,9 @@ class Enemy_Cannonball extends Phaser.Sprite {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     console.log(`hit: ${otherBody.sprite.name}`)
-    if (otherBody !== null && otherBody.sprite.name === 'Enemy') {
-      game.camera.shake(0.001, 200)
-      game.getHit.play('', 0, config.SFX_VOLUME)
+    if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
+      this.game.camera.shake(0.001, 200)
+      this.game.getHit.play('', 0, config.SFX_VOLUME)
       if ((otherBody.sprite.health -= this.damage) <= 0) {
         otherBody.sprite.health = 0
       }
