@@ -154,6 +154,7 @@ class Splash extends Phaser.State {
     this.game.playerCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.game.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
     this.game.projectileGroup = this.game.physics.p2.createCollisionGroup()
+    this.game.portGroup = this.game.physics.p2.createCollisionGroup()
   }
 
   setupAudio () {
