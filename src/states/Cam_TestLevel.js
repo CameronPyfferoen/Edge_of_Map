@@ -266,8 +266,10 @@ class Cam_TestLevel extends Phaser.State {
     // -------------------------------------------------------------
     // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
     // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
-    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
+
+    // CONSIDER RECOMMENTING
+    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
