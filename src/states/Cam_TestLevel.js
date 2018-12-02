@@ -245,7 +245,7 @@ class Cam_TestLevel extends Phaser.State {
         }
       } else if (event.keyCode === 13) {
         console.log('Enter Pressed');
-        
+
       }
     };
 
@@ -267,13 +267,14 @@ class Cam_TestLevel extends Phaser.State {
     // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
     // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
 
-    // CONSIDER RECOMMENTING
-    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
-
     // destroy projectiles when they collide w/ PLAYER
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
     // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
+    // -------------------------------------------------------------
+
+    // WORKING LINES OF CODE
+    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
   }
 
   setupKeyboard () {
