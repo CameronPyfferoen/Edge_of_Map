@@ -13,7 +13,8 @@ import Test_Cannonball from '../sprites/Test_Cannonball'
 import FiringTest from '../states/FiringTest'
 import GameData from '../GameData'
 import Shark from '../sprites/Shark'
-import EnemyShip from '../sprites/EnemyShip';
+import EnemyShip from '../sprites/EnemyShip'
+import GoldDrop from '../sprites/GoldDrop'
 
 class Cam_TestLevel extends Phaser.State {
   init () {
@@ -41,6 +42,10 @@ class Cam_TestLevel extends Phaser.State {
     this.game.world.scale.setTo(2) // 2
     // add world bounds ----------------------------------------------------------
     this.addBounds()
+    // set background numbers --------------------------------
+    this.game.gold = 100;
+    this.goldMax = 999999999; // nine spaces
+    this.goldMin = 0;
     this.shotTimerL = 0;
     this.shotTimerR = 0;
     // Add Island Colliders -------------------------------------------------------------------------------
@@ -56,29 +61,34 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     // Add port positions ---------------------------------------------------------------------------------------
+    /*
     let portPositions = this.map.objects['LandPositions']
     portPositions.forEach(element => {
       this.portPos = this.add.sprite(element.x, element.y)
-      this.portPos.setCollisionGroup(this.game.portGroup)
+      this.portPos.setCollisionGroup([this.game.portGroup])
     })
+    */
 
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
     this.game.mainTheme.play('', 1, config.MUSIC_VOLUME);
-    
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
       x: 300,
       y: 700
-    }) // x = 260, y = 1850
+    }) // x = 260, y = 1850 are the initial spawn points
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.death.onComplete.add(this.sendToDead, this);
-    // this.playerMP.body.collideWorldBounds = true;
-    this.gold = 0;
-    this.goldMax = 999999999; // nine spaces
-    this.goldMin = 0;
+    this.game.add.existing(this.playerMP)
+
+    this.goldDrop = new GoldDrop({
+      game: this.game,
+      x: 300,
+      y: 500
+    })
+    this.game.add.existing(this.goldDrop);
 
     /*
     this.bcrab = new Crab_Blue({
@@ -106,16 +116,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-    
+
     this.eBoat = new EnemyShip({
       game: this.game,
       x: this.playerMP.x + 100,
       y: this.playerMP.y - 100,
       player: this.playerMP
     })
-    
+
     this.game.add.existing(this.eBoat)
-    
+
     /*
     this.sneks = []
     for (let i = 0; i < 10; i++) {
@@ -129,8 +139,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[i])
     }
     */
-    
-    
+
     /*
     this.corner_snek = new Test_Snek({
       game: this.game,
@@ -139,7 +148,6 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.corner_snek)
-    
 
     /*
     this.test_fire = new Test_Snek({
@@ -151,7 +159,6 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.test_fire)
     */
 
-    this.game.add.existing(this.playerMP)
 
     // this.playerMP.body.rotation = 1.57; // uses radians
 
@@ -390,7 +397,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // UI update ---------------------------------------------------------
 
-    this.goldTXT.text = this.gold;
+    this.goldTXT.text = this.game.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
   }
 }
