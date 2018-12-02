@@ -45,7 +45,8 @@ class Splash extends Phaser.State {
 
     // The main player spritesheet
     this.load.spritesheet('player-med', '/assets/images/PLayer_M_Ship_96x96/Player_M_96_Sprite_Sheet.png', 96, 96)
-    this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
+    this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32)
+    this.load.spritesheet('cannonball2', 'assets/images/Projectils_Sprite_Sheet_32px.png', 32, 32)
 
     // Pickups
     this.load.spritesheet('pickups', '/assets/images/Pickups/pickups_Sprite_Sheet.png', 64, 64)
