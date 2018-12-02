@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import config from '../config'
 // import Test_Cannonball from '../sprites/Test_Cannonball'
 
-class Test_Cannonball extends Phaser.Sprite {
+class Enemy_Cannonball extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'sea_snake_16x', 0)
     super(game, x, y, 'cannonball', 0)
@@ -21,45 +21,41 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
 
-    this.body.clearShapes()
-    // this.body.addRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
-    this.body.addRectangle(2, 2, 0, -7)
-    // this.body.offset.setTo(0, 0)
+    this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
+    this.body.offset.setTo(0, 0)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
-    // this.body.fixedRotation = true
 
     this.game.time.events.add(Phaser.Timer.SECOND * 5, this.destroy.bind(this), this)
     this.setupAnimations()
 
-    // this.body.setRectangle(2, 2, 0, -7)
+
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
-    this.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    this.body.collides([this.game.enemyGroup, this.game.landGroup])
+    this.body.collides([this.game.playerGroup, this.game.landGroup])
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 0
+    this.damage = 5
 
     this.body.onBeginContact.add(this.contact, this)
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     console.log(`hit: ${otherBody.sprite.name}`)
-    if(otherBody !== null && otherBody.sprite.name === 'Enemy')
+    if(otherBody !== null && otherBody.sprite.name === 'Player Ship')
     {
-      game.camera.shake(0.001, 200)
-      game.getHit.play('', 0, config.SFX_VOLUME)
+      this.destroy()
+      this.game.camera.shake(0.001, 200)
+      this.game.getHit.play('', 0, config.SFX_VOLUME)
       if((otherBody.sprite.health -= this.damage) <= 0)
       {
         otherBody.sprite.health = 0
       }
-      else{
+      else {
         otherBody.sprite.health -= this.damage
       }
     }
-    this.destroy()
   }
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
@@ -85,4 +81,4 @@ class Test_Cannonball extends Phaser.Sprite {
   }
 }
 
-export default Test_Cannonball
+export default Enemy_Cannonball
