@@ -46,7 +46,10 @@ class EnemyShip extends Enemy {
   positioning () {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
-
+      if(this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472)
+      {
+        this.firingCallback()
+      }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
     } else if ((this.perpAngDiff > 0 && this.perpAngDiff < Phaser.Math.HALF_PI) || (this.perpAngDiff > -2 * Phaser.Math.HALF_PI && this.perpAngDiff < -1 * Phaser.Math.HALF_PI)) {
