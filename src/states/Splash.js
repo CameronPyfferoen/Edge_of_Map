@@ -45,7 +45,17 @@ class Splash extends Phaser.State {
 
     // The main player spritesheet
     this.load.spritesheet('player-med', '/assets/images/PLayer_M_Ship_96x96/Player_M_96_Sprite_Sheet.png', 96, 96)
-    this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32, 4)
+    this.load.spritesheet('cannonball', 'assets/images/Player/Projectiles_75_opacity.png', 32, 32)
+    this.load.spritesheet('cannonball2', 'assets/images/Projectils_Sprite_Sheet_32px.png', 32, 32)
+
+    this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
+    this.load.spritesheet('seasnake_death', 'assets/images/Enemies/SpriteSheet_SeaSnake_Death.png', 64, 128)
+    this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
+    this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
+    this.load.spritesheet('sharkSheet', './assets/images/Enemies/SpriteSheet_Shark.png', 32, 48)
+    // this.load.spritesheet('medBoat', 'assets/images/Player/Player_M_96.png', 96, 96)
+    // this.load.spritesheet('wake', 'assets/images/Player/spr_wake_8x8.png', 8, 8)
+    // this.load.spritesheet('mapoverlay', 'assets/images/Terrain/maptemplatewater.png', 500, 260)
 
     // Pickups
     this.load.spritesheet('pickups', '/assets/images/Pickups/pickups_Sprite_Sheet.png', 64, 64)

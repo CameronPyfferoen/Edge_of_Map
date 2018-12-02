@@ -5,7 +5,7 @@ import config from '../config'
 class Enemy_Cannonball extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     // super(game, x, y, 'sea_snake_16x', 0)
-    super(game, x, y, 'cannonball', 0)
+    super(game, x, y, 'cannonball2', 0)
     this.name = 'Cannonball'
     this.anchor.setTo(0.5, 0.5)
 
@@ -40,15 +40,16 @@ class Enemy_Cannonball extends Phaser.Sprite {
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 0
+    this.damage = 5
 
     this.body.onBeginContact.add(this.contact, this)
+
+    this.explosionAnim.onComplete.add(this.death, this)
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     console.log(`hit: ${otherBody.sprite.name}`)
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      this.destroy()
       this.game.camera.shake(0.001, 200)
       this.game.getHit.play('', 0, config.SFX_VOLUME)
       if ((otherBody.sprite.health -= this.damage) <= 0) {
@@ -58,6 +59,13 @@ class Enemy_Cannonball extends Phaser.Sprite {
         otherBody.sprite.health -= this.damage
       }
     }
+    this.explosionAnim.play()
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
+  }
+
+  death () {
+    this.destroy()
   }
 
   // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
@@ -67,8 +75,9 @@ class Enemy_Cannonball extends Phaser.Sprite {
   }
 
   setupAnimations () {
-    this.animations.add('ball', [3], 60, true)
+    this.animations.add('ball', [12], 60, true)
     this.animations.play('ball')
+    this.explosionAnim = this.animations.add('explosion', [30, 31, 32, 33, 34, 35], 5, false)
     // this.frame = 2
     // console.log('k')
   }

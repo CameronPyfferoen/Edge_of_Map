@@ -60,6 +60,7 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
+    /*
     // Add port positions ---------------------------------------------------------------------------------------
     /*
     let portPositions = this.map.objects['LandPositions']
