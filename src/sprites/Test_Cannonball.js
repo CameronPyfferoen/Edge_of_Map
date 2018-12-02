@@ -40,7 +40,7 @@ class Test_Cannonball extends Phaser.Sprite {
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 10
+    this.damage = 5
 
     this.body.onBeginContact.add(this.contact, this)
 
