@@ -48,27 +48,20 @@ class Test_Snek extends Enemy {
     this.body.velocity.x = 0
     this.body.velocity.y = 0
     console.log(`player animation: ${this.player.animations.currentAnim.name}`)
-    if(this.player.health <= 0)
-    {
+    if (this.player.health <= 0) {
       this.idle()
-    }
-    else if(this.player.animations.currentAnim.name !== 'death' && this.player.animations.currentAnim.name !== 'ded')
-    {
+    } else if (this.player.animations.currentAnim.name !== 'death' && this.player.animations.currentAnim.name !== 'ded') {
       if (this.player.health > 0 && !this.shot) {
         this.animations.currentAnim.onComplete.add(this.fire, this)
         // this.animations.currentAnim.onComplete.add(this.switch, this)
       }
-  }
+    }
   }
 
-  switch ()
-  {
-    if (this.canSwitch)
-    {
+  switch () {
+    if (this.canSwitch) {
       this.canSwitch = false
-    }
-    else
-    {
+    } else {
       this.canSwitch = true
     }
   }
@@ -95,50 +88,58 @@ class Test_Snek extends Enemy {
   }
 
   die () {
-
+    this.destroy()
   }
 
   update () {
-    this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
-    this.canSwitch = !this.attacking
-    this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
-    if (this.animations.currentAnim.name === 'attack')
-    {
-      if (this.shot )//&& this.player_dist > this.fire_dist)
-      {
-        this.canSwitch = true
+    if (this.health <= 0) {
+      if (this.texture.name !== 'seasnake_death') {
+        this.loadTexture('seasnake_death')
+        this.setupDeath()
       }
-    }
-    /*
+      this.animations.play('death')
+      this.animations.currentAnim.onComplete.add(this.die, this)
+    } else {
+      this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
+      this.canSwitch = !this.attacking
+      this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
+      if (this.animations.currentAnim.name === 'attack') {
+        if (this.shot)// && this.player_dist > this.fire_dist)
+        {
+          this.canSwitch = true
+        }
+      }
+      /*
     if (!this.attacking) {
       this.animations.play('swim')
     } else if (this.attacking) {
       this.animations.play('attack')
     }
     */
-    // console.log(`state: ${this.state}`)
-    // console.log(`canSwitch: ${this.canSwitch}`)
-    if (this.player_dist > this.renderdist && !this.isOffCamera) {
-      this.isOffCamera = true
-      this.kill()
-    } else if (this.player_dist <= this.renderdist && this.isOffCamera) {
-      this.isOffCamera = false
-      this.revive()
-    }
-    this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if (this.canSwitch) {
-      if (this.player_dist > this.chase_dist) {
-        this.patrol()
-      } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
-        this.chase()
+      // console.log(`state: ${this.state}`)
+      // console.log(`canSwitch: ${this.canSwitch}`)
+      if (this.player_dist > this.renderdist && !this.isOffCamera) {
+        this.isOffCamera = true
+        this.kill()
+      } else if (this.player_dist <= this.renderdist && this.isOffCamera) {
+        this.isOffCamera = false
+        this.revive()
       }
-    } if (this.player_dist <= this.fire_dist) {
-      if (!this.shot) {
-        this.attack()
-      } else if (this.shot) {
-        this.idle()
-        if (!this.fireb.fire) {
-          this.shot = false
+      this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
+      if (this.canSwitch) {
+        if (this.player_dist > this.chase_dist) {
+          this.patrol()
+        } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
+          this.chase()
+        }
+      } if (this.player_dist <= this.fire_dist) {
+        if (!this.shot) {
+          this.attack()
+        } else if (this.shot) {
+          this.idle()
+          if (!this.fireb.fire) {
+            this.shot = false
+          }
         }
       }
     }
@@ -147,6 +148,10 @@ class Test_Snek extends Enemy {
   setupAnimations () {
     this.animations.add('swim', sequentialNumArray(0, 8), 10, true)
     this.animations.add('attack', sequentialNumArray(9, 17), 10, false)
+  }
+
+  setupDeath () {
+    this.animations.add('death', sequentialNumArray(0, 11), 10, false)
   }
 }
 export default Test_Snek
