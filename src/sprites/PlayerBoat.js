@@ -176,6 +176,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   // Choose projectile type for the left side of the ship
+  // NOTE, only GameData.shotTypes.MULTISHOT works
   firingCallback () {
     console.log('k')
     if (this.health > 0) {
@@ -191,11 +192,11 @@ class PlayerBoat extends Phaser.Sprite {
             this.spreadShotLeft()
             this.canFire = false
             this.firingCallbackCooldown()
-            console.log('k')
+            // console.log('k')
           }
           break
         case GameData.shotTypes.EXTRA:
-          //
+
           break
         default:
       }
@@ -207,17 +208,19 @@ class PlayerBoat extends Phaser.Sprite {
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
     if (this.health > 0) {
-      this.spreadShotRight()
+      if (this.canFire === true) {
+        this.spreadShotRight()
+        this.canFire = false
+        this.firingCallbackCooldown()
+        // console.log('k')
+      }
     }
   }
-
-  // DOES NOT WORK ATM
-  // Firing rate for the left side of the ship
 
   // My thoughts and questions
   // why does the firingCallback begin after what seems to be 2000ms
   // how do I fire instantly?
-  //
+
   firingCallbackCooldown () {
     //  Create our Timer
     this.timer = this.game.time.create(false)
@@ -232,13 +235,12 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer.start()
   }
 
-  // DOES NOT WORK ATM
-  // Firing rate for the right side of the ship
   firingCallbackCooldown2 () {
-      this.firingCallback2()
-      this.timer2 = 4000
+    this.firingCallback2()
+    this.timer2 = 4000
   }
 
+  // The harpoon function isn't really used
   harpoon () {
     // console.log('o')
     let mousex = this.game.input.x
@@ -333,6 +335,7 @@ class PlayerBoat extends Phaser.Sprite {
       x: canPos3[0],
       y: canPos3[1]
     })
+
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
@@ -342,6 +345,7 @@ class PlayerBoat extends Phaser.Sprite {
     // cannonball.body.setRectangle(2, 2, 0, -7)
     // cannonball2.body.setRectangle(2, 2, 0, -7)
     // cannonball3.body.setRectangle(2, 2, 0, -7)
+
     // Tell cannonball to use cannonballCollisionGroup
     // cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     // cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
@@ -404,6 +408,7 @@ class PlayerBoat extends Phaser.Sprite {
       x: canPos3[0],
       y: canPos3[1]
     })
+
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)

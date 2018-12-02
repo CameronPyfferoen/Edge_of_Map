@@ -67,7 +67,7 @@ class Enemy extends Phaser.Sprite
         this.turn = false
       }
     }
-    
+
   }
 
   chase () {

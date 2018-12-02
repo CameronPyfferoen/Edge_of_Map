@@ -18,7 +18,7 @@ import GameData from '../GameData'
 // What I want to do
 
 // #1 multishot distance
-// #2 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun -prioritize
+// #2 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun
 
 // # SFX
 // look at Eliot's links on Slack
