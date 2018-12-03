@@ -66,6 +66,7 @@ class Splash extends Phaser.State {
 
     // Enemies
     this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)
+    this.load.spritesheet('seasnake_all', 'assets/images/Enemies/SpriteSheet_SeaSnake_All.png', 64, 160)
     this.load.spritesheet('enemyship', 'assets/images/Enemies/Enemy_Ships_L_128.png', 128, 128)
     this.load.spritesheet('fireball', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FireBall.png', 16, 32)
     this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
