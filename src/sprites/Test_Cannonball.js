@@ -75,9 +75,9 @@ class Test_Cannonball extends Phaser.Sprite {
   }
 
   setupAnimations () {
-    this.animations.add('ball', [12], 60, true)
+    this.animations.add('ball', [26], 5, true)
     this.animations.play('ball')
-    this.explosionAnim = this.animations.add('explosion', [30, 31, 32, 33, 34, 35], 5, false)
+    this.explosionAnim = this.animations.add('explosion', [35, 29, 23, 17, 11, 5], 5, false)
     // this.frame = 2
     // console.log('k')
   }
