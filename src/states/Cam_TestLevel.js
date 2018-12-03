@@ -124,7 +124,7 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-    /*
+    
     this.eBoat = new EnemyShip({
       game: this.game,
       x: this.playerMP.x + 100,
@@ -392,16 +392,13 @@ class Cam_TestLevel extends Phaser.State {
     // if (this.enterKey.isDown) {}
     // Shooting Listener ------------------------------------
     if (this.fireL.isDown) {
-      // if (this.shotTimerL > 25) {
-        this.shotTimerL = 0;
-        this.playerMP.firingCallback();
-      // }
+      this.shotTimerL = 0;
+      this.playerMP.firingCallback();
     }
+    
     if (this.fireR.isDown) {
-     //  if (this.shotTimerR > 25) {
-        this.shotTimerR = 0;
-        this.playerMP.firingCallback2();
-      // }
+      this.shotTimerR = 0;
+      this.playerMP.firingCallback2();
     }
 
     // move forward ------------------------
