@@ -229,13 +229,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
-      if (event.keyCode === 13) {
-        /*
-        this.startingPort = new Phaser.Point(203, 1945)
-        this.skullPort = new Phaser.Point(1528, 1225)
-        this.crecentPort = new Phaser.Point(2857, 1651)
-        this.icePort = new Phaser.Point(645, 485)
-        */
+      if (event.keyCode === 13) { // Pressing enter near a port takes you to the port menu
         console.log('Enter Pressed');
         if (!this.atPort) {
           if (Phaser.Math.distance(this.game.startingPort.x, this.game.startingPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -287,11 +281,11 @@ class Cam_TestLevel extends Phaser.State {
             this.game.paused = true;
           }
         }
-        else {
+        else { // If you are already in the port menu pressing enter again heals your ship
           
         }
       }
-      else if (event.keyCode === 27) {
+      else if (event.keyCode === 27) { // pressing esc pauses the game and brings the controls back up
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(
@@ -302,8 +296,9 @@ class Cam_TestLevel extends Phaser.State {
           this.pauseBG.scale.setTo(1 / 2.5);
           this.pauseBG.fixedToCamera = true;
 
-        } else {
+        } else { // pressing it again destroys the paused background, or the port menu if that is up
           this.pauseBG.destroy();
+          this.atPort = false;
         }
       }
     };
@@ -394,23 +389,19 @@ class Cam_TestLevel extends Phaser.State {
     // this.game.debug.spriteInfo(this.playerMP, 32, 32);
     // this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
     // Enter Listener -------------------------
-    if (this.enterKey.isDown) {
-      // check for player distance between them and the ports, if close enough create the proper map and pause the game
-     
-    }
-
+    // if (this.enterKey.isDown) {}
     // Shooting Listener ------------------------------------
     if (this.fireL.isDown) {
-      if (this.shotTimerL > 25) {
+      // if (this.shotTimerL > 25) {
         this.shotTimerL = 0;
         this.playerMP.firingCallback();
-      }
+      // }
     }
     if (this.fireR.isDown) {
-      if (this.shotTimerR > 25) {
+     //  if (this.shotTimerR > 25) {
         this.shotTimerR = 0;
         this.playerMP.firingCallback2();
-      }
+      // }
     }
 
     // move forward ------------------------
