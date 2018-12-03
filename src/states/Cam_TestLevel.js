@@ -69,6 +69,10 @@ class Cam_TestLevel extends Phaser.State {
       this.portPos.setCollisionGroup([this.game.portGroup])
     })
     */
+    this.startingPort = new Phaser.Point(203, 1945)
+    this.skullPort = new Phaser.Point(1528, 1225)
+    this.crecentPort = new Phaser.Point(2857, 1651)
+    this.icePort = new Phaser.Point(645, 485)
 
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
@@ -257,25 +261,10 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
-    // THE BROKEN LINES OF CODE
-    // this.cannonballCollisionGroup = this.game.physics.p2.createCollisionGroup()
-    // this.enemyGroup.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-
-    // changed addeventlisteners... this.firingCallback.bind(this) to this.playerMP.firingCallback.bind(this.playerMP)
-    // addEventListener('click', this.firingCallback.bind(this))
-    // addEventListener('contextmenu', this.firingCallback2.bind(this))
-    // -------------------------------------------------------------
-    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
-
-    // destroy projectiles when they collide w/ PLAYER
-    // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-    // this.playerMP.body.collides(this.cannonballCollisionGroup, this.hitCannonball, this)
-    // -------------------------------------------------------------
 
     // WORKING LINES OF CODE
-    addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
+    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
+    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
   }
 
   setupKeyboard () {
@@ -351,6 +340,12 @@ class Cam_TestLevel extends Phaser.State {
     // Enter Listener -------------------------
     if (this.enterKey.isDown) {
       // check for player distance between them and the ports, if close enough create the proper map and pause the game
+      if (Phaser.Math.distance(this.startingPort, this.playerMP) <= 100) {
+        console.log('Starting Port is within range!')
+      }
+      if (Phaser.Math.distance(this.icePort, this.playerMP) <= 100) {
+        console.log('Ice Port is within range!')
+      }
     }
 
     // Shooting Listener ------------------------------------

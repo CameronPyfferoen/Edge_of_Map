@@ -286,16 +286,16 @@
   <object id="42" name="bottomWall" x="0" y="2048" width="3200" height="1"/>
  </objectgroup>
  <objectgroup id="7" name="LandPositions" locked="1">
-  <object id="69" x="2857.09" y="1651.09">
+  <object id="69" name="crecent" x="2857.09" y="1651.09">
    <point/>
   </object>
-  <object id="70" x="1527.75" y="1224.88">
+  <object id="70" name="skull" x="1527.75" y="1224.88">
    <point/>
   </object>
-  <object id="71" x="645.455" y="485.273">
+  <object id="71" name="ice" x="645.455" y="485.273">
    <point/>
   </object>
-  <object id="72" x="203.5" y="1944.75">
+  <object id="72" name="start" x="203.5" y="1944.75">
    <point/>
   </object>
  </objectgroup>
