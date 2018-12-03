@@ -10,10 +10,12 @@ class GoldDrop extends Phaser.Sprite {
     this.smoothed = false
     this.game = game
 
+    this.game.physics.p2.enable(this)
+    this.body.clearShapes()
+    this.body.addCircle(6)
     this._SCALE = config.PLAYER_SCALE * 0.5
     this.scale.setTo(this._SCALE)
 
-    this.game.physics.p2.enable(this)
     // this.game.debug.body(this)
     this.body.debug = __DEV__
     this.body.collideWorldBounds = true
@@ -25,7 +27,7 @@ class GoldDrop extends Phaser.Sprite {
     this.body.angularDamping = 0
     this.body.fixedRotation = true
     this.body.data.gravityScale = 0
-
+    
     // this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
     // this.body.offset.setTo(0, 0)
     this.bodyShape = this.body.data.shapes[0]

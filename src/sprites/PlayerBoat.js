@@ -226,7 +226,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer = this.game.time.create(false)
 
     //  Set a TimerEvent to occur after 2 seconds
-    this.timer.add(2000, function () {
+    this.timer.add(500, function () {
       this.canFire = true
     }.bind(this))
 

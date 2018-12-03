@@ -4,7 +4,7 @@ import PlayerBoat from '../sprites/PlayerBoat'
 import Enemy from './Enemy'
 import { sequentialNumArray } from '../utils'
 import Fireball from '../sprites/Fireball'
-import { Line } from 'phaser-ce'
+import { Line, AnimationManager } from 'phaser-ce'
 
 // change htibox to capsule
 class Test_Snek extends Enemy {
@@ -47,7 +47,7 @@ class Test_Snek extends Enemy {
     this.attacking = true
     this.body.velocity.x = 0
     this.body.velocity.y = 0
-    console.log(`player animation: ${this.player.animations.currentAnim.name}`)
+    // console.log(`player animation: ${this.player.animations.currentAnim.name}`)
     if (this.player.health <= 0) {
       this.idle()
     } else if (this.player.animations.currentAnim.name !== 'death' && this.player.animations.currentAnim.name !== 'ded') {
@@ -93,10 +93,6 @@ class Test_Snek extends Enemy {
 
   update () {
     if (this.health <= 0) {
-      if (this.texture.name !== 'seasnake_death') {
-        this.loadTexture('seasnake_death')
-        this.setupDeath()
-      }
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     } else {
@@ -148,10 +144,7 @@ class Test_Snek extends Enemy {
   setupAnimations () {
     this.animations.add('swim', sequentialNumArray(0, 8), 10, true)
     this.animations.add('attack', sequentialNumArray(9, 17), 10, false)
-  }
-
-  setupDeath () {
-    this.animations.add('death', sequentialNumArray(0, 11), 10, false)
+    this.animations.add('death')
   }
 }
 export default Test_Snek

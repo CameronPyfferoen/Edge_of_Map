@@ -113,6 +113,12 @@ class Splash extends Phaser.State {
     this.load.image('healthBar', '/assets/images/UI/health_health.png')
     this.load.image('healthFG', '/assets/images/UI/health_front.png')
 
+    // Port menus
+    this.load.image('icePort', '/assets/images/UI/PortMenus/menu_portsnowdon_port.png')
+    this.load.image('startingPort', '/assets/images/UI/PortMenus/menu_porttorial_port.png')
+    this.load.image('skullPort', '/assets/images/UI/PortMenus/menu_portpyrus_port.png')
+    this.load.image('crecentPort', '/assets/images/UI/PortMenus/menu_portsflowen_port.png')
+
     // The audiosprite with all music and SFX
     this.load.audioSprite('sounds', [
       'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
