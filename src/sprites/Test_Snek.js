@@ -11,7 +11,7 @@ class Test_Snek extends Enemy {
   constructor (game) {
     super(game)
     this.touch_damage = 10
-    this.loadTexture('seasnake_final')
+    this.loadTexture('seasnake_all')
     this.setupAnimations()
     this.animations.play('swim')
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
@@ -143,8 +143,8 @@ class Test_Snek extends Enemy {
 
   setupAnimations () {
     this.animations.add('swim', sequentialNumArray(0, 8), 10, true)
-    this.animations.add('attack', sequentialNumArray(9, 17), 10, false)
-    this.animations.add('death')
+    this.animations.add('attack', sequentialNumArray(12, 20), 10, false)
+    this.animations.add('death', sequentialNumArray(24, 35), 10, false)
   }
 }
 export default Test_Snek
