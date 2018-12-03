@@ -48,6 +48,7 @@ class Cam_TestLevel extends Phaser.State {
     this.goldMin = 0;
     this.shotTimerL = 0;
     this.shotTimerR = 0;
+    this.atPort = false;
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -60,19 +61,7 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
-    /*
-    // Add port positions ---------------------------------------------------------------------------------------
-    /*
-    let portPositions = this.map.objects['LandPositions']
-    portPositions.forEach(element => {
-      this.portPos = this.add.sprite(element.x, element.y)
-      this.portPos.setCollisionGroup([this.game.portGroup])
-    })
-    */
-    this.startingPort = new Phaser.Point(203, 1945)
-    this.skullPort = new Phaser.Point(1528, 1225)
-    this.crecentPort = new Phaser.Point(2857, 1651)
-    this.icePort = new Phaser.Point(645, 485)
+
 
     // Start playing the background music -----------------------------
     // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
@@ -95,6 +84,20 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.goldDrop);
 
+    /*
+    // Add port positions ---------------------------------------------------------------------------------------
+    /*
+    let portPositions = this.map.objects['LandPositions']
+    portPositions.forEach(element => {
+      this.portPos = this.add.sprite(element.x, element.y)
+      this.portPos.setCollisionGroup([this.game.portGroup])
+    })
+    */
+    this.game.startingPort = new Phaser.Point(203, 1945)
+    this.game.skullPort = new Phaser.Point(1528, 1225)
+    this.game.crecentPort = new Phaser.Point(2857, 1651)
+    this.game.icePort = new Phaser.Point(645, 485)
+    this.game.playerPos = new Phaser.Point(this.playerMP.x, this.playerMP.y)
     /*
     this.bcrab = new Crab_Blue({
       game: this.game,
@@ -226,31 +229,82 @@ class Cam_TestLevel extends Phaser.State {
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
-      if (event.keyCode === 27) {
+      if (event.keyCode === 13) {
+        /*
+        this.startingPort = new Phaser.Point(203, 1945)
+        this.skullPort = new Phaser.Point(1528, 1225)
+        this.crecentPort = new Phaser.Point(2857, 1651)
+        this.icePort = new Phaser.Point(645, 485)
+        */
+        console.log('Enter Pressed');
+        if (!this.atPort) {
+          if (Phaser.Math.distance(this.game.startingPort.x, this.game.startingPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
+            console.log('Starting Port is within range!')
+            this.atPort = true;
+            this.pauseBG = this.game.add.sprite(
+              this.game.camera.x - this.game.camera.x / 2 + 475,
+              this.game.camera.y - this.game.camera.y / 2 + 237.5,
+              'startingPort');
+            this.pauseBG.anchor.setTo(0.5, 0.5);
+            this.pauseBG.scale.setTo(1 / 2);
+            this.pauseBG.fixedToCamera = true;
+            this.game.paused = true;
+          }
+          else if (Phaser.Math.distance(this.game.icePort.x, this.game.icePort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
+            console.log('Ice Port is within range!')
+            this.atPort = true;
+            this.pauseBG = this.game.add.sprite(
+              this.game.camera.x - this.game.camera.x / 2 + 475,
+              this.game.camera.y - this.game.camera.y / 2 + 237.5,
+              'icePort');
+            this.pauseBG.anchor.setTo(0.5, 0.5);
+            this.pauseBG.scale.setTo(1 / 2);
+            this.pauseBG.fixedToCamera = true;
+            this.game.paused = true;
+          }
+          else if (Phaser.Math.distance(this.game.skullPort.x, this.game.skullPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
+            console.log('Skull Port is within range!')
+            this.atPort = true;
+            this.pauseBG = this.game.add.sprite(
+              this.game.camera.x - this.game.camera.x / 2 + 475,
+              this.game.camera.y - this.game.camera.y / 2 + 237.5,
+              'skullPort');
+            this.pauseBG.anchor.setTo(0.5, 0.5);
+            this.pauseBG.scale.setTo(1 / 2);
+            this.pauseBG.fixedToCamera = true;
+            this.game.paused = true;
+          }
+          else if (Phaser.Math.distance(this.game.crecentPort.x, this.game.crecentPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
+            console.log('Crecent Port is within range!')
+            this.atPort = true;
+            this.pauseBG = this.game.add.sprite(
+              this.game.camera.x - this.game.camera.x / 2 + 475,
+              this.game.camera.y - this.game.camera.y / 2 + 237.5,
+              'crecentPort');
+            this.pauseBG.anchor.setTo(0.5, 0.5)
+            this.pauseBG.scale.setTo(1 / 2);
+            this.pauseBG.fixedToCamera = true;;
+            this.game.paused = true;
+          }
+        }
+        else {
+          
+        }
+      }
+      else if (event.keyCode === 27) {
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
-          this.pauseBG = this.game.add.sprite(this.game.camera.x - this.game.camera.x / 2 + 475, this.game.camera.y - this.game.camera.y / 2 + 237.5, 'controlBoard');
-          this.menuButton = this.game.add.button(this.game.camera.x - this.game.camera.x / 2 + 475, 
-            this.game.camera.y - this.game.camera.y / 2 + 237.5 + 90, 
-            'exitButton', 
-            function exitButton () {
-              this.state.start('MainMenu');
-            }, 
-            this, 1, 0, 1, 0);
+          this.pauseBG = this.game.add.sprite(
+            this.game.camera.x - this.game.camera.x / 2 + 475, 
+            this.game.camera.y - this.game.camera.y / 2 + 237.5, 
+            'controlBoard');
           this.pauseBG.anchor.setTo(0.5, 0.5);
-          this.menuButton.anchor.setTo(0.5, 0.5);
           this.pauseBG.scale.setTo(1 / 2.5);
-          this.menuButton.scale.setTo(1 / 2.5);
           this.pauseBG.fixedToCamera = true;
-          this.menuButton.fixedToCamera = true;
 
         } else {
           this.pauseBG.destroy();
-          this.menuButton.destroy();
         }
-      } else if (event.keyCode === 13) {
-        console.log('Enter Pressed');
-
       }
     };
 
@@ -334,18 +388,15 @@ class Cam_TestLevel extends Phaser.State {
     super.update()
     this.shotTimerL++;
     this.shotTimerR++;
+    this.game.playerPos.x = this.playerMP.x;
+    this.game.playerPos.y = this.playerMP.y;
     // info on screen -----------------------------------------------
     // this.game.debug.spriteInfo(this.playerMP, 32, 32);
     // this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
     // Enter Listener -------------------------
     if (this.enterKey.isDown) {
       // check for player distance between them and the ports, if close enough create the proper map and pause the game
-      if (Phaser.Math.distance(this.startingPort, this.playerMP) <= 100) {
-        console.log('Starting Port is within range!')
-      }
-      if (Phaser.Math.distance(this.icePort, this.playerMP) <= 100) {
-        console.log('Ice Port is within range!')
-      }
+     
     }
 
     // Shooting Listener ------------------------------------
