@@ -316,9 +316,9 @@ class PlayerBoat extends Phaser.Sprite {
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
 
     let cannonball = new Test_Cannonball({
       game: this.game,
@@ -361,21 +361,21 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(50)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 100
     // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle - 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(50)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle - 100
     // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle - 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(50)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
@@ -389,9 +389,9 @@ class PlayerBoat extends Phaser.Sprite {
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
 
     let cannonball = new Test_Cannonball({
       game: this.game,
@@ -434,21 +434,21 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(50)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     // cannonball2.x = this.playerMP.angle + 10
     // cannonball2.y = this.playerMP.angle + 10
     cannonball2.body.angle = this.angle + 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(50)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     // cannonball3.x = this.playerMP.angle + 10
     // cannonball3.y = this.playerMP.angle + 10
     cannonball3.body.angle = this.angle + 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(50)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
