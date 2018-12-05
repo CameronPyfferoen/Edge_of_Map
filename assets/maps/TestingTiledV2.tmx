@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="75">
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="85">
  <tileset firstgid="1" name="Clouds" tilewidth="32" tileheight="32" tilecount="8" columns="2">
   <image source="../images/Terrain/cloudedge.png" width="64" height="128"/>
  </tileset>
@@ -151,7 +151,7 @@
 0,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612744,1610612738,1610612740,1610612742,1610612738,1610612740,1610612742,0
 </data>
  </layer>
- <objectgroup id="5" name="GameObjects">
+ <objectgroup id="5" name="GameObjects" locked="1">
   <object id="2" name="Starting_Port_Hitbox" x="528.537" y="2022.07">
    <polygon points="0,0 -503,4 -502,-313 -466,-255 -455,-210 -381,-164 -295,-139 -284,-129 -282,-113 -371,-112 -402,-93 -396,-43 -249,-42 -217,-56 -149,-56"/>
   </object>
@@ -296,6 +296,32 @@
    <point/>
   </object>
   <object id="72" name="start" x="203.5" y="1944.75">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="GoldPositions">
+  <object id="75" name="gp1" x="1908" y="1826.5">
+   <point/>
+  </object>
+  <object id="78" name="gp2" x="1852" y="1859.5">
+   <point/>
+  </object>
+  <object id="79" name="gp3" x="1918.5" y="1943">
+   <point/>
+  </object>
+  <object id="80" name="gp4" x="2353" y="230">
+   <point/>
+  </object>
+  <object id="81" name="gp5" x="2562" y="87">
+   <point/>
+  </object>
+  <object id="82" name="gp6" x="3118" y="497">
+   <point/>
+  </object>
+  <object id="83" name="gp7" x="2411" y="804">
+   <point/>
+  </object>
+  <object id="84" name="gp8" x="228" y="92">
    <point/>
   </object>
  </objectgroup>
