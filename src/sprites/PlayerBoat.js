@@ -75,7 +75,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.minHealth = 0;
 
     this.timer = null
+    this.timer2 = null
     this.canFire = true
+    this.canFire2 = true
   }
 
   update () {
@@ -213,10 +215,10 @@ class PlayerBoat extends Phaser.Sprite {
   // Choose projectile type for the right side of the ship
   firingCallback2 () {
     if (this.health > 0) {
-      if (this.canFire === true) {
+      if (this.canFire2 === true) {
         this.spreadShotRight()
-        this.canFire = false
-        this.firingCallbackCooldown()
+        this.canFire2 = false
+        this.firingCallbackCooldown2()
         // console.log('k')
       }
     }
@@ -241,8 +243,17 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   firingCallbackCooldown2 () {
-    this.firingCallback2()
-    this.timer2 = 4000
+    //  Create our Timer
+    this.timer2 = this.game.time.create(false)
+
+    //  Set a TimerEvent to occur after 2 seconds
+    this.timer2.add(500, function () {
+      this.canFire2 = true
+    }.bind(this))
+
+    //  Start the timer running - this is important!
+    //  It won't start automatically, allowing you to hook it to button events and the like.
+    this.timer2.start()
   }
 
   // The harpoon function isn't really used
