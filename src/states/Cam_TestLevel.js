@@ -46,9 +46,11 @@ class Cam_TestLevel extends Phaser.State {
     this.game.gold = 0;
     this.goldMax = 999999999; // nine spaces
     this.goldMin = 0;
+    this.game.playerHealth = 100;
     this.shotTimerL = 0;
     this.shotTimerR = 0;
     this.atPort = false;
+    this.healed = false;
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -124,7 +126,7 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-    /*
+    
     this.eBoat = new EnemyShip({
       game: this.game,
       x: this.playerMP.x + 100,
@@ -148,7 +150,7 @@ class Cam_TestLevel extends Phaser.State {
     }
     */
 
-    
+    /*
     this.corner_snek = new Test_Snek({
       game: this.game,
       x: this.playerMP.x + 70,
@@ -282,7 +284,16 @@ class Cam_TestLevel extends Phaser.State {
           }
         }
         else { // If you are already in the port menu pressing enter again heals your ship
-          
+          this.game.gold -= (100 - this.game.playerHealth);
+          this.game.playerHealth = 100;
+          if (this.game.gold < 0) {
+            this.game.playerHealth += this.game.gold;
+            this.game.gold = 0;
+          }
+          this.pauseBG.destroy();
+          this.game.healed = true;
+          this.atPort = false;
+          this.game.paused = false;
         }
       }
       else if (event.keyCode === 27) { // pressing esc pauses the game and brings the controls back up
@@ -381,27 +392,31 @@ class Cam_TestLevel extends Phaser.State {
 
   update () {
     super.update()
-    this.shotTimerL++;
-    this.shotTimerR++;
+    // Update player position for docking at port
     this.game.playerPos.x = this.playerMP.x;
     this.game.playerPos.y = this.playerMP.y;
+    // update health properly
+    if (this.game.healed) {
+      console.log('old health: ' + this.playerMP.health + ' Healing up to: ' + this.game.playerHealth);
+      this.playerMP.health = this.game.playerHealth;
+      console.log('new health: ' + this.playerMP.health);
+      this.game.healed = false;
+    } else {
+      this.game.playerHealth = this.playerMP.health;
+    }
+
     // info on screen -----------------------------------------------
     // this.game.debug.spriteInfo(this.playerMP, 32, 32);
     // this.game.debug.text(this.game.time.fps, 5, 14, '#00ff00');
-    // Enter Listener -------------------------
-    // if (this.enterKey.isDown) {}
+
     // Shooting Listener ------------------------------------
     if (this.fireL.isDown) {
-      // if (this.shotTimerL > 25) {
-        this.shotTimerL = 0;
-        this.playerMP.firingCallback();
-      // }
+      this.shotTimerL = 0;
+      this.playerMP.firingCallback();
     }
     if (this.fireR.isDown) {
-     //  if (this.shotTimerR > 25) {
-        this.shotTimerR = 0;
-        this.playerMP.firingCallback2();
-      // }
+      this.shotTimerR = 0;
+      this.playerMP.firingCallback2();
     }
 
     // move forward ------------------------

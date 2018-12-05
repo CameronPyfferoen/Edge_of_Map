@@ -83,6 +83,9 @@ class PlayerBoat extends Phaser.Sprite {
   update () {
     // Always give parent a chance to update
     super.update()
+    if (this.health > this.maxHealth) {
+      this.health = this.maxHealth;
+    }
 
     // set animation states
     if (this.curBoatSpeed > 20 && this.health > 0) {
