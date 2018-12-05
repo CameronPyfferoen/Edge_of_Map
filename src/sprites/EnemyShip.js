@@ -126,9 +126,8 @@ class EnemyShip extends Enemy {
       this.turnRight()
     } else if (this.body.rotation > this.playerAngle) {
       this.turnLeft()
-    } else {
-      this.moveForward(this.intBoatSpeed)
     }
+    this.moveForward(this.intBoatSpeed)
   }
 
   die () {
