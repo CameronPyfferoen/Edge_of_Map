@@ -19,12 +19,14 @@ class Enemy extends Phaser.Sprite
     this.scale.setTo(this._SCALE)
 
     this.game.physics.p2.enable(this)
-    
+    this.body.setCollisionGroup(this.game.enemyGroup)
+    this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
+
     this.body.debug = __DEV__
     this.body.colliderWorldBounds = false
-    
-    this.body.setRectangle(60 * this._SCALE, 130 * this._SCALE, 0, 0)
-    this.body.offset.setTo(0.5, 1.5)
+
+    // this.body.setRectangleFromSprite()
+    // this.body.offset.setTo(0.5, 1.5)
 
     this.body.damping = 0.5
     this.body.data.gravityScale = 0
@@ -36,7 +38,7 @@ class Enemy extends Phaser.Sprite
     this.pat_dist = 200
     this.start_diff = 0
     this.chase_dist = 200
-    this.renderdist = 300
+    this.renderdist = 700
 
     this.fwdspd = 20
     this.turnspd = 10
@@ -65,11 +67,11 @@ class Enemy extends Phaser.Sprite
         this.turn = false
       }
     }
-    
+
   }
 
   chase () {
-    this.animations.play('swim')
+    this.animations.play('snek')
     this.moveToObject(this.body, this.player)
   }
 
@@ -81,23 +83,22 @@ class Enemy extends Phaser.Sprite
     {
       this.isOffCamera = true
       this.kill()
-      console.log('killed')
     }
     else if (this.player_dist <= this.renderdist && this.isOffCamera)
     {
       this.isOffCamera = false
       this.revive()
-      console.log('revived')
     }
     this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-    if (this.player_dist > this.chase_dist) {
+    if (this.player_dist > this.chase_dist)
+    {
       this.patrol()
     }
     else if (this.player_dist <= this.chase_dist)
     {
       this.chase()
-    } 
-    
+    }
+
   }
 
   setupAnimations () {

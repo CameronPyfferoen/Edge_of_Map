@@ -7,6 +7,9 @@ import Phaser from 'phaser'
 import { sequentialNumArray } from '../utils.js'
 import config from '../config'
 
+// GameData in src
+// import GameData from '../GameData'
+
 /**
  * The main player-controllable sprite. This class encapsulates the logic for the main
  * player sprite with all of it's animations and states. It includes a simple, hard-coded

@@ -13,6 +13,11 @@ import PType1State from './states/PrototypeLevel1'
 import TestLevelState from './states/TestLevel' // The main game level for testing
 import Cam_TestLevelState from './states/Cam_TestLevel'
 import FiringTest from './states/FiringTest'
+import ControlsState from './states/Controls'
+import SettingsState from './states/Settings'
+import Dead from './states/Dead'
+import Credits from './states/Credits'
+
 
 // Import our general configuration file
 import config from './config'
@@ -29,13 +34,18 @@ class Game extends Phaser.Game {
     super(config.gameWidth, config.gameHeight, Phaser.AUTO, 'content', null)
 
     // Name and load ALL needed game states (add more states here as you make them)
-    this.state.add('Boot', BootState, false)
-    this.state.add('Splash', SplashState, false)
-    this.state.add('MainMenu', MainMenuState, false)
-    this.state.add('TestLevel', TestLevelState, false)
-    this.state.add('PrototypeLevel1', PType1State, false)
-    this.state.add('Cam_TestLevel', Cam_TestLevelState, false)
-    this.state.add('FiringTest', FiringTest, false)
+    this.state.add('Boot', BootState, false);
+    this.state.add('Splash', SplashState, false);
+    this.state.add('MainMenu', MainMenuState, false);
+    this.state.add('TestLevel', TestLevelState, false);
+    this.state.add('PrototypeLevel1', PType1State, false);
+    this.state.add('Cam_TestLevel', Cam_TestLevelState, false);
+    this.state.add('FiringTest', FiringTest, false);
+    this.state.add('Controls', ControlsState, false );
+    this.state.add('Settings', SettingsState, false );
+    this.state.add('Dead', Dead, false);
+    this.state.add('Credits', Credits, false);
+
 
     // Start the 'boot' state
     // Note: during development it may be helpful to skip this and load right into the
