@@ -11,15 +11,11 @@ gource	--1280x720 \
 	--file-idle-time 0 \
 	--max-files 0 \
 	--bloom-intensity 1.5 \
-	--title "${projName}" \
-	--title-size 48 --font-size 24 \
+	--title "${projName}" --font-size 24 \
 	--hide filenames,dirnames,mouse,progress \
 	--date-format "%B %d" \
-	--title-height-pad -10 \
-	--date-height-pad 10 \
 	--multi-sampling \
 	--caption-file gourceCaptions.txt \
 	--caption-size 36 \
 	--caption-duration 4 \
-	--swap-title-and-date \
 	gourcelog.txt

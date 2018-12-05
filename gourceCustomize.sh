@@ -1,13 +1,14 @@
 # Setup Project Name
-projName="vincent is afraid. - Source Code"
+projName="Edge of the Map - Source Code"
+
+function fix {
+  sed -i -- "s/$1/$2/g" gourceLog.txt
+}
 
 # Replace non human readable names with proper ones
-sed -i -- 's/berriers@uwstout.edu/Seth Berrier/g' gourceLog.txt
-sed -i -- 's/marquardtp0038@my.uwstout.edu/Patrick Marquardt/g' gourceLog.txt
-sed -i -- 's/cerasanij7705@my.uwstout.edu/James Cerasani/g' gourceLog.txt
-sed -i -- 's/hazeb4568@my.uwstout.edu/Brad Haze/g' gourceLog.txt
-sed -i -- 's/hillaryv4658@uwstout.edu/Vanessa Hillary/g' gourceLog.txt
-sed -i -- 's/36007002+TheOttery@users.noreply.github.com/Eric Ottery/g' gourceLog.txt
-
-# Clean up the temporary files from sed
-rm gourceLog.txt--
+fix "|CozyD|" "|Cozy Dumas|"
+fix "|Dumas|" "|Cozy Dumas|"
+fix "|Michael-lange|" "|Michael Lange|"
+fix "|Michael-Lange|" "|Michael Lange|"
+fix "|allenderind|" "|Chris Allender|"
+fix "|AMyersZero|" "|Alex Meyers|"
