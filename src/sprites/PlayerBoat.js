@@ -55,10 +55,10 @@ class PlayerBoat extends Phaser.Sprite {
     // this._overlapping = new Set()
 
     // setup movement physics
-    this.intBoatSpeed = 60
+    this.intBoatSpeed = 80
     this.curBoatSpeed = 0
-    this.turnspd = 25
-    this.bckspd = 10
+    this.turnspd = 30
+    this.bckspd = 20
     this.turnangle = 0.6
 
     // adds the animations to the sprite
@@ -133,10 +133,12 @@ class PlayerBoat extends Phaser.Sprite {
 
   turnLeft () {
     this.body.angle -= this.turnangle
+    // this.body.thrustLeft(15)
   }
 
   turnRight () {
     this.body.angle += this.turnangle
+    // this.body.thrustRight(15)
   }
 
   moveBackward () {
