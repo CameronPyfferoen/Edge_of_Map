@@ -61,8 +61,10 @@ class Splash extends Phaser.State {
     this.load.spritesheet('pickups', './assets/images/Pickups/pickups_Sprite_Sheet.png', 64, 64)
 
     // Tiled Physics
-    this.load.physics('GameObjects', './assets/maps/FinalMap.json')
-    // this.load.physics('GameObjects', './assets/maps/TestingTiledV2.json')
+    this.load.physics('GameObjects', '/assets/maps/FinalMap.json')
+    this.load.physics('SnakeSpawn', '/assets/maps/FinalMap.json')
+    this.load.physics('GhostShipSpawn', '/assets/maps/FinalMap.json')
+    // this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
 
     // Enemies
     this.load.spritesheet('seasnake_final', 'assets/images/Enemies/SpriteSheet_SeaSnake_BothFull.png', 64, 160)

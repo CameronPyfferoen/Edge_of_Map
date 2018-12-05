@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="100" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="85">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="100" height="64" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="102">
  <tileset firstgid="1" name="Clouds" tilewidth="32" tileheight="32" tilecount="8" columns="2">
   <image source="../images/Terrain/cloudedge.png" width="64" height="128"/>
  </tileset>
@@ -299,7 +299,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="8" name="GoldPositions">
+ <objectgroup id="8" name="GoldPositions" locked="1">
   <object id="75" name="gp1" x="1908" y="1826.5">
    <point/>
   </object>
@@ -322,6 +322,43 @@
    <point/>
   </object>
   <object id="84" name="gp8" x="228" y="92">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="SnakeSpawn">
+  <object id="96" name="ss6" x="309.717" y="125.506">
+   <ellipse/>
+  </object>
+  <object id="97" name="ss5" x="2700.4" y="1597.17">
+   <ellipse/>
+  </object>
+  <object id="98" name="ss4" x="2125.51" y="1528.34">
+   <ellipse/>
+  </object>
+  <object id="99" name="ss3" x="1738.87" y="1613.36">
+   <ellipse/>
+  </object>
+  <object id="100" name="ss2" x="1004.05" y="1319.84">
+   <ellipse/>
+  </object>
+  <object id="101" name="ss1" x="149.798" y="1174.09">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="GhostShipSpawn">
+  <object id="91" name="gs1" x="881.011" y="291.33">
+   <point/>
+  </object>
+  <object id="92" name="gs2" x="407.16" y="733.591">
+   <point/>
+  </object>
+  <object id="93" name="gs3" x="1737.45" y="305.37">
+   <point/>
+  </object>
+  <object id="94" name="gs4" x="1941.03" y="1814.67">
+   <point/>
+  </object>
+  <object id="95" name="gs5" x="1898.91" y="775.711">
    <point/>
   </object>
  </objectgroup>

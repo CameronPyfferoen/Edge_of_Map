@@ -63,6 +63,8 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
+   
+
 
 
     // Start playing the background music -----------------------------
@@ -126,15 +128,43 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.meg)
     */
     // Add Enemies ----------------------------------------------------
-    
+    this.sneks = []
+    this.i = 0
+    let SnakeSpawns = this.map.objects['SnakeSpawn']
+    SnakeSpawns.forEach(element => {
+      this.sneks[this.i] = new Test_Snek({
+        game: this.game,
+        x: element.x,
+        y: element.y,
+        player: this.playerMP
+      })
+      this.game.add.existing(this.sneks[this.i])
+      this.i++
+    })
+
+    this.ghostBoats = []
+    this.i = 0
+    let GhostShipSpawns = this.map.objects['GhostShipSpawn']
+    GhostShipSpawns.forEach(element => {
+      this.ghostBoats[this.i] = new EnemyShip({
+        game: this.game,
+        x: element.x,
+        y: element.y,
+        player: this.playerMP
+      })
+      this.game.add.existing(this.ghostBoats[this.i])
+      this.i++
+    })
+
+    /*
     this.eBoat = new EnemyShip({
       game: this.game,
       x: this.playerMP.x + 100,
       y: this.playerMP.y - 100,
       player: this.playerMP
     })
-
     this.game.add.existing(this.eBoat)
+    */
 
     /*
     this.sneks = []
@@ -414,6 +444,7 @@ class Cam_TestLevel extends Phaser.State {
       this.shotTimerL = 0;
       this.playerMP.firingCallback();
     }
+    
     if (this.fireR.isDown) {
       this.shotTimerR = 0;
       this.playerMP.firingCallback2();
