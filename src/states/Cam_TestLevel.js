@@ -134,6 +134,7 @@ class Cam_TestLevel extends Phaser.State {
     this.water = this.game.add.group()
     this.aboveWater = this.game.add.group()
     this.playerGroup = this.game.add.group()
+    this.game.portMenu = this.game.add.group()
     this.UIback = this.game.add.group()
     this.UImid = this.game.add.group()
     this.UIfwd = this.game.add.group()
@@ -193,6 +194,7 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.anchor.setTo(0.5, 0.5);
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
+            this.game.portMenu.add(this.pauseBG);
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.icePort.x, this.game.icePort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -205,6 +207,7 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.anchor.setTo(0.5, 0.5);
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
+            this.game.portMenu.add(this.pauseBG);
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.skullPort.x, this.game.skullPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -217,6 +220,7 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.anchor.setTo(0.5, 0.5);
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
+            this.game.portMenu.add(this.pauseBG);
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.crecentPort.x, this.game.crecentPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -228,7 +232,8 @@ class Cam_TestLevel extends Phaser.State {
               'crecentPort');
             this.pauseBG.anchor.setTo(0.5, 0.5)
             this.pauseBG.scale.setTo(1 / 2);
-            this.pauseBG.fixedToCamera = true;;
+            this.pauseBG.fixedToCamera = true;
+            this.game.portMenu.add(this.pauseBG);
             this.game.paused = true;
           }
         }
