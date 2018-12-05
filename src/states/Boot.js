@@ -56,7 +56,7 @@ class Boot extends Phaser.State {
     this.load.image('loaderBar', './assets/images/UI/loader-bar.png')
     this.load.image('logo', './assets/images/Misc/blaze.jpg')
     this.load.image('conceptArt', './assets/images/Misc/Concept Art.png')
-    this.load.image('ourLogo', '/assets/images/UI/logo.png')
+    this.load.image('ourLogo', './assets/images/UI/logo.png')
   }
 
   // Called repeatedly after pre-load to draw the stage
