@@ -15,6 +15,7 @@ class EnemyShip extends Enemy {
 
     this.intBoatSpeed = 40
     this.curBoatSpeed = 0
+    this.fireBoatSpeed = 15
     this.turnSpeed = 15
     this.backSpeed = 10
     this.turnAngle = 0.6
@@ -45,11 +46,16 @@ class EnemyShip extends Enemy {
   }
 
   positioning () {
+    if (this.curBoatSpeed > this.fireBoatSpeed)
+    {
+      this.slowDown()
+    }
+    else
+    {
+      this.moveForward(this.fireBoatSpeed)
+    }
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
-      // console.log(`perpAngDiff: ${this.perpAngDiff}`)
-      //console.log(`perpAngle: ${this.perpAngle}`)
-      console.log(`perpAngDiffDeg: ${this.perpAngDiffDeg}`)
       if(this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6)
       {
         console.log('fire right')
@@ -349,7 +355,7 @@ class EnemyShip extends Enemy {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
         this.positioning()
       }
-      if (this.curBoatSpeed > 20) {
+      if (this.curBoatSpeed >= 15) {
       // console.log('should play forward')
         this.FWD = true
       } else {
