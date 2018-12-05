@@ -80,13 +80,19 @@ class Cam_TestLevel extends Phaser.State {
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.death.onComplete.add(this.sendToDead, this);
     this.game.add.existing(this.playerMP)
-    // test gold ---------
-    this.goldDrop = new GoldDrop({
-      game: this.game,
-      x: 300,
-      y: 500
+    // add gold ---------
+    this.goldPos = []
+    this.i = 0
+    let goldSpawns = this.map.objects['GoldPositions']
+    goldSpawns.forEach(element => {
+      this.goldPos[this.i] = new GoldDrop({
+        game: this.game,
+        x: element.x,
+        y: element.y,
+      })
+      this.game.add.existing(this.goldPos[this.i])
+      this.i++
     })
-    this.game.add.existing(this.goldDrop);
 
     /*
     // Add port positions ---------------------------------------------------------------------------------------
