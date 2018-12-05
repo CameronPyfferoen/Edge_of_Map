@@ -136,9 +136,9 @@ class Cam_TestLevel extends Phaser.State {
 
     this.game.add.existing(this.eBoat)
 
-    /*
+    
     this.sneks = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       this.sneks[i] = new Test_Snek({
         game: this.game,
         x: Phaser.Math.random(0, 3149),
@@ -148,7 +148,7 @@ class Cam_TestLevel extends Phaser.State {
 
       this.game.add.existing(this.sneks[i])
     }
-    */
+    
 
     /*
     this.corner_snek = new Test_Snek({
