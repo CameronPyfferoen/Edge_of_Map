@@ -216,7 +216,7 @@ class PlayerBoat extends Phaser.Sprite {
       if (this.canFire2 === true) {
         this.spreadShotRight()
         this.canFire2 = false
-        this.firingCallbackCooldown()
+        this.firingCallbackCooldown2()
         // console.log('k')
       }
     }
