@@ -132,8 +132,7 @@ class EnemyShip extends Enemy {
   }
 
   die () {
-    this.animations.play('death')
-    this.animations.currentAnim.onComplete.add(this.destroy, this)
+    this.destroy()
   }
 
   firingCallback () {
@@ -331,7 +330,8 @@ class EnemyShip extends Enemy {
 
   update () {
     if (this.health <= 0) {
-      this.die()
+      this.animations.play('death')
+      this.animations.currentAnim.onComplete.add(this.die, this)
     } else {
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
