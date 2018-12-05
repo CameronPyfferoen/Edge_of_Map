@@ -33,6 +33,7 @@ class EnemyShip extends Enemy {
     this.chase_dist = 300
     this.post_dist = 150
     this.perpAngDiff = 0
+    this.perpAngDiffDeg = 0
 
     this.body.clearShapes()
     this.body.addCapsule(18, 6, 0, 0, -1.55)
@@ -46,13 +47,18 @@ class EnemyShip extends Enemy {
   positioning () {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
-      if(this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472)
+      // console.log(`perpAngDiff: ${this.perpAngDiff}`)
+      //console.log(`perpAngle: ${this.perpAngle}`)
+      console.log(`perpAngDiffDeg: ${this.perpAngDiffDeg}`)
+      if(this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6)
       {
-        this.firingCallback()
-      }
-      else if(this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)
-      {
+        console.log('fire right')
         this.firingCallback2()
+      }
+      else if(this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4)
+      {
+        console.log('fire left')
+        this.firingCallback()
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
@@ -325,8 +331,8 @@ class EnemyShip extends Enemy {
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
       this.perpAngle = this.playerLine.angle
-      this.perpAngDiff = (Phaser.Math.degToRad(this.body.angle) - this.perpAngle) % (2 * Phaser.Math.HALF_PI)
-
+      this.perpAngDiff = (this.body.rotation - this.perpAngle) % (2 * Phaser.Math.HALF_PI)
+      this.perpAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.perpAngle) % (360))
       // console.log(`perpAngle: ${this.perpAngle}`)
       // console.log('perpAngle: ' + this.perpAngle)
 
@@ -340,6 +346,7 @@ class EnemyShip extends Enemy {
       } else if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
+        // console.log(`perpAngDiff: ${this.perpAngDiff}`)
         this.positioning()
       }
       if (this.curBoatSpeed > 20) {
