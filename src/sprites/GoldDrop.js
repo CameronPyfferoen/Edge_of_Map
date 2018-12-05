@@ -27,9 +27,7 @@ class GoldDrop extends Phaser.Sprite {
     this.body.angularDamping = 0
     this.body.fixedRotation = true
     this.body.data.gravityScale = 0
-    
-    // this.body.setRectangle(64 * config.PLAYER_SCALE, 64 * config.PLAYER_SCALE, 0, 0)
-    // this.body.offset.setTo(0, 0)
+
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
 

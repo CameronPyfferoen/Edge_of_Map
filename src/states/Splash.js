@@ -62,6 +62,8 @@ class Splash extends Phaser.State {
 
     // Tiled Physics
     this.load.physics('GameObjects', '/assets/maps/FinalMap.json')
+    this.load.physics('SnakeSpawn', '/assets/maps/FinalMap.json')
+    this.load.physics('GhostShipSpawn', '/assets/maps/FinalMap.json')
     // this.load.physics('GameObjects', '/assets/maps/TestingTiledV2.json')
 
     // Enemies
