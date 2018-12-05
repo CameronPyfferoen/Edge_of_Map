@@ -36,12 +36,14 @@ class Cam_TestLevel extends Phaser.State {
   create () {
     // add tiled map -------------------------------------------------
     this.map = this.game.add.tilemap('map1', 32, 32)
+
     // Scaling here -------------------------------------------
     this.game.world.setBounds(0, 0, 3200, 2048)
-    // this.game.physics.p2.setBounds(0, 0, 3200, 2048)
     this.game.world.scale.setTo(2) // 2
+
     // add world bounds ----------------------------------------------------------
     this.addBounds()
+
     // set background numbers --------------------------------
     this.game.gold = 0;
     this.goldMax = 999999999; // nine spaces
@@ -51,36 +53,32 @@ class Cam_TestLevel extends Phaser.State {
     this.shotTimerR = 0;
     this.atPort = false;
     this.healed = false;
+
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
       this.Collider = this.add.sprite(element.x, element.y)
       this.game.physics.p2.enable(this.Collider)
-      // this.Collider.body.debug = __DEV__ // sends the fps to the garbage
       this.Collider.body.addPolygon({}, element.polygon)
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
     })
 
-   
-
-
-
     // Start playing the background music -----------------------------
-    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
     this.game.mainTheme.play('', 1, config.MUSIC_VOLUME);
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 300,
-      y: 700
+      x: 260,
+      y: 1850
     }) // x = 260, y = 1850 are the initial spawn points
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.death.onComplete.add(this.sendToDead, this);
     this.game.add.existing(this.playerMP)
-    // add gold ---------
+
+    // add gold ------------------------------------------------------
     this.goldPos = []
     this.i = 0
     let goldSpawns = this.map.objects['GoldPositions']
@@ -94,45 +92,14 @@ class Cam_TestLevel extends Phaser.State {
       this.i++
     })
 
-    /*
+
     // Add port positions ---------------------------------------------------------------------------------------
-    /*
-    let portPositions = this.map.objects['LandPositions']
-    portPositions.forEach(element => {
-      this.portPos = this.add.sprite(element.x, element.y)
-      this.portPos.setCollisionGroup([this.game.portGroup])
-    })
-    */
     this.game.startingPort = new Phaser.Point(203, 1945)
     this.game.skullPort = new Phaser.Point(1528, 1225)
     this.game.crecentPort = new Phaser.Point(2857, 1651)
     this.game.icePort = new Phaser.Point(645, 485)
     this.game.playerPos = new Phaser.Point(this.playerMP.x, this.playerMP.y)
-    /*
-    this.bcrab = new Crab_Blue({
-      game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.bcrab)
 
-    this.shark = new Shark({
-      game: this.game,
-      x: this.world.centerX,
-      y: this.world.centerY - 50,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.shark)
-
-    this.meg = new Megalodon({
-      game: this.game,
-      x: this.world.centerX + 30,
-      y: this.world.centerY,
-      player:this.playerMP
-    })
-    this.game.add.existing(this.meg)
-    */
     // Add Enemies ----------------------------------------------------
     this.sneks = []
     this.i = 0
@@ -162,52 +129,6 @@ class Cam_TestLevel extends Phaser.State {
       this.i++
     })
 
-    /*
-    this.eBoat = new EnemyShip({
-      game: this.game,
-      x: this.playerMP.x + 100,
-      y: this.playerMP.y - 100,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.eBoat)
-    */
-
-    /*
-    this.sneks = []
-    for (let i = 0; i < 10; i++) {
-      this.sneks[i] = new Test_Snek({
-        game: this.game,
-        x: Phaser.Math.random(0, 3149),
-        y: Phaser.Math.random(0, 2007),
-        player: this.playerMP
-      })
-
-      this.game.add.existing(this.sneks[i])
-    }
-    */
-
-    /*
-    this.corner_snek = new Test_Snek({
-      game: this.game,
-      x: this.playerMP.x + 70,
-      y: this.playerMP.y + 70,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.corner_snek)
-
-    /*
-    this.test_fire = new Test_Snek({
-      game: this.game,
-      x: this.world.centerX + 50,
-      y: this.world.centerY + 50,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.test_fire)
-    */
-
-
-    // this.playerMP.body.rotation = 1.57; // uses radians
-
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
@@ -216,20 +137,12 @@ class Cam_TestLevel extends Phaser.State {
     this.UIback = this.game.add.group()
     this.UImid = this.game.add.group()
     this.UIfwd = this.game.add.group()
-
     this.enemies = this.game.add.group()
-    /*
-    for (let k = 0; k < 10; k++) {
-      this.enemies.add(this.sneks[k])
-      this.underWater.add(this.sneks[k])
-    }
-    */
 
     // adding the objects to the groups -------------------------------------
     this.playerGroup.add(this.playerMP);
 
     // Lock camera to player -----------------------------------------------
-
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05); /// 0.1 , 0.1
 
     // Add keyboard input --------------------------------------------------
@@ -358,9 +271,6 @@ class Cam_TestLevel extends Phaser.State {
 
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
 
-    // WORKING LINES OF CODE
-    // addEventListener('click', this.playerMP.firingCallback.bind(this.playerMP))
-    // addEventListener('contextmenu', this.playerMP.firingCallback2.bind(this.playerMP))
   }
 
   setupKeyboard () {
@@ -379,7 +289,6 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   sendToDead () {
-    // this.game.sounds.get('thunderchild').fadeOut(500);
     this.game.mainTheme.destroy();
     this.state.start('Dead');
   }
