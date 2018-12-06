@@ -6,6 +6,7 @@ import Enemy_Cannonball from './Enemy_Cannonball'
 import { sequentialNumArray } from '../utils'
 import { Line } from 'phaser-ce'
 import config from '../config'
+import GoldDrop from '../sprites/GoldDrop'
 
 class EnemyShip extends Enemy {
   constructor (game) {
@@ -131,6 +132,12 @@ class EnemyShip extends Enemy {
   }
 
   die () {
+    this.gold = new GoldDrop({
+      game: this.game,
+      x: this.x,
+      y: this.y,
+    })
+    this.game.add.existing(this.gold);
     this.destroy()
   }
 
