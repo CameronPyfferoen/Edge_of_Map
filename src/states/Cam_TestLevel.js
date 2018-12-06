@@ -161,12 +161,14 @@ class Cam_TestLevel extends Phaser.State {
     this.goldTXT.stroke = '#000000';
     this.goldTXT.strokeThickness = 6;
     this.goldTXT.anchor.setTo(0, 0.5);
+    this.fullscreen = this.game.add.button(0, 0, 'playButton', this.makeFullScreen, this, 1, 0, 1, 0);
 
     this.UIback.add(this.healthBG);
     this.UIback.add(this.goldTXT);
     this.UImid.add(this.healthBar);
     this.healthBar.cropEnabled = true;
     this.UIfwd.add(this.healthFG);
+    this.UIfwd.add(this.fullscreen);
 
     this.UIback.fixedToCamera = true;
     this.UImid.fixedToCamera = true;
@@ -293,6 +295,15 @@ class Cam_TestLevel extends Phaser.State {
 
   }
 
+  makeFullScreen () {
+    if (this.game.scale.isFullScreen) {
+      this.game.scale.stopFullScreen();
+    }
+    else {
+      this.game.scale.startFullScreen(false);
+    }
+  }
+  
   sendToDead () {
     this.game.mainTheme.destroy();
     this.state.start('Dead');
