@@ -71,9 +71,9 @@ class Cam_TestLevel extends Phaser.State {
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 260,
-      y: 1850
-    }) // x = 260, y = 1850 are the initial spawn points
+      x: 3000,
+      y: 1800
+    }) // x = 260, y = 1950 are the initial spawn points
     this.playerMP.body.onBeginContact.add(this.rammed, this)
     this.playerMP.death.onComplete.add(this.sendToDead, this);
     this.game.add.existing(this.playerMP)
@@ -138,6 +138,7 @@ class Cam_TestLevel extends Phaser.State {
     this.UIback = this.game.add.group()
     this.UImid = this.game.add.group()
     this.UIfwd = this.game.add.group()
+    this.game.portTXT = this.game.add.group()
     this.enemies = this.game.add.group()
 
     // adding the objects to the groups -------------------------------------
@@ -197,6 +198,22 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
             this.game.portMenu.add(this.pauseBG);
+            this.goldPortTXT = this.game.add.text(
+              this.game.camera.x - this.game.camera.x / 2 + 435,
+              this.game.camera.y - this.game.camera.y / 2 + 257.5, '0', {
+                font: '65px Arial', // Lucida Handwriting
+                fill: '#dad000',
+                align: 'center'
+              }
+            );
+            this.goldPortTXT.stroke = '#000000';
+            this.goldPortTXT.strokeThickness = 6;
+            this.goldPortTXT.anchor.setTo(0.5, 0.5);
+            this.goldPortTXT.text = (100 - this.game.playerHealth);
+            this.goldPortTXT.fixedToCamera = true;
+            this.goldPortTXT.scale.setTo(1/2);
+            this.game.portTXT.add(this.goldPortTXT);
+
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.icePort.x, this.game.icePort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -210,6 +227,21 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
             this.game.portMenu.add(this.pauseBG);
+            this.goldPortTXT = this.game.add.text(
+              this.game.camera.x - this.game.camera.x / 2 + 435,
+              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
+                font: '65px Arial', // Lucida Handwriting
+                fill: '#dad000',
+                align: 'center'
+              }
+            );
+            this.goldPortTXT.stroke = '#000000';
+            this.goldPortTXT.strokeThickness = 6;
+            this.goldPortTXT.anchor.setTo(0.5, 0.5);
+            this.goldPortTXT.text = (100 - this.game.playerHealth);
+            this.goldPortTXT.fixedToCamera = true;
+            this.goldPortTXT.scale.setTo(1/2);
+            this.game.portTXT.add(this.goldPortTXT);
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.skullPort.x, this.game.skullPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -223,6 +255,21 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
             this.game.portMenu.add(this.pauseBG);
+            this.goldPortTXT = this.game.add.text(
+              this.game.camera.x - this.game.camera.x / 2 + 263,
+              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
+                font: '65px Arial', // Lucida Handwriting
+                fill: '#dad000',
+                align: 'center'
+              }
+            );
+            this.goldPortTXT.stroke = '#000000';
+            this.goldPortTXT.strokeThickness = 6;
+            this.goldPortTXT.anchor.setTo(0.5, 0.5);
+            this.goldPortTXT.text = (100 - this.game.playerHealth);
+            this.goldPortTXT.fixedToCamera = true;
+            this.goldPortTXT.scale.setTo(1/2);
+            this.game.portTXT.add(this.goldPortTXT);
             this.game.paused = true;
           }
           else if (Phaser.Math.distance(this.game.crecentPort.x, this.game.crecentPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
@@ -236,6 +283,21 @@ class Cam_TestLevel extends Phaser.State {
             this.pauseBG.scale.setTo(1 / 2);
             this.pauseBG.fixedToCamera = true;
             this.game.portMenu.add(this.pauseBG);
+            this.goldPortTXT = this.game.add.text(
+              this.game.camera.x - this.game.camera.x / 2 + 263,
+              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
+                font: '65px Arial', // Lucida Handwriting
+                fill: '#dad000',
+                align: 'center'
+              }
+            );
+            this.goldPortTXT.stroke = '#000000';
+            this.goldPortTXT.strokeThickness = 6;
+            this.goldPortTXT.anchor.setTo(0.5, 0.5);
+            this.goldPortTXT.text = (100 - this.game.playerHealth);
+            this.goldPortTXT.fixedToCamera = true;
+            this.goldPortTXT.scale.setTo(1/2);
+            this.game.portTXT.add(this.goldPortTXT);
             this.game.paused = true;
           }
         }
@@ -247,6 +309,7 @@ class Cam_TestLevel extends Phaser.State {
             this.game.gold = 0;
           }
           this.pauseBG.destroy();
+          this.goldPortTXT.destroy();
           this.game.healed = true;
           this.atPort = false;
           this.game.paused = false;
@@ -303,7 +366,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.scale.startFullScreen(false);
     }
   }
-  
+
   sendToDead () {
     this.game.mainTheme.destroy();
     this.state.start('Dead');
