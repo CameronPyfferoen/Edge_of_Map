@@ -45,41 +45,57 @@ class EnemyShip extends Enemy {
     this.body.onBeginContact.add(this.contact, this)
 
     this.n = 0
-    this.island = false
+    this.isLand = false
+    this.isPlayer = false
+    this.bitArray = []
 
     this.timer = null
     this.canFire = true
     console.log(`enemy bitmask: ${this.game.enemyGroup.mask}`)
     console.log(`land bitmask: ${this.game.landGroup.mask}`)
+    console.log(`player bitmask: ${this.game.playerGroup.mask}`)
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     otherBody.collidesWith.forEach(element => {
-      // if(otherBody.collidesWith[n] === '' )
-      // console.log(`bitmasks: ${otherBody.collidesWith[this.n].mask}`)
+      this.bitArray.push(otherBody.collidesWith[this.n].mask)
       this.n++
     })
-  }
-
-  positioning () {
-    if (this.curBoatSpeed > this.fireBoatSpeed)
+    if(this.bitArray.includes(4))
     {
-      this.slowDown()
+      this.isPlayer = false
     }
     else
     {
+      this.isPlayer = true
+    }
+    if(this.bitArray.includes(32))
+    {
+      this.isLand = false
+    }
+    else
+    {
+      this.isLand = true
+    }
+    if(this.isLand || this.isPlayer)
+    {
+      this.thrustBackward()
+    }
+  }
+
+  positioning () {
+    if (this.curBoatSpeed > this.fireBoatSpeed) {
+      this.slowDown()
+    } else {
       this.moveForward(this.fireBoatSpeed)
     }
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
-      if(this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6)
-      {
+      if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
         console.log('fire right')
         this.firingCallback2()
-      }
-      else if(this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4)
-      {
+      } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
         console.log('fire left')
         this.firingCallback()
       }
@@ -121,7 +137,10 @@ class EnemyShip extends Enemy {
   }
 
   thrustBackward () {
-    this.body.thrust(-150)
+    this.body.velocity.x = 0
+    this.body.velocity.y = 0
+    this.body.reverse(10000)
+    console.log('thrust')
   }
 
   patrol () {
@@ -155,9 +174,9 @@ class EnemyShip extends Enemy {
     this.gold = new GoldDrop({
       game: this.game,
       x: this.x,
-      y: this.y,
+      y: this.y
     })
-    this.game.add.existing(this.gold);
+    this.game.add.existing(this.gold)
     this.destroy()
   }
 
@@ -180,29 +199,37 @@ class EnemyShip extends Enemy {
   }
 
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians),
-    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    let radians = (Math.PI / 180) * angle;
+
+    
+let cos = Math.cos(radians);
+
+    
+let sin = Math.sin(radians);
+
+    
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+
+    
+let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
   }
- 
+
   spreadShotLeft () {
     // Create projectile object
     // console.log('o')
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
- 
+
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
- 
+
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -222,7 +249,7 @@ class EnemyShip extends Enemy {
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
- 
+
     // Set hitbox size for projectile
     /*
     cannonball.body.setRectangle(2, 2, 0, -7)
@@ -233,28 +260,28 @@ class EnemyShip extends Enemy {
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     */
- 
+
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
- 
+
     // Set projectile sprite size, spawn location, and velocity
     this.cannonballWidth = 10
     this.cannonballHeight = 20
- 
+
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
     cannonball.body.moveForward(500)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
- 
+
     // cannonball2.x = this.playerMP.angle + 100
     // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle - 90
     cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
- 
+
     // cannonball3.x = this.playerMP.angle - 100
     // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle - 90
@@ -280,20 +307,20 @@ class EnemyShip extends Enemy {
 
     this.timer.start()
   }
- 
+
   spreadShotRight () {
     // Create projectile object
     // console.log('o')
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
- 
+
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
- 
+
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -313,7 +340,7 @@ class EnemyShip extends Enemy {
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
- 
+
     // Set hitbox size for projectile
     /*
     cannonball.body.setRectangle(2, 2, 0, -7)
@@ -324,28 +351,28 @@ class EnemyShip extends Enemy {
     cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
     */
- 
+
     //  Cannonballs will collide against themselves and the player
     //  If this is not set, cannonballs will not collide with anything
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
- 
+
     // Set projectile sprite size, spawn location, and velocity
     this.cannonballWidth = 10
     this.cannonballHeight = 20
- 
+
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
     cannonball.body.moveForward(500)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
- 
+
     // cannonball2.x = this.playerMP.angle + 100
     // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle + 90
     cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
- 
+
     // cannonball3.x = this.playerMP.angle - 100
     // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle + 90
