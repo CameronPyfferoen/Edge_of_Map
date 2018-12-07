@@ -57,7 +57,7 @@ class PlayerBoat extends Phaser.Sprite {
     // setup movement physics
     this.intBoatSpeed = 80
     this.curBoatSpeed = 0
-    this.turnspd = 30
+    this.turnspd = 40
     this.bckspd = 20
     this.turnangle = 0.6
 

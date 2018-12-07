@@ -5,6 +5,7 @@ import Enemy from './Enemy'
 import { sequentialNumArray } from '../utils'
 import Fireball from '../sprites/Fireball'
 import { Line, AnimationManager } from 'phaser-ce'
+import GoldDrop from '../sprites/GoldDrop'
 
 // change htibox to capsule
 class Test_Snek extends Enemy {
@@ -88,6 +89,12 @@ class Test_Snek extends Enemy {
   }
 
   die () {
+    this.gold = new GoldDrop({
+      game: this.game,
+      x: this.x,
+      y: this.y,
+    })
+    this.game.add.existing(this.gold);
     this.destroy()
   }
 

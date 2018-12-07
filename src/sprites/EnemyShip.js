@@ -6,6 +6,7 @@ import Enemy_Cannonball from './Enemy_Cannonball'
 import { sequentialNumArray } from '../utils'
 import { Line } from 'phaser-ce'
 import config from '../config'
+import GoldDrop from '../sprites/GoldDrop'
 
 class EnemyShip extends Enemy {
   constructor (game) {
@@ -41,8 +42,24 @@ class EnemyShip extends Enemy {
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
+    this.body.onBeginContact.add(this.contact, this)
+
+    this.n = 0
+    this.island = false
+
     this.timer = null
     this.canFire = true
+    console.log(`enemy bitmask: ${this.game.enemyGroup.mask}`)
+    console.log(`land bitmask: ${this.game.landGroup.mask}`)
+  }
+
+  contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
+    this.n = 0
+    otherBody.collidesWith.forEach(element => {
+      // if(otherBody.collidesWith[n] === '' )
+      // console.log(`bitmasks: ${otherBody.collidesWith[this.n].mask}`)
+      this.n++
+    })
   }
 
   positioning () {
@@ -103,6 +120,10 @@ class EnemyShip extends Enemy {
     }
   }
 
+  thrustBackward () {
+    this.body.thrust(-150)
+  }
+
   patrol () {
     if (!this.turn) {
       this.moveForward(this.intBoatSpeed)
@@ -131,6 +152,12 @@ class EnemyShip extends Enemy {
   }
 
   die () {
+    this.gold = new GoldDrop({
+      game: this.game,
+      x: this.x,
+      y: this.y,
+    })
+    this.game.add.existing(this.gold);
     this.destroy()
   }
 

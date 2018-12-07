@@ -22,3 +22,6 @@ assets/audio/sounds.*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+gourceVideo.mp4
+gourceLog.txt
