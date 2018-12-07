@@ -160,14 +160,14 @@ class Cam_TestLevel extends Phaser.State {
     this.goldTXT.stroke = '#000000';
     this.goldTXT.strokeThickness = 6;
     this.goldTXT.anchor.setTo(0, 0.5);
-    this.fullscreen = this.game.add.button(0, 0, 'playButton', this.makeFullScreen, this, 1, 0, 1, 0);
+    this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0);
 
     this.UIback.add(this.healthBG);
     this.UIback.add(this.goldTXT);
     this.UImid.add(this.healthBar);
     this.healthBar.cropEnabled = true;
     this.UIfwd.add(this.healthFG);
-    this.UIfwd.add(this.fullscreen);
+    this.UIfwd.add(this.game.fullscreen);
 
     this.UIback.fixedToCamera = true;
     this.UImid.fixedToCamera = true;
@@ -312,7 +312,8 @@ class Cam_TestLevel extends Phaser.State {
           this.game.paused = false;
         }
       }
-      else if (event.keyCode === 80) { // pressing esc pauses the game and brings the controls back up
+
+      else if (event.keyCode === 80) { // pressing P pauses the game and brings the controls back up
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(
@@ -328,13 +329,20 @@ class Cam_TestLevel extends Phaser.State {
           this.atPort = false;
         }
       }
-      else if (event.keyCode === 79) {
+
+      else if (event.keyCode === 79) { // pressing O to enter or exit fullscreen
         if (this.game.scale.isFullScreen) {
           this.game.scale.stopFullScreen();
+          this.game.fullscreen.setFrames(1, 0, 1, 0);
         }
         else {
           this.game.scale.startFullScreen(false);
+          this.game.fullscreen.setFrames(3, 2, 3, 2);
         }
+      }
+
+      else if (event.keyCode === 27) { // on escape
+        this.game.fullscreen.setFrames(1, 0, 1, 0);
       }
     };
 
@@ -366,9 +374,11 @@ class Cam_TestLevel extends Phaser.State {
   makeFullScreen () {
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
+      this.game.fullscreen.setFrames(1, 0, 1, 0)
     }
     else {
       this.game.scale.startFullScreen(false);
+      this.game.fullscreen.setFrames(3, 2, 3, 2)
     }
   }
 
@@ -424,7 +434,7 @@ class Cam_TestLevel extends Phaser.State {
     // Update player position for docking at port
     this.game.playerPos.x = this.playerMP.x;
     this.game.playerPos.y = this.playerMP.y;
-    // update health properly
+    // update health properly -----------------------------
     if (this.game.healed) {
       console.log('old health: ' + this.playerMP.health + ' Healing up to: ' + this.game.playerHealth);
       this.playerMP.health = this.game.playerHealth;
@@ -487,7 +497,11 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // UI update ---------------------------------------------------------
-
+    if (!this.game.scale.isFullScreen) {
+      this.game.fullscreen.setFrames(1, 0, 1, 0);
+    } else {
+      this.game.fullscreen.setFrames(3, 2, 3, 2);
+    }
     this.goldTXT.text = this.game.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
   }

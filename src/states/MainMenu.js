@@ -17,7 +17,7 @@ class MainMenu extends Phaser.State {
     this.game.add.button(this.world.centerX - 179, this.world.centerY - 260, 'playButton', this.sendToCam, this, 1, 0, 1, 0)
     this.game.add.button(this.world.centerX - 333, this.world.centerY - 120, 'controlsButton', this.sendToControls, this, 1, 0, 1, 0)
     this.game.add.button(this.world.centerX - 308, this.world.centerY + 20, 'settingsButton', this.sendToSettings, this, 1, 0, 1, 0)
-    this.game.add.button(0, 0, 'playButton', this.makeFullScreen, this, 1, 0, 1, 0)
+    this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
 
     this.exitButton = this.game.add.button(this.world.centerX + 300, this.world.centerY + 160, 'exitButton', this.sendToTest, this, 1, 0, 1, 0)
     this.exitButton.anchor.setTo(0.5, 0)
@@ -39,6 +39,18 @@ class MainMenu extends Phaser.State {
  
     // Maintain aspect ratio
     // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    window.onkeydown = function (event) {
+      if (event.keyCode === 79) {
+        if (this.game.scale.isFullScreen) {
+          this.game.scale.stopFullScreen();
+          this.game.fullscreen.setFrames(1, 0, 1, 0);
+        }
+        else {
+          this.game.scale.startFullScreen(false);
+          this.game.fullscreen.setFrames(3, 2, 3, 2);
+        }
+      }
+    }
 
   }
 
@@ -64,9 +76,11 @@ class MainMenu extends Phaser.State {
   makeFullScreen () {
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
+      this.game.fullscreen.setFrames(1, 0, 1, 0)
     }
     else {
       this.game.scale.startFullScreen(false);
+      this.game.fullscreen.setFrames(3, 2, 3, 2)
     }
   }
 
