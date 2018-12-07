@@ -129,6 +129,14 @@ class Cam_TestLevel extends Phaser.State {
       this.i++
     })
 
+    this.testship = new EnemyShip({
+      game: this.game,
+      x: this.playerMP.x - 80,
+      y: this.playerMP.y - 80,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.testship)
+
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
