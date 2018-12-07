@@ -1,18 +1,8 @@
 import Phaser from 'phaser'
 import config from '../config'
-import { Sprite } from 'phaser-ce'
 import Test_Snek from '../sprites/Test_Snek'
-import Crab_Blue from '../sprites/Crab_Blue'
-import Crab_Orange from '../sprites/Crab_Orange'
-import Kraken from '../sprites/Kraken'
-import Megalodon from '../sprites/Megalodon'
-import Pirhanas from '../sprites/Pirhanas'
-import Jellyfish from '../sprites/Jellyfish'
 import PlayerBoat from '../sprites/PlayerBoat'
-import Test_Cannonball from '../sprites/Test_Cannonball'
-import FiringTest from '../states/FiringTest'
 import GameData from '../GameData'
-import Shark from '../sprites/Shark'
 import EnemyShip from '../sprites/EnemyShip'
 import GoldDrop from '../sprites/GoldDrop'
 
@@ -71,12 +61,12 @@ class Cam_TestLevel extends Phaser.State {
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
       game: this.game,
-      x: 3000,
-      y: 1800
+      x: 260,
+      y: 1950
     }) // x = 260, y = 1950 are the initial spawn points
-    this.playerMP.body.onBeginContact.add(this.rammed, this)
+    this.playerMP.body.onBeginContact.add(this.rammed, this);
     this.playerMP.death.onComplete.add(this.sendToDead, this);
-    this.game.add.existing(this.playerMP)
+    this.game.add.existing(this.playerMP);
 
     // add gold ------------------------------------------------------
     this.goldPos = []
@@ -187,8 +177,7 @@ class Cam_TestLevel extends Phaser.State {
     this.UImid.scale.setTo(1 / 2);
     this.UIfwd.scale.setTo(1 / 2);
 
-    this.game.camera.x = this.playerMP.body.x;
-    this.game.camera.y = this.playerMP.body.y;
+    this.game.camera.setPosition(0, 4000);
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
@@ -323,7 +312,7 @@ class Cam_TestLevel extends Phaser.State {
           this.game.paused = false;
         }
       }
-      else if (event.keyCode === 27) { // pressing esc pauses the game and brings the controls back up
+      else if (event.keyCode === 80) { // pressing esc pauses the game and brings the controls back up
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(
@@ -337,6 +326,14 @@ class Cam_TestLevel extends Phaser.State {
         } else { // pressing it again destroys the paused background, or the port menu if that is up
           this.pauseBG.destroy();
           this.atPort = false;
+        }
+      }
+      else if (event.keyCode === 79) {
+        if (this.game.scale.isFullScreen) {
+          this.game.scale.stopFullScreen();
+        }
+        else {
+          this.game.scale.startFullScreen(false);
         }
       }
     };

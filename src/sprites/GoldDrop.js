@@ -12,7 +12,7 @@ class GoldDrop extends Phaser.Sprite {
 
     this.game.physics.p2.enable(this)
     this.body.clearShapes()
-    this.body.addCircle(6)
+    this.body.addCircle(12)
     this._SCALE = config.PLAYER_SCALE * 0.5
     this.scale.setTo(this._SCALE)
 
