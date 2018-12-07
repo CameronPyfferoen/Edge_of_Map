@@ -112,11 +112,13 @@ class Splash extends Phaser.State {
     this.load.image('creditsMenu', './assets/images/UI/menu_credits_board.png')
     this.load.spritesheet('creditsButton', './assets/images/UI/SpriteSheet_main_credits.png', 559, 121)
     this.load.image('controlBoard', 'assets/images/UI/menu_controls_board.png')
+    this.load.spritesheet('fullScreen', './assets/images/UI/SpriteSheet_main_fullscreen.png', 70, 63)
 
     // In-game UI
     this.load.image('healthBG', './assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', './assets/images/UI/health_health.png')
     this.load.image('healthFG', './assets/images/UI/health_front.png')
+    this.load.spritesheet('enterToPort', './assets/images/UI/SpriteSheet_enterforports.png')
 
     // Port menus
     this.load.image('icePort', './assets/images/UI/PortMenus/menu_portsnowdon_newport.png')
