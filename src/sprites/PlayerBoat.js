@@ -124,7 +124,7 @@ class PlayerBoat extends Phaser.Sprite {
 
   moveForward () {
     if (this.curBoatSpeed < this.intBoatSpeed) {
-      this.curBoatSpeed += 2
+      this.curBoatSpeed += 100
     }
     this.body.moveForward(this.curBoatSpeed)
   }
@@ -233,7 +233,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer = this.game.time.create(false)
 
     //  Set a TimerEvent to occur after 2 seconds
-    this.timer.add(500, function () {
+    this.timer.add(1500, function () {
       this.canFire = true
     }.bind(this))
 
@@ -247,7 +247,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer2 = this.game.time.create(false)
 
     //  Set a TimerEvent to occur after 2 seconds
-    this.timer2.add(500, function () {
+    this.timer2.add(1500, function () {
       this.canFire2 = true
     }.bind(this))
 
