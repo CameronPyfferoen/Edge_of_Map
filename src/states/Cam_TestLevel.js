@@ -121,8 +121,8 @@ class Cam_TestLevel extends Phaser.State {
 
     this.testship = new EnemyShip({
       game: this.game,
-      x: this.playerMP.x - 80,
-      y: this.playerMP.y - 80,
+      x: this.playerMP.x - 40,
+      y: this.playerMP.y - 120,
       player: this.playerMP
     })
     this.game.add.existing(this.testship)

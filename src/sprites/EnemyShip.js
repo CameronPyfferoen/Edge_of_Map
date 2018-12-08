@@ -32,6 +32,9 @@ class EnemyShip extends Enemy {
     this.maxHealth = 50
     this.health = this.maxHealth
     this.damage = 20
+    this.ram_damage = 5
+
+    this.pat_dist = 200
     this.chase_dist = 300
     this.post_dist = 150
     this.perpAngDiff = 0
@@ -48,6 +51,7 @@ class EnemyShip extends Enemy {
     this.isLand = false
     this.isPlayer = false
     this.bitArray = []
+    this.count = 0
 
     this.timer = null
     this.canFire = true
@@ -70,6 +74,10 @@ class EnemyShip extends Enemy {
     {
       this.isPlayer = true
     }
+    if(this.isPlayer)
+    {
+      this.player.health -= this.ram_damage
+    }
     if(this.bitArray.includes(32))
     {
       this.isLand = false
@@ -77,10 +85,6 @@ class EnemyShip extends Enemy {
     else
     {
       this.isLand = true
-    }
-    if(this.isLand || this.isPlayer)
-    {
-      this.thrustBackward()
     }
   }
 
@@ -137,9 +141,7 @@ class EnemyShip extends Enemy {
   }
 
   thrustBackward () {
-    this.body.velocity.x = 0
-    this.body.velocity.y = 0
-    this.body.reverse(10000)
+    this.body.reverse(1000)
     console.log('thrust')
   }
 
@@ -385,7 +387,32 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
-    } else {
+    }
+    else if(this.isLand || this.isPlayer)
+    {
+      if(this.count < 5)
+      {
+        this.body.velocity.x = 0
+        this.body.velocity.y = 0
+        this.body.angularVelocity = 0
+      }
+      else if(this.count < 10 && this.count >= 5)
+      {
+        this.thrustBackward()
+      }
+      else if(this.count >= 10 && this.count < 200)
+      {
+        this.body.angle -= this.turnAngle
+      }
+      else if(this.count >= 200)
+      {
+        this.isLand = false
+        this.isPlayer = false
+      }
+      this.count++
+    }
+    else {
+      this.count = 0
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
