@@ -51,17 +51,16 @@ class EnemyShip extends Enemy {
     this.isLand = false
     this.isPlayer = false
     this.bitArray = []
+    this.bitLandArray = []
     this.count = 0
 
     this.timer = null
     this.canFire = true
-    console.log(`enemy bitmask: ${this.game.enemyGroup.mask}`)
-    console.log(`land bitmask: ${this.game.landGroup.mask}`)
-    console.log(`player bitmask: ${this.game.playerGroup.mask}`)
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
+    this.count = 0
     otherBody.collidesWith.forEach(element => {
       this.bitArray.push(otherBody.collidesWith[this.n].mask)
       this.n++
@@ -86,6 +85,7 @@ class EnemyShip extends Enemy {
     {
       this.isLand = true
     }
+    this.bitArray.length = 0
   }
 
   positioning () {
@@ -398,6 +398,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       }
       else if(this.count < 10 && this.count >= 5)
       {
+        this.body.angularVelocity = 0
         this.thrustBackward()
       }
       else if(this.count >= 10 && this.count < 200)
@@ -412,7 +413,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.count++
     }
     else {
-      this.count = 0
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI

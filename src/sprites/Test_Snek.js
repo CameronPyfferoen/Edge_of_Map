@@ -41,6 +41,7 @@ class Test_Snek extends Enemy {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
+    this.count = 0
     otherBody.collidesWith.forEach(element => {
       this.bitArray.push(otherBody.collidesWith[this.n].mask)
       this.n++
@@ -65,6 +66,7 @@ class Test_Snek extends Enemy {
     {
       this.isLand = true
     }
+    this.bitArray.length = 0
   }
 
   idle () {
@@ -155,6 +157,7 @@ class Test_Snek extends Enemy {
       }
       else if(this.count < 10 && this.count >= 5)
       {
+        this.body.angularVelocity = 0
         this.thrustBackward()
       }
       else if(this.count >= 10 && this.count < 200)
