@@ -23,11 +23,48 @@ class Test_Snek extends Enemy {
     this.maxHealth = 30
     this.health = this.maxHealth
     this.state = 0
+    this.ram_damage = 5
 
     this.body.clearShapes()
     this.body.addCapsule(30, 6, 0, 0, -1.55)
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
+
+    this.body.onBeginContact.add(this.contact, this)
+
+    this.n = 0
+    this.isLand = false
+    this.isPlayer = false
+    this.bitArray = []
+    this.count = 0
+  }
+
+  contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
+    this.n = 0
+    otherBody.collidesWith.forEach(element => {
+      this.bitArray.push(otherBody.collidesWith[this.n].mask)
+      this.n++
+    })
+    if(this.bitArray.includes(4))
+    {
+      this.isPlayer = false
+    }
+    else
+    {
+      this.isPlayer = true
+    }
+    if(this.isPlayer)
+    {
+      this.player.health -= this.ram_damage
+    }
+    if(this.bitArray.includes(32))
+    {
+      this.isLand = false
+    }
+    else
+    {
+      this.isLand = true
+    }
   }
 
   idle () {
@@ -57,6 +94,11 @@ class Test_Snek extends Enemy {
         // this.animations.currentAnim.onComplete.add(this.switch, this)
       }
     }
+  }
+
+  thrustBackward () {
+    this.body.reverse(1000)
+    console.log('thrust')
   }
 
   switch () {
@@ -102,7 +144,31 @@ class Test_Snek extends Enemy {
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
-    } else {
+    }
+    else if(this.isLand || this.isPlayer)
+    {
+      if(this.count < 5)
+      {
+        this.body.velocity.x = 0
+        this.body.velocity.y = 0
+        this.body.angularVelocity = 0
+      }
+      else if(this.count < 10 && this.count >= 5)
+      {
+        this.thrustBackward()
+      }
+      else if(this.count >= 10 && this.count < 200)
+      {
+        this.body.angle -= this.turnAngle
+      }
+      else if(this.count >= 200)
+      {
+        this.isLand = false
+        this.isPlayer = false
+      }
+      this.count++
+    }
+    else {
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       this.canSwitch = !this.attacking
       this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)

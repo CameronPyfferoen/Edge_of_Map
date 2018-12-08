@@ -31,7 +31,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.data.gravityScale = 0
     // this.body.fixedRotation = true
 
-    this.game.time.events.add(Phaser.Timer.SECOND * 5, this.destroy.bind(this), this)
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.noncontact, this)
     this.setupAnimations()
 
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
@@ -45,6 +45,9 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.onBeginContact.add(this.contact, this)
 
     this.explosionAnim.onComplete.add(this.death, this)
+    this.splooshAnim.onComplete.add(this.death, this)
+
+    this.hasHit = false
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
@@ -59,9 +62,18 @@ class Test_Cannonball extends Phaser.Sprite {
         otherBody.sprite.health -= this.damage
       }
     }
+    this.hasHit = true
     this.explosionAnim.play()
     this.body.velocity.x = 0
     this.body.velocity.y = 0
+  }
+
+  noncontact () {
+    if (!this.hasHit) {
+      this.splooshAnim.play()
+      this.body.velocity.x = 0
+      this.body.velocity.y = 0
+    }
   }
 
   death () {
@@ -78,6 +90,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.animations.add('ball', [26], 5, true)
     this.animations.play('ball')
     this.explosionAnim = this.animations.add('explosion', [35, 29, 23, 17, 11, 5], 5, false)
+    this.splooshAnim = this.animations.add('sploosh', [34, 28, 22, 16, 10, 4], 5, false)
     // this.frame = 2
     // console.log('k')
   }
