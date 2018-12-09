@@ -199,9 +199,9 @@ class EnemyShip extends Enemy {
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
  
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
  
     let cannonball = new Enemy_Cannonball({
       game: this.game,
@@ -290,9 +290,9 @@ class EnemyShip extends Enemy {
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
  
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
  
     let cannonball = new Enemy_Cannonball({
       game: this.game,
