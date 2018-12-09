@@ -2,9 +2,11 @@ import Phaser from 'phaser'
 import config from '../config'
 import Test_Snek from '../sprites/Test_Snek'
 import PlayerBoat from '../sprites/PlayerBoat'
+import BossShip from '../sprites/BossShip'
 import GameData from '../GameData'
 import EnemyShip from '../sprites/EnemyShip'
 import GoldDrop from '../sprites/GoldDrop'
+import PortPopup from '../sprites/PortPopup'
 
 class Cam_TestLevel extends Phaser.State {
   init () {
@@ -90,6 +92,11 @@ class Cam_TestLevel extends Phaser.State {
     this.game.icePort = new Phaser.Point(645, 485)
     this.game.playerPos = new Phaser.Point(this.playerMP.x, this.playerMP.y)
 
+    this.portSignStart = new PortPopup({ game: this.game, x: 203, y: 1945, player: this.playerMP })
+    this.portSignSkull = new PortPopup({ game: this.game, x: 1528, y: 1225, player: this.playerMP })
+    this.portSignCrecent = new PortPopup({ game: this.game, x: 2857, y: 1651, player: this.playerMP })
+    this.portSignIce = new PortPopup({ game: this.game, x: 645, y: 485, player: this.playerMP })
+    
     // Add Enemies ----------------------------------------------------
     this.sneks = []
     this.i = 0
@@ -119,10 +126,10 @@ class Cam_TestLevel extends Phaser.State {
       this.i++
     })
 
-    this.testship = new EnemyShip({
+    this.testship = new BossShip({
       game: this.game,
-      x: this.playerMP.x - 80,
-      y: this.playerMP.y - 80,
+      x: this.playerMP.x - 40,
+      y: this.playerMP.y - 120,
       player: this.playerMP
     })
     this.game.add.existing(this.testship)
@@ -160,14 +167,14 @@ class Cam_TestLevel extends Phaser.State {
     this.goldTXT.stroke = '#000000';
     this.goldTXT.strokeThickness = 6;
     this.goldTXT.anchor.setTo(0, 0.5);
-    this.fullscreen = this.game.add.button(0, 0, 'playButton', this.makeFullScreen, this, 1, 0, 1, 0);
+    this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0);
 
     this.UIback.add(this.healthBG);
     this.UIback.add(this.goldTXT);
     this.UImid.add(this.healthBar);
     this.healthBar.cropEnabled = true;
     this.UIfwd.add(this.healthFG);
-    this.UIfwd.add(this.fullscreen);
+    this.UIfwd.add(this.game.fullscreen);
 
     this.UIback.fixedToCamera = true;
     this.UImid.fixedToCamera = true;
@@ -210,6 +217,9 @@ class Cam_TestLevel extends Phaser.State {
             this.goldPortTXT.fixedToCamera = true;
             this.goldPortTXT.scale.setTo(1/2);
             this.game.portTXT.add(this.goldPortTXT);
+
+            // this.pauseBG.alpha = 0; // can't fade in while the game is paused
+            // this.game.add.tween(this.pauseBG).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.game.paused = true;
           }
@@ -312,7 +322,8 @@ class Cam_TestLevel extends Phaser.State {
           this.game.paused = false;
         }
       }
-      else if (event.keyCode === 80) { // pressing esc pauses the game and brings the controls back up
+
+      else if (event.keyCode === 80) { // pressing P pauses the game and brings the controls back up
         this.game.paused = !this.game.paused;
         if (this.game.paused) {
           this.pauseBG = this.game.add.sprite(
@@ -328,13 +339,20 @@ class Cam_TestLevel extends Phaser.State {
           this.atPort = false;
         }
       }
-      else if (event.keyCode === 79) {
+
+      else if (event.keyCode === 79) { // pressing O to enter or exit fullscreen
         if (this.game.scale.isFullScreen) {
           this.game.scale.stopFullScreen();
+          this.game.fullscreen.setFrames(1, 0, 1, 0);
         }
         else {
           this.game.scale.startFullScreen(false);
+          this.game.fullscreen.setFrames(3, 2, 3, 2);
         }
+      }
+
+      else if (event.keyCode === 27) { // on escape
+        this.game.fullscreen.setFrames(1, 0, 1, 0);
       }
     };
 
@@ -366,9 +384,11 @@ class Cam_TestLevel extends Phaser.State {
   makeFullScreen () {
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
+      this.game.fullscreen.setFrames(1, 0, 1, 0)
     }
     else {
       this.game.scale.startFullScreen(false);
+      this.game.fullscreen.setFrames(3, 2, 3, 2)
     }
   }
 
@@ -424,7 +444,7 @@ class Cam_TestLevel extends Phaser.State {
     // Update player position for docking at port
     this.game.playerPos.x = this.playerMP.x;
     this.game.playerPos.y = this.playerMP.y;
-    // update health properly
+    // update health properly -----------------------------
     if (this.game.healed) {
       console.log('old health: ' + this.playerMP.health + ' Healing up to: ' + this.game.playerHealth);
       this.playerMP.health = this.game.playerHealth;
@@ -449,6 +469,8 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.firingCallback2();
     }
 
+    if(this.playerMP.control)
+    {
     // move forward ------------------------
     if (this.playerMP.health > 0) {
       if (this.forwardKey.isDown) {
@@ -474,6 +496,7 @@ class Cam_TestLevel extends Phaser.State {
     } else {
       this.playerMP.curBoatSpeed = 0;
     }
+  }
     // Zero out angular velocity when not turning -----------
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
@@ -487,7 +510,11 @@ class Cam_TestLevel extends Phaser.State {
     }
 
     // UI update ---------------------------------------------------------
-
+    if (!this.game.scale.isFullScreen) {
+      this.game.fullscreen.setFrames(1, 0, 1, 0);
+    } else {
+      this.game.fullscreen.setFrames(3, 2, 3, 2);
+    }
     this.goldTXT.text = this.game.gold;
     this.healthBar.width = 538 * (this.playerMP.health / this.playerMP.maxHealth);
   }

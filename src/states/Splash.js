@@ -76,6 +76,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('seasnake', 'assets/images/Enemies/SpriteSheet_SeaSnake.png', 64, 128)
     this.load.spritesheet('seasnake_attack', './assets/images/Enemies/SpriteSheet_SeaSnake_Attack_FullBody.png', 64, 128)
     this.load.spritesheet('sharkSheet', './assets/images/Enemies/SpriteSheet_Shark.png', 32, 48)
+    this.load.spritesheet('bossSheet', 'assets/images/Enemies/Boss_Ship_01_Sprite_Sheet.png', 288, 288)
 
     this.load.image('seasnake_still', './assets/images/Enemies/seasnake_16x.png')
     this.load.image('bluecrab', './assets/images/Enemies/crab_blue.png')
@@ -112,11 +113,13 @@ class Splash extends Phaser.State {
     this.load.image('creditsMenu', './assets/images/UI/menu_credits_board.png')
     this.load.spritesheet('creditsButton', './assets/images/UI/SpriteSheet_main_credits.png', 559, 121)
     this.load.image('controlBoard', 'assets/images/UI/menu_controls_board.png')
+    this.load.spritesheet('fullScreen', './assets/images/UI/SpriteSheet_main_fullscreen.png', 70, 63)
 
     // In-game UI
     this.load.image('healthBG', './assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', './assets/images/UI/health_health.png')
     this.load.image('healthFG', './assets/images/UI/health_front.png')
+    this.load.spritesheet('enterToPort', './assets/images/UI/SpriteSheet_enterforports.png', 311, 251)
 
     // Port menus
     this.load.image('icePort', './assets/images/UI/PortMenus/menu_portsnowdon_newport.png')

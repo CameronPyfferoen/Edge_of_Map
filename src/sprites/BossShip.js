@@ -8,10 +8,10 @@ import { Line } from 'phaser-ce'
 import config from '../config'
 import GoldDrop from '../sprites/GoldDrop'
 
-class EnemyShip extends Enemy {
+class BossShip extends Enemy {
   constructor (game) {
     super(game)
-    this.loadTexture('enemyship', 0)
+    this.loadTexture('bossSheet', 0)
     this.setupAnimations()
 
     this.intBoatSpeed = 40
@@ -29,7 +29,7 @@ class EnemyShip extends Enemy {
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
-    this.maxHealth = 50
+    this.maxHealth = 200
     this.health = this.maxHealth
     this.damage = 20
     this.ram_damage = 5
@@ -48,6 +48,7 @@ class EnemyShip extends Enemy {
     this.body.onBeginContact.add(this.contact, this)
 
     this.n = 0
+    this.m = 0
     this.isLand = false
     this.isPlayer = false
     this.isBall = false
@@ -170,11 +171,6 @@ class EnemyShip extends Enemy {
     }
   }
 
-  idle () {
-    this.body.velocity.x = 0
-    this.body.velocity.y = 0
-  }
-
   chase () {
     if (this.body.rotation < this.playerAngle) {
       this.turnRight()
@@ -239,19 +235,15 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
-<<<<<<< HEAD
- 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
- 
-=======
+    let canPos4 = [this.x, this.y + 15]
+    let canPos5 = [this.x, this.y - 15]
 
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle)
+    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle)
 
->>>>>>> c2f485372844137030073f6cd757476f616a66a7
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -267,11 +259,22 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       x: canPos3[0],
       y: canPos3[1]
     })
+    let cannonball4 = new Enemy_Cannonball({
+      game: this.game,
+      x: canPos4[0],
+      y: canPos4[1]
+    })
+    let cannonball5 = new Enemy_Cannonball({
+      game: this.game,
+      x: canPos5[0],
+      y: canPos5[1]
+    })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
-
+    this.projectile.add(cannonball4)
+    this.projectile.add(cannonball5)
     // Set hitbox size for projectile
     /*
     cannonball.body.setRectangle(2, 2, 0, -7)
@@ -310,6 +313,16 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
+
+    cannonball4.body.angle = this.angle - 90
+    cannonball4.body.moveForward(500)
+    cannonball4.width = this.cannonballWidth
+    cannonball4.height = this.cannonballHeight
+
+    cannonball5.body.angle = this.angle - 90
+    cannonball5.body.moveForward(500)
+    cannonball5.width = this.cannonballWidth
+    cannonball5.height = this.cannonballHeight
   }
 
   firingCallback2 () {
@@ -338,19 +351,15 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
-<<<<<<< HEAD
- 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
- 
-=======
+    let canPos4 = [this.x, this.y + 15]
+    let canPos5 = [this.x, this.y - 15]
 
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
+    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle)
+    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle)
 
->>>>>>> c2f485372844137030073f6cd757476f616a66a7
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -366,11 +375,22 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       x: canPos3[0],
       y: canPos3[1]
     })
+    let cannonball4 = new Enemy_Cannonball({
+      game: this.game,
+      x: canPos4[0],
+      y: canPos4[1]
+    })
+    let cannonball5 = new Enemy_Cannonball({
+      game: this.game,
+      x: canPos5[0],
+      y: canPos5[1]
+    })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
-
+    this.projectile.add(cannonball4)
+    this.projectile.add(cannonball5)
     // Set hitbox size for projectile
     /*
     cannonball.body.setRectangle(2, 2, 0, -7)
@@ -409,6 +429,16 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
+
+    cannonball4.body.angle = this.angle + 90
+    cannonball4.body.moveForward(500)
+    cannonball4.width = this.cannonballWidth
+    cannonball4.height = this.cannonballHeight
+
+    cannonball5.body.angle = this.angle + 90
+    cannonball5.body.moveForward(500)
+    cannonball5.width = this.cannonballWidth
+    cannonball5.height = this.cannonballHeight
   }
 
   update () {
@@ -455,9 +485,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
       this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
       this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-      if (this.player_dist > this.chase_dist) {
-        this.patrol()
-      } else if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
+      } if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
@@ -475,13 +503,12 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.animations.play('idle')
       }
     }
-  }
 
   setupAnimations () {
     this.animations.add('idle', sequentialNumArray(0, 4), 10, true)
-    this.animations.add('forward', sequentialNumArray(26, 29), 10, true)
-    this.animations.add('death', sequentialNumArray(155, 180), 10, false)
+    this.animations.add('forward', sequentialNumArray(27, 30), 10, true)
+    this.animations.add('death', sequentialNumArray(162, 188), 10, false)
   }
 }
 
-export default EnemyShip
+export default BossShip
