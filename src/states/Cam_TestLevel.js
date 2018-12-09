@@ -188,7 +188,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
-      if (event.keyCode === 13) { // Pressing enter near a port takes you to the port menu
+      if (event.keyCode === 13 || event.keyCode === 32) { // Pressing enter near a port takes you to the port menu
         console.log('Enter Pressed');
         if (!this.atPort) {
           if (Phaser.Math.distance(this.game.startingPort.x, this.game.startingPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
