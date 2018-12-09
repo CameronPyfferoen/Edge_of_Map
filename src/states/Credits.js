@@ -13,7 +13,7 @@ class Credits extends Phaser.State {
   preLoad () {}
 
   create () {
-    this.game.deathTune.play('', 1, config.MUSIC_VOLUME);
+    // this.game.deathTune.play('', 1, config.MUSIC_VOLUME);
     this.game.add.tileSprite(0, 0, 1900, 950, 'mainMenuBackground');
     this.board = this.game.add.sprite(
       this.world.centerX, 
@@ -21,16 +21,46 @@ class Credits extends Phaser.State {
       'creditsMenu');
     this.board.anchor.setTo(0.5, 0.5);
     this.backButton = this.game.add.button(this.world.centerX + 240, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
+    this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
     this.backButton.anchor.setTo(0.5, 0);
+
+    window.onkeydown = function (event) {
+      if (event.keyCode === 79) {
+        if (this.game.scale.isFullScreen) {
+          this.game.scale.stopFullScreen();
+          this.game.fullscreen.setFrames(1, 0, 1, 0);
+        }
+        else {
+          this.game.scale.startFullScreen(false);
+          this.game.fullscreen.setFrames(3, 2, 3, 2);
+        }
+      }
+    }
   }
 
   update () {
-
+    if (!this.game.scale.isFullScreen) {
+      this.game.fullscreen.setFrames(1, 0, 1, 0);
+    } else {
+      this.game.fullscreen.setFrames(3, 2, 3, 2);
+    }
   }
 
   sendToMain () {
-    this.game.deathTune.destroy();
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('MainMenu');
+  }
+
+  makeFullScreen () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    if (this.game.scale.isFullScreen) {
+      this.game.scale.stopFullScreen();
+      this.game.fullscreen.setFrames(1, 0, 1, 0)
+    }
+    else {
+      this.game.scale.startFullScreen(false);
+      this.game.fullscreen.setFrames(3, 2, 3, 2)
+    }
   }
 }
 export default Credits
