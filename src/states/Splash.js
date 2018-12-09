@@ -119,7 +119,7 @@ class Splash extends Phaser.State {
     this.load.image('healthBG', './assets/images/UI/health_back&gold.png')
     this.load.image('healthBar', './assets/images/UI/health_health.png')
     this.load.image('healthFG', './assets/images/UI/health_front.png')
-    this.load.spritesheet('enterToPort', './assets/images/UI/SpriteSheet_enterforports.png')
+    this.load.spritesheet('enterToPort', './assets/images/UI/SpriteSheet_enterforports.png', 311, 251)
 
     // Port menus
     this.load.image('icePort', './assets/images/UI/PortMenus/menu_portsnowdon_newport.png')
