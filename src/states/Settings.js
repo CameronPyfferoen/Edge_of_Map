@@ -102,6 +102,7 @@ class Settings extends Phaser.State {
   update () {
     this.SFXknob.y = this.world.centerY;
     this.Musicknob.y = this.world.centerY- 100;
+    // keep the knobs from going beyond the bars
     if (this.SFXknob.x < 641) {
       this.SFXknob.x = 641;
     } else if (this.SFXknob.x > 1259) {
@@ -117,6 +118,7 @@ class Settings extends Phaser.State {
     this.MusicbarFG.width = 618 * (config.MUSIC_VOLUME / 1);
     config.MUSIC_VOLUME = (this.Musicknob.x - 641) / (618);
 
+    // change the frames of the icons next to the bars to relfect their volume level
     if (config.SFX_VOLUME <= 0) {
       this.SFXVolumeDisplay.frame = 0;
     } else if (config.SFX_VOLUME < 0.33) {
@@ -133,6 +135,7 @@ class Settings extends Phaser.State {
       this.MusicVolumeDisplay.frame = 0;
     }
 
+    // update the fullscreen button to reflect the current state
     if (!this.game.scale.isFullScreen) {
       this.game.fullscreen.setFrames(1, 0, 1, 0);
     } else {
