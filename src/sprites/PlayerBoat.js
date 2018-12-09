@@ -16,7 +16,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
     this.smoothed = false
-    this.dead = false;
+    this.dead = false
 
     this.game = game
 
@@ -39,7 +39,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Create a custom shape for the collider body
     // this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
-    this.body.clearShapes();
+    this.body.clearShapes()
     this.body.addCapsule(12, 6, 0, 0, -1.55)
     this.body.offset.setTo(0.25, 0)
 
@@ -49,8 +49,11 @@ class PlayerBoat extends Phaser.Sprite {
 
     this.body.setCollisionGroup(this.game.playerGroup)
     this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
+
+    // cut if not working
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.isLand = false
     this.isEnemy = false
@@ -77,9 +80,9 @@ class PlayerBoat extends Phaser.Sprite {
     this.shotType = GameData.shotTypes.MULTISHOTx
 
     // player health
-    this.maxHealth = 100;
-    this.health = 100;
-    this.minHealth = 0;
+    this.maxHealth = 100
+    this.health = 100
+    this.minHealth = 0
 
     this.timer = null
     this.timer2 = null
@@ -89,9 +92,10 @@ class PlayerBoat extends Phaser.Sprite {
 
   update () {
     // Always give parent a chance to update
-    super.update()
+    // super.update()
+    // console.log(`player angle: ${this.body.angle}`)
     if (this.health > this.maxHealth) {
-      this.health = this.maxHealth;
+      this.health = this.maxHealth
     }
 
     // set animation states
@@ -111,36 +115,32 @@ class PlayerBoat extends Phaser.Sprite {
       this.animations.play('idle')
     } else if (this.dead === false) {
       this.animations.play('death')
-      this.animations.currentAnim.onComplete.add(this.youAreDead, this);
+      this.animations.currentAnim.onComplete.add(this.youAreDead, this)
     } else {
-      this.animations.play('ded');
+      this.animations.play('ded')
     }
-
-    if(this.isLand || this.isEnemy)
-    {
-      this.input = false
-      if(this.count < 5)
-      {
+    // look 
+    // cut if not working
+    if (this.isLand || this.isEnemy) {
+      this.control = false
+      console.log(`this.count: ${this.count}`)
+      if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
         this.body.angularVelocity = 0
-      }
-      else if(this.count < 10 && this.count >= 5)
-      {
+      } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      }
-      else if(this.count >= 10 && this.count < 200)
-      {
-        this.body.angle -= this.turnAngle
-      }
-      else if(this.count >= 200)
-      {
+      } else if (this.count >= 10 && this.count < 200) {
+        this.turnLeft()
+      } else if (this.count >= 200) {
         this.isLand = false
         this.isEnemy = false
-        this.input = true
+        this.control = true
       }
-      this.count++
+      if (this.count < 200) {
+        this.count++
+      }
     }
   }
 
@@ -148,49 +148,43 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
-    this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false);
-    this.animations.add('ded', [27], 1, false);
+    this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false)
+    this.animations.add('ded', [27], 1, false)
   }
 
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(otherBody.sprite.name === 'Cannonball')
-    {
+    if (otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
-    if(!this.isBall){
-    otherBody.collidesWith.forEach(element => {
-      this.bitArray.push(otherBody.collidesWith[this.n].mask)
-      this.n++
-    })
-    if(this.bitArray.includes(8))
-    {
-      this.isEnemy = false
+    if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
+      if (this.bitArray.includes(8)) {
+        this.isEnemy = false
+      } else {
+        this.isEnemy = true
+      }
+      if (this.isEnemy) {
+        otherBody.sprite.health -= this.ram_damage
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+        this.isLand = true
+      }
     }
-    else
-    {
-      this.isEnemy = true
-    }
-    if(this.isEnemy)
-    {
-      otherBody.sprite.health -= this.ram_damage
-    }
-    if(this.bitArray.includes(32))
-    {
-      this.isLand = false
-    }
-    else
-    {
-      this.isLand = true
-    }
-  }
     this.bitArray.length = 0
     this.isBall = false
   }
 
   youAreDead () {
-    this.dead = true;
+    this.dead = true
   }
 
   moveForward () {
@@ -363,9 +357,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     if (harpoonAngle > 0) {
       cannonball.body.angle = harpoonAngle - 90
-    }
-
-    else {
+    } else {
       cannonball.body.angle = harpoonAngle + 90
     }
 
@@ -389,11 +381,19 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians),
-    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    let radians = (Math.PI / 180) * angle
+
+    
+let cos = Math.cos(radians)
+
+    
+let sin = Math.sin(radians)
+
+    
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
+
+    
+let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -402,8 +402,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotLeft () {
     // Create projectile object
     // console.log('o')
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -475,8 +475,8 @@ class PlayerBoat extends Phaser.Sprite {
   spreadShotRight () {
     // Create projectile object
     // console.log('o')
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]

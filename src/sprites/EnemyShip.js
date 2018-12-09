@@ -45,8 +45,10 @@ class EnemyShip extends Enemy {
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
+    // cut if not working
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.isLand = false
     this.isPlayer = false
@@ -57,7 +59,8 @@ class EnemyShip extends Enemy {
     this.timer = null
     this.canFire = true
   }
-
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
@@ -406,6 +409,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }
+    // look here
+    // cut if not working
     else if(this.isLand || this.isPlayer)
     {
       if(this.count < 5)

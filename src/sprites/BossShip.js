@@ -44,8 +44,10 @@ class BossShip extends Enemy {
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
+    // cut if not working
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.m = 0
     this.isLand = false
@@ -58,40 +60,34 @@ class BossShip extends Enemy {
     this.canFire = true
   }
 
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
     console.log(`Boss health: ${this.health}`)
-    if(otherBody.sprite.name === 'Cannonball')
-    {
+    if (otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
-    if(!this.isBall){
-    otherBody.collidesWith.forEach(element => {
-      this.bitArray.push(otherBody.collidesWith[this.n].mask)
-      this.n++
-    })
-    if(this.bitArray.includes(4))
-    {
-      this.isPlayer = false
+    if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
+      if (this.bitArray.includes(4)) {
+        this.isPlayer = false
+      } else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        this.player.health -= this.ram_damage
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+        this.isLand = true
+      }
     }
-    else
-    {
-      this.isPlayer = true
-    }
-    if(this.isPlayer)
-    {
-      this.player.health -= this.ram_damage
-    }
-    if(this.bitArray.includes(32))
-    {
-      this.isLand = false
-    }
-    else
-    {
-      this.isLand = true
-    }
-  }
     this.bitArray.length = 0
     this.isBall = false
   }
@@ -209,16 +205,16 @@ class BossShip extends Enemy {
   }
 
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle;
+    let radians = (Math.PI / 180) * angle
 
     
-let cos = Math.cos(radians);
+let cos = Math.cos(radians)
 
     
-let sin = Math.sin(radians);
+let sin = Math.sin(radians)
 
     
-let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
 
     
 let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
@@ -456,31 +452,24 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }
-    else if(this.isLand || this.isPlayer)
-    {
-      if(this.count < 5)
-      {
+    // look here
+    // cut if not working
+    else if (this.isLand || this.isPlayer) {
+      if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
         this.body.angularVelocity = 0
-      }
-      else if(this.count < 10 && this.count >= 5)
-      {
+      } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      }
-      else if(this.count >= 10 && this.count < 200)
-      {
+      } else if (this.count >= 10 && this.count < 200) {
         this.body.angle -= this.turnAngle
-      }
-      else if(this.count >= 200)
-      {
+      } else if (this.count >= 200) {
         this.isLand = false
         this.isPlayer = false
       }
       this.count++
-    }
-    else {
+    } else {
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
