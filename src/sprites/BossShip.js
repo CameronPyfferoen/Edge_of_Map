@@ -11,7 +11,7 @@ import GoldDrop from '../sprites/GoldDrop'
 class BossShip extends Enemy {
   constructor (game) {
     super(game)
-    this.loadTexture('BossSheet', 0)
+    this.loadTexture('bossSheet', 0)
     this.setupAnimations()
 
     this.intBoatSpeed = 40

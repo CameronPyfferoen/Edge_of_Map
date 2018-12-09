@@ -55,12 +55,12 @@ class PlayerBoat extends Phaser.Sprite {
     this.isLand = false
     this.isEnemy = false
     this.isBall = false
-    this.input = true
+    this.control = true
     this.bitArray = []
     this.count = 0
     this.ram_damage = 5
 
-    console.log(`Enemy bitmask: ${this.game.enemyGroup.mask}`)
+    // console.log(`Enemy bitmask: ${this.game.enemyGroup.mask}`)
     // setup movement physics
     this.intBoatSpeed = 80
     this.curBoatSpeed = 0

@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import config from '../config'
 import Test_Snek from '../sprites/Test_Snek'
 import PlayerBoat from '../sprites/PlayerBoat'
+import BossShip from '../sprites/BossShip'
 import GameData from '../GameData'
 import EnemyShip from '../sprites/EnemyShip'
 import GoldDrop from '../sprites/GoldDrop'
@@ -125,7 +126,7 @@ class Cam_TestLevel extends Phaser.State {
       this.i++
     })
 
-    this.testship = new EnemyShip({
+    this.testship = new BossShip({
       game: this.game,
       x: this.playerMP.x - 40,
       y: this.playerMP.y - 120,
@@ -468,7 +469,7 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.firingCallback2();
     }
 
-    if(this.playerMP.input)
+    if(this.playerMP.control)
     {
     // move forward ------------------------
     if (this.playerMP.health > 0) {
