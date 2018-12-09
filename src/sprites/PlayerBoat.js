@@ -226,7 +226,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   thrustBackward () {
-    this.body.reverse(1000)
+    this.body.reverse(100)
     console.log('thrust')
   }
 

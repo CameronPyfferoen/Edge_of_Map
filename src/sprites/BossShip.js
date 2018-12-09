@@ -499,7 +499,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
-        // this.positioning()
+        this.positioning()
       }
       if (this.curBoatSpeed >= 15) {
       // console.log('should play forward')
