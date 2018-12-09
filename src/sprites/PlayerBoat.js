@@ -59,7 +59,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.curBoatSpeed = 0
     this.turnspd = 40
     this.bckspd = 20
-    this.turnangle = 0.6
+    this.turnangle = 0.8
 
     // adds the animations to the sprite
     this.setupAnimations()
@@ -124,14 +124,14 @@ class PlayerBoat extends Phaser.Sprite {
 
   moveForward () {
     if (this.curBoatSpeed < this.intBoatSpeed) {
-      this.curBoatSpeed += 100
+      this.curBoatSpeed += 20
     }
     this.body.moveForward(this.curBoatSpeed)
   }
 
   slowDown () {
     if (this.curBoatSpeed > 0) {
-      this.curBoatSpeed -= 0.2
+      this.curBoatSpeed -= 0.8
     }
     this.body.moveForward(this.curBoatSpeed)
   }
