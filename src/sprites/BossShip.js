@@ -31,7 +31,7 @@ class BossShip extends Enemy {
 
     this.maxHealth = 200
     this.health = this.maxHealth
-    this.damage = 20
+    this.damage = 10
     this.ram_damage = 5
 
     this.chase_dist = 300
@@ -61,6 +61,7 @@ class BossShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
+    console.log(`Boss health: ${this.health}`)
     if(otherBody.sprite.name === 'Cannonball')
     {
       this.isBall = true
@@ -494,11 +495,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
       this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
       this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-      } if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
+      if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
-        this.positioning()
+        // this.positioning()
       }
       if (this.curBoatSpeed >= 15) {
       // console.log('should play forward')
@@ -512,6 +513,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.animations.play('idle')
       }
     }
+  }
 
   setupAnimations () {
     this.animations.add('idle', sequentialNumArray(0, 4), 10, true)

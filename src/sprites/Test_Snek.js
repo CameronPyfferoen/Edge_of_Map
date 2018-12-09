@@ -11,7 +11,6 @@ import GoldDrop from '../sprites/GoldDrop'
 class Test_Snek extends Enemy {
   constructor (game) {
     super(game)
-    this.touch_damage = 10
     this.loadTexture('seasnake_all')
     this.setupAnimations()
     this.animations.play('swim')

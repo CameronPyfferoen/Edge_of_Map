@@ -358,7 +358,7 @@ class PlayerBoat extends Phaser.Sprite {
     cannonball.body.setRectangle(2, 2)
     // cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-    this.cannonballWidth = 10
+    this.cannonballWidth = 20
     this.cannonballHeight = 20
 
     if (harpoonAngle > 0) {
