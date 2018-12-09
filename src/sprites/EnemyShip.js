@@ -31,7 +31,7 @@ class EnemyShip extends Enemy {
 
     this.maxHealth = 50
     this.health = this.maxHealth
-    this.damage = 20
+    this.damage = 10
     this.ram_damage = 5
 
     this.pat_dist = 200
@@ -247,17 +247,20 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
-      y: canPos1[1]
+      y: canPos1[1],
+      damage: this.damage
     })
     let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
-      y: canPos2[1]
+      y: canPos2[1],
+      damage: this.damage
     })
     let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
-      y: canPos3[1]
+      y: canPos3[1],
+      damage: this.damage
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -338,17 +341,20 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
-      y: canPos1[1]
+      y: canPos1[1],
+      damage: this.damage
     })
     let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
-      y: canPos2[1]
+      y: canPos2[1],
+      damage: this.damage
     })
     let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
-      y: canPos3[1]
+      y: canPos3[1],
+      damage: this.damage
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
