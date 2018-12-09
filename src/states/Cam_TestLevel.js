@@ -364,6 +364,7 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   makeFullScreen () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen()
       this.game.fullscreen.setFrames(1, 0, 1, 0)

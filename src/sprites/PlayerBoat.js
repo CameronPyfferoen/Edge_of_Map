@@ -448,8 +448,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+    this.cannonballWidth = 15
+    this.cannonballHeight = 15
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
@@ -521,8 +521,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+    this.cannonballWidth = 15
+    this.cannonballHeight = 15
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90

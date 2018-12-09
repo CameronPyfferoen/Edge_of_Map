@@ -23,8 +23,6 @@ class MainMenu extends Phaser.State {
     this.exitButton.anchor.setTo(0.5, 0)
     this.creditsButton = this.game.add.button(this.world.centerX - 210, this.world.centerY + 160, 'creditsButton', this.sendToCredits, this, 1, 0, 1, 0)
     this.creditsButton.anchor.setTo(0.5, 0)
-    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
-    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     this.game.deathTune = this.game.add.audio('deathTune', config.MUSIC_VOLUME)
     this.game.mainTheme = this.game.add.audio('mainTheme', config.MUSIC_VOLUME)
     this.game.deathTune.loop = true;
@@ -55,25 +53,39 @@ class MainMenu extends Phaser.State {
   }
 
   update () {
-
+    this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
+    this.game.clickSound.volume = config.SFX_VOLUME;
+    if (!this.game.scale.isFullScreen) {
+      this.game.fullscreen.setFrames(1, 0, 1, 0);
+    } else {
+      this.game.fullscreen.setFrames(3, 2, 3, 2);
+    }
   }
 
   sendToCam () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.mainMenuTheme.destroy();
     this.state.start('Cam_TestLevel')
   }
   sendToControls () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('Controls')
   }
   sendToSettings () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('Settings')
   }
   sendToTest () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.mainMenuTheme.destroy();
     this.state.start('Dead')
   }
   sendToCredits () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('Credits')
   }
   makeFullScreen () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)
