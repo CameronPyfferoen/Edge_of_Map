@@ -239,19 +239,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
-<<<<<<< HEAD
- 
+
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
- 
-=======
 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
-
->>>>>>> c2f485372844137030073f6cd757476f616a66a7
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -341,19 +333,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
-<<<<<<< HEAD
  
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
  
-=======
-
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
-
->>>>>>> c2f485372844137030073f6cd757476f616a66a7
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
