@@ -3,7 +3,7 @@ import config from '../config'
 // import Test_Cannonball from '../sprites/Test_Cannonball'
 
 class Enemy_Cannonball extends Phaser.Sprite {
-  constructor ({ game, x, y }) {
+  constructor ({ game, x, y, damage }) {
     // super(game, x, y, 'sea_snake_16x', 0)
     super(game, x, y, 'cannonball2', 0)
     this.name = 'Cannonball'
@@ -40,7 +40,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
 
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-    this.damage = 5
+    this.damage = damage
 
     this.body.onBeginContact.add(this.contact, this)
 

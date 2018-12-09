@@ -31,10 +31,9 @@ class BossShip extends Enemy {
 
     this.maxHealth = 200
     this.health = this.maxHealth
-    this.damage = 20
+    this.damage = 10
     this.ram_damage = 5
 
-    this.pat_dist = 200
     this.chase_dist = 300
     this.post_dist = 150
     this.perpAngDiff = 0
@@ -62,6 +61,7 @@ class BossShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
+    console.log(`Boss health: ${this.health}`)
     if(otherBody.sprite.name === 'Cannonball')
     {
       this.isBall = true
@@ -247,27 +247,32 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
-      y: canPos1[1]
+      y: canPos1[1],
+      damage: this.damage
     })
     let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
-      y: canPos2[1]
+      y: canPos2[1],
+      damage: this.damage
     })
     let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
-      y: canPos3[1]
+      y: canPos3[1],
+      damage: this.damage
     })
     let cannonball4 = new Enemy_Cannonball({
       game: this.game,
       x: canPos4[0],
-      y: canPos4[1]
+      y: canPos4[1],
+      damage: this.damage
     })
     let cannonball5 = new Enemy_Cannonball({
       game: this.game,
       x: canPos5[0],
-      y: canPos5[1]
+      y: canPos5[1],
+      damage: this.damage
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -363,27 +368,32 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
-      y: canPos1[1]
+      y: canPos1[1],
+      damage: this.damage
     })
     let cannonball2 = new Enemy_Cannonball({
       game: this.game,
       x: canPos2[0],
-      y: canPos2[1]
+      y: canPos2[1],
+      damage: this.damage
     })
     let cannonball3 = new Enemy_Cannonball({
       game: this.game,
       x: canPos3[0],
-      y: canPos3[1]
+      y: canPos3[1],
+      damage: this.damage
     })
     let cannonball4 = new Enemy_Cannonball({
       game: this.game,
       x: canPos4[0],
-      y: canPos4[1]
+      y: canPos4[1],
+      damage: this.damage
     })
     let cannonball5 = new Enemy_Cannonball({
       game: this.game,
       x: canPos5[0],
-      y: canPos5[1]
+      y: canPos5[1],
+      damage: this.damage
     })
     // Add sprite to the projectile physics group
     this.projectile.add(cannonball)
@@ -485,11 +495,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
       this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
       this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-      } if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
+      if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
-        this.positioning()
+        // this.positioning()
       }
       if (this.curBoatSpeed >= 15) {
       // console.log('should play forward')
@@ -503,6 +513,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.animations.play('idle')
       }
     }
+  }
 
   setupAnimations () {
     this.animations.add('idle', sequentialNumArray(0, 4), 10, true)
