@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import config from '../config'
 import { sequentialNumArray } from '../utils';
 
 class PortPopup extends Phaser.Sprite {
@@ -9,6 +10,9 @@ class PortPopup extends Phaser.Sprite {
     this.x = x;
     this.y = y;
     this.player = player;
+
+    this._SCALE = config.PLAYER_SCALE * 0.5
+    this.scale.setTo(this._SCALE)
 
     this.anchor.setTo(0.5, 1);
     this.smoothed = false;

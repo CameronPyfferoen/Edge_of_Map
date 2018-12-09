@@ -125,7 +125,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.ghostBoats[this.i])
       this.i++
     })
-
+    
     this.testship = new BossShip({
       game: this.game,
       x: this.playerMP.x - 40,
@@ -133,7 +133,7 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.testship)
-
+    
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
@@ -188,7 +188,7 @@ class Cam_TestLevel extends Phaser.State {
 
     // pause listener -----------------------------------------------------------
     window.onkeydown = function (event) {
-      if (event.keyCode === 13) { // Pressing enter near a port takes you to the port menu
+      if (event.keyCode === 13 || event.keyCode === 32) { // Pressing enter near a port takes you to the port menu
         console.log('Enter Pressed');
         if (!this.atPort) {
           if (Phaser.Math.distance(this.game.startingPort.x, this.game.startingPort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
