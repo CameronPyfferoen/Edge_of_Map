@@ -225,6 +225,11 @@ class PlayerBoat extends Phaser.Sprite {
     }
   }
 
+  thrustBackward () {
+    this.body.reverse(1000)
+    console.log('thrust')
+  }
+
   /*
   onBeginContact (otherPhaserBody, otherP2Body, myShape, otherShape, contactEquation){
     if((otherPhaserBody.x <= this.body.x + 1 || otherPhaserBody.x >= this.body.x - 1) && (otherPhaserBody.y <= this.body.y + 1 || otherPhaserBody.y >= this.body.y - 1)){
