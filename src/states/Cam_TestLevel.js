@@ -459,6 +459,8 @@ class Cam_TestLevel extends Phaser.State {
       this.playerMP.firingCallback2();
     }
 
+    if(this.playerMP.input)
+    {
     // move forward ------------------------
     if (this.playerMP.health > 0) {
       if (this.forwardKey.isDown) {
@@ -484,6 +486,7 @@ class Cam_TestLevel extends Phaser.State {
     } else {
       this.playerMP.curBoatSpeed = 0;
     }
+  }
     // Zero out angular velocity when not turning -----------
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;
