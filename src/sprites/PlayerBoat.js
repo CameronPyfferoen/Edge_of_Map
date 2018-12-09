@@ -49,11 +49,18 @@ class PlayerBoat extends Phaser.Sprite {
 
     this.body.setCollisionGroup(this.game.playerGroup)
     this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
-    // this.body.onBeginContact.add(this.onBeginContact, this)
-    // this.body.onEndContact.add(this.onExitContact, this)
+    this.body.onBeginContact.add(this.contact, this)
 
-    // this._overlapping = new Set()
+    this.n = 0
+    this.isLand = false
+    this.isEnemy = false
+    this.isBall = false
+    this.input = true
+    this.bitArray = []
+    this.count = 0
+    this.ram_damage = 5
 
+    console.log(`Enemy bitmask: ${this.game.enemyGroup.mask}`)
     // setup movement physics
     this.intBoatSpeed = 80
     this.curBoatSpeed = 0
@@ -108,6 +115,33 @@ class PlayerBoat extends Phaser.Sprite {
     } else {
       this.animations.play('ded');
     }
+
+    if(this.isLand || this.isEnemy)
+    {
+      this.input = false
+      if(this.count < 5)
+      {
+        this.body.velocity.x = 0
+        this.body.velocity.y = 0
+        this.body.angularVelocity = 0
+      }
+      else if(this.count < 10 && this.count >= 5)
+      {
+        this.body.angularVelocity = 0
+        this.thrustBackward()
+      }
+      else if(this.count >= 10 && this.count < 200)
+      {
+        this.body.angle -= this.turnAngle
+      }
+      else if(this.count >= 200)
+      {
+        this.isLand = false
+        this.isEnemy = false
+        this.input = true
+      }
+      this.count++
+    }
   }
 
   // create the animations
@@ -116,6 +150,43 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
     this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false);
     this.animations.add('ded', [27], 1, false);
+  }
+
+  contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
+    this.n = 0
+    this.count = 0
+    if(otherBody.sprite.name === 'Cannonball')
+    {
+      this.isBall = true
+    }
+    if(!this.isBall){
+    otherBody.collidesWith.forEach(element => {
+      this.bitArray.push(otherBody.collidesWith[this.n].mask)
+      this.n++
+    })
+    if(this.bitArray.includes(8))
+    {
+      this.isEnemy = false
+    }
+    else
+    {
+      this.isEnemy = true
+    }
+    if(this.isEnemy)
+    {
+      otherBody.sprite.health -= this.ram_damage
+    }
+    if(this.bitArray.includes(32))
+    {
+      this.isLand = false
+    }
+    else
+    {
+      this.isLand = true
+    }
+  }
+    this.bitArray.length = 0
+    this.isBall = false
   }
 
   youAreDead () {
