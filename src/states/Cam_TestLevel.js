@@ -5,6 +5,7 @@ import PlayerBoat from '../sprites/PlayerBoat'
 import GameData from '../GameData'
 import EnemyShip from '../sprites/EnemyShip'
 import GoldDrop from '../sprites/GoldDrop'
+import PortPopup from '../sprites/PortPopup'
 
 class Cam_TestLevel extends Phaser.State {
   init () {
@@ -90,6 +91,11 @@ class Cam_TestLevel extends Phaser.State {
     this.game.icePort = new Phaser.Point(645, 485)
     this.game.playerPos = new Phaser.Point(this.playerMP.x, this.playerMP.y)
 
+    this.portSignStart = new PortPopup({ game: this.game, x: 203, y: 1945, player: this.playerMP })
+    this.portSignSkull = new PortPopup({ game: this.game, x: 1528, y: 1225, player: this.playerMP })
+    this.portSignCrecent = new PortPopup({ game: this.game, x: 2857, y: 1651, player: this.playerMP })
+    this.portSignIce = new PortPopup({ game: this.game, x: 645, y: 485, player: this.playerMP })
+    
     // Add Enemies ----------------------------------------------------
     this.sneks = []
     this.i = 0
@@ -210,6 +216,9 @@ class Cam_TestLevel extends Phaser.State {
             this.goldPortTXT.fixedToCamera = true;
             this.goldPortTXT.scale.setTo(1/2);
             this.game.portTXT.add(this.goldPortTXT);
+
+            // this.pauseBG.alpha = 0; // can't fade in while the game is paused
+            // this.game.add.tween(this.pauseBG).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
 
             this.game.paused = true;
           }
