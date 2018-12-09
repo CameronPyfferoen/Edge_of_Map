@@ -239,19 +239,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
-<<<<<<< HEAD
- 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
- 
-=======
 
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
 
->>>>>>> a966a4d5e076ca7f770819f86585c1b2a781a242
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -291,8 +283,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+    this.cannonballWidth = 15
+    this.cannonballHeight = 15
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
@@ -385,8 +377,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
 
     // Set projectile sprite size, spawn location, and velocity
-    this.cannonballWidth = 10
-    this.cannonballHeight = 20
+    this.cannonballWidth = 15
+    this.cannonballHeight = 15
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
