@@ -8,10 +8,10 @@ import { Line } from 'phaser-ce'
 import config from '../config'
 import GoldDrop from '../sprites/GoldDrop'
 
-class EnemyShip extends Enemy {
+class BossShip extends Enemy {
   constructor (game) {
     super(game)
-    this.loadTexture('enemyship', 0)
+    this.loadTexture('BossSheet', 0)
     this.setupAnimations()
 
     this.intBoatSpeed = 40
@@ -29,7 +29,7 @@ class EnemyShip extends Enemy {
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
-    this.maxHealth = 50
+    this.maxHealth = 200
     this.health = this.maxHealth
     this.damage = 20
     this.ram_damage = 5
@@ -48,6 +48,7 @@ class EnemyShip extends Enemy {
     this.body.onBeginContact.add(this.contact, this)
 
     this.n = 0
+    this.m = 0
     this.isLand = false
     this.isPlayer = false
     this.isBall = false
@@ -168,11 +169,6 @@ class EnemyShip extends Enemy {
         this.turn = false
       }
     }
-  }
-
-  idle () {
-    this.body.velocity.x = 0
-    this.body.velocity.y = 0
   }
 
   chase () {
@@ -439,9 +435,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       this.perpLine.fromAngle(this.body.x, this.body.y, this.perpAngle, this.player_dist)
       this.player_dist = Phaser.Math.distance(this.body.x, this.body.y, this.player.x, this.player.y)
       this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
-      if (this.player_dist > this.chase_dist) {
-        this.patrol()
-      } else if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
+      } if (this.player_dist <= this.chase_dist && this.player_dist > this.post_dist) {
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
@@ -459,13 +453,12 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.animations.play('idle')
       }
     }
-  }
 
   setupAnimations () {
     this.animations.add('idle', sequentialNumArray(0, 4), 10, true)
-    this.animations.add('forward', sequentialNumArray(26, 29), 10, true)
+    this.animations.add('forward', sequentialNumArray(27, 30), 10, true)
     this.animations.add('death', sequentialNumArray(155, 180), 10, false)
   }
 }
 
-export default EnemyShip
+export default BossShip
