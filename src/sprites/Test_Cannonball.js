@@ -64,6 +64,8 @@ class Test_Cannonball extends Phaser.Sprite {
     }
     this.hasHit = true
     this.explosionAnim.play()
+    this.width = 30
+    this.height = 30
     this.body.velocity.x = 0
     this.body.velocity.y = 0
   }
