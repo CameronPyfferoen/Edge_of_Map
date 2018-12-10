@@ -67,27 +67,36 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(!this.enemyInvincible)
-    {
-    if (otherBody !== null) {
-      if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-        this.isBall = true
-      }
-      if (this.isPlayer) {
-        if(otherBody.sprite !== null)
-        {
-        this.player.health -= this.ram_damage
+    if (!this.enemyInvincible) {
+      if (otherBody !== null) {
+        if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+          this.isBall = true
         }
       }
-      if (this.bitArray.includes(32)) {
-        this.isLand = false
-      } else {
-        this.isLand = true
+      if (!this.isBall) {
+        otherBody.collidesWith.forEach(element => {
+          this.bitArray.push(otherBody.collidesWith[this.n].mask)
+          this.n++
+        })
+        if (this.bitArray.includes(4)) {
+          this.isPlayer = false
+        } else {
+          this.isPlayer = true
+        }
+        if (this.isPlayer) {
+          if (otherBody.sprite !== null) {
+            this.player.health -= this.ram_damage
+          }
+        }
+        if (this.bitArray.includes(32)) {
+          this.isLand = false
+        } else {
+          this.isLand = true
+        }
       }
+      this.bitArray.length = 0
+      this.isBall = false
     }
-    this.bitArray.length = 0
-    this.isBall = false
-  }
   }
 
   positioning () {
@@ -99,16 +108,14 @@ class EnemyShip extends Enemy {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
       if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
-        if(!this.playerInvincible)
-        {
-        console.log('fire right')
-        this.firingCallback2()
+        if (!this.playerInvincible) {
+          console.log('fire right')
+          this.firingCallback2()
         }
       } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
-        if(!this.playerInvincible)
-        {
-        console.log('fire left')
-        this.firingCallback()
+        if (!this.playerInvincible) {
+          console.log('fire left')
+          this.firingCallback()
         }
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
@@ -214,19 +221,15 @@ class EnemyShip extends Enemy {
   }
 
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle;
+    let radians = (Math.PI / 180) * angle
 
-    
-let cos = Math.cos(radians);
+    let cos = Math.cos(radians)
 
-    
-let sin = Math.sin(radians);
+    let sin = Math.sin(radians)
 
-    
-let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
 
-    
-let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
+    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -311,11 +314,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
- 
+
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
- 
+
     let cannonball = new Enemy_Cannonball({
       game: this.game,
       x: canPos1[0],
@@ -368,33 +371,24 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     }
     // look here
     // cut if not working
-    else if(this.isLand || this.isPlayer)
-    {
+    else if (this.isLand || this.isPlayer) {
       this.enemyInvincible = true
-      if(this.count < 5)
-      {
+      if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
         this.body.angularVelocity = 0
-      }
-      else if(this.count < 10 && this.count >= 5)
-      {
+      } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      }
-      else if(this.count >= 10 && this.count < 200)
-      {
+      } else if (this.count >= 10 && this.count < 200) {
         this.body.angle -= this.turnAngle
-      }
-      else if(this.count >= 200)
-      {
+      } else if (this.count >= 200) {
         this.isLand = false
         this.isPlayer = false
         this.enemyInvincible = false
       }
       this.count++
-    }
-    else {
+    } else {
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
