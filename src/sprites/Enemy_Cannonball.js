@@ -62,6 +62,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
         otherBody.sprite.health -= this.damage
       }
     }
+    this.hasHit = true
     this.explosionAnim.play()
     this.width = 30
     this.height = 30
