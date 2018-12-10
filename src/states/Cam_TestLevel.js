@@ -95,6 +95,10 @@ class Cam_TestLevel extends Phaser.State {
     this.portSignSkull = new PortPopup({ game: this.game, x: 1528, y: 1225, player: this.playerMP })
     this.portSignCrecent = new PortPopup({ game: this.game, x: 2857, y: 1651, player: this.playerMP })
     this.portSignIce = new PortPopup({ game: this.game, x: 645, y: 485, player: this.playerMP })
+    this.game.add.existing(this.portSignStart);
+    this.game.add.existing(this.portSignSkull);
+    this.game.add.existing(this.portSignCrecent);
+    this.game.add.existing(this.portSignIce);
 
     // Add Enemies ----------------------------------------------------
     this.sneks = []
