@@ -133,10 +133,12 @@ class Splash extends Phaser.State {
       'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3', 
       'assets/audio/SFX//q009/explosion.ogg', 'assets/audio/SFX//q009/grenade.ogg'
     ], 'assets/audio/sounds.json')
-    this.load.audio('explosion', 'assets/audio/SFX//q009/explosion.ogg')
-    this.load.audio('getHit', 'assets/audio/SFX//q009/grenade.ogg')
-    this.load.audio('deathTune', 'assets/audio/Music/pirate1uf.ogg')
-    this.load.audio('mainTheme', 'assets/audio/thunderchild.wav')
+    this.load.audio('explosion', './assets/audio/SFX//q009/explosion.ogg')
+    this.load.audio('getHit', './assets/audio/SFX//q009/grenade.ogg')
+    this.load.audio('deathTune', './assets/audio/Music/pirate1uf.ogg')
+    this.load.audio('mainMenuTheme', './assets/audio/Music/Pirate1_Theme1.ogg')
+    this.load.audio('mainTheme', './assets/audio/thunderchild.wav')
+    this.load.audio('click', './assets/audio/SFX/q009/weapswitch.ogg')
 
   }
 
@@ -191,6 +193,14 @@ class Splash extends Phaser.State {
     sounds.get('music-bridge').onStop.add(() => {
       sounds.play('music-theme2', config.MUSIC_VOLUME)
     })
+
+    // Add sounds for the game ------------
+    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
+    this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
+    this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
+    this.game.mainMenuTheme.loop = true;
+    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME);
   }
 
   // Called repeatedly after pre-load finishes and after 'create' has run

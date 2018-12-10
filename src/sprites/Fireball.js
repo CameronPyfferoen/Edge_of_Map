@@ -5,6 +5,7 @@ import config from '../config'
 class Fireball extends Phaser.Sprite {
   constructor ({ game, x, y, angle }) {
     super(game, x, y, 'fireball', 0)
+    this.name = 'Fireball'
     this.game = game
     this.x = x
     this.y = y
@@ -49,7 +50,6 @@ class Fireball extends Phaser.Sprite {
     // Turn into a sensor
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-
     this.body.onBeginContact.add(this.contact, this)
     /*
     var coll  = this.body.collidesWith

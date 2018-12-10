@@ -16,7 +16,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.anchor.setTo(0.5, 0.5)
     // turn off smoothing (this is pixel art)
     this.smoothed = false
-    this.dead = false;
+    this.dead = false
 
     this.game = game
 
@@ -39,7 +39,7 @@ class PlayerBoat extends Phaser.Sprite {
 
     // Create a custom shape for the collider body
     // this.body.setRectangle(12 * config.PLAYER_SCALE, 32 * config.PLAYER_SCALE, 0, 0)
-    this.body.clearShapes();
+    this.body.clearShapes()
     this.body.addCapsule(12, 6, 0, 0, -1.55)
     this.body.offset.setTo(0.25, 0)
 
@@ -49,8 +49,13 @@ class PlayerBoat extends Phaser.Sprite {
 
     this.body.setCollisionGroup(this.game.playerGroup)
     this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
+
+    // cut if not working
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.isLand = false
     this.isEnemy = false
@@ -77,9 +82,10 @@ class PlayerBoat extends Phaser.Sprite {
     this.shotType = GameData.shotTypes.MULTISHOTx
 
     // player health
-    this.maxHealth = 100;
-    this.health = 100;
-    this.minHealth = 0;
+    this.maxHealth = 100
+    this.health = 100
+    this.minHealth = 0
+    this.invincible = false
 
     // variables for firing cooldown
     this.timer = null
@@ -88,11 +94,16 @@ class PlayerBoat extends Phaser.Sprite {
     this.canFire2 = true
   }
 
+  getvincible () {
+    return this.invincible
+  }
+
   update () {
     // Always give parent a chance to update
-    super.update()
+    // super.update()
+    // console.log(`player invincible: ${this.invincible}`)
     if (this.health > this.maxHealth) {
-      this.health = this.maxHealth;
+      this.health = this.maxHealth
     }
     // set animation states
     if (this.curBoatSpeed > 20 && this.health > 0) {
@@ -111,36 +122,35 @@ class PlayerBoat extends Phaser.Sprite {
       this.animations.play('idle')
     } else if (this.dead === false) {
       this.animations.play('death')
-      this.animations.currentAnim.onComplete.add(this.youAreDead, this);
+      this.animations.currentAnim.onComplete.add(this.youAreDead, this)
     } else {
-      this.animations.play('ded');
+      this.animations.play('ded')
     }
-
-    if (this.isLand || this.isEnemy)
-    {
-      this.input = false
-      if (this.count < 5)
-      {
+    // look here
+    // cut if not working
+    if (this.isLand || this.isEnemy) {
+      this.invincible = true
+      this.control = false
+      console.log(`this.count: ${this.count}`)
+      if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
         this.body.angularVelocity = 0
-      }
-      else if (this.count < 10 && this.count >= 5)
-      {
+      } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      }
-      else if (this.count >= 10 && this.count < 200)
-      {
-        this.body.angle -= this.turnAngle
-      }
-      else if (this.count >= 200)
-      {
+      } else if (this.count >= 10 && this.count < 200) {
+        this.turnLeft()
+      } else if (this.count >= 200) {
         this.isLand = false
         this.isEnemy = false
-        this.input = true
+        this.control = true
+        this.invincible = false
       }
-      this.count++
+      if (this.count < 200) {
+        this.count++
+      }
+      window.invincible = this.invincible
     }
   }
 
@@ -148,16 +158,24 @@ class PlayerBoat extends Phaser.Sprite {
   setupAnimations () {
     this.animations.add('idle', [0, 1, 2, 3, 4], 5, true)
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
-    this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false);
-    this.animations.add('ded', [27], 1, false);
+    this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false)
+    this.animations.add('ded', [27], 1, false)
   }
 
+  getInvince() {
+    return this.invincible
+  }
+
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(otherBody.sprite.name === 'Cannonball')
+    if(otherBody !== null)
     {
+    if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
       this.isBall = true
+      }
     }
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
@@ -166,17 +184,18 @@ class PlayerBoat extends Phaser.Sprite {
       })
       if (this.bitArray.includes(8)) {
         this.isEnemy = false
-      }
-      else {
+      } else {
         this.isEnemy = true
       }
       if (this.isEnemy) {
+        if(otherBody.sprite !== null)
+        {
         otherBody.sprite.health -= this.ram_damage
+        }
       }
       if (this.bitArray.includes(32)) {
         this.isLand = false
-      }
-      else {
+      } else {
         this.isLand = true
       }
     }
@@ -185,7 +204,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   youAreDead () {
-    this.dead = true;
+    this.dead = true
   }
 
   moveForward () {
@@ -221,7 +240,7 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   thrustBackward () {
-    this.body.reverse(1000)
+    this.body.reverse(100)
     console.log('thrust')
   }
 
@@ -309,60 +328,67 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer2.start()
   }
 
-  // The harpoon function does not work properly and is not used
-  // harpoon () {
-  //   // console.log('o')
-  //   let mousex = this.game.input.x
-  //   let mousey = this.game.input.y
-  //   console.log('MousePos: [' + mousex + ',' + mousey + ']')
-  //   let shipx = this.x / 2
-  //   let shipy = this.y / 2
-  //   console.log('ShipPos: [' + shipx + ',' + shipy + ']')
-  //   let directionx = mousex - shipx
-  //   let directiony = mousey - shipy
-  //   let magnitude = Math.sqrt(((Math.pow(directionx, 2)) + (Math.pow(directiony, 2))))
-  //   let unitx = directionx / magnitude
-  //   let unity = directiony / magnitude
-  //   let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI))
-  //   console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
-  //   let cannonball = new Test_Cannonball({
-  //     game: this.game,
-  //     x: this.x,
-  //     y: this.y
-  //   })
+  // The harpoon function isn't really used
+  harpoon () {
+    // console.log('o')
+    let mousex = this.game.input.x
+    let mousey = this.game.input.y
+    console.log('MousePos: [' + mousex + ',' + mousey + ']')
+    let shipx = this.x / 2
+    let shipy = this.y / 2
+    console.log('ShipPos: [' + shipx + ',' + shipy + ']')
+    let directionx = mousex - shipx
+    let directiony = mousey - shipy
+    let magnitude = Math.sqrt(((Math.pow(directionx, 2)) + (Math.pow(directiony, 2))))
+    let unitx = directionx / magnitude
+    let unity = directiony / magnitude
+    let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI))
+    console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
+    let cannonball = new Test_Cannonball({
+      game: this.game,
+      x: this.x,
+      y: this.y
+    })
 
-  //   this.projectile.add(cannonball)
-  //   cannonball.body.setRectangle(2, 2)
-  //   // cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
+    this.projectile.add(cannonball)
+    cannonball.body.setRectangle(2, 2)
+    // cannonball.body.setCollisionGroup(this.cannonballCollisionGroup)
 
-  //   this.cannonballWidth = 20
-  //   this.cannonballHeight = 20
+    this.cannonballWidth = 20
+    this.cannonballHeight = 20
 
-  //   if (harpoonAngle > 0) {
-  //     cannonball.body.angle = harpoonAngle - 90
-  //   }
+    if (harpoonAngle > 0) {
+      cannonball.body.angle = harpoonAngle - 90
+    } else {
+      cannonball.body.angle = harpoonAngle + 90
+    }
 
-  //   else {
-  //     cannonball.body.angle = harpoonAngle + 90
-  //   }
+    cannonball.body.velocity.x = unitx * 500
+    cannonball.body.velocity.y = unity * 500
 
-  //   cannonball.body.velocity.x = unitx * 500
-  //   cannonball.body.velocity.y = unity * 500
+    console.log(harpoonAngle)
 
-  //   console.log(harpoonAngle)
-
-  //   cannonball.width = this.cannonballWidth
-  //   cannonball.height = this.cannonballHeight
+    // let shipP = new Phaser.Point(shipx, shipy)
+    // let mouseP = new Phaser.Point(mousex, mousey)
+    // cannonball.body.angle = shipP.angle(mouseP)
 
   // }
 
   // Code for rotating cannonballs with the player ship
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle,
-    cos = Math.cos(radians),
-    sin = Math.sin(radians),
-    nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-    ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    let radians = (Math.PI / 180) * angle
+
+    
+let cos = Math.cos(radians)
+
+    
+let sin = Math.sin(radians)
+
+    
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
+
+    
+let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -370,8 +396,9 @@ class PlayerBoat extends Phaser.Sprite {
 
   spreadShotLeft () {
     // Create projectile object
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    // console.log('o')
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -444,8 +471,10 @@ class PlayerBoat extends Phaser.Sprite {
   }
 
   spreadShotRight () {
-    this.game.camera.shake(0.001, 250);
-    this.game.explosion.play('', 0, config.SFX_VOLUME);
+    // Create projectile object
+    // console.log('o')
+    this.game.camera.shake(0.001, 250)
+    this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]

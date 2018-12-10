@@ -44,8 +44,12 @@ class BossShip extends Enemy {
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
+    // cut if not working
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.m = 0
     this.isLand = false
@@ -56,42 +60,42 @@ class BossShip extends Enemy {
 
     this.timer = null
     this.canFire = true
+    this.playerInvincible = false
   }
 
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    console.log(`Boss health: ${this.health}`)
-    if(otherBody.sprite.name === 'Cannonball')
+    if(otherBody !== null)
     {
+    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
-    if(!this.isBall){
-    otherBody.collidesWith.forEach(element => {
-      this.bitArray.push(otherBody.collidesWith[this.n].mask)
-      this.n++
-    })
-    if(this.bitArray.includes(4))
-    {
-      this.isPlayer = false
-    }
-    else
-    {
-      this.isPlayer = true
-    }
-    if(this.isPlayer)
-    {
-      this.player.health -= this.ram_damage
-    }
-    if(this.bitArray.includes(32))
-    {
-      this.isLand = false
-    }
-    else
-    {
-      this.isLand = true
-    }
   }
+    if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
+      if (this.bitArray.includes(4)) {
+        this.isPlayer = false
+      } else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        if(otherBody.sprite !== null)
+        {
+        this.player.health -= this.ram_damage
+        }
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+        this.isLand = true
+      }
+    }
     this.bitArray.length = 0
     this.isBall = false
   }
@@ -105,11 +109,17 @@ class BossShip extends Enemy {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
       if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
+        if(!this.playerInvincible)
+        {
         console.log('fire right')
         this.firingCallback2()
+        }
       } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
+        if(!this.playerInvincible)
+        {
         console.log('fire left')
         this.firingCallback()
+        }
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
@@ -209,16 +219,16 @@ class BossShip extends Enemy {
   }
 
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle;
+    let radians = (Math.PI / 180) * angle
 
     
-let cos = Math.cos(radians);
+let cos = Math.cos(radians)
 
     
-let sin = Math.sin(radians);
+let sin = Math.sin(radians)
 
     
-let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
 
     
 let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
@@ -452,35 +462,29 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
   }
 
   update () {
+    this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }
-    else if(this.isLand || this.isPlayer)
-    {
-      if(this.count < 5)
-      {
+    // look here
+    // cut if not working
+    else if (this.isLand || this.isPlayer) {
+      if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
         this.body.angularVelocity = 0
-      }
-      else if(this.count < 10 && this.count >= 5)
-      {
+      } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      }
-      else if(this.count >= 10 && this.count < 200)
-      {
+      } else if (this.count >= 10 && this.count < 200) {
         this.body.angle -= this.turnAngle
-      }
-      else if(this.count >= 200)
-      {
+      } else if (this.count >= 200) {
         this.isLand = false
         this.isPlayer = false
       }
       this.count++
-    }
-    else {
+    } else {
       this.playerLine.setTo(this.body.x, this.body.y, this.player.x, this.player.y)
       // this.perpSlope = this.playerLine.perpSlope
       this.playerAngle = this.playerLine.angle + Phaser.Math.HALF_PI
@@ -499,7 +503,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
         this.chase()
       } else if (this.player_dist <= this.post_dist) {
         // console.log(`perpAngDiff: ${this.perpAngDiff}`)
-        // this.positioning()
+        this.positioning()
       }
       if (this.curBoatSpeed >= 15) {
       // console.log('should play forward')

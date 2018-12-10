@@ -45,8 +45,12 @@ class EnemyShip extends Enemy {
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
+    // cut if not working
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
 
+    // cut if not working
     this.n = 0
     this.isLand = false
     this.isPlayer = false
@@ -56,15 +60,22 @@ class EnemyShip extends Enemy {
 
     this.timer = null
     this.canFire = true
+    this.playerInvincible = false
   }
-
+  // look here
+  // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(otherBody.sprite.name === 'Cannonball')
+    if(otherBody !== null)
     {
+    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
+<<<<<<< HEAD
+=======
+  }
+>>>>>>> a8a87ba3730b66673732cc7791030969252ac464
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
         this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -72,6 +83,7 @@ class EnemyShip extends Enemy {
       })
       if (this.bitArray.includes(4)) {
         this.isPlayer = false
+<<<<<<< HEAD
       }
       else {
         this.isPlayer = true
@@ -83,6 +95,20 @@ class EnemyShip extends Enemy {
         this.isLand = false
       }
       else {
+=======
+      } else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        if(otherBody.sprite !== null)
+        {
+        this.player.health -= this.ram_damage
+        }
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+>>>>>>> a8a87ba3730b66673732cc7791030969252ac464
         this.isLand = true
       }
     }
@@ -99,11 +125,17 @@ class EnemyShip extends Enemy {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
       if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
+        if(!this.playerInvincible)
+        {
         console.log('fire right')
         this.firingCallback2()
+        }
       } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
+        if(!this.playerInvincible)
+        {
         console.log('fire left')
         this.firingCallback()
+        }
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
@@ -355,10 +387,13 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
   }
 
   update () {
+    this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }
+    // look here
+    // cut if not working
     else if(this.isLand || this.isPlayer)
     {
       if(this.count < 5)

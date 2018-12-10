@@ -13,6 +13,8 @@ class Settings extends Phaser.State {
 
   create () {
     this.game.add.tileSprite(0, 0, 1900, 950, 'mainMenuBackground')
+    this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
+
     this.board = this.game.add.sprite(
       this.world.centerX, 
       this.world.centerY, 
@@ -82,11 +84,25 @@ class Settings extends Phaser.State {
       this.world.centerY - 160, 
       'MusicNote')
     this.SFXVolumeDisplay.anchor.setTo(0.5, 0.5)
+
+    window.onkeydown = function (event) {
+      if (event.keyCode === 79) {
+        if (this.game.scale.isFullScreen) {
+          this.game.scale.stopFullScreen();
+          this.game.fullscreen.setFrames(1, 0, 1, 0);
+        }
+        else {
+          this.game.scale.startFullScreen(false);
+          this.game.fullscreen.setFrames(3, 2, 3, 2);
+        }
+      }
+    }
   }
 
   update () {
     this.SFXknob.y = this.world.centerY;
     this.Musicknob.y = this.world.centerY- 100;
+    // keep the knobs from going beyond the bars
     if (this.SFXknob.x < 641) {
       this.SFXknob.x = 641;
     } else if (this.SFXknob.x > 1259) {
@@ -102,6 +118,7 @@ class Settings extends Phaser.State {
     this.MusicbarFG.width = 618 * (config.MUSIC_VOLUME / 1);
     config.MUSIC_VOLUME = (this.Musicknob.x - 641) / (618);
 
+    // change the frames of the icons next to the bars to relfect their volume level
     if (config.SFX_VOLUME <= 0) {
       this.SFXVolumeDisplay.frame = 0;
     } else if (config.SFX_VOLUME < 0.33) {
@@ -117,10 +134,32 @@ class Settings extends Phaser.State {
     } else {
       this.MusicVolumeDisplay.frame = 0;
     }
+
+    // update the fullscreen button to reflect the current state
+    if (!this.game.scale.isFullScreen) {
+      this.game.fullscreen.setFrames(1, 0, 1, 0);
+    } else {
+      this.game.fullscreen.setFrames(3, 2, 3, 2);
+    }
+    this.game.clickSound.volume = config.SFX_VOLUME;
+    this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
   }
 
   sendToMain () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('MainMenu');
+  }
+
+  makeFullScreen () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    if (this.game.scale.isFullScreen) {
+      this.game.scale.stopFullScreen();
+      this.game.fullscreen.setFrames(1, 0, 1, 0)
+    }
+    else {
+      this.game.scale.startFullScreen(false);
+      this.game.fullscreen.setFrames(3, 2, 3, 2)
+    }
   }
 
 }
