@@ -67,6 +67,7 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
+<<<<<<< HEAD
     if(otherBody !== null)
     {
     if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
@@ -82,6 +83,13 @@ class EnemyShip extends Enemy {
         this.isPlayer = false
       } else {
         this.isPlayer = true
+=======
+    if(!this.enemyInvincible)
+    {
+    if (otherBody !== null) {
+      if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+        this.isBall = true
+>>>>>>> 0e56db5264278932004a7e13e3047e9507e14854
       }
       if (this.isPlayer) {
         if(otherBody.sprite !== null)
@@ -97,6 +105,7 @@ class EnemyShip extends Enemy {
     }
     this.bitArray.length = 0
     this.isBall = false
+  }
   }
 
   positioning () {
@@ -379,6 +388,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     // cut if not working
     else if(this.isLand || this.isPlayer)
     {
+      this.enemyInvincible = true
       if(this.count < 5)
       {
         this.body.velocity.x = 0
@@ -398,6 +408,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
       {
         this.isLand = false
         this.isPlayer = false
+        this.enemyInvincible = false
       }
       this.count++
     }
