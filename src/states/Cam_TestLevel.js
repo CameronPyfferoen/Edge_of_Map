@@ -472,31 +472,31 @@ class Cam_TestLevel extends Phaser.State {
     if(this.playerMP.control)
     {
     // move forward ------------------------
-    if (this.playerMP.health > 0) {
-      if (this.forwardKey.isDown) {
-        this.playerMP.moveForward();
-      } else {
-        this.playerMP.slowDown();
-      }
-      // turn left --------------------------
-      if (this.leftKey.isDown) {
-        this.playerMP.turnLeft();
-      }
-      // move back --------------------------
-      if (this.backwardKey.isDown) {
+      if (this.playerMP.health > 0) {
+        if (this.forwardKey.isDown) {
+          this.playerMP.moveForward();
+        } else {
+          this.playerMP.slowDown();
+        }
+        // turn left --------------------------
+        if (this.leftKey.isDown) {
+          this.playerMP.turnLeft();
+        }
+        // move back --------------------------
+        if (this.backwardKey.isDown) {
+          this.playerMP.moveBackward();
+        }
+        // turn right -------------------------
+        if (this.rightKey.isDown) {
+          this.playerMP.turnRight();
+        }
+        // Slow down over time ---------------
+      } else if (this.playerMP.curBoatSpeed > 0) {
         this.playerMP.moveBackward();
+      } else {
+        this.playerMP.curBoatSpeed = 0;
       }
-      // turn right -------------------------
-      if (this.rightKey.isDown) {
-        this.playerMP.turnRight();
-      }
-      // Slow down over time ---------------
-    } else if (this.playerMP.curBoatSpeed > 0) {
-      this.playerMP.moveBackward();
-    } else {
-      this.playerMP.curBoatSpeed = 0;
     }
-  }
     // Zero out angular velocity when not turning -----------
     if (!this.rightKey.isDown && !this.leftKey.isDown) {
       this.playerMP.body.angularVelocity = 0;

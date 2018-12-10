@@ -42,14 +42,18 @@ class Test_Cannonball extends Phaser.Sprite {
     this.bodyShape.sensor = true
     this.damage = 5
 
+    // Call the contact function when cannonballs collide with another object
     this.body.onBeginContact.add(this.contact, this)
 
+    // Delete the cannonball hitbox and sprite after animations are done
     this.explosionAnim.onComplete.add(this.death, this)
     this.splooshAnim.onComplete.add(this.death, this)
 
+    // Determine if cannonballs are colliding with an object or not
     this.hasHit = false
   }
 
+  // If the cannonballs are colliding w/ an object, play the explosion animation
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     console.log(`hit: ${otherBody.sprite.name}`)
     if (otherBody !== null && otherBody.sprite.name === 'Enemy') {
@@ -70,19 +74,21 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.velocity.y = 0
   }
 
+  // After a certain amount of time, if the cannonballs have not collided with anything, play the sploosh animation
   noncontact () {
     if (!this.hasHit) {
       this.splooshAnim.play()
+      this.width = 30
+      this.height = 30
       this.body.velocity.x = 0
       this.body.velocity.y = 0
     }
   }
 
+  // Delete cannonballs
   death () {
     this.destroy()
   }
-
-  // DELETED LARGE CHUNK OF CODE, IT DID NOT BELONG
 
   update () {
     super.update()
@@ -93,14 +99,9 @@ class Test_Cannonball extends Phaser.Sprite {
     this.animations.play('ball')
     this.explosionAnim = this.animations.add('explosion', [35, 29, 23, 17, 11, 5], 5, false)
     this.splooshAnim = this.animations.add('sploosh', [34, 28, 22, 16, 10, 4], 5, false)
-    // this.frame = 2
-    // console.log('k')
   }
 
   hitCannonball (cannonball, enemy) {
-    // body1 is the ship (as it's the body that owns the callback)
-    // body2 is the body it impacted with, in this case projectiles
-
     cannonball.sprite.destroy()
     // enemy.sprite.destroy()
   }

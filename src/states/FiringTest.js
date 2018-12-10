@@ -12,19 +12,7 @@ import { Sprite } from 'phaser-ce'
 // GameData
 import GameData from '../GameData'
 
-// What I did previously
-// Integrated shooting from PlayerBoat to Cam_TestLevel(the main game)
-
-// What I want to do
-// #1 multishot distance
-// #2 rather than destroy body2/enemy after one collision, destroy after 2 collisions -should be easy and fun
-// ^LOOK AT DAMAGE CODE
-
-// # SFX
-// look at Eliot's links on Slack
-// add more comments to large commented code below
-// consider adding --- lines to comments for readability
-// sfc
+// TODO
 
 // Phaser examples to look at
 // ...
