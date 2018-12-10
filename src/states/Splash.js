@@ -114,6 +114,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('creditsButton', './assets/images/UI/SpriteSheet_main_credits.png', 559, 121)
     this.load.image('controlBoard', 'assets/images/UI/menu_controls_board.png')
     this.load.spritesheet('fullScreen', './assets/images/UI/SpriteSheet_main_fullscreen.png', 70, 63)
+    this.load.image('winScreen', './assets/images/UI/win_menu.png')
 
     // In-game UI
     this.load.image('healthBG', './assets/images/UI/health_back&gold.png')

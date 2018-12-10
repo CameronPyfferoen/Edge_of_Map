@@ -394,7 +394,7 @@ class Cam_TestLevel extends Phaser.State {
 
   sendToWin () {
     this.game.mainTheme.destroy()
-    this.state.start('MainMenu')
+    this.state.start('Win')
   }
 
   addBounds () {
