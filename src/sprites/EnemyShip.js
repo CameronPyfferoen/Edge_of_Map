@@ -72,7 +72,10 @@ class EnemyShip extends Enemy {
     if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
+<<<<<<< HEAD
+=======
   }
+>>>>>>> a8a87ba3730b66673732cc7791030969252ac464
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
         this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -80,6 +83,19 @@ class EnemyShip extends Enemy {
       })
       if (this.bitArray.includes(4)) {
         this.isPlayer = false
+<<<<<<< HEAD
+      }
+      else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        this.player.health -= this.ram_damage
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      }
+      else {
+=======
       } else {
         this.isPlayer = true
       }
@@ -92,6 +108,7 @@ class EnemyShip extends Enemy {
       if (this.bitArray.includes(32)) {
         this.isLand = false
       } else {
+>>>>>>> a8a87ba3730b66673732cc7791030969252ac464
         this.isLand = true
       }
     }
@@ -242,8 +259,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
   }
 
   spreadShotLeft () {
-    // Create projectile object
-    // console.log('o')
     this.game.camera.shake(0.001, 250)
     this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
@@ -277,21 +292,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
 
-    // Set hitbox size for projectile
-    /*
-    cannonball.body.setRectangle(2, 2, 0, -7)
-    cannonball2.body.setRectangle(2, 2, 0, -7)
-    cannonball3.body.setRectangle(2, 2, 0, -7)
-    // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    */
-
-    //  Cannonballs will collide against themselves and the player
-    //  If this is not set, cannonballs will not collide with anything
-    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
-
     // Set projectile sprite size, spawn location, and velocity
     this.cannonballWidth = 15
     this.cannonballHeight = 15
@@ -302,15 +302,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
-    // cannonball2.x = this.playerMP.angle + 100
-    // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle - 90
     cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
-    // cannonball3.x = this.playerMP.angle - 100
-    // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle - 90
     cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
@@ -336,8 +332,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
   }
 
   spreadShotRight () {
-    // Create projectile object
-    // console.log('o')
     this.game.camera.shake(0.001, 250)
     this.game.explosion.play('', 0, config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
@@ -371,21 +365,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
 
-    // Set hitbox size for projectile
-    /*
-    cannonball.body.setRectangle(2, 2, 0, -7)
-    cannonball2.body.setRectangle(2, 2, 0, -7)
-    cannonball3.body.setRectangle(2, 2, 0, -7)
-    // Tell cannonball to use cannonballCollisionGroup
-    cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    */
-
-    //  Cannonballs will collide against themselves and the player
-    //  If this is not set, cannonballs will not collide with anything
-    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
-
     // Set projectile sprite size, spawn location, and velocity
     this.cannonballWidth = 15
     this.cannonballHeight = 15
@@ -396,15 +375,11 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
-    // cannonball2.x = this.playerMP.angle + 100
-    // cannonball2.y = this.playerMP.angle + 100
     cannonball2.body.angle = this.angle + 90
     cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
-    // cannonball3.x = this.playerMP.angle - 100
-    // cannonball3.y = this.playerMP.angle - 100
     cannonball3.body.angle = this.angle + 90
     cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth

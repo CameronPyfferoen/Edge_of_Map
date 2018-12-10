@@ -60,8 +60,20 @@ class Enemy_Cannonball extends Phaser.Sprite {
       }
     }
     this.explosionAnim.play()
+    this.width = 30
+    this.height = 30
     this.body.velocity.x = 0
     this.body.velocity.y = 0
+  }
+
+  noncontact () {
+    if (!this.hasHit) {
+      this.splooshAnim.play()
+      this.width = 30
+      this.height = 30
+      this.body.velocity.x = 0
+      this.body.velocity.y = 0
+    }
   }
 
   death () {
@@ -78,16 +90,11 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.animations.add('ball', [12], 60, true)
     this.animations.play('ball')
     this.explosionAnim = this.animations.add('explosion', [30, 31, 32, 33, 34, 35], 5, false)
-    // this.frame = 2
-    // console.log('k')
+    this.splooshAnim = this.animations.add('sploosh', [34, 28, 22, 16, 10, 4], 5, false)
   }
 
   hitCannonball (cannonball, enemy) {
-    // body1 is the ship (as it's the body that owns the callback)
-    // body2 is the body it impacted with, in this case projectiles
-
     cannonball.sprite.destroy()
-    // enemy.sprite.destroy()
   }
 }
 

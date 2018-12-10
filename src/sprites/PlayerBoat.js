@@ -87,6 +87,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.minHealth = 0
     this.invincible = false
 
+    // variables for firing cooldown
     this.timer = null
     this.timer2 = null
     this.canFire = true
@@ -104,7 +105,6 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.health > this.maxHealth) {
       this.health = this.maxHealth
     }
-
     // set animation states
     if (this.curBoatSpeed > 20 && this.health > 0) {
       this.MOVEFWD = true
@@ -260,13 +260,9 @@ class PlayerBoat extends Phaser.Sprite {
     })
   }
   */
+
   // Delete projectiles after x amount of seconds or collision
   hitCannonball (body1, body2) {
-    // body1 is the ship (as it's the body that owns the callback)
-    // body2 is the body it impacted with, in this case projectiles
-
-    // body2.sprite.kill()
-    // for some reason, the line of code below, relating to destory, causes the game to crash after the player collides with the projectile
     body2.destroy()
   }
 
@@ -275,28 +271,21 @@ class PlayerBoat extends Phaser.Sprite {
   firingCallback () {
     console.log('k')
     if (this.health > 0) {
-      // console.log(GameData.shotTypes.HARPOON)
       switch (GameData.shotTypes.MULTISHOT) {
         case GameData.shotTypes.HARPOON:
-          // console.log('o')
           this.harpoon()
           break
         case GameData.shotTypes.MULTISHOT:
-          // console.log('k')
           if (this.canFire === true) {
             this.spreadShotLeft()
             this.canFire = false
             this.firingCallbackCooldown()
-            // console.log('k')
           }
           break
         case GameData.shotTypes.EXTRA:
-
           break
         default:
       }
-    // this.spreadShotLeft()
-    // this.harpoon()
     }
   }
 
@@ -307,15 +296,11 @@ class PlayerBoat extends Phaser.Sprite {
         this.spreadShotRight()
         this.canFire2 = false
         this.firingCallbackCooldown2()
-        // console.log('k')
       }
     }
   }
 
-  // My thoughts and questions
-  // why does the firingCallback begin after what seems to be 2000ms
-  // how do I fire instantly?
-
+  // Implement the firerate to the left side of the ship
   firingCallbackCooldown () {
     //  Create our Timer
     this.timer = this.game.time.create(false)
@@ -330,17 +315,14 @@ class PlayerBoat extends Phaser.Sprite {
     this.timer.start()
   }
 
+  // Implement the firerate to the right side of the ship
   firingCallbackCooldown2 () {
-    //  Create our Timer
     this.timer2 = this.game.time.create(false)
 
-    //  Set a TimerEvent to occur after 2 seconds
     this.timer2.add(750, function () {
       this.canFire2 = true
     }.bind(this))
 
-    //  Start the timer running - this is important!
-    //  It won't start automatically, allowing you to hook it to button events and the like.
     this.timer2.start()
   }
 
@@ -388,16 +370,9 @@ class PlayerBoat extends Phaser.Sprite {
     // let mouseP = new Phaser.Point(mousex, mousey)
     // cannonball.body.angle = shipP.angle(mouseP)
 
-    // cannonball.angle = Math.atan2(mousey - shipy, mousex - shipx)
+  // }
 
-    // cannonball.body.moveForward(1000)
-
-    cannonball.width = this.cannonballWidth
-    cannonball.height = this.cannonballHeight
-
-    // this.game.p2.moveToPointer(cannonball, 100)
-  }
-
+  // Code for rotating cannonballs with the player ship
   rotate (cx, cy, x, y, angle) {
     let radians = (Math.PI / 180) * angle
 
@@ -426,6 +401,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
 
+    // Important to multiply by negative one so the cannonball rotates in the correct direction
     canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
     canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
     canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
@@ -450,6 +426,8 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     this.projectile.add(cannonball)
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
+
+    // Commented code below was moved to Test_Cannonball for efficiency
 
     // Set hitbox size for projectile
     // cannonball.body.setRectangle(2, 2, 0, -7)
@@ -524,20 +502,6 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     this.projectile.add(cannonball2)
     this.projectile.add(cannonball3)
 
-    // Set hitbox size for projectile
-    // cannonball.body.setRectangle(2, 2, 0, -7)
-    // cannonball2.body.setRectangle(2, 2, 0, -7)
-    // cannonball3.body.setRectangle(2, 2, 0, -7)
-
-    // Tell cannonball to use cannonballCollisionGroup
-    // cannonball.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    // cannonball2.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-    // cannonball3.body.setCollisionGroup(this.game.cannonballCollisionGroup)
-
-    //  Cannonballs will collide against themselves and the player
-    //  If this is not set, cannonballs will not collide with anything
-    // cannonball.body.collides([this.cannonballCollisionGroup, this.playerCollisionGroup])
-
     // Set projectile sprite size, spawn location, and velocity
     this.cannonballWidth = 15
     this.cannonballHeight = 15
@@ -548,25 +512,17 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
-    // cannonball2.x = this.playerMP.angle + 10
-    // cannonball2.y = this.playerMP.angle + 10
     cannonball2.body.angle = this.angle + 90
     cannonball2.body.moveForward(500)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
-    // cannonball3.x = this.playerMP.angle + 10
-    // cannonball3.y = this.playerMP.angle + 10
     cannonball3.body.angle = this.angle + 90
     cannonball3.body.moveForward(500)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
 
-  // destroy () {
-  //   this.body.sprite.kill()
-  //   this.body.destroy()
-  // }
 }
 
 export default PlayerBoat
