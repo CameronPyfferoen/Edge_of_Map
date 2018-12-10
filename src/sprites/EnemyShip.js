@@ -67,29 +67,11 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-<<<<<<< HEAD
-    if(otherBody !== null)
-    {
-    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-      this.isBall = true
-    }
-  }
-    if (!this.isBall) {
-      otherBody.collidesWith.forEach(element => {
-        this.bitArray.push(otherBody.collidesWith[this.n].mask)
-        this.n++
-      })
-      if (this.bitArray.includes(4)) {
-        this.isPlayer = false
-      } else {
-        this.isPlayer = true
-=======
     if(!this.enemyInvincible)
     {
     if (otherBody !== null) {
       if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
         this.isBall = true
->>>>>>> 0e56db5264278932004a7e13e3047e9507e14854
       }
       if (this.isPlayer) {
         if(otherBody.sprite !== null)
