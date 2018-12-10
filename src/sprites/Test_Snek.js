@@ -31,7 +31,7 @@ class Test_Snek extends Enemy {
     this.body.addCapsule(30, 6, 0, 0, -1.55)
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
-    
+
     // cut if not working
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
@@ -50,39 +50,36 @@ class Test_Snek extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(!this.enemyInvincible)
-    {
-    if(otherBody !== null)
-    {
-    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-      this.isBall = true
-    }
-  }
-    if (!this.isBall) {
-      otherBody.collidesWith.forEach(element => {
-        this.bitArray.push(otherBody.collidesWith[this.n].mask)
-        this.n++
-      })
-      if (this.bitArray.includes(4)) {
-        this.isPlayer = false
-      } else {
-        this.isPlayer = true
-      }
-      if (this.isPlayer) {
-        if(otherBody.sprite !== null)
-        {
-        this.player.health -= this.ram_damage
+    if (!this.enemyInvincible) {
+      if (otherBody !== null) {
+        if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+          this.isBall = true
         }
       }
-      if (this.bitArray.includes(32)) {
-        this.isLand = false
-      } else {
-        this.isLand = true
+      if (!this.isBall) {
+        otherBody.collidesWith.forEach(element => {
+          this.bitArray.push(otherBody.collidesWith[this.n].mask)
+          this.n++
+        })
+        if (this.bitArray.includes(4)) {
+          this.isPlayer = false
+        } else {
+          this.isPlayer = true
+        }
+        if (this.isPlayer) {
+          if (otherBody.sprite !== null) {
+            this.player.health -= this.ram_damage
+          }
+        }
+        if (this.bitArray.includes(32)) {
+          this.isLand = false
+        } else {
+          this.isLand = true
+        }
       }
+      this.bitArray.length = 0
+      this.isBall = false
     }
-    this.bitArray.length = 0
-    this.isBall = false
-  }
   }
 
   idle () {
@@ -219,8 +216,7 @@ class Test_Snek extends Enemy {
         }
       } if (this.player_dist <= this.fire_dist) {
         if (!this.shot) {
-          if(!this.playerInvincible)
-          {
+          if (!this.playerInvincible) {
             this.attack()
           }
         } else if (this.shot) {
