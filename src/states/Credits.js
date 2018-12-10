@@ -20,7 +20,7 @@ class Credits extends Phaser.State {
       this.world.centerY, 
       'creditsMenu');
     this.board.anchor.setTo(0.5, 0.5);
-    this.backButton = this.game.add.button(this.world.centerX + 240, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
+    this.backButton = this.game.add.button(this.world.centerX + 250, this.world.centerY + 210, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
     this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
     this.backButton.anchor.setTo(0.5, 0);
 
