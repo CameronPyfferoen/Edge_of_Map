@@ -85,6 +85,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.maxHealth = 100
     this.health = 100
     this.minHealth = 0
+    this.invincible = false
 
     this.timer = null
     this.timer2 = null
@@ -92,10 +93,14 @@ class PlayerBoat extends Phaser.Sprite {
     this.canFire2 = true
   }
 
+  getvincible () {
+    return this.invincible
+  }
+
   update () {
     // Always give parent a chance to update
     // super.update()
-    // console.log(`player angle: ${this.body.angle}`)
+    // console.log(`player invincible: ${this.invincible}`)
     if (this.health > this.maxHealth) {
       this.health = this.maxHealth
     }
@@ -124,6 +129,7 @@ class PlayerBoat extends Phaser.Sprite {
     // look here
     // cut if not working
     if (this.isLand || this.isEnemy) {
+      this.invincible = true
       this.control = false
       console.log(`this.count: ${this.count}`)
       if (this.count < 5) {
@@ -139,10 +145,12 @@ class PlayerBoat extends Phaser.Sprite {
         this.isLand = false
         this.isEnemy = false
         this.control = true
+        this.invincible = false
       }
       if (this.count < 200) {
         this.count++
       }
+      window.invincible = this.invincible
     }
   }
 
@@ -152,6 +160,10 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('moveFWD', [23, 24, 25, 26], 10, true)
     this.death = this.animations.add('death', sequentialNumArray(138, 160), 10, false)
     this.animations.add('ded', [27], 1, false)
+  }
+
+  getInvince() {
+    return this.invincible
   }
 
   // look here

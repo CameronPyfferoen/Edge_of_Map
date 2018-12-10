@@ -60,6 +60,7 @@ class EnemyShip extends Enemy {
 
     this.timer = null
     this.canFire = true
+    this.playerInvincible = false
   }
   // look here
   // cut if not working
@@ -107,11 +108,17 @@ class EnemyShip extends Enemy {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
       if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
+        if(!this.playerInvincible)
+        {
         console.log('fire right')
         this.firingCallback2()
+        }
       } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
+        if(!this.playerInvincible)
+        {
         console.log('fire left')
         this.firingCallback()
+        }
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
       this.turnRight()
@@ -405,6 +412,7 @@ let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
   }
 
   update () {
+    this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)

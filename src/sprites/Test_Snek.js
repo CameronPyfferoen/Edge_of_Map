@@ -25,6 +25,8 @@ class Test_Snek extends Enemy {
     this.ram_damage = 5
     this.turnAngle = 0.6
 
+    this.playerInvincible = false
+
     this.body.clearShapes()
     this.body.addCapsule(30, 6, 0, 0, -1.55)
     this.body.setCollisionGroup(this.game.enemyGroup)
@@ -154,6 +156,8 @@ class Test_Snek extends Enemy {
   }
 
   update () {
+    this.playerInvincible = this.player.getvincible()
+    console.log(`snake detection: ${this.playerInvincible}`)
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
@@ -210,7 +214,10 @@ class Test_Snek extends Enemy {
         }
       } if (this.player_dist <= this.fire_dist) {
         if (!this.shot) {
-          this.attack()
+          if(!this.playerInvincible)
+          {
+            this.attack()
+          }
         } else if (this.shot) {
           this.idle()
           if (!this.fireb.fire) {

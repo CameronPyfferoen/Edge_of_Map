@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import config from '../config'
+import PlayerBoat from '../sprites/PlayerBoat'
 
 class Enemy extends Phaser.Sprite
 {
