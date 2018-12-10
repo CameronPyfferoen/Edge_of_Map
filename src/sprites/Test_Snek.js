@@ -157,7 +157,7 @@ class Test_Snek extends Enemy {
 
   update () {
     this.playerInvincible = this.player.getvincible()
-    console.log(`snake detection: ${this.playerInvincible}`)
+    // console.log(`snake detection: ${this.playerInvincible}`)
     if (this.health <= 0) {
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
