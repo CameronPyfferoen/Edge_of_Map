@@ -163,8 +163,8 @@ class PlayerBoat extends Phaser.Sprite {
     {
     if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
       this.isBall = true
+      }
     }
-  }
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
         this.bitArray.push(otherBody.collidesWith[this.n].mask)
