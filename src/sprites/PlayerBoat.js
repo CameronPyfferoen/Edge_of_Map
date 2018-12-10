@@ -131,7 +131,7 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.isLand || this.isEnemy) {
       this.invincible = true
       this.control = false
-      console.log(`this.count: ${this.count}`)
+      // console.log(`this.count: ${this.count}`)
       if (this.count < 30) {
         this.body.setZeroVelocity()
         this.body.angularVelocity = 0
@@ -173,8 +173,13 @@ class PlayerBoat extends Phaser.Sprite {
     this.n = 0
     this.count = 0
     if (otherBody !== null) {
+      // console.log(`collided w/: ${otherBody.sprite.name}`)
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
         // console.log(`collided w/: ${otherBody.sprite.name}`)
+        this.isBall = true
+      }
+      else if(otherBody.sprite === null)
+      {
         this.isBall = true
       }
     }
