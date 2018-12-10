@@ -26,11 +26,14 @@ class PortPopup extends Phaser.Sprite {
     super.update();
     
     if (Phaser.Math.distance(this.x, this.y, this.player.x, this.player.y) <= 200 && !this.close) {
-      this.alpha = 1;
+      // this.alpha = 1;
+      this.game.add.tween(this).to( { alpha: 1 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+      // this.game.add.tween(this).to()
       this.close = true;
     } 
     else if (Phaser.Math.distance(this.x, this.y, this.player.x, this.player.y) > 200 && this.close) {
-      this.alpha = 0;
+      // this.alpha = 0;
+      this.game.add.tween(this).to( { alpha: 0 }, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
       this.close = false;
     }
   }
