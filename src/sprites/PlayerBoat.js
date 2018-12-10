@@ -171,17 +171,14 @@ class PlayerBoat extends Phaser.Sprite {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if (otherBody !== null) {
-      if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
-        this.isBall = true
-      }
-    }
     otherBody.collidesWith.forEach(element => {
       this.bitArray.push(otherBody.collidesWith[this.n].mask)
       this.n++
     })
-    if (!this.bitArray.includes(32)) {
-      this.isBall = false
+    if (otherBody !== null) {
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+        this.isBall = true
+      }
     }
     if (!this.isBall) {
       if (this.bitArray.includes(8)) {
