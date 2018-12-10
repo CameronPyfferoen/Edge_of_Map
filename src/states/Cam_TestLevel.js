@@ -55,6 +55,7 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
+      this.Collider.name = 'Land'
     })
 
     // Start playing the background music -----------------------------
