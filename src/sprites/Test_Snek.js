@@ -50,6 +50,8 @@ class Test_Snek extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
+    if(!this.enemyInvincible)
+    {
     if(otherBody !== null)
     {
     if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
@@ -80,6 +82,7 @@ class Test_Snek extends Enemy {
     }
     this.bitArray.length = 0
     this.isBall = false
+  }
   }
 
   idle () {
@@ -165,6 +168,7 @@ class Test_Snek extends Enemy {
     // look here
     // cut if not working
     else if (this.isLand || this.isPlayer) {
+      this.enemyInvincible = true
       if (this.count < 5) {
         this.body.velocity.x = 0
         this.body.velocity.y = 0
@@ -177,6 +181,7 @@ class Test_Snek extends Enemy {
       } else if (this.count >= 200) {
         this.isLand = false
         this.isPlayer = false
+        this.enemyInvincible = false
       }
       this.count++
     } else {

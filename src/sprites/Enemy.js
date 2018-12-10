@@ -34,6 +34,7 @@ class Enemy extends Phaser.Sprite
 
     // this.autocull = true;
     this.isOffCamera = false
+    this.enemyInvincible = false
 
     this.player_dist = 1000000
     this.pat_dist = 200
@@ -51,6 +52,10 @@ class Enemy extends Phaser.Sprite
     this.startang = this.body.angle
     this.turn = false
     this.setupAnimations()
+  }
+
+  getInvincible () {
+    return this.enemyInvincible
   }
 
   patrol () {

@@ -139,15 +139,17 @@ class PlayerBoat extends Phaser.Sprite {
       } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      } else if (this.count >= 10 && this.count < 200) {
+        
+      } /*else if (this.count >= 10 && this.count < 200) {
         this.turnLeft()
-      } else if (this.count >= 200) {
+        */
+      } else if (this.count >= 10) {
         this.isLand = false
         this.isEnemy = false
         this.control = true
         this.invincible = false
       }
-      if (this.count < 200) {
+      if (this.count < 10) {
         this.count++
       }
       window.invincible = this.invincible
