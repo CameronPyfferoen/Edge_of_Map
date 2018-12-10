@@ -46,6 +46,8 @@ class EnemyShip extends Enemy {
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
 
     // cut if not working
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
 
     // cut if not working
@@ -64,36 +66,34 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(otherBody.sprite.name === 'Cannonball')
+    if(otherBody !== null)
     {
+    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
-    if(!this.isBall){
-    otherBody.collidesWith.forEach(element => {
-      this.bitArray.push(otherBody.collidesWith[this.n].mask)
-      this.n++
-    })
-    if(this.bitArray.includes(4))
-    {
-      this.isPlayer = false
-    }
-    else
-    {
-      this.isPlayer = true
-    }
-    if(this.isPlayer)
-    {
-      this.player.health -= this.ram_damage
-    }
-    if(this.bitArray.includes(32))
-    {
-      this.isLand = false
-    }
-    else
-    {
-      this.isLand = true
-    }
   }
+    if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
+      if (this.bitArray.includes(4)) {
+        this.isPlayer = false
+      } else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        if(otherBody.sprite !== null)
+        {
+        this.player.health -= this.ram_damage
+        }
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+        this.isLand = true
+      }
+    }
     this.bitArray.length = 0
     this.isBall = false
   }

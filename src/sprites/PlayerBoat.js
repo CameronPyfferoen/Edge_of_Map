@@ -51,6 +51,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
 
     // cut if not working
+    this.bodyShape = this.body.data.shapes[0]
+    this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
 
     // cut if not working
@@ -119,7 +121,7 @@ class PlayerBoat extends Phaser.Sprite {
     } else {
       this.animations.play('ded')
     }
-    // look 
+    // look here
     // cut if not working
     if (this.isLand || this.isEnemy) {
       this.control = false
@@ -157,9 +159,12 @@ class PlayerBoat extends Phaser.Sprite {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if (otherBody.sprite.name === 'Cannonball') {
+    if(otherBody !== null)
+    {
+    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
       this.isBall = true
     }
+  }
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
         this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -171,7 +176,10 @@ class PlayerBoat extends Phaser.Sprite {
         this.isEnemy = true
       }
       if (this.isEnemy) {
+        if(otherBody.sprite !== null)
+        {
         otherBody.sprite.health -= this.ram_damage
+        }
       }
       if (this.bitArray.includes(32)) {
         this.isLand = false

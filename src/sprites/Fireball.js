@@ -49,7 +49,6 @@ class Fireball extends Phaser.Sprite {
     // Turn into a sensor
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
-
     this.body.onBeginContact.add(this.contact, this)
     /*
     var coll  = this.body.collidesWith
