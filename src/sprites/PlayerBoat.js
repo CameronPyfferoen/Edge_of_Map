@@ -176,11 +176,14 @@ class PlayerBoat extends Phaser.Sprite {
         this.isBall = true
       }
     }
+    otherBody.collidesWith.forEach(element => {
+      this.bitArray.push(otherBody.collidesWith[this.n].mask)
+      this.n++
+    })
+    if (!this.bitArray.includes(32)) {
+      this.isBall = false
+    }
     if (!this.isBall) {
-      otherBody.collidesWith.forEach(element => {
-        this.bitArray.push(otherBody.collidesWith[this.n].mask)
-        this.n++
-      })
       if (this.bitArray.includes(8)) {
         this.isEnemy = false
       } else {
