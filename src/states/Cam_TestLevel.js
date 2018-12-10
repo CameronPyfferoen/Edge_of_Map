@@ -247,7 +247,7 @@ class Cam_TestLevel extends Phaser.State {
             this.game.portMenu.add(this.pauseBG)
             this.goldPortTXT = this.game.add.text(
               this.game.camera.x - this.game.camera.x / 2 + 435,
-              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
+              this.game.camera.y - this.game.camera.y / 2 + 260, '0', {
                 font: '65px Arial', // Lucida Handwriting
                 fill: '#dad000',
                 align: 'center'
