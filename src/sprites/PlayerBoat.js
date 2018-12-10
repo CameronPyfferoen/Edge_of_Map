@@ -342,6 +342,7 @@ class PlayerBoat extends Phaser.Sprite {
     let unity = directiony / magnitude
     let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI))
     console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
+  
     let cannonball = new Test_Cannonball({
       game: this.game,
       x: this.x,
@@ -370,23 +371,15 @@ class PlayerBoat extends Phaser.Sprite {
     // let mouseP = new Phaser.Point(mousex, mousey)
     // cannonball.body.angle = shipP.angle(mouseP)
 
-  // }
+  }
 
   // Code for rotating cannonballs with the player ship
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle
-
-    
-let cos = Math.cos(radians)
-
-    
-let sin = Math.sin(radians)
-
-    
-let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
-
-    
-let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
+    let radians = (Math.PI / 180) * angle;
+    let cos = Math.cos(radians);
+    let sin = Math.sin(radians);
+    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
     console.log(nx)
     console.log(ny)
     return [nx, ny]
