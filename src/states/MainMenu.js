@@ -64,8 +64,7 @@ class MainMenu extends Phaser.State {
 
   sendToCam () {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
-    this.game.mainMenuTheme.destroy();
-    this.state.start('Cam_TestLevel')
+    this.state.start('ControlsBeforePlay')
   }
   sendToControls () {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
