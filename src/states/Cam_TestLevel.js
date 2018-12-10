@@ -128,15 +128,15 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.ghostBoats[this.i])
       this.i++
     })
-    /*
-    this.testship = new BossShip({
+    
+    this.testship = new Test_Snek({
       game: this.game,
       x: this.playerMP.x - 40,
       y: this.playerMP.y - 120,
       player: this.playerMP
     })
     this.game.add.existing(this.testship)
-    */
+    
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
