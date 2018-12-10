@@ -67,6 +67,8 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
+    if(!this.enemyInvincible)
+    {
     if (otherBody !== null) {
       if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
         this.isBall = true
@@ -95,6 +97,7 @@ class EnemyShip extends Enemy {
       this.bitArray.length = 0
       this.isBall = false
     }
+  }
   }
 
   positioning () {
@@ -367,6 +370,7 @@ class EnemyShip extends Enemy {
     // cut if not working
     else if(this.isLand || this.isPlayer)
     {
+      this.enemyInvincible = true
       if(this.count < 5)
       {
         this.body.velocity.x = 0
@@ -386,6 +390,7 @@ class EnemyShip extends Enemy {
       {
         this.isLand = false
         this.isPlayer = false
+        this.enemyInvincible = false
       }
       this.count++
     }
