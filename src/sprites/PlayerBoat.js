@@ -139,11 +139,10 @@ class PlayerBoat extends Phaser.Sprite {
       } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-        
-      } /*else if (this.count >= 10 && this.count < 200) {
+      } /* else if (this.count >= 10 && this.count < 200) {
         this.turnLeft()
-        */
-      } else if (this.count >= 10) {
+      } */
+      else if (this.count >= 10) {
         this.isLand = false
         this.isEnemy = false
         this.control = true
@@ -152,7 +151,6 @@ class PlayerBoat extends Phaser.Sprite {
       if (this.count < 10) {
         this.count++
       }
-      window.invincible = this.invincible
     }
   }
 
@@ -174,7 +172,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.n = 0
     this.count = 0
     if (otherBody !== null) {
-      if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
         this.isBall = true
       }
     }
@@ -344,7 +342,7 @@ class PlayerBoat extends Phaser.Sprite {
     let unity = directiony / magnitude
     let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI))
     console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
-  
+
     let cannonball = new Test_Cannonball({
       game: this.game,
       x: this.x,
@@ -372,16 +370,15 @@ class PlayerBoat extends Phaser.Sprite {
     // let shipP = new Phaser.Point(shipx, shipy)
     // let mouseP = new Phaser.Point(mousex, mousey)
     // cannonball.body.angle = shipP.angle(mouseP)
-
   }
 
   // Code for rotating cannonballs with the player ship
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle;
-    let cos = Math.cos(radians);
-    let sin = Math.sin(radians);
-    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
-    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    let radians = (Math.PI / 180) * angle
+    let cos = Math.cos(radians)
+    let sin = Math.sin(radians)
+    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
+    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -517,7 +514,6 @@ class PlayerBoat extends Phaser.Sprite {
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
-
 }
 
 export default PlayerBoat
