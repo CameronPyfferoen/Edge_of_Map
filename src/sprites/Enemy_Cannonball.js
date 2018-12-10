@@ -47,7 +47,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.explosionAnim.onComplete.add(this.death, this)
     this.splooshAnim.onComplete.add(this.death, this)
 
-    // this.hasHit = false
+    this.hasHit = false
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
