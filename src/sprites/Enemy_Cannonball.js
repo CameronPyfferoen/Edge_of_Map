@@ -87,7 +87,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
   }
 
   setupAnimations () {
-    this.animations.add('ball', [12], 60, true)
+    this.animations.add('ball', [26], 60, true)
     this.animations.play('ball')
     this.explosionAnim = this.animations.add('explosion', [35, 29, 23, 17, 11, 5], 5, false)
     this.splooshAnim = this.animations.add('sploosh', [34, 28, 22, 16, 10, 4], 5, false)

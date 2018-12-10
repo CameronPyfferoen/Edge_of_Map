@@ -67,34 +67,36 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if (otherBody !== null) {
-      if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-        this.isBall = true
-      }
-      if (!this.isBall) {
-        otherBody.collidesWith.forEach(element => {
-          this.bitArray.push(otherBody.collidesWith[this.n].mask)
-          this.n++
-        })
-        if (this.bitArray.includes(4)) {
-          this.isPlayer = false
-        } else {
-          this.isPlayer = true
-        }
-        if (this.isPlayer) {
-          if (otherBody.sprite !== null) {
-            this.player.health -= this.ram_damage
-          }
-        }
-        if (this.bitArray.includes(32)) {
-          this.isLand = false
-        } else {
-          this.isLand = true
-        }
-      }
-      this.bitArray.length = 0
-      this.isBall = false
+    if(otherBody !== null)
+    {
+    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+      this.isBall = true
     }
+  }
+    if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
+      if (this.bitArray.includes(4)) {
+        this.isPlayer = false
+      } else {
+        this.isPlayer = true
+      }
+      if (this.isPlayer) {
+        if(otherBody.sprite !== null)
+        {
+        this.player.health -= this.ram_damage
+        }
+      }
+      if (this.bitArray.includes(32)) {
+        this.isLand = false
+      } else {
+        this.isLand = true
+      }
+    }
+    this.bitArray.length = 0
+    this.isBall = false
   }
 
   positioning () {
@@ -106,14 +108,16 @@ class EnemyShip extends Enemy {
     if ((this.perpAngDiff > -0.010472 && this.perpAngDiff < 0.010472) || (this.perpAngDiff > 3.13112 && this.perpAngDiff < -3.13112)) {
       this.body.angularVelocity = 0
       if (this.perpAngDiffDeg > -0.6 && this.perpAngDiffDeg < 0.6) {
-        if (!this.playerInvincible) {
-          console.log('fire right')
-          this.firingCallback2()
+        if(!this.playerInvincible)
+        {
+        console.log('fire right')
+        this.firingCallback2()
         }
       } else if (this.perpAngDiffDeg > 179.4 || this.perpAngDiffDeg < -179.4) {
-        if (!this.playerInvincible) {
-          console.log('fire left')
-          this.firingCallback()
+        if(!this.playerInvincible)
+        {
+        console.log('fire left')
+        this.firingCallback()
         }
       }
     } else if ((this.perpAngDiff > Phaser.Math.HALF_PI && this.perpAngDiff < 2 * Phaser.Math.HALF_PI) || (this.perpAngDiff > -1 * Phaser.Math.HALF_PI && this.perpAngDiff < 0)) {
@@ -220,10 +224,18 @@ class EnemyShip extends Enemy {
 
   rotate (cx, cy, x, y, angle) {
     let radians = (Math.PI / 180) * angle;
-    let cos = Math.cos(radians);
-    let sin = Math.sin(radians);
-    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
-    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
+
+    
+let cos = Math.cos(radians);
+
+    
+let sin = Math.sin(radians);
+
+    
+let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
+
+    
+let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -269,17 +281,17 @@ class EnemyShip extends Enemy {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle - 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(400)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     cannonball2.body.angle = this.angle - 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(400)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     cannonball3.body.angle = this.angle - 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(400)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
@@ -342,17 +354,17 @@ class EnemyShip extends Enemy {
 
     // Set cannonball angle, velocity, and size
     cannonball.body.angle = this.angle + 90
-    cannonball.body.moveForward(500)
+    cannonball.body.moveForward(400)
     cannonball.width = this.cannonballWidth
     cannonball.height = this.cannonballHeight
 
     cannonball2.body.angle = this.angle + 90
-    cannonball2.body.moveForward(500)
+    cannonball2.body.moveForward(400)
     cannonball2.width = this.cannonballWidth
     cannonball2.height = this.cannonballHeight
 
     cannonball3.body.angle = this.angle + 90
-    cannonball3.body.moveForward(500)
+    cannonball3.body.moveForward(400)
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
