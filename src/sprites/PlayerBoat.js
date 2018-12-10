@@ -161,7 +161,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.count = 0
     if(otherBody !== null)
     {
-    if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+    if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop') {
       this.isBall = true
     }
   }

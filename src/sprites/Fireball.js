@@ -5,6 +5,7 @@ import config from '../config'
 class Fireball extends Phaser.Sprite {
   constructor ({ game, x, y, angle }) {
     super(game, x, y, 'fireball', 0)
+    this.name = 'Fireball'
     this.game = game
     this.x = x
     this.y = y
