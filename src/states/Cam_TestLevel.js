@@ -128,7 +128,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.ghostBoats[this.i])
       this.i++
     })
-    
+    /*
     this.testship = new Test_Snek({
       game: this.game,
       x: this.playerMP.x - 40,
@@ -136,7 +136,16 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.testship)
-    
+    */
+    this.boss = new BossShip({
+      game: this.game,
+      x: 2900,
+      y: 500,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.boss);
+    this.boss.ded.onComplete.add(this.sendToWin, this)
+
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()
     this.water = this.game.add.group()
@@ -381,6 +390,11 @@ class Cam_TestLevel extends Phaser.State {
   sendToDead () {
     this.game.mainTheme.destroy()
     this.state.start('Dead')
+  }
+
+  sendToWin () {
+    this.game.mainTheme.destroy()
+    this.state.start('MainMenu')
   }
 
   addBounds () {

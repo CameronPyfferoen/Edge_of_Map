@@ -162,7 +162,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.animations.add('ded', [27], 1, false)
   }
 
-  getInvince() {
+  getInvince () {
     return this.invincible
   }
 
@@ -171,10 +171,9 @@ class PlayerBoat extends Phaser.Sprite {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     this.count = 0
-    if(otherBody !== null)
-    {
-    if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
-      this.isBall = true
+    if (otherBody !== null) {
+      if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+        this.isBall = true
       }
     }
     if (!this.isBall) {
@@ -188,9 +187,8 @@ class PlayerBoat extends Phaser.Sprite {
         this.isEnemy = true
       }
       if (this.isEnemy) {
-        if(otherBody.sprite !== null)
-        {
-        otherBody.sprite.health -= this.ram_damage
+        if (otherBody.sprite !== null) {
+          otherBody.sprite.health -= this.ram_damage
         }
       }
       if (this.bitArray.includes(32)) {
