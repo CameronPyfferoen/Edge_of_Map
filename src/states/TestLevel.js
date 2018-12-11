@@ -62,7 +62,7 @@ class TestLevel extends Phaser.State {
     this.setupText(floorHeight)
 
     // Start playing the background music
-    this.game.sounds.play('music-intro', config.MUSIC_VOLUME)
+    // this.game.sounds.play('music-intro', config.MUSIC_VOLUME)
 
     // Setup the key objects
     this.setupKeyboard()
@@ -145,12 +145,12 @@ class TestLevel extends Phaser.State {
     if (Math.abs(speed) > 1) {
       // Player is running
       this.player.moveState = MainPlayer.moveStates.RUNNING
-      if (!this.game.sounds.get('running').isPlaying) {
-        this.game.sounds.play('running', config.SFX_VOLUME)
-      }
+      // if (!this.game.sounds.get('running').isPlaying) {
+      //   this.game.sounds.play('running', config.SFX_VOLUME)
+      // }
     } else {
       // Player is walking or stopped
-      this.game.sounds.stop('running')
+      // this.game.sounds.stop('running')
       if (Math.abs(speed) > 0) {
         this.player.moveState = MainPlayer.moveStates.WALKING
       } else {

@@ -50,6 +50,8 @@ class MainMenu extends Phaser.State {
       }
     }
 
+    // Play menu music
+    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME)
   }
 
   update () {

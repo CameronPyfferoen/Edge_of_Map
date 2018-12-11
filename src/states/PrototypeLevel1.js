@@ -49,7 +49,7 @@ class PrototypeLevel1 extends Phaser.State {
     this.game.add.existing(this.player)
 
     // Start playing the background music
-    this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
+    // this.game.sounds.play('thunderchild', config.MUSIC_VOLUME, true)
 
     // frame of the game
     this.game.world.scale.setTo(1);

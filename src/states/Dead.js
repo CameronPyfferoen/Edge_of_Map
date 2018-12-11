@@ -45,7 +45,6 @@ class Dead extends Phaser.State {
   sendToMain () {
     this.game.deathTune.destroy();
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
-    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME);
     this.state.start('MainMenu');
   }
 
