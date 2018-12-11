@@ -5,7 +5,6 @@ import { sequentialNumArray } from '../utils.js'
 class GoldDrop extends Phaser.Sprite {
   constructor ({ game, x, y }) {
     super(game, x, y, 'pickups', 0)
-    this.name = 'GoldDrop'
     this.anchor.setTo(0.5, 0.5)
     this.smoothed = false
     this.game = game
@@ -15,6 +14,8 @@ class GoldDrop extends Phaser.Sprite {
     this.body.addCircle(12)
     this._SCALE = config.PLAYER_SCALE * 0.5
     this.scale.setTo(this._SCALE)
+
+    this.name = 'GoldDrop'
 
     // this.game.debug.body(this)
     this.body.debug = __DEV__
