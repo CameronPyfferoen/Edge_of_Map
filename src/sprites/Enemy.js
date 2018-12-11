@@ -55,6 +55,7 @@ class Enemy extends Phaser.Sprite
   }
 
   getInvincible () {
+    this.enemyInvincible = false;
     return this.enemyInvincible
   }
 

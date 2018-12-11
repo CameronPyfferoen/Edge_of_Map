@@ -18,6 +18,7 @@ import SettingsState from './states/Settings'
 import Dead from './states/Dead'
 import Credits from './states/Credits'
 import ControlsBeforePlay from './states/ControlsBeforePlay'
+import Win from './states/Win'
 
 
 // Import our general configuration file
@@ -47,6 +48,7 @@ class Game extends Phaser.Game {
     this.state.add('Dead', Dead, false);
     this.state.add('Credits', Credits, false);
     this.state.add('ControlsBeforePlay', ControlsBeforePlay, false );
+    this.state.add('Win', Win, false);
 
 
     // Start the 'boot' state

@@ -14,12 +14,12 @@ class EnemyShip extends Enemy {
     this.loadTexture('enemyship', 0)
     this.setupAnimations()
 
-    this.intBoatSpeed = 40
+    this.intBoatSpeed = 50
     this.curBoatSpeed = 0
-    this.fireBoatSpeed = 15
-    this.turnSpeed = 15
-    this.backSpeed = 10
-    this.turnAngle = 0.6
+    this.fireBoatSpeed = 20
+    this.turnSpeed = 18
+    this.backSpeed = 20
+    this.turnAngle = 0.8
     this.FWD = false
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.perpLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
@@ -35,8 +35,8 @@ class EnemyShip extends Enemy {
     this.ram_damage = 5
 
     this.pat_dist = 200
-    this.chase_dist = 300
-    this.post_dist = 150
+    this.chase_dist = 400
+    this.post_dist = 200
     this.perpAngDiff = 0
     this.perpAngDiffDeg = 0
 
@@ -57,7 +57,7 @@ class EnemyShip extends Enemy {
     this.isBall = false
     this.bitArray = []
     this.count = 0
-
+    this.playedDeathSoundTimer = 0;
     this.timer = null
     this.canFire = true
     this.playerInvincible = false
@@ -66,13 +66,11 @@ class EnemyShip extends Enemy {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
-    this.count = 0
-    if (!this.enemyInvincible) {
-      if (otherBody !== null) {
-        if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-          this.isBall = true
-        }
+    if (otherBody !== null) {
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
+        this.isBall = true
       }
+      
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
           this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -82,6 +80,7 @@ class EnemyShip extends Enemy {
           this.isPlayer = false
         } else {
           this.isPlayer = true
+          this.count = 0
         }
         if (this.isPlayer) {
           if (otherBody.sprite !== null) {
@@ -92,6 +91,7 @@ class EnemyShip extends Enemy {
           this.isLand = false
         } else {
           this.isLand = true
+          this.count = 0
         }
       }
       this.bitArray.length = 0
@@ -199,6 +199,7 @@ class EnemyShip extends Enemy {
       y: this.y
     })
     this.game.add.existing(this.gold)
+    this.game.goldGroup.add(this.gold)
     this.destroy()
   }
 
@@ -366,6 +367,15 @@ class EnemyShip extends Enemy {
   update () {
     this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
+      if (this.playedDeathSoundTimer === 0) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 30) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 60) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.body.clearShapes()
+      }
+      this.playedDeathSoundTimer++;
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }
@@ -374,8 +384,7 @@ class EnemyShip extends Enemy {
     else if (this.isLand || this.isPlayer) {
       this.enemyInvincible = true
       if (this.count < 5) {
-        this.body.velocity.x = 0
-        this.body.velocity.y = 0
+        this.body.setZeroVelocity()
         this.body.angularVelocity = 0
       } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
