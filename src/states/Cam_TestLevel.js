@@ -236,9 +236,6 @@ class Cam_TestLevel extends Phaser.State {
             this.goldPortTXT.scale.setTo(1 / 2)
             this.game.portTXT.add(this.goldPortTXT)
 
-            // this.pauseBG.alpha = 0; // can't fade in while the game is paused
-            // this.game.add.tween(this.pauseBG).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
-
             this.game.paused = true
           } else if (Phaser.Math.distance(this.game.icePort.x, this.game.icePort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
             console.log('Ice Port is within range!')
@@ -253,7 +250,7 @@ class Cam_TestLevel extends Phaser.State {
             this.game.portMenu.add(this.pauseBG)
             this.goldPortTXT = this.game.add.text(
               this.game.camera.x - this.game.camera.x / 2 + 435,
-              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
+              this.game.camera.y - this.game.camera.y / 2 + 260, '0', {
                 font: '65px Arial', // Lucida Handwriting
                 fill: '#dad000',
                 align: 'center'
