@@ -122,6 +122,7 @@ class Cam_TestLevel extends Phaser.State {
 
 
     // Add Enemies ----------------------------------------------------
+    
     this.sneks = []
     this.i = 0
     let SnakeSpawns = this.map.objects['SnakeSpawn']
@@ -161,6 +162,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.boss);
     this.aboveWater.add(this.boss);
     this.boss.ded.onComplete.add(this.sendToWin, this)
+
+    /*
+    this.testEnemy = new EnemyShip ({
+      game: this.game,
+      x: this.playerMP.x,
+      y: this.playerMP.y - 80,
+      player: this.playerMP
+    })
+    this.game.add.existing(this.testEnemy)
+    */
 
     // Lock camera to player -----------------------------------------------
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05) /// 0.1 , 0.1

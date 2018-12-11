@@ -27,6 +27,7 @@ class Test_Snek extends Enemy {
     this.playedDeathSound = false
 
     this.playerInvincible = false
+    this.conAngDiffDeg = 0
 
     this.body.clearShapes()
     this.body.addCapsule(30, 6, 0, 0, -1.55)
