@@ -26,7 +26,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.MOVEFWD = false
     this.MOVEBCK = false
     this.STOPPED = true
-
+    this.playedDeathSoundTimer = 0
+    
     // set player scale
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
@@ -121,6 +122,15 @@ class PlayerBoat extends Phaser.Sprite {
     } else if (this.health > 0) {
       this.animations.play('idle')
     } else if (this.dead === false) {
+      if (this.playedDeathSoundTimer === 0) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 30) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 60) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.body.clearShapes()
+      }
+      this.playedDeathSoundTimer++;
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.youAreDead, this)
     } else {

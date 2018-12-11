@@ -58,6 +58,7 @@ class BossShip extends Enemy {
     this.isBall = false
     this.bitArray = []
     this.count = 0
+    this.playedDeathSoundTimer = 0
 
     this.timer = null
     this.canFire = true
@@ -455,6 +456,15 @@ class BossShip extends Enemy {
   update () {
     this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
+      if (this.playedDeathSoundTimer === 0) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 30) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 60) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.body.clearShapes()
+      }
+      this.playedDeathSoundTimer++;
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.die, this)
     }

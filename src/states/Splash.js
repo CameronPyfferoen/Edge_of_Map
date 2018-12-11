@@ -139,7 +139,8 @@ class Splash extends Phaser.State {
     this.load.audio('mainMenuTheme', './assets/audio/Music/Pirate1_Theme1.ogg')
     this.load.audio('mainTheme', './assets/audio/thunderchild.wav')
     this.load.audio('click', './assets/audio/SFX/q009/weapswitch.ogg')
-
+    this.load.audio('fireBallShoot', './assets/audio/SFX/q009/quaddamage_out.ogg')
+    this.load.audio('snakeDeath', './assets/audio/SFX/q009/quaddamage_shoot.ogg')
   }
 
   // Pre-load is done
@@ -196,6 +197,8 @@ class Splash extends Phaser.State {
 
     // Add sounds for the game ------------
     this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    this.game.fireBallShoot = this.game.add.audio('fireBallShoot', config.SFX_VOLUME)
+    this.game.snakeDeath = this.game.add.audio('snakeDeath', config.SFX_VOLUME)
     this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
     this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
