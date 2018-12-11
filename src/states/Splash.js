@@ -147,9 +147,12 @@ class Splash extends Phaser.State {
     this.load.audio('mainMenuTheme', [
       './assets/audio/Pirate1_Theme1.ogg', './assets/audio/Pirate1_Theme1.mp3',
       './assets/audio/Pirate1_Theme1.m4a', './assets/audio/Pirate1_Theme1.ac3'])
-    this.load.audio('mainTheme', [
-      './assets/audio/thunderchild.ogg', './assets/audio/thunderchild.mp3',
-      './assets/audio/thunderchild.m4a', './assets/audio/thunderchild.ac3'])
+    this.load.audio('mainThemeIntro', [
+      './assets/audio/thunderchild-intro.ogg', './assets/audio/thunderchild-intro.mp3',
+      './assets/audio/thunderchild-intro.m4a', './assets/audio/thunderchild-intro.ac3'])
+    this.load.audio('mainThemeLoop', [
+      './assets/audio/thunderchild-loop.ogg', './assets/audio/thunderchild-loop.mp3',
+      './assets/audio/thunderchild-loop.m4a', './assets/audio/thunderchild-loop.ac3'])
     this.load.audio('click', [
       './assets/audio/weapswitch.ogg', './assets/audio/weapswitch.mp3',
       './assets/audio/weapswitch.m4a', './assets/audio/weapswitch.ac3'])
@@ -194,9 +197,6 @@ class Splash extends Phaser.State {
     // let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
     // // Make the different music sections flow into one another in a seemless loop
     // // (this is unusually complex and your audio probabaly wont need it)
-    // sounds.get('music-intro').onStop.add(() => {
-    //   sounds.play('music-theme1', config.MUSIC_VOLUME)
-    // })
 
     // for (let i = 1; i < 4; i++) {
     //   sounds.get(`music-theme${i}`).onStop.add(() => {
