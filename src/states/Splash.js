@@ -24,22 +24,23 @@ class Splash extends Phaser.State {
     // Set / Reset world bounds
     this.game.world.setBounds(0, 0, this.game.width, this.game.height)
 
-    // Add the logo to the screen and center it
-    this.logo = this.game.add.sprite(
-      this.game.world.centerX, this.game.world.centerY + 100, 'ourLogo')
-    centerGameObjects([this.logo])
+    // // Add the logo to the screen and center it
+    // this.logo = this.game.add.sprite(
+    //   this.game.world.centerX, this.game.world.centerY + 100, 'ourLogo')
+    // centerGameObjects([this.logo])
   }
 
   preload () {
     // Create sprites from the progress bar assets
     this.loaderBg = this.add.sprite(
-      this.game.world.centerX, this.game.height - 30, 'loaderBg')
+      this.game.world.centerX, this.game.world.centerY + 500, 'loaderBg')
     this.loaderBar = this.add.sprite(
-      this.game.world.centerX, this.game.height - 30, 'loaderBar')
+      this.game.world.centerX, this.game.world.centerY + 500, 'loaderBar')
     centerGameObjects([this.loaderBg, this.loaderBar])
 
     // Display the progress bar
     this.load.setPreloadSprite(this.loaderBar)
+    this.startLogoSequence()
 
     // Load all the assets needed for next state ------------------------------------------------------------------------
 
@@ -215,14 +216,166 @@ class Splash extends Phaser.State {
 
   // Called repeatedly after pre-load finishes and after 'create' has run
   update () {
-    // Check how much time has elapsed since the stage started and only
-    // proceed once MIN_SPLASH_SECONDS or more has elapsed
-    if (this.game.time.elapsedSecondsSince(this.started) >= config.MIN_SPLASH_SECONDS) {
-      // Make sure the audio is not only loaded but also decoded before advancing
-      if (this.game.mainMenuTheme.isDecoded) {
-        this.state.start('MainMenu')
-      }
+    if (this.doneWithLogos && this.game.mainMenuTheme.isDecoded) {
+      this.state.start('MainMenu')
     }
+  }
+
+  startLogoSequence () {
+    // Begin the logo process
+    let myState = this
+    let myCam = this.game.camera
+    this.stage.backgroundColor = '#000000'
+    myCam.fade(0x000000, 1)
+    myCam.onFadeComplete.add(() => {
+      myCam.onFadeComplete.removeAll()
+      myState.makeSethsBasementLogo()
+    })
+  }
+
+  makeSethsBasementLogo () {
+    // Add the background audio
+    this.basementAudio = this.game.add.audio('basement')
+
+    // Add the logo to the screen and center it
+    this.sethsBlogo = this.game.add.sprite(
+      this.game.world.centerX, this.game.world.centerY, 'sethsBLogo')
+
+    // Setup the text
+    this.sethsBText1 = this.game.add.text(
+      this.game.world.centerX,
+      this.game.world.centerY - this.sethsBlogo.height / 2 - 50,
+      'A game made in')
+
+    this.sethsBText2 = this.game.add.bitmapText(
+      this.game.world.centerX,
+      this.game.world.centerY + this.sethsBlogo.height / 2 + 50,
+      'sethsBFont', 'Seth\'s Basement', 64)
+
+    this.sethsBText3 = this.game.add.text(
+      this.game.world.centerX,
+      this.game.world.centerY + this.sethsBlogo.height / 2 + 150,
+      'by ...')
+
+    // Configure the non-bitmap text
+    this.sethsBText1.font = this.sethsBText3.font = 'Arial'
+    this.sethsBText1.padding.set(10, 16)
+    this.sethsBText3.padding.set(10, 16)
+    this.sethsBText1.fontSize = this.sethsBText3.fontSize = 40
+    this.sethsBText1.fontWeight = this.sethsBText3.fontWeight = 'bold'
+    this.sethsBText1.stroke = this.sethsBText3.stroke = '#000000'
+    this.sethsBText1.strokeThickness = this.sethsBText3.strokeThickness = 4
+    this.sethsBText1.fill = this.sethsBText3.fill = '#FFFFFF'
+
+    // Center everything
+    centerGameObjects([this.sethsBlogo, this.sethsBText1,
+      this.sethsBText2, this.sethsBText3])
+
+    // Setup transition fade to happen when audio stops
+    let myState = this
+    let myCam = this.game.camera
+    setTimeout(() => {
+      this.basementAudio.fadeOut(1000)
+      myCam.fade(0x000000, 1000, false, 1.0)
+      myCam.onFadeComplete.add(() => {
+        // Reset signal
+        myCam.onFadeComplete.removeAll()
+
+        // Remove previous logo
+        myState.sethsBlogo.destroy()
+        myState.sethsBText1.destroy()
+        myState.sethsBText2.destroy()
+        myState.sethsBText3.destroy()
+
+        // Create next logo
+        myState.makeTeamLogo()
+      })
+    }, 4000)
+
+    // Fade in from black
+    myCam.flash(0x000000, 1000)
+
+    // Start the audio
+    this.basementAudio.play()
+  }
+
+  makeTeamLogo () {
+    // Set final background color
+    this.stage.backgroundColor = '#7f7f7f'
+
+    // Add the logo to the screen and center it
+    this.logo = this.game.add.sprite(
+      this.game.world.centerX, this.game.world.centerY, 'logo')
+
+    this.teamName = this.game.add.bitmapText(
+      this.game.world.centerX,
+      this.game.world.centerY + this.logo.height / 2 + 50,
+      'treasureFont', 'Marauder Media', 100)
+
+    centerGameObjects([this.logo, this.teamName])
+
+    // Setup transition fade to happen after timeout
+    let myState = this
+    let myCam = this.game.camera
+    setTimeout(() => {
+      myCam.onFadeComplete.add(() => {
+        myState.logo.destroy()
+        myState.teamName.destroy()
+        myCam.onFadeComplete.removeAll()
+
+        myState.showTitle()
+      })
+      myCam.fade(0x000000, 1000, false, 1.0)
+    }, 4000)
+
+    // Fade in from black
+    myCam.flash(0x000000, 1000)
+  }
+
+  showTitle () {
+    // Set final background color
+    this.stage.backgroundColor = '#000000'
+
+    // Add the logo to the screen and center it
+    this.titleBG = this.game.add.sprite(
+      this.game.world.centerX, this.game.world.centerY, 'titleBG')
+
+    this.gameName = this.game.add.bitmapText(
+      this.game.world.centerX, this.game.world.centerY,
+      'treasureFont', 'Edge of the Map', 256)
+
+    centerGameObjects([this.titleBG, this.gameName])
+
+    let myState = this
+    let myCam = this.game.camera
+
+    // Setup motion
+    this.titleBG.scale.setTo(0.33, 0.33)
+    this.mapTween = this.game.add.tween(this.titleBG.scale).to(
+      { x: 1.0, y: 1.0 }, 4000, Phaser.Easing.Sinusoidal.InOut)
+
+    this.gameName.alpha = 0.0
+    this.nameTween = this.game.add.tween(this.gameName).to(
+      { alpha: 1.0 }, 4000)
+
+    this.mapTween.onComplete.add(() => {
+      myState.nameTween.start()
+    })
+
+    // Final fade out after name fade-in finishes
+    this.nameTween.onComplete.add(() => {
+      setTimeout(() => {
+        myCam.fade(0x000000, 1000, false, 1.0)
+        myCam.onFadeComplete.add(() => {
+          myState.doneWithLogos = true
+        })
+      }, 2000)
+    })
+
+    // Fade in from black
+    myCam.flash(0x000000, 1000)
+    myState.mapTween.start()
+    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME)
   }
 }
 
