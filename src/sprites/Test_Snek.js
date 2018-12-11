@@ -28,6 +28,7 @@ class Test_Snek extends Enemy {
 
     this.playerInvincible = false
     this.conAngDiffDeg = 0
+    this.conLine = new Line(this.body.x, this.body.y, this.body.x + 2, this.body.y + 2)
 
     this.body.clearShapes()
     this.body.addCapsule(30, 6, 0, 0, -1.55)
@@ -52,10 +53,12 @@ class Test_Snek extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
+      this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
+      this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
         this.isBall = true
       }
-      
+
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
           this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -118,6 +121,10 @@ class Test_Snek extends Enemy {
     console.log('thrust')
   }
 
+  thrustForward () {
+    this.body.thrust(1000)
+  }
+
   switch () {
     if (this.canSwitch) {
       this.canSwitch = false
@@ -143,7 +150,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    this.game.fireBallShoot.play('', 0, config.SFX_VOLUME);
+    this.game.fireBallShoot.play('', 0, config.SFX_VOLUME)
     this.canSwitch = true
     this.shot = true
   }
@@ -168,8 +175,8 @@ class Test_Snek extends Enemy {
     // console.log(`snake detection: ${this.playerInvincible}`)
     if (this.health <= 0) {
       if (!this.playedDeathSound) {
-        this.game.snakeDeath.play('', 0, config.SFX_VOLUME);
-        this.playedDeathSound = true;
+        this.game.snakeDeath.play('', 0, config.SFX_VOLUME)
+        this.playedDeathSound = true
         this.body.clearShapes()
       }
       this.animations.play('death')
@@ -182,9 +189,16 @@ class Test_Snek extends Enemy {
       if (this.count < 5) {
         this.body.setZeroVelocity()
         this.body.angularVelocity = 0
-      } else if (this.count < 10 && this.count >= 5) {
+      } else if (this.count < 10 && this.count >= 5 && (this.conAngDiffDeg > -45 || this.conAngDiffDeg < -135)) {
         this.body.angularVelocity = 0
         this.thrustBackward()
+      }
+      else if (this.count < 10 && this.count >= 5 && this.conAngDiffDeg <= -45 && this.conAngDiffDeg >= -135) {
+        this.body.angularVelocity = 0
+        this.thrustForward()
+        if (this.count === 9) {
+          this.count = 200
+        }
       } else if (this.count >= 10 && this.count < 200) {
         this.turnLeft()
       } else if (this.count >= 200) {

@@ -153,7 +153,7 @@ class PlayerBoat extends Phaser.Sprite {
         this.body.angularVelocity = 0
         this.thrustBackward()
       } 
-      else if (this.count < 60 && this.count >= 30 && this.conAngDiffDeg < -45 && this.conAngDiffDeg > -135) {
+      else if (this.count < 60 && this.count >= 30 && this.conAngDiffDeg <= -45 && this.conAngDiffDeg >= -135) {
         this.body.angularVelocity = 0
         this.thrustForward()
       }/* else if (this.count >= 10 && this.count < 200) {
