@@ -26,6 +26,8 @@ class BossShip extends Enemy {
     // this.perpSlope = 0
     this.perpAngle = 0
     this.playerAngle = 0
+    this.conAngDiffDeg = 0
+    this.conLine = new Line(this.body.x, this.body.y, this.body.x + 2, this.body.y + 2)
     this.projectile = this.game.add.physicsGroup(Phaser.Physics.P2JS)
     this.shotType = GameData.shotTypes.MULTISHOTx
 
@@ -70,6 +72,8 @@ class BossShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
+      this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
+      this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
         this.isBall = true
       }
@@ -162,6 +166,11 @@ class BossShip extends Enemy {
     this.body.reverse(1000)
     console.log('thrust')
   }
+
+  thrustForward () {
+    this.body.thrust(1000)
+  }
+
 
   patrol () {
     if (!this.turn) {
@@ -475,9 +484,16 @@ class BossShip extends Enemy {
       if (this.count < 5) {
         this.body.setZeroVelocity()
         this.body.angularVelocity = 0
-      } else if (this.count < 10 && this.count >= 5) {
+      } else if (this.count < 10 && this.count >= 5 && (this.conAngDiffDeg > -45 || this.conAngDiffDeg < -135)) {
         this.body.angularVelocity = 0
         this.thrustBackward()
+      }
+      else if (this.count < 10 && this.count >= 5 && this.conAngDiffDeg <= -45 && this.conAngDiffDeg >= -135) {
+        this.body.angularVelocity = 0
+        this.thrustForward()
+        if (this.count === 9) {
+          this.count = 200
+        }
       } else if (this.count >= 10 && this.count < 200) {
         this.body.angle -= this.turnAngle
       } else if (this.count >= 200) {

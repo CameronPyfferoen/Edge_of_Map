@@ -7,6 +7,7 @@ import { sequentialNumArray } from '../utils.js'
 // GameData in src
 import GameData from '../GameData'
 import Test_Cannonball from './Test_Cannonball'
+import { Line } from 'phaser-ce'
 
 class PlayerBoat extends Phaser.Sprite {
   constructor ({ game, x, y }) {
@@ -27,7 +28,7 @@ class PlayerBoat extends Phaser.Sprite {
     this.MOVEBCK = false
     this.STOPPED = true
     this.playedDeathSoundTimer = 0
-    
+
     // set player scale
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
@@ -51,12 +52,10 @@ class PlayerBoat extends Phaser.Sprite {
     this.body.setCollisionGroup(this.game.playerGroup)
     this.body.collides([this.game.enemyGroup, this.game.itemGroup, this.game.landGroup, this.game.projectileGroup])
 
-    // cut if not working
+    // collision stuff
     this.bodyShape = this.body.data.shapes[0]
     this.bodyShape.sensor = true
     this.body.onBeginContact.add(this.contact, this)
-
-    // cut if not working
     this.n = 0
     this.isLand = false
     this.isEnemy = false
@@ -64,7 +63,11 @@ class PlayerBoat extends Phaser.Sprite {
     this.control = true
     this.bitArray = []
     this.count = 0
-    this.ram_damage = 5
+    this.ram_damage =
+
+    // experimental
+    this.conAngDiffDeg = 0
+    this.conLine = new Line(this.body.x, this.body.y, this.body.x + 2, this.body.y + 2)
 
     // console.log(`Enemy bitmask: ${this.game.enemyGroup.mask}`)
     // setup movement physics
@@ -123,14 +126,14 @@ class PlayerBoat extends Phaser.Sprite {
       this.animations.play('idle')
     } else if (this.dead === false) {
       if (this.playedDeathSoundTimer === 0) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.explosion.play('', 0, config.SFX_VOLUME)
       } else if (this.playedDeathSoundTimer === 30) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.explosion.play('', 0, config.SFX_VOLUME)
       } else if (this.playedDeathSoundTimer === 60) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.explosion.play('', 0, config.SFX_VOLUME)
         this.body.clearShapes()
       }
-      this.playedDeathSoundTimer++;
+      this.playedDeathSoundTimer++
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.youAreDead, this)
     } else {
@@ -141,26 +144,31 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.isLand || this.isEnemy) {
       this.invincible = true
       this.control = false
-      console.log(`this.count: ${this.count}`)
-      if (this.count < 5) {
-        this.body.velocity.x = 0
-        this.body.velocity.y = 0
+      // console.log(`this.count: ${this.count}`)
+      if (this.count < 30) {
+        this.body.setZeroVelocity()
         this.body.angularVelocity = 0
-      } else if (this.count < 10 && this.count >= 5) {
+        this.curBoatSpeed = 0
+      } else if (this.count < 60 && this.count >= 30 && (this.conAngDiffDeg > -45 || this.conAngDiffDeg < -135)) {
         this.body.angularVelocity = 0
         this.thrustBackward()
-      } else if (this.count >= 10 && this.count < 200) {
+      } 
+      else if (this.count < 60 && this.count >= 30 && this.conAngDiffDeg <= -45 && this.conAngDiffDeg >= -135) {
+        this.body.angularVelocity = 0
+        this.thrustForward()
+      }/* else if (this.count >= 10 && this.count < 200) {
         this.turnLeft()
-      } else if (this.count >= 200) {
+      } */
+      else if (this.count >= 60) {
+        this.body.setZeroVelocity()
         this.isLand = false
         this.isEnemy = false
         this.control = true
         this.invincible = false
       }
-      if (this.count < 200) {
+      if (this.count < 60) {
         this.count++
       }
-      window.invincible = this.invincible
     }
   }
 
@@ -181,36 +189,42 @@ class PlayerBoat extends Phaser.Sprite {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
-      if (otherBody.sprite !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+      this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
+      this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
+      // console.log(`collided w/: ${otherBody.sprite.name}`)
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+        // console.log(`collided w/: ${otherBody.sprite.name}`)
+        this.isBall = true
+      } else if (otherBody.sprite === null) {
         this.isBall = true
       }
-    
-    if (!this.isBall) {
-      otherBody.collidesWith.forEach(element => {
-        this.bitArray.push(otherBody.collidesWith[this.n].mask)
-        this.n++
-      })
-      if (this.bitArray.includes(8)) {
-        this.isEnemy = false
-      } else {
-        this.isEnemy = true
-        this.count = 0
-      }
-      if (this.isEnemy) {
-        if (otherBody.sprite !== null) {
-          otherBody.sprite.health -= this.ram_damage
+
+      if (!this.isBall) {
+        otherBody.collidesWith.forEach(element => {
+          this.bitArray.push(otherBody.collidesWith[this.n].mask)
+          this.n++
+        })
+        if (this.bitArray.includes(8)) {
+          this.isEnemy = false
+        } else {
+          this.isEnemy = true
+          this.count = 0
+        }
+        if (this.isEnemy) {
+          if (otherBody.sprite !== null) {
+            otherBody.sprite.health -= this.ram_damage
+          }
+        }
+        if (this.bitArray.includes(32)) {
+          this.isLand = false
+        } else {
+          this.isLand = true
+          this.count = 0
         }
       }
-      if (this.bitArray.includes(32)) {
-        this.isLand = false
-      } else {
-        this.isLand = true
-        this.count = 0
-      }
+      this.bitArray.length = 0
+      this.isBall = false
     }
-    this.bitArray.length = 0
-    this.isBall = false
-  }
   }
 
   youAreDead () {
@@ -251,7 +265,12 @@ class PlayerBoat extends Phaser.Sprite {
 
   thrustBackward () {
     this.body.reverse(100)
-    console.log('thrust')
+    console.log('thrust back')
+  }
+
+  thrustForward () {
+    this.body.thrust(100)
+    console.log('thrust forward')
   }
 
   /*
@@ -281,7 +300,7 @@ class PlayerBoat extends Phaser.Sprite {
   // Choose projectile type for the left side of the ship
   // NOTE, only GameData.shotTypes.MULTISHOT works
   firingCallback () {
-    // console.log('k')
+    console.log('k')
     if (this.health > 0) {
       switch (GameData.shotTypes.MULTISHOT) {
         case GameData.shotTypes.HARPOON:
@@ -354,7 +373,7 @@ class PlayerBoat extends Phaser.Sprite {
     let unity = directiony / magnitude
     let harpoonAngle = (Math.atan(directiony / directionx) * (180 / Math.PI))
     console.log('DIRECTION: [' + directionx + ',' + directiony + ']')
-  
+
     let cannonball = new Test_Cannonball({
       game: this.game,
       x: this.x,
@@ -382,16 +401,15 @@ class PlayerBoat extends Phaser.Sprite {
     // let shipP = new Phaser.Point(shipx, shipy)
     // let mouseP = new Phaser.Point(mousex, mousey)
     // cannonball.body.angle = shipP.angle(mouseP)
-
   }
 
   // Code for rotating cannonballs with the player ship
   rotate (cx, cy, x, y, angle) {
-    let radians = (Math.PI / 180) * angle;
-    let cos = Math.cos(radians);
-    let sin = Math.sin(radians);
-    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx;
-    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+    let radians = (Math.PI / 180) * angle
+    let cos = Math.cos(radians)
+    let sin = Math.sin(radians)
+    let nx = (cos * (x - cx)) + (sin * (y - cy)) + cx
+    let ny = (cos * (y - cy)) - (sin * (x - cx)) + cy
     console.log(nx)
     console.log(ny)
     return [nx, ny]
@@ -527,7 +545,6 @@ class PlayerBoat extends Phaser.Sprite {
     cannonball3.width = this.cannonballWidth
     cannonball3.height = this.cannonballHeight
   }
-
 }
 
 export default PlayerBoat
