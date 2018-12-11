@@ -17,7 +17,7 @@ class Test_Snek extends Enemy {
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.attacking = false
     this.canSwitch = true
-    this.fire_dist = 80
+    this.fire_dist = 120
     this.shot = false
     this.maxHealth = 30
     this.health = this.maxHealth
@@ -50,9 +50,9 @@ class Test_Snek extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
-        if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
-          this.isBall = true
-        }
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
+        this.isBall = true
+      }
       
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
@@ -152,6 +152,7 @@ class Test_Snek extends Enemy {
       y: this.y
     })
     this.game.add.existing(this.gold)
+    this.game.goldGroup.add(this.gold)
     this.destroy()
   }
 
@@ -212,9 +213,9 @@ class Test_Snek extends Enemy {
       }
       this.start_diff = Phaser.Math.distance(this.body.x, this.body.y, this.startx, this.starty)
       if (this.canSwitch) {
-        if (this.player_dist > this.chase_dist) {
+        if (this.player_dist > 400) { // this.chase_dist
           this.patrol()
-        } else if (this.player_dist <= this.chase_dist && this.player_dist > this.fire_dist) {
+        } else if (this.player_dist <= 400 && this.player_dist > this.fire_dist) {
           this.chase()
         }
       } if (this.player_dist <= this.fire_dist) {

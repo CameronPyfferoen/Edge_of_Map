@@ -43,7 +43,7 @@ class Fireball extends Phaser.Sprite {
 
     this.setupAnimations()
 
-    this.speed = 100
+    this.speed = 200
     this.damage = 12.5
     this.fire = true
 

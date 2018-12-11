@@ -14,12 +14,12 @@ class EnemyShip extends Enemy {
     this.loadTexture('enemyship', 0)
     this.setupAnimations()
 
-    this.intBoatSpeed = 40
+    this.intBoatSpeed = 50
     this.curBoatSpeed = 0
-    this.fireBoatSpeed = 15
-    this.turnSpeed = 15
-    this.backSpeed = 10
-    this.turnAngle = 0.6
+    this.fireBoatSpeed = 20
+    this.turnSpeed = 18
+    this.backSpeed = 20
+    this.turnAngle = 0.8
     this.FWD = false
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.perpLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
@@ -35,8 +35,8 @@ class EnemyShip extends Enemy {
     this.ram_damage = 5
 
     this.pat_dist = 200
-    this.chase_dist = 300
-    this.post_dist = 150
+    this.chase_dist = 400
+    this.post_dist = 200
     this.perpAngDiff = 0
     this.perpAngDiffDeg = 0
 
@@ -67,9 +67,9 @@ class EnemyShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
-        if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
-          this.isBall = true
-        }
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
+        this.isBall = true
+      }
       
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
@@ -199,6 +199,7 @@ class EnemyShip extends Enemy {
       y: this.y
     })
     this.game.add.existing(this.gold)
+    this.game.goldGroup.add(this.gold)
     this.destroy()
   }
 

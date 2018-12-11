@@ -14,12 +14,12 @@ class BossShip extends Enemy {
     this.loadTexture('bossSheet', 0)
     this.setupAnimations()
 
-    this.intBoatSpeed = 40
+    this.intBoatSpeed = 50
     this.curBoatSpeed = 0
-    this.fireBoatSpeed = 15
-    this.turnSpeed = 15
-    this.backSpeed = 10
-    this.turnAngle = 0.6
+    this.fireBoatSpeed = 20
+    this.turnSpeed = 18
+    this.backSpeed = 20
+    this.turnAngle = 0.8
     this.FWD = false
     this.playerLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
     this.perpLine = new Line(this.body.x, this.body.y, this.player.x, this.player.y)
@@ -34,15 +34,16 @@ class BossShip extends Enemy {
     this.damage = 10
     this.ram_damage = 5
 
-    this.chase_dist = 300
-    this.post_dist = 150
+    this.chase_dist = 450
+    this.post_dist = 225
     this.perpAngDiff = 0
     this.perpAngDiffDeg = 0
 
     this.body.clearShapes()
-    this.body.addCapsule(18, 6, 0, 0, -1.55)
+    this.body.addCapsule(38, 14, 0, 0, -1.55) // this.body.addCapsule(18, 6, 0, 0, -1.55)
     this.body.setCollisionGroup(this.game.enemyGroup)
     this.body.collides([this.game.playerGroup, this.game.landGroup, this.game.cannonballCollisionGroup])
+    this.scale.setTo(1)
 
     // cut if not working
     this.bodyShape = this.body.data.shapes[0]
@@ -68,9 +69,9 @@ class BossShip extends Enemy {
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
     if (otherBody !== null) {
-        if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
-          this.isBall = true
-        }
+      if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
+        this.isBall = true
+      }
       
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
@@ -238,11 +239,11 @@ class BossShip extends Enemy {
     let canPos4 = [this.x, this.y + 15]
     let canPos5 = [this.x, this.y - 15]
 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
-    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle)
-    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
+    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle * -1)
+    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle * -1)
 
     let cannonball = new Enemy_Cannonball({
       game: this.game,
@@ -359,11 +360,11 @@ class BossShip extends Enemy {
     let canPos4 = [this.x, this.y + 15]
     let canPos5 = [this.x, this.y - 15]
 
-    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle)
-    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle)
-    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle)
-    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle)
-    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle)
+    canPos1 = this.rotate(this.x, this.y, canPos1[0], canPos1[1], this.angle * -1)
+    canPos2 = this.rotate(this.x, this.y, canPos2[0], canPos2[1], this.angle * -1)
+    canPos3 = this.rotate(this.x, this.y, canPos3[0], canPos3[1], this.angle * -1)
+    canPos4 = this.rotate(this.x, this.y, canPos4[0], canPos4[1], this.angle * -1)
+    canPos5 = this.rotate(this.x, this.y, canPos5[0], canPos5[1], this.angle * -1)
 
     let cannonball = new Enemy_Cannonball({
       game: this.game,
@@ -511,9 +512,9 @@ class BossShip extends Enemy {
   }
 
   setupAnimations () {
-    this.animations.add('idle', sequentialNumArray(0, 4), 10, true)
-    this.animations.add('forward', sequentialNumArray(27, 30), 10, true)
-    this.ded = this.animations.add('death', sequentialNumArray(162, 188), 10, false)
+    this.animations.add('idle', sequentialNumArray(0, 4), 5, true)
+    this.animations.add('forward', sequentialNumArray(27, 30), 8, true)
+    this.ded = this.animations.add('death', sequentialNumArray(162, 188), 8, false)
   }
 }
 
