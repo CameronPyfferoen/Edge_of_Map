@@ -171,7 +171,6 @@ class PlayerBoat extends Phaser.Sprite {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
-    this.count = 0
     if (otherBody !== null) {
       // console.log(`collided w/: ${otherBody.sprite.name}`)
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
@@ -182,7 +181,7 @@ class PlayerBoat extends Phaser.Sprite {
       {
         this.isBall = true
       }
-    }
+    
     if (!this.isBall) {
       otherBody.collidesWith.forEach(element => {
         this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -192,6 +191,7 @@ class PlayerBoat extends Phaser.Sprite {
         this.isEnemy = false
       } else {
         this.isEnemy = true
+        this.count = 0
       }
       if (this.isEnemy) {
         if (otherBody.sprite !== null) {
@@ -202,10 +202,12 @@ class PlayerBoat extends Phaser.Sprite {
         this.isLand = false
       } else {
         this.isLand = true
+        this.count = 0
       }
     }
     this.bitArray.length = 0
     this.isBall = false
+  }
   }
 
   youAreDead () {

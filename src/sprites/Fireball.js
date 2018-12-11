@@ -70,6 +70,10 @@ class Fireball extends Phaser.Sprite {
         otherBody.sprite.health -= this.damage
       }
     }
+    else
+    {
+      this.end()
+    }
   }
 
   end () {

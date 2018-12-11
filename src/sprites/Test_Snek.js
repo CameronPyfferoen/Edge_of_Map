@@ -49,13 +49,11 @@ class Test_Snek extends Enemy {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
-    this.count = 0
-    if (!this.enemyInvincible) {
-      if (otherBody !== null) {
-        if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
+    if (otherBody !== null) {
+        if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
           this.isBall = true
         }
-      }
+      
       if (!this.isBall) {
         otherBody.collidesWith.forEach(element => {
           this.bitArray.push(otherBody.collidesWith[this.n].mask)
@@ -65,6 +63,7 @@ class Test_Snek extends Enemy {
           this.isPlayer = false
         } else {
           this.isPlayer = true
+          this.count = 0
         }
         if (this.isPlayer) {
           if (otherBody.sprite !== null) {
@@ -75,6 +74,7 @@ class Test_Snek extends Enemy {
           this.isLand = false
         } else {
           this.isLand = true
+          this.count = 0
         }
       }
       this.bitArray.length = 0
@@ -155,6 +155,10 @@ class Test_Snek extends Enemy {
     this.destroy()
   }
 
+  turnLeft () {
+    this.body.angle -= this.turnAngle
+  }
+
   update () {
     this.playerInvincible = this.player.getvincible()
     // console.log(`snake detection: ${this.playerInvincible}`)
@@ -167,14 +171,13 @@ class Test_Snek extends Enemy {
     else if (this.isLand || this.isPlayer) {
       this.enemyInvincible = true
       if (this.count < 5) {
-        this.body.velocity.x = 0
-        this.body.velocity.y = 0
+        this.body.setZeroVelocity()
         this.body.angularVelocity = 0
       } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
         this.thrustBackward()
       } else if (this.count >= 10 && this.count < 200) {
-        this.body.angle -= this.turnAngle
+        this.turnLeft()
       } else if (this.count >= 200) {
         this.isLand = false
         this.isPlayer = false

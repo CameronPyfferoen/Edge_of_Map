@@ -105,6 +105,7 @@ class Cam_TestLevel extends Phaser.State {
     this.sneks = []
     this.i = 0
     let SnakeSpawns = this.map.objects['SnakeSpawn']
+    
     SnakeSpawns.forEach(element => {
       this.sneks[this.i] = new Test_Snek({
         game: this.game,
@@ -115,10 +116,21 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.sneks[this.i])
       this.i++
     })
+    
+   /*
+   this.testEnemy = new Test_Snek({
+     game:this.game,
+     x: this.playerMP.x - 50,
+     y: this.playerMP.y - 150,
+     player: this.playerMP
+   })
+   this.game.add.existing(this.testEnemy)
+   */
 
     this.ghostBoats = []
     this.i = 0
     let GhostShipSpawns = this.map.objects['GhostShipSpawn']
+    
     GhostShipSpawns.forEach(element => {
       this.ghostBoats[this.i] = new EnemyShip({
         game: this.game,
@@ -129,15 +141,7 @@ class Cam_TestLevel extends Phaser.State {
       this.game.add.existing(this.ghostBoats[this.i])
       this.i++
     })
-    /*
-    this.testship = new Test_Snek({
-      game: this.game,
-      x: this.playerMP.x - 40,
-      y: this.playerMP.y - 120,
-      player: this.playerMP
-    })
-    this.game.add.existing(this.testship)
-    */
+   
     this.boss = new BossShip({
       game: this.game,
       x: 2900,
@@ -146,6 +150,7 @@ class Cam_TestLevel extends Phaser.State {
     })
     this.game.add.existing(this.boss);
     this.boss.ded.onComplete.add(this.sendToWin, this)
+    
 
     // layer groups ----------------------------------------------------------
     this.underWater = this.game.add.group()

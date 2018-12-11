@@ -67,38 +67,37 @@ class BossShip extends Enemy {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
-    this.count = 0
-    if(!this.enemyInvincible)
-    {
     if (otherBody !== null) {
-      if (otherBody.sprite !== null && otherBody.sprite.name === 'Cannonball') {
-        this.isBall = true
-      }
-    }
-    if (!this.isBall) {
-      otherBody.collidesWith.forEach(element => {
-        this.bitArray.push(otherBody.collidesWith[this.n].mask)
-        this.n++
-      })
-      if (this.bitArray.includes(4)) {
-        this.isPlayer = false
-      } else {
-        this.isPlayer = true
-      }
-      if (this.isPlayer) {
-        if (otherBody.sprite !== null) {
-          this.player.health -= this.ram_damage
+        if (otherBody.sprite !== null && otherBody.sprite.name !== null && otherBody.sprite.name === 'Cannonball') {
+          this.isBall = true
+        }
+      
+      if (!this.isBall) {
+        otherBody.collidesWith.forEach(element => {
+          this.bitArray.push(otherBody.collidesWith[this.n].mask)
+          this.n++
+        })
+        if (this.bitArray.includes(4)) {
+          this.isPlayer = false
+        } else {
+          this.isPlayer = true
+          this.count = 0
+        }
+        if (this.isPlayer) {
+          if (otherBody.sprite !== null) {
+            this.player.health -= this.ram_damage
+          }
+        }
+        if (this.bitArray.includes(32)) {
+          this.isLand = false
+        } else {
+          this.isLand = true
+          this.count = 0
         }
       }
-      if (this.bitArray.includes(32)) {
-        this.isLand = false
-      } else {
-        this.isLand = true
-      }
+      this.bitArray.length = 0
+      this.isBall = false
     }
-    this.bitArray.length = 0
-    this.isBall = false
-  }
   }
 
   positioning () {
@@ -463,8 +462,7 @@ class BossShip extends Enemy {
     else if (this.isLand || this.isPlayer) {
       this.enemyInvincible = true
       if (this.count < 5) {
-        this.body.velocity.x = 0
-        this.body.velocity.y = 0
+        this.body.setZeroVelocity()
         this.body.angularVelocity = 0
       } else if (this.count < 10 && this.count >= 5) {
         this.body.angularVelocity = 0
