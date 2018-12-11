@@ -51,19 +51,22 @@ class Test_Cannonball extends Phaser.Sprite {
 
     // Determine if cannonballs are colliding with an object or not
     this.hasHit = false
+    this.enemyCheck = false
   }
 
   // If the cannonballs are colliding w/ an object, play the explosion animation
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
-    console.log(`hit: ${otherBody.sprite.name}`)
+    // console.log(`hit: ${otherBody.sprite.name}`)
     if (otherBody !== null && otherBody.sprite.name === 'Enemy') {
-      game.camera.shake(0.001, 200)
-      game.getHit.play('', 0, config.SFX_VOLUME)
-      if ((otherBody.sprite.health -= this.damage) <= 0) {
-        otherBody.sprite.health = 0
-      }
-      else {
-        otherBody.sprite.health -= this.damage
+      this.enemyCheck = otherBody.sprite.getInvincible()
+      if (!this.enemyCheck) {
+        game.camera.shake(0.001, 200)
+        game.getHit.play('', 0, config.SFX_VOLUME)
+        if ((otherBody.sprite.health -= this.damage) <= 0) {
+          otherBody.sprite.health = 0
+        } else {
+          otherBody.sprite.health -= this.damage
+        }
       }
     }
     this.hasHit = true

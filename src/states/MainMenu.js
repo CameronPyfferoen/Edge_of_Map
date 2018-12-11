@@ -30,13 +30,13 @@ class MainMenu extends Phaser.State {
     
     // Add fullscreen controls
     // Stretch to fill
-    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    // this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
     // Keep original size
-    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
+    // this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
  
     // Maintain aspect ratio
-    // game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
     window.onkeydown = function (event) {
       if (event.keyCode === 79) {
         if (this.game.scale.isFullScreen) {

@@ -31,7 +31,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.body.data.gravityScale = 0
     // this.body.fixedRotation = true
 
-    this.game.time.events.add(Phaser.Timer.SECOND * 5, this.destroy.bind(this), this)
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.destroy.bind(this), this)
     this.setupAnimations()
 
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
@@ -48,20 +48,24 @@ class Enemy_Cannonball extends Phaser.Sprite {
     this.splooshAnim.onComplete.add(this.death, this)
 
     this.hasHit = false
+    this.playerCheck = false
   }
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
-    console.log(`hit: ${otherBody.sprite.name}`)
+    // console.log(`hit: ${otherBody.sprite.name}`)
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      this.game.camera.shake(0.001, 200)
-      this.game.getHit.play('', 0, config.SFX_VOLUME)
-      if ((otherBody.sprite.health -= this.damage) <= 0) {
-        otherBody.sprite.health = 0
-      }
-      else {
-        otherBody.sprite.health -= this.damage
+      this.playerCheck = otherBody.sprite.getvincible()
+      if (!this.playerCheck) {
+        this.game.camera.shake(0.001, 200)
+        this.game.getHit.play('', 0, config.SFX_VOLUME)
+        if ((otherBody.sprite.health -= this.damage) <= 0) {
+          otherBody.sprite.health = 0
+        } else {
+          otherBody.sprite.health -= this.damage
+        }
       }
     }
+    this.hasHit = true
     this.explosionAnim.play()
     this.width = 30
     this.height = 30

@@ -26,7 +26,8 @@ class PlayerBoat extends Phaser.Sprite {
     this.MOVEFWD = false
     this.MOVEBCK = false
     this.STOPPED = true
-
+    this.playedDeathSoundTimer = 0
+    
     // set player scale
     this._SCALE = config.PLAYER_SCALE
     this.scale.setTo(this._SCALE)
@@ -121,6 +122,15 @@ class PlayerBoat extends Phaser.Sprite {
     } else if (this.health > 0) {
       this.animations.play('idle')
     } else if (this.dead === false) {
+      if (this.playedDeathSoundTimer === 0) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 30) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+      } else if (this.playedDeathSoundTimer === 60) {
+        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.body.clearShapes()
+      }
+      this.playedDeathSoundTimer++;
       this.animations.play('death')
       this.animations.currentAnim.onComplete.add(this.youAreDead, this)
     } else {
@@ -131,24 +141,25 @@ class PlayerBoat extends Phaser.Sprite {
     if (this.isLand || this.isEnemy) {
       this.invincible = true
       this.control = false
-      console.log(`this.count: ${this.count}`)
-      if (this.count < 5) {
-        this.body.velocity.x = 0
-        this.body.velocity.y = 0
+      // console.log(`this.count: ${this.count}`)
+      if (this.count < 30) {
+        this.body.setZeroVelocity()
         this.body.angularVelocity = 0
-      } else if (this.count < 10 && this.count >= 5) {
+        this.curBoatSpeed = 0
+      } else if (this.count < 60 && this.count >= 30) {
         this.body.angularVelocity = 0
         this.thrustBackward()
       } /* else if (this.count >= 10 && this.count < 200) {
         this.turnLeft()
       } */
-      else if (this.count >= 10) {
+      else if (this.count >= 60) {
+        this.body.setZeroVelocity()
         this.isLand = false
         this.isEnemy = false
         this.control = true
         this.invincible = false
       }
-      if (this.count < 10) {
+      if (this.count < 60) {
         this.count++
       }
     }
@@ -170,24 +181,27 @@ class PlayerBoat extends Phaser.Sprite {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
-    this.count = 0
     if (otherBody !== null) {
+      // console.log(`collided w/: ${otherBody.sprite.name}`)
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
+        // console.log(`collided w/: ${otherBody.sprite.name}`)
         this.isBall = true
       }
-    }
-    otherBody.collidesWith.forEach(element => {
-      this.bitArray.push(otherBody.collidesWith[this.n].mask)
-      this.n++
-    })
-    if (!this.bitArray.includes(32)) {
-      this.isBall = false
-    }
+      else if(otherBody.sprite === null)
+      {
+        this.isBall = true
+      }
+    
     if (!this.isBall) {
+      otherBody.collidesWith.forEach(element => {
+        this.bitArray.push(otherBody.collidesWith[this.n].mask)
+        this.n++
+      })
       if (this.bitArray.includes(8)) {
         this.isEnemy = false
       } else {
         this.isEnemy = true
+        this.count = 0
       }
       if (this.isEnemy) {
         if (otherBody.sprite !== null) {
@@ -198,10 +212,12 @@ class PlayerBoat extends Phaser.Sprite {
         this.isLand = false
       } else {
         this.isLand = true
+        this.count = 0
       }
     }
     this.bitArray.length = 0
     this.isBall = false
+  }
   }
 
   youAreDead () {
