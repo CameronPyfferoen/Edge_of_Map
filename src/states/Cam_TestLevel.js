@@ -46,6 +46,19 @@ class Cam_TestLevel extends Phaser.State {
     this.atPort = false
     this.healed = false
 
+    // layer groups ----------------------------------------------------------
+    this.underWater = this.game.add.group()
+    this.water = this.game.add.group()
+    this.aboveWater = this.game.add.group()
+    this.game.goldGroup = this.game.add.group()
+    this.playerGroup = this.game.add.group()
+    this.game.portMenu = this.game.add.group()
+    this.UIback = this.game.add.group()
+    this.UImid = this.game.add.group()
+    this.UIfwd = this.game.add.group()
+    this.game.portTXT = this.game.add.group()
+    this.enemies = this.game.add.group()
+
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -70,6 +83,7 @@ class Cam_TestLevel extends Phaser.State {
     // this.playerMP.body.onBeginContact.add(this.rammed, this);
     this.playerMP.death.onComplete.add(this.sendToDead, this)
     this.game.add.existing(this.playerMP)
+    this.playerGroup.add(this.playerMP)
 
     // add gold ------------------------------------------------------
     this.goldPos = []
@@ -81,8 +95,9 @@ class Cam_TestLevel extends Phaser.State {
         x: element.x,
         y: element.y
       })
-      this.game.add.existing(this.goldPos[this.i])
-      this.i++
+      this.game.add.existing(this.goldPos[this.i]);
+      this.game.goldGroup.add(this.goldPos[this.i]);
+      this.i++;
     })
 
     // Add port positions ---------------------------------------------------------------------------------------
@@ -100,12 +115,16 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.portSignSkull);
     this.game.add.existing(this.portSignCrecent);
     this.game.add.existing(this.portSignIce);
+    this.game.portMenu.add(this.portSignStart);
+    this.game.portMenu.add(this.portSignSkull);
+    this.game.portMenu.add(this.portSignCrecent);
+    this.game.portMenu.add(this.portSignIce);
+
 
     // Add Enemies ----------------------------------------------------
     this.sneks = []
     this.i = 0
     let SnakeSpawns = this.map.objects['SnakeSpawn']
-    
     SnakeSpawns.forEach(element => {
       this.sneks[this.i] = new Test_Snek({
         game: this.game,
@@ -114,23 +133,13 @@ class Cam_TestLevel extends Phaser.State {
         player: this.playerMP
       })
       this.game.add.existing(this.sneks[this.i])
+      this.aboveWater.add(this.sneks[this.i])
       this.i++
     })
-    
-   /*
-   this.testEnemy = new Test_Snek({
-     game:this.game,
-     x: this.playerMP.x - 50,
-     y: this.playerMP.y - 150,
-     player: this.playerMP
-   })
-   this.game.add.existing(this.testEnemy)
-   */
 
     this.ghostBoats = []
     this.i = 0
     let GhostShipSpawns = this.map.objects['GhostShipSpawn']
-    
     GhostShipSpawns.forEach(element => {
       this.ghostBoats[this.i] = new EnemyShip({
         game: this.game,
@@ -139,9 +148,10 @@ class Cam_TestLevel extends Phaser.State {
         player: this.playerMP
       })
       this.game.add.existing(this.ghostBoats[this.i])
+      this.aboveWater.add(this.ghostBoats[this.i])
       this.i++
     })
-   
+
     this.boss = new BossShip({
       game: this.game,
       x: 2900,
@@ -149,23 +159,8 @@ class Cam_TestLevel extends Phaser.State {
       player: this.playerMP
     })
     this.game.add.existing(this.boss);
+    this.aboveWater.add(this.boss);
     this.boss.ded.onComplete.add(this.sendToWin, this)
-    
-
-    // layer groups ----------------------------------------------------------
-    this.underWater = this.game.add.group()
-    this.water = this.game.add.group()
-    this.aboveWater = this.game.add.group()
-    this.playerGroup = this.game.add.group()
-    this.game.portMenu = this.game.add.group()
-    this.UIback = this.game.add.group()
-    this.UImid = this.game.add.group()
-    this.UIfwd = this.game.add.group()
-    this.game.portTXT = this.game.add.group()
-    this.enemies = this.game.add.group()
-
-    // adding the objects to the groups -------------------------------------
-    this.playerGroup.add(this.playerMP)
 
     // Lock camera to player -----------------------------------------------
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05) /// 0.1 , 0.1
@@ -397,7 +392,7 @@ class Cam_TestLevel extends Phaser.State {
 
   sendToWin () {
     this.game.mainTheme.destroy()
-    this.state.start('MainMenu')
+    this.state.start('Win')
   }
 
   addBounds () {

@@ -114,6 +114,7 @@ class Splash extends Phaser.State {
     this.load.spritesheet('creditsButton', './assets/images/UI/SpriteSheet_main_credits.png', 559, 121)
     this.load.image('controlBoard', 'assets/images/UI/menu_controls_board.png')
     this.load.spritesheet('fullScreen', './assets/images/UI/SpriteSheet_main_fullscreen.png', 70, 63)
+    this.load.image('winScreen', './assets/images/UI/win_menu.png')
 
     // In-game UI
     this.load.image('healthBG', './assets/images/UI/health_back&gold.png')
@@ -152,6 +153,12 @@ class Splash extends Phaser.State {
     this.load.audio('click', [
       './assets/audio/weapswitch.ogg', './assets/audio/weapswitch.mp3',
       './assets/audio/weapswitch.m4a', './assets/audio/weapswitch.ac3'])
+    this.load.audio('fireBallShoot', [
+      './assets/audio/quaddamage_out.ogg', './assets/audio/quaddamage_out.mp3',
+      './assets/audio/quaddamage_out.m4a', './assets/audio/quaddamage_out.ac3'])
+    this.load.audio('snakeDeath', [
+      './assets/audio/quaddamage_shoot.ogg', './assets/audio/quaddamage_shoot.mp3',
+      './assets/audio/quaddamage_shoot.m4a', './assets/audio/quaddamage_shoot.ac3'])
   }
 
   // Pre-load is done
@@ -208,6 +215,8 @@ class Splash extends Phaser.State {
 
     // Add sounds for the game ------------
     this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    this.game.fireBallShoot = this.game.add.audio('fireBallShoot', config.SFX_VOLUME)
+    this.game.snakeDeath = this.game.add.audio('snakeDeath', config.SFX_VOLUME)
     this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
     this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
