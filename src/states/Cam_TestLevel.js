@@ -46,19 +46,6 @@ class Cam_TestLevel extends Phaser.State {
     this.atPort = false
     this.healed = false
 
-    // layer groups ----------------------------------------------------------
-    this.underWater = this.game.add.group()
-    this.water = this.game.add.group()
-    this.aboveWater = this.game.add.group()
-    this.game.goldGroup = this.game.add.group()
-    this.playerGroup = this.game.add.group()
-    this.game.portMenu = this.game.add.group()
-    this.UIback = this.game.add.group()
-    this.UImid = this.game.add.group()
-    this.UIfwd = this.game.add.group()
-    this.game.portTXT = this.game.add.group()
-    this.enemies = this.game.add.group()
-
     // Add Island Colliders -------------------------------------------------------------------------------
     let customCollider = this.map.objects['GameObjects']
     customCollider.forEach(element => {
@@ -68,7 +55,6 @@ class Cam_TestLevel extends Phaser.State {
       this.Collider.body.static = true
       this.Collider.body.setCollisionGroup(this.game.landGroup)
       this.Collider.body.collides([this.game.playerGroup, this.game.enemyGroup, this.game.cannonballCollisionGroup, this.game.projectileGroup])
-      this.Collider.name = 'Land'
     })
 
     // Start playing the background music -----------------------------
@@ -83,7 +69,6 @@ class Cam_TestLevel extends Phaser.State {
     // this.playerMP.body.onBeginContact.add(this.rammed, this);
     this.playerMP.death.onComplete.add(this.sendToDead, this)
     this.game.add.existing(this.playerMP)
-    this.playerGroup.add(this.playerMP)
 
     // add gold ------------------------------------------------------
     this.goldPos = []
@@ -95,9 +80,8 @@ class Cam_TestLevel extends Phaser.State {
         x: element.x,
         y: element.y
       })
-      this.game.add.existing(this.goldPos[this.i]);
-      this.game.goldGroup.add(this.goldPos[this.i]);
-      this.i++;
+      this.game.add.existing(this.goldPos[this.i])
+      this.i++
     })
 
     // Add port positions ---------------------------------------------------------------------------------------
@@ -115,11 +99,6 @@ class Cam_TestLevel extends Phaser.State {
     this.game.add.existing(this.portSignSkull);
     this.game.add.existing(this.portSignCrecent);
     this.game.add.existing(this.portSignIce);
-    this.game.portMenu.add(this.portSignStart);
-    this.game.portMenu.add(this.portSignSkull);
-    this.game.portMenu.add(this.portSignCrecent);
-    this.game.portMenu.add(this.portSignIce);
-
 
     // Add Enemies ----------------------------------------------------
     this.sneks = []
@@ -133,7 +112,6 @@ class Cam_TestLevel extends Phaser.State {
         player: this.playerMP
       })
       this.game.add.existing(this.sneks[this.i])
-      this.aboveWater.add(this.sneks[this.i])
       this.i++
     })
 
@@ -148,19 +126,31 @@ class Cam_TestLevel extends Phaser.State {
         player: this.playerMP
       })
       this.game.add.existing(this.ghostBoats[this.i])
-      this.aboveWater.add(this.ghostBoats[this.i])
       this.i++
     })
-
-    this.boss = new BossShip({
+    
+    this.testship = new Test_Snek({
       game: this.game,
-      x: 2900,
-      y: 500,
+      x: this.playerMP.x - 40,
+      y: this.playerMP.y - 120,
       player: this.playerMP
     })
-    this.game.add.existing(this.boss);
-    this.aboveWater.add(this.boss);
-    this.boss.ded.onComplete.add(this.sendToWin, this)
+    this.game.add.existing(this.testship)
+    
+    // layer groups ----------------------------------------------------------
+    this.underWater = this.game.add.group()
+    this.water = this.game.add.group()
+    this.aboveWater = this.game.add.group()
+    this.playerGroup = this.game.add.group()
+    this.game.portMenu = this.game.add.group()
+    this.UIback = this.game.add.group()
+    this.UImid = this.game.add.group()
+    this.UIfwd = this.game.add.group()
+    this.game.portTXT = this.game.add.group()
+    this.enemies = this.game.add.group()
+
+    // adding the objects to the groups -------------------------------------
+    this.playerGroup.add(this.playerMP)
 
     // Lock camera to player -----------------------------------------------
     this.game.camera.follow(this.playerMP, Phaser.Camera.FOLLOW_LOCKON, 0.01, 0.05) /// 0.1 , 0.1
@@ -231,6 +221,9 @@ class Cam_TestLevel extends Phaser.State {
             this.goldPortTXT.scale.setTo(1 / 2)
             this.game.portTXT.add(this.goldPortTXT)
 
+            // this.pauseBG.alpha = 0; // can't fade in while the game is paused
+            // this.game.add.tween(this.pauseBG).to( { alpha: 1 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
             this.game.paused = true
           } else if (Phaser.Math.distance(this.game.icePort.x, this.game.icePort.y, this.game.playerPos.x, this.game.playerPos.y) <= 200) {
             console.log('Ice Port is within range!')
@@ -245,7 +238,7 @@ class Cam_TestLevel extends Phaser.State {
             this.game.portMenu.add(this.pauseBG)
             this.goldPortTXT = this.game.add.text(
               this.game.camera.x - this.game.camera.x / 2 + 435,
-              this.game.camera.y - this.game.camera.y / 2 + 260, '0', {
+              this.game.camera.y - this.game.camera.y / 2 + 250, '0', {
                 font: '65px Arial', // Lucida Handwriting
                 fill: '#dad000',
                 align: 'center'
@@ -390,11 +383,6 @@ class Cam_TestLevel extends Phaser.State {
     this.state.start('Dead')
   }
 
-  sendToWin () {
-    this.game.mainTheme.destroy()
-    this.state.start('Win')
-  }
-
   addBounds () {
     this.leftWall = this.game.add.sprite(0, 0, 'nothing')
     this.game.physics.p2.enable(this.leftWall)
@@ -471,32 +459,33 @@ class Cam_TestLevel extends Phaser.State {
     // move forward ------------------------
       if (this.playerMP.health > 0) {
         if (this.forwardKey.isDown) {
-          this.playerMP.moveForward();
+          this.playerMP.moveForward()
         } else {
-          this.playerMP.slowDown();
+          this.playerMP.slowDown()
         }
         // turn left --------------------------
         if (this.leftKey.isDown) {
-          this.playerMP.turnLeft();
+          this.playerMP.turnLeft()
         }
         // move back --------------------------
         if (this.backwardKey.isDown) {
-          this.playerMP.moveBackward();
+          this.playerMP.moveBackward()
         }
         // turn right -------------------------
         if (this.rightKey.isDown) {
-          this.playerMP.turnRight();
+          this.playerMP.turnRight()
         }
-        // Slow down over time ---------------
+      // Slow down over time ---------------
       } else if (this.playerMP.curBoatSpeed > 0) {
-        this.playerMP.moveBackward();
+        this.playerMP.moveBackward()
       } else {
-        this.playerMP.curBoatSpeed = 0;
+        this.playerMP.curBoatSpeed = 0
       }
-    }
-    // Zero out angular velocity when not turning -----------
-    if (!this.rightKey.isDown && !this.leftKey.isDown) {
-      this.playerMP.body.angularVelocity = 0;
+
+      // Zero out angular velocity when not turning -----------
+      if (!this.rightKey.isDown && !this.leftKey.isDown) {
+        this.playerMP.body.angularVelocity = 0
+      }
     }
 
     // on player death --------------------------------------------
