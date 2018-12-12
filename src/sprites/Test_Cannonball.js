@@ -31,7 +31,7 @@ class Test_Cannonball extends Phaser.Sprite {
     this.body.data.gravityScale = 0
     // this.body.fixedRotation = true
 
-    this.game.time.events.add(Phaser.Timer.SECOND * 0.75, this.noncontact, this)
+    this.game.time.events.add(Phaser.Timer.SECOND * 0.50, this.noncontact, this)
     this.setupAnimations()
 
     // this.body.collides([this.game.enemyGroup, this.game.landGroup], this.hitCannonball)
@@ -80,6 +80,7 @@ class Test_Cannonball extends Phaser.Sprite {
   // After a certain amount of time, if the cannonballs have not collided with anything, play the sploosh animation
   noncontact () {
     if (!this.hasHit) {
+      
       this.splooshAnim.play()
       this.width = 30
       this.height = 30

@@ -310,7 +310,7 @@ class Splash extends Phaser.State {
 
   makeTeamLogo () {
     // Set final background color
-    this.stage.backgroundColor = '#7f7f7f'
+    this.stage.backgroundColor = '#000000' //'#7f7f7f'
 
     // Add the logo to the screen and center it
     this.logo = this.game.add.sprite(
