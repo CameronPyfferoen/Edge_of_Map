@@ -80,6 +80,7 @@ class Test_Cannonball extends Phaser.Sprite {
   // After a certain amount of time, if the cannonballs have not collided with anything, play the sploosh animation
   noncontact () {
     if (!this.hasHit) {
+      
       this.splooshAnim.play()
       this.width = 30
       this.height = 30
