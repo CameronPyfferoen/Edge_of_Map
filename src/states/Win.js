@@ -17,7 +17,7 @@ class Win extends Phaser.State {
     this.game.mainMenuTheme.loop = true;
     this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME);
     this.game.add.tileSprite(0, 0, 1900, 950, 'winScreen');
-    this.game.add.button(this.world.centerX - 179, this.world.centerY + 180, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
+    this.game.add.button(this.world.centerX - 179, this.world.centerY + 300, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
     this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
 
     window.onkeydown = function (event) {
