@@ -72,7 +72,10 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     // Start playing the background music -----------------------------
-    this.game.mainTheme.play('', 1, config.MUSIC_VOLUME)
+    this.game.mainThemeIntro.onStop.add(() => {
+      this.game.mainTheme.play('', 1, config.MUSIC_VOLUME)
+    })
+    this.game.mainThemeIntro.play()
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({

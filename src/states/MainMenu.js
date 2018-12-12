@@ -24,7 +24,9 @@ class MainMenu extends Phaser.State {
     this.creditsButton = this.game.add.button(this.world.centerX - 210, this.world.centerY + 160, 'creditsButton', this.sendToCredits, this, 1, 0, 1, 0)
     this.creditsButton.anchor.setTo(0.5, 0)
     this.game.deathTune = this.game.add.audio('deathTune', config.MUSIC_VOLUME)
-    this.game.mainTheme = this.game.add.audio('mainTheme', config.MUSIC_VOLUME)
+
+    this.game.mainThemeIntro = this.game.add.audio('mainThemeIntro', config.MUSIC_VOLUME)
+    this.game.mainTheme = this.game.add.audio('mainThemeLoop', config.MUSIC_VOLUME)
     this.game.deathTune.loop = true;
     this.game.mainTheme.loop = true;
     
