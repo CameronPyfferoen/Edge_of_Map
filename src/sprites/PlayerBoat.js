@@ -69,6 +69,12 @@ class PlayerBoat extends Phaser.Sprite {
     this.conAngDiffDeg = 0
     this.conLine = new Line(this.body.x, this.body.y, this.body.x + 2, this.body.y + 2)
 
+    this.behindLine = new Line(this.body.x, this.body.y, this.body.x + 2, this.body.y + 2)
+    this.backCollide = []
+    this.fwdthrust = false
+    this.backthrust = false
+    this.m = 0
+
     // console.log(`Enemy bitmask: ${this.game.enemyGroup.mask}`)
     // setup movement physics
     this.intBoatSpeed = 80
@@ -106,6 +112,8 @@ class PlayerBoat extends Phaser.Sprite {
     // Always give parent a chance to update
     // super.update()
     // console.log(`player invincible: ${this.invincible}`)
+    // this.game.debug.geom(this.behindLine, '#FF0', true)
+    // console.log(`boat rotation: ${this.body.rotation}`)
     if (this.health > this.maxHealth) {
       this.health = this.maxHealth
     }
@@ -142,6 +150,8 @@ class PlayerBoat extends Phaser.Sprite {
     // look here
     // cut if not working
     if (this.isLand || this.isEnemy) {
+      console.log(`update backthrust: ${this.backthrust}`)
+      console.log(`update fwdthrust: ${this.fwdthrust}`)
       this.invincible = true
       this.control = false
       // console.log(`this.count: ${this.count}`)
@@ -149,11 +159,11 @@ class PlayerBoat extends Phaser.Sprite {
         this.body.setZeroVelocity()
         this.body.angularVelocity = 0
         this.curBoatSpeed = 0
-      } else if (this.count < 60 && this.count >= 30 && (this.conAngDiffDeg > -45 || this.conAngDiffDeg < -135)) {
+      } else if (this.count < 60 && this.count >= 30 && this.backthrust) {
         this.body.angularVelocity = 0
         this.thrustBackward()
       } 
-      else if (this.count < 60 && this.count >= 30 && this.conAngDiffDeg <= -45 && this.conAngDiffDeg >= -135) {
+      else if (this.count < 60 && this.count >= 30 && this.fwdthrust) {
         this.body.angularVelocity = 0
         this.thrustForward()
       }/* else if (this.count >= 10 && this.count < 200) {
@@ -165,6 +175,8 @@ class PlayerBoat extends Phaser.Sprite {
         this.isEnemy = false
         this.control = true
         this.invincible = false
+        this.backthrust = false
+        this.fwdthrust = false
       }
       if (this.count < 60) {
         this.count++
@@ -188,9 +200,44 @@ class PlayerBoat extends Phaser.Sprite {
   // cut if not working
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     this.n = 0
+    this.m = 0
     if (otherBody !== null) {
-      this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
-      this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
+      // this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
+      // this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
+      if(Math.abs(this.body.rotation) <= Phaser.Math.HALF_PI)
+      {
+        this.behindLine.fromAngle(this.body.x, this.body.y + 12, this.body.rotation - 2 * Phaser.Math.HALF_PI, 1)
+      }
+      else if(Math.abs(this.body.rotation) > Phaser.Math.HALF_PI)
+      {
+        this.behindLine.fromAngle(this.body.x, this.body.y - 12, this.body.rotation - 2 * Phaser.Math.HALF_PI, 1)
+      }
+      console.log(`behindLine rotation: ${this.behindLine.angle}`)
+      this.backCollide = this.game.physics.p2.hitTest(this.behindLine.end)
+      
+      this.backCollide.forEach(element => {
+            console.log(`backcollide[${this.m}]: ${this.backCollide[this.m]}`)
+            let hitobject = this.backCollide[this.m]
+            console.log(`hitbobject: ${hitobject.parent.sprite.name}`)
+          
+        if(this.backCollide[this.m].parent.sprite.name === 'Player Ship')
+        {
+          this.backCollide.splice(this.m, 1)
+        }
+        
+        
+        this.m++
+      })
+      
+      if(this.backCollide.length > 0)
+      {
+        console.log(`back collide length: ${this.backCollide.length}`)
+        this.fwdthrust = true
+      }
+      else
+      {
+        this.backthrust = true
+      }
       // console.log(`collided w/: ${otherBody.sprite.name}`)
       if (otherBody.sprite !== null && otherBody.sprite.name !== null && (otherBody.sprite.name === 'Cannonball' || otherBody.sprite.name === 'Fireball' || otherBody.sprite.name === 'GoldDrop')) {
         // console.log(`collided w/: ${otherBody.sprite.name}`)
@@ -222,6 +269,9 @@ class PlayerBoat extends Phaser.Sprite {
           this.count = 0
         }
       }
+      console.log(`contact backthrust: ${this.backthrust}`)
+      console.log(`contact fwdthrust: ${this.fwdthrust}`)
+      this.backCollide.length = 0
       this.bitArray.length = 0
       this.isBall = false
     }
