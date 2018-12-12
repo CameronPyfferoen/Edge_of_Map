@@ -19,7 +19,7 @@ class MainMenu extends Phaser.State {
     this.game.add.button(this.world.centerX - 308, this.world.centerY + 20, 'settingsButton', this.sendToSettings, this, 1, 0, 1, 0)
     this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
 
-    this.exitButton = this.game.add.button(this.world.centerX + 300, this.world.centerY + 160, 'exitButton', this.sendToTest, this, 1, 0, 1, 0)
+    this.exitButton = this.game.add.button(this.world.centerX + 300, this.world.centerY + 160, 'exitButton', this.sendToDead, this, 1, 0, 1, 0)
     this.exitButton.anchor.setTo(0.5, 0)
     this.creditsButton = this.game.add.button(this.world.centerX - 210, this.world.centerY + 160, 'creditsButton', this.sendToCredits, this, 1, 0, 1, 0)
     this.creditsButton.anchor.setTo(0.5, 0)
@@ -80,10 +80,11 @@ class MainMenu extends Phaser.State {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.state.start('Settings')
   }
-  sendToTest () {
+  sendToDead () {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
     this.game.mainMenuTheme.destroy();
-    this.state.start('Dead')
+    // this.state.start('Dead')
+    this.game.destroy();
   }
   sendToCredits () {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);

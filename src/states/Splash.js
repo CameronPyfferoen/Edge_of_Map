@@ -162,6 +162,7 @@ class Splash extends Phaser.State {
     this.load.audio('snakeDeath', [
       './assets/audio/quaddamage_shoot.ogg', './assets/audio/quaddamage_shoot.mp3',
       './assets/audio/quaddamage_shoot.m4a', './assets/audio/quaddamage_shoot.ac3'])
+    this.load.audio('coinPickup', '/assets/audio/SFX/Coins_Several_00.wav');
   }
 
   // Pre-load is done
@@ -219,6 +220,7 @@ class Splash extends Phaser.State {
     this.game.snakeDeath = this.game.add.audio('snakeDeath', config.SFX_VOLUME)
     this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
     this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
+    this.game.coinPickup = this.game.add.audio('coinPickup', config.SFX_VOLUME)
     this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
     this.game.mainMenuTheme.loop = true
   }

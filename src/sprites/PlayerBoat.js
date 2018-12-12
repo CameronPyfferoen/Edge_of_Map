@@ -204,38 +204,32 @@ class PlayerBoat extends Phaser.Sprite {
     if (otherBody !== null) {
       // this.conLine.setTo(this.body.x, this.body.y, otherBody.x, otherBody.y)
       // this.conAngDiffDeg = (this.body.angle - Phaser.Math.radToDeg(this.conLine.angle)) % 360
-      if(Math.abs(this.body.rotation) <= Phaser.Math.HALF_PI)
-      {
+      if (Math.abs(this.body.rotation) <= Phaser.Math.HALF_PI) {
         this.behindLine.fromAngle(this.body.x, this.body.y + 12, this.body.rotation - 2 * Phaser.Math.HALF_PI, 1)
       }
-      else if(Math.abs(this.body.rotation) > Phaser.Math.HALF_PI)
-      {
+      else if (Math.abs(this.body.rotation) > Phaser.Math.HALF_PI) {
         this.behindLine.fromAngle(this.body.x, this.body.y - 12, this.body.rotation - 2 * Phaser.Math.HALF_PI, 1)
       }
       console.log(`behindLine rotation: ${this.behindLine.angle}`)
       this.backCollide = this.game.physics.p2.hitTest(this.behindLine.end)
       
       this.backCollide.forEach(element => {
-            console.log(`backcollide[${this.m}]: ${this.backCollide[this.m]}`)
-            let hitobject = this.backCollide[this.m]
-            console.log(`hitbobject: ${hitobject.parent.sprite.name}`)
+        console.log(`backcollide[${this.m}]: ${this.backCollide[this.m]}`)
+        let hitobject = this.backCollide[this.m]
+        console.log(`hitbobject: ${hitobject.parent.sprite.name}`)
           
-        if(this.backCollide[this.m].parent.sprite.name === 'Player Ship')
+        if (this.backCollide[this.m].parent.sprite.name === 'Player Ship')
         {
           this.backCollide.splice(this.m, 1)
         }
-        
-        
         this.m++
       })
       
-      if(this.backCollide.length > 0)
-      {
+      if (this.backCollide.length > 0) {
         console.log(`back collide length: ${this.backCollide.length}`)
         this.fwdthrust = true
       }
-      else
-      {
+      else {
         this.backthrust = true
       }
       // console.log(`collided w/: ${otherBody.sprite.name}`)
