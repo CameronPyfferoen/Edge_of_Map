@@ -1,3 +1,7 @@
+# Remove actions after a certain date (currently December SGX)
+cat gourceLog.txt | awk -F\| '$1<=1544637600' > gourceLog.temp
+mv gourceLog.temp gourceLog.txt
+
 # Setup Project Name
 projName="Edge of the Map - Source Code"
 

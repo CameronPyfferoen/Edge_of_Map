@@ -4,7 +4,7 @@ gource --output-custom-log gourceLog.txt
 source gourceCustomize.sh
 
 # Generate video and encode to MP4 all in one
-gource --1280x720 \
+gource --1920x1080 \
 	--auto-skip-seconds 1 \
 	--seconds-per-day 1.5 \
 	--max-file-lag 1 \
@@ -23,7 +23,6 @@ gource --1280x720 \
 ffmpeg  -y -r 30 \
 	-f image2pipe -vcodec ppm \
 	-i - -vcodec libx264 \
-	-preset veryslow \
 	-pix_fmt yuv420p \
-	-crf 1 -threads 0 \
+	-crf 19 -threads 0 \
 	-bf 0 gourceVideo.mp4
