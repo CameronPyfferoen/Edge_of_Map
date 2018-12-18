@@ -6,8 +6,11 @@ import NwBuilder from 'nw-builder'
 let FILES = [
   path.resolve('package.json'),
   path.resolve('index.html'),
+  path.resolve('LibraFranklin.css'),
   path.resolve('./dist/*.js'),
   path.resolve('./assets/images/**/*'),
+  path.resolve('./assets/fonts/**/*'),
+  path.resolve('./assets/spalsh/**/*'),
   path.resolve('./assets/audio/sounds.*')
 ]
 

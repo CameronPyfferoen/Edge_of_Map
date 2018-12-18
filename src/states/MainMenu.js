@@ -19,7 +19,7 @@ class MainMenu extends Phaser.State {
     this.game.add.button(this.world.centerX - 308, this.world.centerY + 20, 'settingsButton', this.sendToSettings, this, 1, 0, 1, 0)
     this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
 
-    this.exitButton = this.game.add.button(this.world.centerX + 300, this.world.centerY + 160, 'exitButton', this.sendToDead, this, 1, 0, 1, 0)
+    this.exitButton = this.game.add.button(this.world.centerX + 300, this.world.centerY + 160, 'exitButton', this.sendToExit, this, 1, 0, 1, 0)
     this.exitButton.anchor.setTo(0.5, 0)
     this.creditsButton = this.game.add.button(this.world.centerX - 210, this.world.centerY + 160, 'creditsButton', this.sendToCredits, this, 1, 0, 1, 0)
     this.creditsButton.anchor.setTo(0.5, 0)
@@ -38,7 +38,9 @@ class MainMenu extends Phaser.State {
     // this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
  
     // Maintain aspect ratio
-    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    if (!__NWJS__) {
+      this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    }
     window.onkeydown = function (event) {
       if (event.keyCode === 79) {
         if (this.game.scale.isFullScreen) {
@@ -85,6 +87,12 @@ class MainMenu extends Phaser.State {
     this.game.mainMenuTheme.destroy();
     // this.state.start('Dead')
     this.game.destroy();
+  }
+  sendToExit () {
+    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    if (__NWJS__) {
+      window.close()
+    }  
   }
   sendToCredits () {
     this.game.clickSound.play('', 0, config.SFX_VOLUME);
