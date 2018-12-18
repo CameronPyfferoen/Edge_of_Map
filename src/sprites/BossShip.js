@@ -242,7 +242,7 @@ class BossShip extends Enemy {
     // Create projectile object
     // console.log('o')
     this.game.camera.shake(0.001, 250)
-    this.game.explosion.play('', 0, config.SFX_VOLUME)
+    this.game.sounds.play('explosion', config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -363,7 +363,7 @@ class BossShip extends Enemy {
     // Create projectile object
     // console.log('o')
     this.game.camera.shake(0.001, 250)
-    this.game.explosion.play('', 0, config.SFX_VOLUME)
+    this.game.sounds.play('explosion', config.SFX_VOLUME)
     let canPos1 = [this.x, this.y]
     let canPos2 = [this.x, this.y + 7.5]
     let canPos3 = [this.x, this.y - 7.5]
@@ -466,11 +466,11 @@ class BossShip extends Enemy {
     this.playerInvincible = this.player.getvincible()
     if (this.health <= 0) {
       if (this.playedDeathSoundTimer === 0) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.sounds.play('explosion', config.SFX_VOLUME);
       } else if (this.playedDeathSoundTimer === 30) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.sounds.play('explosion', config.SFX_VOLUME);
       } else if (this.playedDeathSoundTimer === 60) {
-        this.game.explosion.play('', 0, config.SFX_VOLUME);
+        this.game.sounds.play('explosion', config.SFX_VOLUME);
         this.body.clearShapes()
       }
       this.playedDeathSoundTimer++;

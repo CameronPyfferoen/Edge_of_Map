@@ -23,12 +23,12 @@ class MainMenu extends Phaser.State {
     this.exitButton.anchor.setTo(0.5, 0)
     this.creditsButton = this.game.add.button(this.world.centerX - 210, this.world.centerY + 160, 'creditsButton', this.sendToCredits, this, 1, 0, 1, 0)
     this.creditsButton.anchor.setTo(0.5, 0)
-    this.game.deathTune = this.game.add.audio('deathTune', config.MUSIC_VOLUME)
 
-    this.game.mainThemeIntro = this.game.add.audio('mainThemeIntro', config.MUSIC_VOLUME)
-    this.game.mainTheme = this.game.add.audio('mainThemeLoop', config.MUSIC_VOLUME)
-    this.game.deathTune.loop = true;
-    this.game.mainTheme.loop = true;
+    // this.game.deathTune = this.game.add.audio('deathTune', config.MUSIC_VOLUME)
+    // this.game.mainThemeIntro = this.game.add.audio('mainThemeIntro', config.MUSIC_VOLUME)
+    // this.game.mainTheme = this.game.add.audio('mainThemeLoop', config.MUSIC_VOLUME)
+    // this.game.deathTune.loop = true;
+    // this.game.mainTheme.loop = true;
     
     // Add fullscreen controls
     // Stretch to fill
@@ -55,14 +55,14 @@ class MainMenu extends Phaser.State {
     }
 
     // Play menu music
-    if (!this.game.mainMenuTheme.isPlaying) {
-      this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME)
+    if (!this.game.sounds.get('mainMenuTheme').isPlaying) {
+      this.game.sounds.play('mainMenuTheme', config.MUSIC_VOLUME)
     }
   }
 
   update () {
-    this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
-    this.game.clickSound.volume = config.SFX_VOLUME;
+    // this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
+    // this.game.clickSound.volume = config.SFX_VOLUME;
     if (!this.game.scale.isFullScreen) {
       this.game.fullscreen.setFrames(1, 0, 1, 0);
     } else {
@@ -71,35 +71,35 @@ class MainMenu extends Phaser.State {
   }
 
   sendToCam () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('ControlsBeforePlay')
   }
   sendToControls () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('Controls')
   }
   sendToSettings () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('Settings')
   }
   sendToDead () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
-    this.game.mainMenuTheme.destroy();
+    this.game.sounds.play('click', config.SFX_VOLUME);
+    this.game.sounds.stop('mainMenuTheme');
     // this.state.start('Dead')
     this.game.destroy();
   }
   sendToExit () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (__NWJS__) {
       window.close()
     }  
   }
   sendToCredits () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('Credits')
   }
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)

@@ -141,17 +141,17 @@ class Settings extends Phaser.State {
     } else {
       this.game.fullscreen.setFrames(3, 2, 3, 2);
     }
-    this.game.clickSound.volume = config.SFX_VOLUME;
-    this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
+    // this.game.clickSound.volume = config.SFX_VOLUME;
+    // this.game.mainMenuTheme.volume = config.MUSIC_VOLUME;
   }
 
   sendToMain () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('MainMenu');
   }
 
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)

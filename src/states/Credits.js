@@ -13,7 +13,7 @@ class Credits extends Phaser.State {
   preLoad () {}
 
   create () {
-    // this.game.deathTune.play('', 1, config.MUSIC_VOLUME);
+    // this.game.sounds.play('deathTune', config.MUSIC_VOLUME);
     this.game.add.tileSprite(0, 0, 1900, 950, 'mainMenuBackground');
     this.board = this.game.add.sprite(
       this.world.centerX, 
@@ -47,12 +47,12 @@ class Credits extends Phaser.State {
   }
 
   sendToMain () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('MainMenu');
   }
 
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)

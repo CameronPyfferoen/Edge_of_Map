@@ -46,7 +46,7 @@ class GoldDrop extends Phaser.Sprite {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      this.game.coinPickup.play('', 0, config.SFX_VOLUME);
+      this.game.sounds.play('coinPickup', config.SFX_VOLUME);
       this.game.gold += 25;
       this.destroy()
     }

@@ -55,12 +55,11 @@
   },
   "dependencies": {
     "phaser-ce": "^2.11.0",
-    "sfx": "^0.1.1",
     "webfontloader": "^1.6.28"
   },
   "window": {
     "title": "Edge of the Map",
-    "icon": "./assets/images/icon.png",
+    "icon": "assets/images/Misc/icon.png",
     "toolbar": false,
     "frame": true,
     "fullscreen": false

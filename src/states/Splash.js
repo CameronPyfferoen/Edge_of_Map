@@ -129,40 +129,40 @@ class Splash extends Phaser.State {
     this.load.image('crecentPort', './assets/images/UI/PortMenus/menu_portsflowen_newport.png')
 
     // The audiosprite with all music and SFX
-    // this.load.audioSprite('sounds', [
-    //   'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
-    //   'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3'
-    // ], 'assets/audio/sounds.json')
+    this.load.audioSprite('sounds', [
+      'assets/audio/sounds.ogg', 'assets/audio/sounds.mp3',
+      'assets/audio/sounds.m4a', 'assets/audio/sounds.ac3'
+    ], 'assets/audio/sounds.json')
 
     // Load all sounds individually
-    this.load.audio('explosion', [
-      './assets/audio/explosion.ogg', './assets/audio/explosion.mp3',
-      './assets/audio/explosion.m4a', './assets/audio/explosion.ac3'])
-    this.load.audio('getHit', [
-      './assets/audio/grenade.ogg', './assets/audio/grenade.mp3',
-      './assets/audio/grenade.m4a', './assets/audio/grenade.ac3'])
-    this.load.audio('deathTune', [
-      './assets/audio/pirate1uf.ogg', './assets/audio/pirate1uf.mp3',
-      './assets/audio/pirate1uf.m4a', './assets/audio/pirate1uf.ac3'])
-    this.load.audio('mainMenuTheme', [
-      './assets/audio/Pirate1_Theme1.ogg', './assets/audio/Pirate1_Theme1.mp3',
-      './assets/audio/Pirate1_Theme1.m4a', './assets/audio/Pirate1_Theme1.ac3'])
-    this.load.audio('mainThemeIntro', [
-      './assets/audio/thunderchild-intro.ogg', './assets/audio/thunderchild-intro.mp3',
-      './assets/audio/thunderchild-intro.m4a', './assets/audio/thunderchild-intro.ac3'])
-    this.load.audio('mainThemeLoop', [
-      './assets/audio/thunderchild-loop.ogg', './assets/audio/thunderchild-loop.mp3',
-      './assets/audio/thunderchild-loop.m4a', './assets/audio/thunderchild-loop.ac3'])
-    this.load.audio('click', [
-      './assets/audio/weapswitch.ogg', './assets/audio/weapswitch.mp3',
-      './assets/audio/weapswitch.m4a', './assets/audio/weapswitch.ac3'])
-    this.load.audio('fireBallShoot', [
-      './assets/audio/quaddamage_out.ogg', './assets/audio/quaddamage_out.mp3',
-      './assets/audio/quaddamage_out.m4a', './assets/audio/quaddamage_out.ac3'])
-    this.load.audio('snakeDeath', [
-      './assets/audio/quaddamage_shoot.ogg', './assets/audio/quaddamage_shoot.mp3',
-      './assets/audio/quaddamage_shoot.m4a', './assets/audio/quaddamage_shoot.ac3'])
-    this.load.audio('coinPickup', '/assets/audio/SFX/Coins_Several_00.wav');
+    // this.load.audio('explosion', [
+    //   './assets/audio/explosion.ogg', './assets/audio/explosion.mp3',
+    //   './assets/audio/explosion.m4a', './assets/audio/explosion.ac3'])
+    // this.load.audio('getHit', [
+    //   './assets/audio/grenade.ogg', './assets/audio/grenade.mp3',
+    //   './assets/audio/grenade.m4a', './assets/audio/grenade.ac3'])
+    // this.load.audio('deathTune', [
+    //   './assets/audio/pirate1uf.ogg', './assets/audio/pirate1uf.mp3',
+    //   './assets/audio/pirate1uf.m4a', './assets/audio/pirate1uf.ac3'])
+    // this.load.audio('mainMenuTheme', [
+    //   './assets/audio/Pirate1_Theme1.ogg', './assets/audio/Pirate1_Theme1.mp3',
+    //   './assets/audio/Pirate1_Theme1.m4a', './assets/audio/Pirate1_Theme1.ac3'])
+    // this.load.audio('mainThemeIntro', [
+    //   './assets/audio/thunderchild-intro.ogg', './assets/audio/thunderchild-intro.mp3',
+    //   './assets/audio/thunderchild-intro.m4a', './assets/audio/thunderchild-intro.ac3'])
+    // this.load.audio('mainThemeLoop', [
+    //   './assets/audio/thunderchild-loop.ogg', './assets/audio/thunderchild-loop.mp3',
+    //   './assets/audio/thunderchild-loop.m4a', './assets/audio/thunderchild-loop.ac3'])
+    // this.load.audio('click', [
+    //   './assets/audio/weapswitch.ogg', './assets/audio/weapswitch.mp3',
+    //   './assets/audio/weapswitch.m4a', './assets/audio/weapswitch.ac3'])
+    // this.load.audio('fireBallShoot', [
+    //   './assets/audio/quaddamage_out.ogg', './assets/audio/quaddamage_out.mp3',
+    //   './assets/audio/quaddamage_out.m4a', './assets/audio/quaddamage_out.ac3'])
+    // this.load.audio('snakeDeath', [
+    //   './assets/audio/quaddamage_shoot.ogg', './assets/audio/quaddamage_shoot.mp3',
+    //   './assets/audio/quaddamage_shoot.m4a', './assets/audio/quaddamage_shoot.ac3'])
+    // this.load.audio('coinPickup', '/assets/audio/SFX/Coins_Several_00.wav');
   }
 
   // Pre-load is done
@@ -194,40 +194,26 @@ class Splash extends Phaser.State {
   }
 
   setupAudio () {
-    // // Load the audio sprite into the global game object (and also make a local variable)
-    // let sounds = this.game.sounds = this.game.add.audioSprite('sounds')
-    // // Make the different music sections flow into one another in a seemless loop
-    // // (this is unusually complex and your audio probabaly wont need it)
-
-    // for (let i = 1; i < 4; i++) {
-    //   sounds.get(`music-theme${i}`).onStop.add(() => {
-    //     sounds.play(`music-theme${i + 1}`, config.MUSIC_VOLUME)
-    //   })
-    // }
-
-    // sounds.get('music-theme4').onStop.add(() => {
-    //   sounds.play('music-bridge', config.MUSIC_VOLUME)
-    // })
-
-    // // Theme 2 seems to flow out of the bridge better than theme 1
-    // sounds.get('music-bridge').onStop.add(() => {
-    //   sounds.play('music-theme2', config.MUSIC_VOLUME)
-    // })
+    // Load the audio sprite into the global game object (and also make a local variable)
+    this.game.sounds = this.game.add.audioSprite('sounds')
+    this.game.sounds.get('mainThemeIntro').onStop.add(() => {
+      this.game.sounds.play('mainThemeLoop', config.MUSIC_VOLUME)
+    }, this)
 
     // Add sounds for the game ------------
-    this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
-    this.game.fireBallShoot = this.game.add.audio('fireBallShoot', config.SFX_VOLUME)
-    this.game.snakeDeath = this.game.add.audio('snakeDeath', config.SFX_VOLUME)
-    this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
-    this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
-    this.game.coinPickup = this.game.add.audio('coinPickup', config.SFX_VOLUME)
-    this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
-    this.game.mainMenuTheme.loop = true
+    // this.game.explosion = this.game.add.audio('explosion', config.SFX_VOLUME)
+    // this.game.fireBallShoot = this.game.add.audio('fireBallShoot', config.SFX_VOLUME)
+    // this.game.snakeDeath = this.game.add.audio('snakeDeath', config.SFX_VOLUME)
+    // this.game.getHit = this.game.add.audio('getHit', config.SFX_VOLUME)
+    // this.game.clickSound = this.game.add.audio('click', config.SFX_VOLUME)
+    // this.game.coinPickup = this.game.add.audio('coinPickup', config.SFX_VOLUME)
+    // this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
+    // this.game.mainMenuTheme.loop = true
   }
 
   // Called repeatedly after pre-load finishes and after 'create' has run
   update () {
-    if (this.doneWithLogos && this.game.mainMenuTheme.isDecoded) {
+    if (this.doneWithLogos && this.game.sounds.get('mainMenuTheme').isDecoded) {
       this.state.start('MainMenu')
     }
   }
@@ -386,7 +372,7 @@ class Splash extends Phaser.State {
     // Fade in from black
     myCam.flash(0x000000, 1000)
     myState.mapTween.start()
-    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME)
+    this.game.sounds.play('mainMenuTheme', config.MUSIC_VOLUME)
   }
 }
 

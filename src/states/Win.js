@@ -13,9 +13,9 @@ class Win extends Phaser.State {
   preLoad () {}
 
   create () {
-    this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
-    this.game.mainMenuTheme.loop = true;
-    this.game.mainMenuTheme.play('', 1, config.MUSIC_VOLUME);
+    // this.game.mainMenuTheme = this.game.add.audio('mainMenuTheme', config.MUSIC_VOLUME)
+    // this.game.mainMenuTheme.loop = true;
+    this.game.sounds.play('mainMenuTheme', config.MUSIC_VOLUME);
     this.game.add.tileSprite(0, 0, 1900, 950, 'winScreen');
     this.game.add.button(this.world.centerX - 179, this.world.centerY + 300, 'backButton', this.sendToMain, this, 1, 0, 1, 0);
     this.game.fullscreen = this.game.add.button(0, 0, 'fullScreen', this.makeFullScreen, this, 1, 0, 1, 0)
@@ -43,13 +43,13 @@ class Win extends Phaser.State {
   }
 
   sendToMain () {
-    this.game.deathTune.destroy();
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.stop('deathTune')
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('MainMenu');
   }
 
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)

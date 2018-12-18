@@ -57,7 +57,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
       this.playerCheck = otherBody.sprite.getvincible()
       if (!this.playerCheck) {
         this.game.camera.shake(0.001, 200)
-        this.game.getHit.play('', 0, config.SFX_VOLUME)
+        this.game.sounds.play('getHit', config.SFX_VOLUME)
         if ((otherBody.sprite.health -= this.damage) <= 0) {
           otherBody.sprite.health = 0
         } else {
@@ -65,6 +65,7 @@ class Enemy_Cannonball extends Phaser.Sprite {
         }
       }
     }
+    
     this.hasHit = true
     this.explosionAnim.play()
     this.width = 30

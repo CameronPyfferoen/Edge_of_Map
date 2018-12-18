@@ -150,7 +150,7 @@ class Test_Snek extends Enemy {
       angle: this.angle
     })
     this.game.add.existing(this.fireb)
-    this.game.fireBallShoot.play('', 0, config.SFX_VOLUME)
+    this.game.sounds.play('fireBallShot', config.SFX_VOLUME)
     this.canSwitch = true
     this.shot = true
   }
@@ -175,7 +175,7 @@ class Test_Snek extends Enemy {
     // console.log(`snake detection: ${this.playerInvincible}`)
     if (this.health <= 0) {
       if (!this.playedDeathSound) {
-        this.game.snakeDeath.play('', 0, config.SFX_VOLUME)
+        this.game.sounds.play('snakeDeath', config.SFX_VOLUME)
         this.playedDeathSound = true
         this.body.clearShapes()
       }

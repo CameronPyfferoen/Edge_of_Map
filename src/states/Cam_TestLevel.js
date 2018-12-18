@@ -72,10 +72,7 @@ class Cam_TestLevel extends Phaser.State {
     })
 
     // Start playing the background music -----------------------------
-    this.game.mainThemeIntro.onStop.add(() => {
-      this.game.mainTheme.play('', 1, config.MUSIC_VOLUME)
-    })
-    this.game.mainThemeIntro.play()
+    this.game.sounds.play('mainThemeIntro', config.MUSIC_VOLUME)
 
     // Add player -----------------------------------------------------
     this.playerMP = new PlayerBoat({
@@ -389,7 +386,7 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen()
       this.game.fullscreen.setFrames(1, 0, 1, 0)
@@ -400,12 +397,12 @@ class Cam_TestLevel extends Phaser.State {
   }
 
   sendToDead () {
-    this.game.mainTheme.destroy()
+    this.game.sounds.stop('mainThemeLoop')
     this.state.start('Dead')
   }
 
   sendToWin () {
-    this.game.mainTheme.destroy()
+    this.game.sounds.stop('mainThemeLoop')
     this.state.start('Win')
   }
 
@@ -516,7 +513,7 @@ class Cam_TestLevel extends Phaser.State {
     // on player death --------------------------------------------
     if (this.playerMP.health <= 0) {
       this.game.input.onDown.removeAll()
-      this.game.mainTheme.fadeOut(2250)
+      this.game.sounds.get('mainThemeLoop').fadeOut(2250)
       // this.sendToDead();
     }
 

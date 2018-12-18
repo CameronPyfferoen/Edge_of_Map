@@ -6,7 +6,6 @@ class Fireball extends Phaser.Sprite {
   constructor ({ game, x, y, angle }) {
     super(game, x, y, 'fireball', 0)
     this.name = 'Fireball'
-    this.game = game
     this.x = x
     this.y = y
     this.angle = angle
@@ -61,19 +60,17 @@ class Fireball extends Phaser.Sprite {
 
   contact (otherBody, otherP2Body, myShape, otherShape, contactEQ) {
     if (otherBody !== null && otherBody.sprite.name === 'Player Ship') {
-      this.end()
-      game.camera.shake(0.005, 500); // this.game is null?
-      game.getHit.play('', 0, config.SFX_VOLUME);
+      this.game.camera.shake(0.005, 500); // this.game is null?
+      this.game.sounds.play('getHit', config.SFX_VOLUME)
       if ((otherBody.sprite.health -= this.damage) <= 0) {
-        otherBody.sprite.health = 0;
+        otherBody.sprite.health = 0
       } else {
         otherBody.sprite.health -= this.damage
       }
     }
-    else
-    {
-      this.end()
-    }
+
+    // Always destroy on contact
+    this.end()
   }
 
   end () {

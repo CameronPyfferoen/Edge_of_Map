@@ -10,8 +10,10 @@ let FILES = [
   path.resolve('./dist/*.js'),
   path.resolve('./assets/images/**/*'),
   path.resolve('./assets/fonts/**/*'),
-  path.resolve('./assets/spalsh/**/*'),
-  path.resolve('./assets/audio/sounds.*')
+  path.resolve('./assets/splash/**/*'),
+  path.resolve('./assets/maps/*.json'),
+  path.resolve('./assets/audio/sounds.ogg'),
+  path.resolve('./assets/audio/sounds.json')
 ]
 
 // Start the nw-builder configuration object
@@ -26,12 +28,12 @@ let NW_CONFIG = {
 switch (process.platform) {
   case 'win32':
     NW_CONFIG.platforms = [ 'win64' ]
-    NW_CONFIG.winIco = path.resolve('./assets/images/icon.ico')
+    NW_CONFIG.winIco = path.resolve('./assets/images/Misc/icon.ico')
     break
 
   case 'darwin':
     NW_CONFIG.platforms = [ 'osx64' ]
-    NW_CONFIG.macIcns = path.resolve('./assets/images/icon.icns')
+    NW_CONFIG.macIcns = path.resolve('assets/images/Misc/icon.icns')
     break
 
   default:

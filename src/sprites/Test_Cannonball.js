@@ -60,8 +60,8 @@ class Test_Cannonball extends Phaser.Sprite {
     if (otherBody !== null && otherBody.sprite.name === 'Enemy') {
       this.enemyCheck = otherBody.sprite.getInvincible()
       if (!this.enemyCheck) {
-        game.camera.shake(0.001, 200)
-        game.getHit.play('', 0, config.SFX_VOLUME)
+        this.game.camera.shake(0.001, 200)
+        this.game.sounds.play('getHit', config.SFX_VOLUME)
         if ((otherBody.sprite.health -= this.damage) <= 0) {
           otherBody.sprite.health = 0
         } else {

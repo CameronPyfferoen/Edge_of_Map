@@ -39,12 +39,12 @@ class Controls extends Phaser.State {
   }
 
   sendToMain () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     this.state.start('MainMenu');
   }
 
   makeFullScreen () {
-    this.game.clickSound.play('', 0, config.SFX_VOLUME);
+    this.game.sounds.play('click', config.SFX_VOLUME);
     if (this.game.scale.isFullScreen) {
       this.game.scale.stopFullScreen();
       this.game.fullscreen.setFrames(1, 0, 1, 0)
