@@ -6,10 +6,10 @@ import Phaser from 'phaser'
 // A flexible tool for loading fonts from many common sources
 // including typekit, google fonts, fonts.com and fontdeck.
 // See more here: https://www.npmjs.com/package/webfontloader
-import WebFont from 'webfontloader'
+// import WebFont from 'webfontloader'
 
 // Grab some global configuration options for local use
-import config from '../config'
+// import config from '../config'
 
 /**
  * The Boot game state. This game state is used as a quick, low-impact
